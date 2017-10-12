@@ -9,8 +9,8 @@ const MovieItem = (props) => (
                 <div className="movie-item__poster">
                     <img src={"https://image.tmdb.org/t/p/w370_and_h556_bestv2" + props.poster} alt=""/>
                 </div>
+                <div className="movie-item__title">{props.title}</div>
             </Link>
-            <div className="movie-item__title">{props.title}</div>
         </div>
     </div>
 );

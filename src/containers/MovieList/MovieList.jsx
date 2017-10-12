@@ -8,12 +8,14 @@ class MovieList extends Component {
         if (this.props.movieList.isFetching) {
             return (
                 <div className="movies">
-	                <h2 className="movies__title-list">{this.props.movieListTitle}</h2>
-	                {this.props.movieList.data.dates ?
-		                <div className="movies__data-range">
-		                     {friendlyData(this.props.movieList.data.dates.minimum)} - {friendlyData(this.props.movieList.data.dates.maximum)}
-	                    </div>
-		                : null}
+	                <div className="movies__header">
+		                <h2 className="movies__title-list">{this.props.movieListTitle}</h2>
+		                {this.props.movieList.data.dates ?
+			                <div className="movies__data-range">
+			                     {friendlyData(this.props.movieList.data.dates.minimum)} - {friendlyData(this.props.movieList.data.dates.maximum)}
+		                    </div>
+			                : null}
+	                </div>
                     <div className="movies__list">
                         {this.props.movieList.data.results.map(( item, index ) =>
                             (<MovieItem
