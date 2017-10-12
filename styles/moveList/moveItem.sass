@@ -1,14 +1,32 @@
 .movie-item
 	width: 14%
-	padding: 20px
+	padding: 0 20px
 	position: relative
 	overflow: hidden
 
 .movie-item__poster
 	width: 100%
-	padding-bottom: 150%
 	transition: all .3s linear
+	border: 1px solid #272f46
 	&:hover
-		background-size: 100% !important
-		//transform: scale(1.03)
-		//box-shadow: 0 0 10px rgba(8,28,36,.1)
+		border: 1px solid #f7f7f7
+	img
+		display: block
+		width: 100%
+		height: auto
+
+.popover
+	width: 320px
+	border: 1px solid #272f46
+	padding: 0 15px
+	box-shadow: 0 0 20px 5px rgba(0,0,0,.3)
+	position: absolute
+	z-index: 105
+	transition: opacity .2s,visibility .2s
+	animation-direction: normal
+	animation-duration: .2s
+	animation-iteration-count: 1
+	animation-name: fadeIn
+	animation-timing-function: ease-out
+
+

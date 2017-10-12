@@ -10,9 +10,10 @@ class Main extends Component {
     render() {
         return (
             <main className="main">
-                <div className="movies-list-content">
-                    <MovieList movieListTitle={'ожидаемые фильмы'} movieList={this.props.UpcomingList}/>
-                    <MovieList movieListTitle={'топ фильмы'} movieList={this.props.TopMovies}/>
+                <div className="movies-content">
+                    <MovieList movieListTitle={'Ожидаемые фильмы'} movieList={this.props.UpcomingList}/>
+                    <MovieList movieListTitle={'Топ фильмы'} movieList={this.props.TopMovies}/>
+                    <MovieList movieListTitle={'Сейчас в прокате'} movieList={this.props.PlayMovies}/>
                 </div>
             </main>
         );
@@ -26,7 +27,8 @@ const mapDispatchToProps = (dispatch) => ({
 function mapStateToProps(state) {
 	return {
 		UpcomingList: state.upcomingMovies,
-		TopMovies: state.topMovies
+		TopMovies: state.topMovies,
+		PlayMovies: state.PlayingMovies
 	};
 }
 
