@@ -1,0 +1,63 @@
+.movie-popup
+	position: absolute
+	z-index: 2
+	width: 352px
+	padding: 20px
+	font-weight: bold
+	background-image: radial-gradient(circle closest-corner at 50% 20%,#272f46,#10101a)
+	background-color: #0f111e
+	background-attachment: fixed
+	border: 1px solid #272f46
+	box-shadow: 0 0 20px 5px rgba(0,0,0,.3)
+
+.movie-popup
+	&:after,
+	&:before
+		right: 100%
+		top: 50%
+		border: solid transparent
+		content: " "
+		height: 0
+		width: 0
+		position: absolute
+		pointer-events: none
+
+.movie-popup
+	&:after
+		border-bottom: 24px solid transparent
+		border-top: 24px solid transparent
+		margin-top: -24px
+	&:before
+		border-bottom: 20px solid transparent
+		border-top: 20px solid transparent
+		margin-top: -20px
+		z-index: 1
+		height: 1px
+
+
+.movie-popup--left
+	&:after
+		left: -21px
+		border-right: 18px solid #272f46
+	&:before
+		border-right: 15px solid #0f111e
+		left: -18px
+		margin-bottom: -1px
+
+
+.movie-popup--right
+	&:after
+		right: -21px
+		border-left: 18px solid #272f46
+	&:before
+		border-left: 15px solid #0f111e
+		right: -18px
+		margin-bottom: -1px
+
+.popup__title
+	margin-bottom: 5px
+	.original-title
+		margin-top: 3px
+
+.movie-popup__info
+	margin-top: 10px

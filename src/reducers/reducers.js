@@ -1,17 +1,25 @@
-import { UPCOMING_MOVIES, TOP_MOVIES, PLAYING_MOVIES} from '../constants';
+import { UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, SEARCH_VALUE, SEARCH_MOVIE, TOP_MOVIES} from '../constants';
 import update from 'react-addons-update';
 
 
 const initialState = {
-	upcomingMovies: {
+    upcomingMovies: {
         isFetching: false
     },
-	topMovies: {
-		isFetching: false
+    TopMovies: {
+        isFetching: false
     },
-	PlayingMovies: {
-		isFetching: false
+    PopMovies: {
+        isFetching: false
+    },
+    PlayingMovies: {
+        isFetching: false
+    },
+    SearchField: '',
+    SearchResult: {
+        isFetching: false
     }
+
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -25,9 +33,17 @@ export default function rootReducer(state = initialState, action) {
 	                }
 	            }
             });
+	    case POPULAR_MOVIES:
+		    return update(state, {
+			    PopMovies: {$merge: {
+				    isFetching: true,
+				    data: action.movies
+			        }
+			    }
+		    });
 	    case TOP_MOVIES:
 		    return update(state, {
-			    topMovies: {$merge: {
+			    TopMovies: {$merge: {
 				    isFetching: true,
 				    data: action.movies
 			        }
@@ -41,6 +57,21 @@ export default function rootReducer(state = initialState, action) {
 			        }
 			    }
 		    });
+	    case SEARCH_VALUE:
+		    return update(state, {
+			    SearchField: {$set: action.querySearch}
+		    });
+
+        case SEARCH_MOVIE:
+            return update(state, {
+                SearchResult: {$merge: {
+                    isFetching: true,
+                    data: action.querySearch
+                }
+                }
+            });
+
+
         default:
             return state;
     }

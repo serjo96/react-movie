@@ -1,8 +1,100 @@
 .nav
-	width: 150px
+	width: 250px
 	height: calc(100% - 60px)
 	position: fixed
 	left: 0
 	top: 60px
-	//background: #212121
+	background: #212121
+	transition: transform .5s
+	transform: translate3d(-195px, 0, 0)
+	&:hover
+		transform: translate3d(0,0,0)
 
+.nav__element
+	padding: 0 10px
+	border-bottom: 1px solid #2e2e2e
+	transition: all .4s linear
+	&:hover
+		background: #141414
+	i
+		background: #363636
+		color: #8a8a8a
+		transition: all .4s linear
+	input
+		opacity: 0
+		position: absolute
+		top: 0
+		right: 0
+		left: 0
+		width: 100%
+		height: 100%
+		z-index: 25
+		cursor: pointer
+
+
+
+.hasSubmenu-trigger
+	padding: 15px 16px
+	cursor: pointer
+	position: relative
+	font-size: 17px
+	&:before
+		position: absolute
+		font-family: 'FontAwesome'
+		right: 65px
+		color: #757575
+		content: "\f067"
+	i
+		background: #363636
+		color: #8a8a8a
+		position: absolute
+		top: 9px
+		right: 15px
+		font-size: 16.1px
+		height: 26px
+		width: 26px
+		text-align: center
+		line-height: 26px
+
+
+.hasSubmenu.hasSubmenu--open
+	background: #141414
+	.hasSubmenu-trigger
+		color: #26a69a
+		&:before
+			color: #26a69a
+			content: "\f068"
+		i
+			background: #26a69a
+			color: #ffffff
+	.sub-menu
+		display: block
+
+
+.sub-menu
+	transition: all .4s linear
+	display: none
+	background: #141414
+
+.sub-menu__item
+	font-size: 17px
+	padding: 8px 0
+	padding-left: 17px
+	color: #757575
+	transition: color .4s linear
+	position: relative
+	&:hover
+		color: #fff
+	i
+		position: absolute
+		right: 18px
+		top: 6px
+		background: #26a69a
+		color: #ffffff
+		width: 20px
+		height: 20px
+		font-size: 14px
+		line-height: 20px
+		text-align: center
+	span
+		max-width: 156px

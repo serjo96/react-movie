@@ -3,8 +3,13 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 
 class Post extends Component {
+	componentDidMount() {
+		let movieId = this.props.location.pathname.match(/\d+/)[0];
+		console.log(movieId)
+	}
+
     render() {
-    console.log(this.props)
+
         // const post = this.props.movie.find((item) => item.id === +this.props.match.params.id);
         // if (!post) {
         //     return (
@@ -16,7 +21,9 @@ class Post extends Component {
         // }
         return (
             <div className="main">
-                123
+                <div className="movies-content">
+                    123
+                </div>
             </div>
         )
     }
@@ -24,7 +31,7 @@ class Post extends Component {
 
 function mapStateToProps (state) {
     return {
-        movie: state.moviesUpcoming.data
+        movie: state.upcomingMovies.data
     }
 }
 

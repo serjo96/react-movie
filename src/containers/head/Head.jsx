@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
-
+import { Link } from 'react-router-dom';
+import Search from '../search/Search';
 
 export default class Header extends Component {
     render() {
-        return(
+        return (
             <div className="header">
                 <div className="logo">
-                    <a href="/" className='logo__link'>
+                    <Link to='/' className="logo__link">
                         <div className="logo__img"/>
-                    </a>
+                    </Link>
                 </div>
-                <input type="text" placeholder='Поиск фильмов и сериалов...'/>
+                <Search/>
             </div>
-        )
+        );
     }
 }

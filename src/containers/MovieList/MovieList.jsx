@@ -3,8 +3,14 @@ import MovieItem from '../../components/Move/MovieItem';
 import { friendlyData } from '../../utils/utils';
 
 class MovieList extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			count: 12
+		}
+	}
+
     render() {
-            console.log(this.props.movieList);
         if (this.props.movieList.isFetching) {
             return (
                 <div className="movies">
@@ -16,12 +22,12 @@ class MovieList extends Component {
 		                    </div>
 			                : null}
 	                </div>
-                    <div className="movies__list">
-                        {this.props.movieList.data.results.map(( item, index ) =>
+                    <div className="movies__list" >
+                        {this.props.movieList.data.results.slice(0, this.state.count).map((item, index) =>
                             (<MovieItem
                                 title={item.title}
                                 original_title={item.original_title}
-                                data={item.release_date}
+                                data={item}
                                 voteAverage={item.vote_average}
                                 poster={item.poster_path}
                                 key={index}
@@ -29,10 +35,10 @@ class MovieList extends Component {
                             />)
                         )}
                     </div>
-
 	                <div className="movies__btn-wrap">
 		                <div className="movies__btn btn">Открыть полный список</div>
 	                </div>
+
 
                 </div>
             );
@@ -41,7 +47,6 @@ class MovieList extends Component {
 			
     }
 }
-
 
 
 export default (MovieList);

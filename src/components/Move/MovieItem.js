@@ -1,18 +1,52 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { friendlyUrl } from '../../utils/utils';
+import { urlRusLat } from '../../utils/utils';
+import MovieInfo from '../Popup/MovieInfo';
 
-const MovieItem = (props) => (
-    <div className="movie-item" id={props.id} >
-        <div className="movie-item__data">
-            <Link to={'/movie/' + friendlyUrl(props.original_title)}>
-                <div className="movie-item__poster">
-                    <img src={"https://image.tmdb.org/t/p/w370_and_h556_bestv2" + props.poster} alt=""/>
-                </div>
-                <div className="movie-item__title">{props.title}</div>
-            </Link>
-        </div>
-    </div>
-);
+
+class MovieItem extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            popup: false
+        };
+        this.el = null;
+    }
+
+ outItem = (e) => {
+     this.setState({
+         popup: true
+     });
+ };
+
+ leaveItem = (e) => {
+     this.setState({
+         popup: false
+     });
+ };
+
+
+ render() {
+     return (
+         <div className="movie-item" id={this.props.id} onMouseEnter={this.outItem} onMouseLeave={ this.leaveItem} ref={el=> this.el = el}>
+             {this.state.popup ?
+	             <MovieInfo
+	             title={this.props.title}
+	             originalTitle={this.props.original_title}
+	             data={this.props.data}
+                 el={this.el}
+	             /> : null}
+             <div className="movie-item__data">
+                 <Link to={'/movie/' + urlRusLat(this.props.title) + '-' + this.props.id}>
+                     <div className="movie-item__poster">
+                         <img src={'https://image.tmdb.org/t/p/w370_and_h556_bestv2' + this.props.poster} alt=""/>
+                     </div>
+                     <div className="movie-item__title">{this.props.title}</div>
+                 </Link>
+             </div>
+         </div>
+     );
+ }
+}
 
 export default MovieItem;

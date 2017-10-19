@@ -8,12 +8,15 @@ class Main extends Component {
         this.props.loadUpcomingMovies();
     }
     render() {
+
+
         return (
             <main className="main">
                 <div className="movies-content">
-                    <MovieList movieListTitle={'Ожидаемые фильмы'} movieList={this.props.UpcomingList}/>
+                    <MovieList movieListTitle={'Скоро в кино'} movieList={this.props.UpcomingList}/>
+                    <MovieList movieListTitle={'Сейчас в кино'} movieList={this.props.PlayMovies}/>
                     <MovieList movieListTitle={'Топ фильмы'} movieList={this.props.TopMovies}/>
-                    <MovieList movieListTitle={'Сейчас в прокате'} movieList={this.props.PlayMovies}/>
+                    <MovieList movieListTitle={'Популярные фильмы'} movieList={this.props.PopMovies}/>
                 </div>
             </main>
         );
@@ -25,11 +28,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 function mapStateToProps(state) {
-	return {
-		UpcomingList: state.upcomingMovies,
-		TopMovies: state.topMovies,
-		PlayMovies: state.PlayingMovies
-	};
+    return {
+        UpcomingList: state.upcomingMovies,
+        TopMovies: state.TopMovies,
+        PopMovies: state.PopMovies,
+        PlayMovies: state.PlayingMovies
+    };
 }
 
 
