@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {onLoadPage} from '../../actions/movies-action';
-import MovieList from '../MovieList/MovieList';
+import MovieList from '../../components/MovieList/MovieList';
 
 class Main extends Component {
     componentDidMount() {

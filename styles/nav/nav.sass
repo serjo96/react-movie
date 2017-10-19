@@ -43,6 +43,7 @@
 		font-family: 'FontAwesome'
 		right: 65px
 		color: #757575
+		transition: color .4s linear
 		content: "\f067"
 	i
 		background: #363636
@@ -67,13 +68,14 @@
 		i
 			background: #26a69a
 			color: #ffffff
-	.sub-menu
-		display: block
+	.sub-menu__item
+		i
+			background: #26a69a
+			color: #ffffff
 
 
 .sub-menu
 	transition: all .4s linear
-	display: none
 	background: #141414
 
 .sub-menu__item
@@ -89,12 +91,13 @@
 		position: absolute
 		right: 18px
 		top: 6px
-		background: #26a69a
-		color: #ffffff
+		background: #363636
+		color: #8a8a8a
 		width: 20px
 		height: 20px
 		font-size: 14px
 		line-height: 20px
 		text-align: center
+		transition: all .4s linear
 	span
 		max-width: 156px

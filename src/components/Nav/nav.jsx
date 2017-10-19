@@ -6,7 +6,7 @@ export default class Nav extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			firstCollapse: false,
+			firstCollapse: true,
 			secondCollapse: false
 		}
 	}
@@ -24,11 +24,11 @@ export default class Nav extends Component {
         return(
             <div className="nav">
                 <ul className="sidebar-menu sm-bordered sm-icons-block sm-icons-right">
-                    <li className="hasSubmenu active" >
+                    <li className="hasSubmenu active hasSubmenu--open">
                         <div className="nav__element hasSubmenu-trigger js--submenuTrigger" >
 	                        <span>Фильмы</span>
 	                        <i className="fa fa-film"/>
-	                        <input name='firstCollapse' type="checkbox" onChange={e=> this.collapseNav(e)}/>
+	                        <input name='firstCollapse' type="checkbox" onChange={e=> this.collapseNav(e)} checked={this.state.firstCollapse}/>
                         </div>
 	                    <Collapse isOpened={this.state.firstCollapse}>
 	                    <ul className="sub-menu">

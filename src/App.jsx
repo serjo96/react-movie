@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {  Route, Switch, withRouter } from 'react-router-dom';
 import '../styles/index.scss';
 import Header from './containers/head/Head';
-import Nav from './containers/Nav/nav';
+import Nav from './components/Nav/nav';
 
 import Main from './containers/main/Main';
 import Movie from './components/Move/Movie';
