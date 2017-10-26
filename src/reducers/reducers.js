@@ -1,4 +1,4 @@
-import { UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, SEARCH_VALUE, SEARCH_MOVIE, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA, TV_DATA, CLEAR_TV_DATA} from '../constants';
+import { UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, SEARCH_VALUE, SEARCH_MOVIE, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA, TV_DATA, CLEAR_TV_DATA, CLEAR_SEARCH} from '../constants';
 import update from 'react-addons-update';
 
 
@@ -113,6 +113,11 @@ export default function rootReducer(state = initialState, action) {
 				    data: null
 			    }
 			    }
+		    });
+
+	    case CLEAR_SEARCH:
+		    return update(state, {
+			    $merge: {SearchField: ''}
 		    });
 
 

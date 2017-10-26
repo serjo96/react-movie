@@ -1,4 +1,4 @@
-import {UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, SEARCH_VALUE, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA, TV_DATA, CLEAR_TV_DATA} from '../constants';
+import {UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, SEARCH_VALUE, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA, TV_DATA, CLEAR_TV_DATA, CLEAR_SEARCH} from '../constants';
 
 import * as axios from 'axios';
 import { SEARCH_MOVIE } from '../constants/index';
@@ -67,6 +67,11 @@ function takeTvData( data ) {
 export function clearTvData() {
 	return {
 		type: CLEAR_TV_DATA
+	}
+}
+export function clearSearch() {
+	return {
+		type: CLEAR_SEARCH
 	}
 }
 
@@ -163,7 +168,7 @@ export function onLoadMovie(id) {
 					api_key: '5a1d310d575e516dd3c547048eb7abf1',
 					language: 'ru-RU',
 					include_image_language: 'ru',
-					append_to_response: 'credits,images,videos,recommendations,reviews,lists,keywords'
+					append_to_response: 'credits,images,videos,recommendations,reviews,lists,keywords,release_dates'
 				}
 			}
 		).then(response => {

@@ -65,3 +65,9 @@ export function declOfNum(n, titles) {
 export function kFormatter(num) {
 	return num > 999 ? (num/1000).toFixed(1) + 'k' : num
 }
+
+export function isMatching(full, chunk) {
+        full = full.toLowerCase();
+        chunk = chunk.toLowerCase();
+        return full.substr(0, chunk.length) === chunk;
+}

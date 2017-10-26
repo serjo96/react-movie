@@ -1,4 +1,4 @@
-.movie-popup
+.movie-tooltip
 	position: absolute
 	z-index: 2
 	width: 352px
@@ -10,7 +10,7 @@
 	border: 1px solid #272f46
 	box-shadow: 0 0 20px 5px rgba(0,0,0,.3)
 
-.movie-popup
+.movie-tooltip
 	&:after,
 	&:before
 		right: 100%
@@ -22,7 +22,7 @@
 		position: absolute
 		pointer-events: none
 
-.movie-popup
+.movie-tooltip
 	&:after
 		border-bottom: 24px solid transparent
 		border-top: 24px solid transparent
@@ -35,7 +35,7 @@
 		height: 1px
 
 
-.movie-popup--left
+.movie-tooltip--left
 	&:after
 		left: -21px
 		border-right: 18px solid #272f46
@@ -45,7 +45,7 @@
 		margin-bottom: -1px
 
 
-.movie-popup--right
+.movie-tooltip--right
 	&:after
 		right: -21px
 		border-left: 18px solid #272f46
@@ -61,3 +61,5 @@
 
 .movie-popup__info
 	margin-top: 10px
+
+
