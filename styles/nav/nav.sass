@@ -1,18 +1,22 @@
 .nav
 	width: 250px
-	height: calc(100% - 60px)
+	height: 100%
+	z-index: 55
 	position: fixed
 	left: 0
-	top: 60px
-	background: #212121
+	top: 0px
+	padding-top: 60px
+	background: #1b1d38
 	transition: transform .5s
 	transform: translate3d(-195px, 0, 0)
+	overflow: hidden
+	overflow-y: auto
 	&:hover
 		transform: translate3d(0,0,0)
 
 .nav__element
 	padding: 0 10px
-	border-bottom: 1px solid #2e2e2e
+	border-bottom: 1px solid #292e35
 	transition: all .4s linear
 	&:hover
 		background: #141414
@@ -61,16 +65,16 @@
 .hasSubmenu.hasSubmenu--open
 	background: #141414
 	.hasSubmenu-trigger
-		color: #26a69a
+		color: #812aa7
 		&:before
-			color: #26a69a
+			color: #4e2b5d
 			content: "\f068"
 		i
-			background: #26a69a
+			background: #4e2b5d
 			color: #ffffff
 	.sub-menu__item
 		i
-			background: #26a69a
+			background: #4e2b5d
 			color: #ffffff
 
 

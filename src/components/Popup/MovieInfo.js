@@ -37,7 +37,7 @@ class MoviePopup extends Component   {
                         <div className="original-title">{this.props.originalTitle}</div>
                     </div>
                     <div className="movie-popup__info">
-                        <div className="rating">Рейтинг фильма {this.props.data.vote_average === 0 ? '-' : this.props.data.vote_average}</div>
+                        <div className="rating">Рейтинг {this.props.data.vote_average} из 10</div>
                         <div className="time" />
                     </div>
                     <div className="movie-popup__description">{this.props.data.overview.length > 475 ? this.props.data.overview.substring(0, 475) + '...' : this.props.data.overview}</div>

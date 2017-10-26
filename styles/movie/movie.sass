@@ -1,0 +1,116 @@
+.movie__bg
+	height: 550px
+	position: relative
+	background-color: #000
+	overflow: hidden
+	display: flex
+	align-items: flex-end
+	justify-content: center
+	img
+		position: absolute
+		opacity: 0
+
+.movie__cover
+	position: absolute
+	top: 0
+	right: 0
+	width: 100%
+	height: 100%
+	display: block
+	transition: all .5s
+	background-size: cover
+	background-position: 50% 0
+	opacity: 1
+
+.img-loading
+	.movie__cover
+		opacity: 0
+
+.movie-info
+	width: 100%
+	position: relative
+
+.shadow-base
+	width: 100%
+	background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)
+	background-repeat: no-repeat
+	padding: 25px 0
+
+
+.movie-ratings-wrap
+	background: rgba(0,0,0,0.70)
+	padding: 15px 0
+	width: 100%
+	.rating
+		.icon
+			margin-right: 10px
+			font-size: 30px
+			text-shadow: 0 0 20px black
+		.rating-1
+			color: #616161
+		.rating-2
+			color: #675b5b
+		.rating-3
+			color: #705252
+		.rating-4
+			color: #7a4747
+		.rating-5
+			color: #863c3c
+		.rating-6
+			color: #922f30
+		.rating-7
+			color: #9e2424
+		.rating-8
+			color: #a81918
+		.rating-9
+			color: #b11010
+		.rating-10
+			color: #b70a0a
+
+.movie__summary
+	margin-left: 16.66666667%
+	text-shadow: 0 0 20px black
+
+.movie__title
+	font-size: 34px
+	display: inline-block
+
+.movie__year
+	margin-left: 7px
+	color: #999999
+	font: 400 25px 'Proxima Nova', sans-serif
+
+.summary-ratings
+	margin-left: 16.66666667%
+
+.ratings
+	display: flex
+
+.summary-item
+	margin-left: 15px
+	&:first-child
+		margin-left: 0
+
+.rating
+	display: flex
+	flex-wrap: wrap
+
+.movie__aside
+	width: 173px
+	margin-top: -180px
+
+.movie__poster
+	border: 4px solid #fff
+	box-shadow: 0 0 20px 0px #666666
+	img
+		display: block
+
+.info-wrapper
+	display: flex
+	flex-wrap: wrap
+	position: relative
+
+.overview
+	width: 80%
+	padding-left: 20px
+	padding-top: 10px

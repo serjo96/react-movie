@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import NoImg from '../../img/NoImg.png';
-import { onLoadMovie } from '../../actions/movies-action';
-import { clearMovieData } from '../../actions/movies-action';
+import { onLoadTV } from '../../actions/movies-action';
+import { clearTvData } from '../../actions/movies-action';
 import {Helmet} from 'react-helmet';
 import {declOfNum, kFormatter} from '../../utils/utils';
 
-class Movie extends Component {
+class TV extends Component {
     componentDidUpdate(prevProps) {
         if (this.props.location.pathname !== prevProps.location.pathname) {
             this.sendRequest();
@@ -19,17 +19,17 @@ class Movie extends Component {
     }
 
     componentWillUnmount() {
-    	this.props.clearMovieData();
+    	this.props.clearTvData();
     }
 
  sendRequest = () =>{
      let movieId = this.props.location.pathname.split('-');
-     this.props.loadMovieData(movieId[1]);
+     this.props.loadTvData(movieId[1]);
  };
 
  render() {
-    	let movie = this.props.movie.data;
-	    if (this.props.movie.isFetching) {
+    	let movie = this.props.tv.data;
+	    if (this.props.tv.isFetching) {
 	        return (
 		            <div className="movie">
 			            <Helmet>
@@ -37,16 +37,16 @@ class Movie extends Component {
 			            </Helmet>
 		                <div className="movie__bg img-loading" onLoad={e=> e.target.closest('.movie__bg').classList.remove('img-loading')}>
 			                <div className="movie__cover " style={{backgroundImage: 'url(https://image.tmdb.org/t/p/original' + (movie.backdrop_path || movie.poster_path) + ')'}}/>
-			                <img src={'https://image.tmdb.org/t/p/original/' + (movie.backdrop_path || movie.poster_path)} alt={movie.title} />
+			                <img src={'https://image.tmdb.org/t/p/original/' + (movie.backdrop_path || movie.poster_path)} alt={movie.name} />
 			                <div className="movie-info">
                                 <div className="shadow-base">
 	                                 <div className="container">
 					                    <div className="movie__summary">
 						                    <h1 className="movie__title">
-							                    <div className="ru-title">{movie.title}</div>
-							                    <div className="original-title">{movie.original_title === movie.title ? null : movie.original_title}</div>
+							                    <div className="ru-title">{movie.name}</div>
+							                    <div className="original-title">{movie.original_name === movie.name ? null : movie.original_name}</div>
 						                    </h1>
-						                    <span className="movie__year">{movie.release_date.substring(0, 4)}</span>
+						                    <span className="movie__year">{movie.first_air_date.substring(0, 4)}</span>
 					                    </div>
 	                                 </div>
                                 </div>
@@ -77,10 +77,15 @@ class Movie extends Component {
 									                <div className="summary-item__title">Сборы в мире</div>
 									                <div className="summary-item__number">{movie.revenue ? '$'+ movie.revenue.toString().replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g,"\$1 ") : '-'}</div>
 								                </div>
-								                <div className="summary-item">
-									                <div className="summary-item__title">В коллекциях</div>
-									                <div className="summary-item__number">{movie.lists.total_results === 0 ? '-': movie.lists.total_results}</div>
+                                                <div className="summary-item">
+									                <div className="summary-item__title">Количество сезонов</div>
+									                <div className="summary-item__number">{movie.number_of_seasons ? movie.number_of_seasons : '-'}</div>
 								                </div>
+                                                <div className="summary-item">
+									                <div className="summary-item__title">Статус</div>
+									                <div className="summary-item__number">{movie.in_production ? 'Идет ' + movie.number_of_seasons + ' сезон' : 'Закончен'}</div>
+								                </div>
+
 							                </div>
 						                </div>
 					                </div>
@@ -107,14 +112,14 @@ class Movie extends Component {
 
 function mapStateToProps(state) {
     return {
-        movie: state.MovieData
+        tv: state.TvData
     };
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    loadMovieData: (id) => dispatch(onLoadMovie(id)),
-    clearMovieData: () => dispatch(clearMovieData())
+    loadTvData: (id) => dispatch(onLoadTV(id)),
+	clearTvData: () => dispatch(clearTvData())
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Movie);
+export default connect(mapStateToProps, mapDispatchToProps)(TV);

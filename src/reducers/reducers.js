@@ -1,8 +1,14 @@
-import { UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, SEARCH_VALUE, SEARCH_MOVIE, TOP_MOVIES} from '../constants';
+import { UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, SEARCH_VALUE, SEARCH_MOVIE, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA, TV_DATA, CLEAR_TV_DATA} from '../constants';
 import update from 'react-addons-update';
 
 
 const initialState = {
+	MovieData: {
+		isFetching: false
+	},
+	TvData: {
+		isFetching: false
+	},
     upcomingMovies: {
         isFetching: false
     },
@@ -67,9 +73,47 @@ export default function rootReducer(state = initialState, action) {
                 SearchResult: {$merge: {
                     isFetching: true,
                     data: action.querySearch
-                }
+                    }
                 }
             });
+
+        case MOVIE_DATA:
+            return update(state, {
+                MovieData: {$merge: {
+                    isFetching: true,
+                    data: action.data
+                    }
+                }
+            });
+
+
+        case CLEAR_MOVIE_DATA:
+            return update(state, {
+                MovieData: {$merge: {
+                    isFetching: false,
+                    data: null
+                    }
+                }
+            });
+
+	    case TV_DATA:
+		    return update(state, {
+			    TvData: {$merge: {
+				    isFetching: true,
+				    data: action.data
+			    }
+			    }
+		    });
+
+
+	    case CLEAR_TV_DATA:
+		    return update(state, {
+			    TvData: {$merge: {
+				    isFetching: false,
+				    data: null
+			    }
+			    }
+		    });
 
 
         default:

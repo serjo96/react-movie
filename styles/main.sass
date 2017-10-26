@@ -1,11 +1,14 @@
 @import "./clear.css"
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700')
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
+@import './fonts/proximanova-semibold/stylesheet.css'
+@import './fonts/ProximaNova-Regular/stylesheet.css'
 @import "./nav/nav.sass"
 @import "./Header/header.sass"
 @import "./Header/search.sass"
 @import "./moveList/moveList.sass"
 @import "./moveList/moveItem.sass"
+@import "./movie/movie.sass"
 @import "./popup/moviePopup"
 
 body
@@ -16,9 +19,16 @@ body
 	color: #fff
 	font-size: 14px
 
+h1,h2,h3,h4
+	font-family: 'proxima_novasemibold', Sans-Serif
+
 .main
 	width: calc(100% - 150px)
-	margin-left: 150px
+	margin-left: 50px
+
+.container
+	width: 1160px
+	margin: 0 auto
 
 .btn
 	cursor: pointer
