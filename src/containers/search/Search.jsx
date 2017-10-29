@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import ReactScrollbar from 'react-scrollbar-js';
+import { Scrollbars } from 'react-custom-scrollbars';
 import {onSearch, clearSearch} from '../../actions/movies-action';
 import { urlRusLat } from '../../utils/utils';
 import NoImg from '../../img/NoImg.png';
@@ -53,7 +53,7 @@ class Search extends Component {
 
  renderResults = (item, index) =>{
      return (
-         <Link to={'/' + item.media_type + '/' + urlRusLat(item.title || item.name) + '-' + item.id} className="result-element" key={index} onClick={this.props.clearInput()}>
+         <Link to={'/' + item.media_type + '/' + urlRusLat(item.title || item.name) + '-' + item.id} className="result-element" key={index} onClick={this.props.clearInput}>
              <div className="result-element__poster">
                  <img src={(item.backdrop_path || item.poster_path) ? 'https://image.tmdb.org/t/p/w45_and_h67_bestv2/' + (item.backdrop_path || item.poster_path) :  NoImg} alt=""/>
              </div>
@@ -78,15 +78,14 @@ class Search extends Component {
          <div className="header__search search" onMouseDown={this.mouseDownHandler} onMouseUp={this.mouseUpHandler}>
 
              <input className="search__field" type="text" name="Search" placeholder="Поиск фильмов и сериалов..." onKeyDown={this.onKeyDown} onInput={this.onInput} value={this.props.SearchFieldVal}/>
-	            {this.state.visabilityResult ?
+	            {this.state.visabilityResult &&
 		            <div className="search__result searchComboBox">
-			            {this.props.SearchResult.isFetching ?
+			            {this.props.SearchResult.isFetching &&
 				            this.props.SearchResult.data.total_results >0 ?
-					            <ReactScrollbar style={myScrollbar} >
-						            {this.props.SearchResult.data.results.map((item, index)=> this.renderResults(item, index))}
-					            </ReactScrollbar> : <div>Не чего не найдено, уточните запрос</div>
-				            : null}
-		            </div> : null}
+				            <Scrollbars style={myScrollbar} autoHide autoHideTimeout={1000} autoHideDuration={600}>
+					            {this.props.SearchResult.data.results.map((item, index)=> this.renderResults(item, index))}
+				            </Scrollbars> : null}
+		            </div> }
 
          </div>
      );

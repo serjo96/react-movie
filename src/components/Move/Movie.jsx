@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import YouTube  from 'react-youtube';
+import Lightbox from 'react-image-lightbox';
 import NoImg from '../../img/NoImg.png';
+import Swiper from 'react-id-swiper';
+import { Link } from 'react-router-dom';
 import { onLoadMovie } from '../../actions/movies-action';
 import { clearMovieData } from '../../actions/movies-action';
 import {Helmet} from 'react-helmet';
-import {declOfNum, kFormatter, friendlyData} from '../../utils/utils';
+import { friendlyUrl } from '../../utils/utils';
 import Popup from '../Popup/Popup';
+import MovieBG from './MovieBg';
 
 class Movie extends Component {
     constructor(props) {
@@ -15,7 +18,8 @@ class Movie extends Component {
         this.state = {
             modalTrailer: false,
 	        trailerKey: '',
-	        trailerFetch: false
+	        lightBox: false,
+	        imgIndex: 0
         };
     }
     componentDidUpdate(prevProps) {
@@ -32,7 +36,7 @@ class Movie extends Component {
     	this.props.clearMovieData();
     }
 
-	 sendRequest = () => {
+	 sendRequest = () =>{
 	     let movieId = this.props.location.pathname.split('-');
 	     this.props.loadMovieData(movieId[1]);
 	 };
@@ -44,101 +48,91 @@ class Movie extends Component {
 	     });
 	 };
 
-	closePopup = () =>{
-		this.setState({modalTrailer: false});
-	};
+	 closePopup = () =>{
+	     this.setState({modalTrailer: false});
+	 };
 
 	 _onReady = (event) => {
-	     // access to player in all event handlers via event.target
 	     event.target.pauseVideo();
-	     this.setState({trailerFetch: true});
 	 };
 
 
- render() {
- 	const opts ={
-	    height: '540',
-	    width: '640',
-	    playerVars: { // https://developers.google.com/youtube/player_parameters
-		    autoplay: 0
-	    }
-     };
- 	let movie = this.props.movie.data;
+  render() {
+  	const YouTubeParams ={
+		    height: '540',
+		    width: '640',
+		    playerVars: { // https://developers.google.com/youtube/player_parameters
+			    autoplay: 0
+		    }
+          };
+
+ 	const SwiperParams = {
+		    scrollbar: {
+			    el: '.swiper-scrollbar',
+			    hide: false,
+			    draggable: true
+		    },
+	        slidesPerView: 8,
+	        spaceBetween: 20,
+	        mousewheel: {
+		        sensitivity: 150
+	        }
+          };
+
+	  const { imgIndex } = this.state;
+
+	  const movie = this.props.movie.data,
+		  images = this.props.movie.images;
  	if (this.props.movie.isFetching) {
 		 return (
 			 <div className="movie">
 				 <Helmet>
 					 <title>{movie.title}</title>
 				 </Helmet>
-				 {this.state.modalTrailer?
+				 {this.state.modalTrailer &&
 					 <div className="popup-base" onClick={this.closePopup}>
 						 <div className="popup" onMouseDown={this.mouseDownHandler} onMouseUp={this.mouseUpHandler}>
 							 <div className="popup__close" onClick={this.closePopup}/>
-							 <Popup videoStatus={this.state.trailerFetch}>
+							 <Popup>
 								 <YouTube
 									 videoId={this.state.trailerKey}
-									 opts={opts}
+									 opts={YouTubeParams}
 									 onReady={this._onReady}
 								 />
 							 </Popup>
 						 </div>
-					 </div>: null}
-				 <div className="movie__bg img-loading" onLoad={e=> e.target.closest('.movie__bg').classList.remove('img-loading')}>
-					 <div className="movie__cover " style={{backgroundImage: 'url(https://image.tmdb.org/t/p/original' + (movie.backdrop_path || movie.poster_path) + ')'}}/>
-					    <img src={'https://image.tmdb.org/t/p/original/' + (movie.backdrop_path || movie.poster_path)} alt={movie.title} />
-					    <div className="movie-info">
-                            <div className="shadow-base">
-	                            <div className="container">
-		                            <div className="movie__summary">
-			                            <h1 className="movie__title">
-				                            <div className="ru-title">{movie.title}</div>
-				                            <div className="original-title">{movie.original_title === movie.title ? null : movie.original_title}</div>
-			                             </h1>
-			                            <span className="movie__year">{movie.release_date.substring(0, 4)}</span>
-		                            </div>
-	                            </div>
-                            </div>
-						    <div className="movie-ratings-wrap">
-							    <div className="container">
-								    <div className="summary-ratings">
-									    <div className="ratings" >
-										    <div className="rating summary-item">
-											    <div className={'icon fa fa-heart rating-' + Math.ceil(movie.vote_average)}/>
-											    <div className="vote-numbers">
-												    <div className="rating__vote-count">{movie.vote_average} из 10</div>
-												    <div className="rating__count">{kFormatter(movie.vote_count)} {declOfNum(movie.vote_count, ['голос', 'голоса', 'голосов'])}</div>
-											    </div>
-										    </div>
-										    <div className="popularity summary-item">
-											    <div className="summary-item__title">Популярность</div>
-											    <div className="summary-item__number">{movie.popularity.toFixed(1)}</div>
-										    </div>
-										    <div className="summary-item">
-											    <div className="summary-item__title">Продолжиельность</div>
-											    <div className="summary-item__number">{movie.runtime ? movie.runtime + ' мин': '-'}</div>
-										    </div>
-										    <div className="summary-item">
-											    <div className="summary-item__title">Бюджет</div>
-											    <div className="summary-item__number">{movie.budget ? '$' + movie.budget.toString().replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g, '\$1 ') : '-'}</div>
-										    </div>
-										    <div className="summary-item">
-											    <div className="summary-item__title">Сборы в мире</div>
-											    <div className="summary-item__number">{movie.revenue ? '$'+ movie.revenue.toString().replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g, '\$1 ') : '-'}</div>
-										    </div>
-										    <div className="summary-item">
-											    <div className="summary-item__title">В коллекциях</div>
-											    <div className="summary-item__number">{movie.lists.total_results === 0 ? '-': movie.lists.total_results}</div>
-										    </div>
-										    <div className="summary-item">
-											    <div className="summary-item__title">Дата выхода</div>
-											    <div className="summary-item__number">{friendlyData(movie.release_date)}</div>
-										    </div>
-									    </div>
-								    </div>
-							    </div>
-						    </div>
-					    </div>
-				 </div>
+					 </div>}
+
+				 {this.state.lightBox &&
+				 <Lightbox
+					 mainSrc={'https://image.tmdb.org/t/p/w1280' + images[imgIndex].file_path}
+					 nextSrc={'https://image.tmdb.org/t/p/w1280' + images[(imgIndex + 1) % images.length].file_path}
+					 prevSrc={'https://image.tmdb.org/t/p/w1280' + images[(imgIndex + images.length - 1) % images.length].file_path}
+
+					 onCloseRequest={() => this.setState({ lightBox: false })}
+					 onMovePrevRequest={() => this.setState({
+						 imgIndex: (imgIndex + images.length - 1) % images.length,
+					 })}
+					 onMoveNextRequest={() => this.setState({
+						 imgIndex: (imgIndex + 1) % images.length,
+					 })}
+				 />
+				 }
+
+				 <MovieBG original_title={movie.original_title}
+				          title={movie.title}
+				          backdrop={movie.backdrop_path}
+				          poster={movie.poster_path}
+				          runtime={movie.runtime}
+				          budget={movie.budget}
+				          revenue={movie.revenue}
+				          lists={movie.lists}
+				          release_date={movie.release_date}
+				          vote_count={movie.vote_count}
+				          vote_average={movie.vote_average}
+				          popularity={movie.popularity}
+				 />
+
 				 <div className="container">
 					 <div className="info-wrapper">
 
@@ -147,35 +141,71 @@ class Movie extends Component {
 						 </aside>
 
 						 <div className="overview">
-							 <p className="description">{movie.overview}</p>
+							 <div className="description">
+								 <p className="description__text">{movie.overview}</p>
+							 </div>
+
 							 {movie.videos.results.length >0 ?
 								 <div className="trailer">
 									 <h2>{movie.videos.results.length === 1 ? 'Трейлер' : 'Трейлеры'}</h2>
 
 									 <div className="trailer__list">
 										 {movie.videos.results.map((video, indx)=>
-												 video.site === 'YouTube' ?
-													 <div className="trailer__preview" id={video.key} key={indx}>
-											            <div className="preview-base" onClick={this.showTrailerModal}><i className="fa fa-play" aria-hidden="true"/></div>
-											            <img src={'http://i3.ytimg.com/vi/' + video.key + '/mqdefault.jpg'} alt=""/>
-										            </div>
-										            : null )}
+											 video.site === 'YouTube' &&
+												 <div className="trailer__preview" id={video.key} key={indx}>
+													 <div className="preview-base" onClick={this.showTrailerModal}><i className="fa fa-play" aria-hidden="true"/></div>
+													 <img src={'http://i3.ytimg.com/vi/' + video.key + '/mqdefault.jpg'} alt=""/>
+												 </div>)}
 									 </div>
 								 </div> : null}
+
+							 <div className="stills">
+								 {images.map((backdrop, indx)=>
+								    <div className="stills__img"
+								         key={indx}
+								         data-index={indx}
+								         style={{backgroundImage: 'url(https://image.tmdb.org/t/p/original' + backdrop.file_path + ')'}}
+								         onClick={e=> this.setState({
+									         imgIndex: e.target.dataset.index,
+									         lightBox: !this.state.lightBox
+								         })}
+								    />
+								 )}
+							 </div>
+
+							 <div className="credits">
+								 <div className="cast">
+									 <h2 className="cast__title">В ролях</h2>
+									 <Swiper {...SwiperParams}>
+									 {movie.credits.cast.map((actor, indx) =>
+										 (<Link to={'/actor/'+ friendlyUrl(actor.name)} className="actor" id={actor.id} key={indx}>
+											 <div className="actor__img" style={{backgroundImage: actor.profile_path ? 'url(https://image.tmdb.org/t/p/w185/' + actor.profile_path + ')': 'url('+ NoImg + ')'}} />
+										    <div className="actor__info">
+											    <div className="actor__name">{actor.name}</div>
+											    {actor.character  &&
+											    <div className="actor__role">{actor.character}</div>
+											    }
+										    </div>
+										 </Link>)
+									 )}
+									 </Swiper>
+								 </div>
+							 </div>
+
 						 </div>
 					 </div>
 				 </div>
 			 </div>
 	        );
-     }
+      }
 		    return null;
 	    
- }
+  }
 }
 
 function mapStateToProps(state) {
     return {
-        movie: state.MovieData
+        movie: state.MovieData,
     };
 }
 

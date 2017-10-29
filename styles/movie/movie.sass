@@ -91,6 +91,9 @@
 	&:first-child
 		margin-left: 0
 
+.summary-item__title
+	margin-bottom: 5px
+
 .rating
 	display: flex
 	flex-wrap: wrap
@@ -110,22 +113,22 @@
 	flex-wrap: wrap
 	position: relative
 	margin: 20px 0
-
-.overview
-	width: 80%
-	padding-left: 20px
-	padding-top: 10px
-
-.movie__description
-	font-size: 16px
-
-
-.trailer
-	margin-top: 20px
 	h2
 		font-size: 18px
 		font-weight: bold
 		margin-bottom: 15px
+
+.overview
+	width: 80%
+	padding-left: 20px
+
+.description__text
+	font-size: 16px
+	line-height: 23px
+
+.trailer
+	margin: 20px 0
+
 
 .trailer__list
 	display: flex
@@ -160,3 +163,50 @@
 	user-select: none
 	i
 		transition: all 0.6s
+
+.credits
+	margin-top: 40px
+
+.cast
+	&:hover
+		.actor__info
+			opacity: 0.7
+	.swiper-wrapper
+		margin-bottom: 30px
+
+.actor
+	width: 25%
+	&:hover
+		.actor__info
+			opacity: 1
+		.actor__role
+			color: #d8b16b
+
+.actor__info
+	transition: all 0.6s
+
+.actor__name
+	transition: all 0.6s
+	margin-bottom: 3px
+
+.actor__img
+	padding-bottom: 100%
+	margin-bottom: 10px
+	-webkit-background-size: cover
+	background-size: cover
+	background-repeat: no-repeat
+	background-position: center
+
+.stills
+	display: flex
+	flex-wrap: wrap
+	align-items: flex-start
+
+.stills__img
+	cursor: pointer
+	width: 25%
+	padding-bottom: 15%
+	-webkit-background-size: cover
+	background-size: cover
+	background-repeat: no-repeat
+	background-position: center

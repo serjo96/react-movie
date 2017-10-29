@@ -6,7 +6,7 @@ var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 loaders.push({
-  test: /\.scss$/,
+  test: /\.sass$/,
   loader: ExtractTextPlugin.extract({fallback: 'style-loader', use : 'css-loader?sourceMap&localIdentName=[local]___[hash:base64:5]!sass-loader?outputStyle=expanded'}),
   exclude: ['node_modules']
 });
@@ -14,7 +14,7 @@ loaders.push({
 module.exports = {
   entry: [
     './src/index.jsx',
-    './styles/index.scss'
+    './styles/main.sass'
   ],
   output: {
     publicPath: './',		

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {  Route, Switch, withRouter } from 'react-router-dom';
 import {Helmet} from 'react-helmet';
-import '../styles/index.scss';
+import '../styles/main.sass';
 import Header from './containers/head/Head';
 import Nav from './components/Nav/nav';
 import Main from './containers/main/Main';

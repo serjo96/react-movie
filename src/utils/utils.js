@@ -1,5 +1,11 @@
 export const friendlyUrl = (e) => e.replace(/\s+/g, '-').toLowerCase();
+
 export const friendlyData = (e) => e.replace(/-/g, '.').toLowerCase();
+
+export const kFormatter = num => num > 999 ? (num/1000).toFixed(1) + 'k' : num;
+
+export const declOfNum = (n, titles) => titles[(n%10==1 && n%100!=11) ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2];
+
 export function urlRusLat(str) {
     str = str.toLowerCase();
     let cyr2latChars = [
@@ -58,16 +64,14 @@ export function urlRusLat(str) {
 }
 
 
-export function declOfNum(n, titles) {
-	return titles[(n%10==1 && n%100!=11) ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2];
-}
-
-export function kFormatter(num) {
-	return num > 999 ? (num/1000).toFixed(1) + 'k' : num
-}
-
 export function isMatching(full, chunk) {
-        full = full.toLowerCase();
-        chunk = chunk.toLowerCase();
-        return full.substr(0, chunk.length) === chunk;
+    full = full.toLowerCase();
+    chunk = chunk.toLowerCase();
+    return full.substr(0, chunk.length) === chunk;
+}
+
+export function formatTime( minutes ) {
+    let m = minutes % 60,
+        h = (minutes-m)/60;
+    return h.toString() + ' ' + declOfNum(h.toString(),['час', 'часа', 'часов']) + ' ' + (m<10?'0':'') + m.toString();
 }

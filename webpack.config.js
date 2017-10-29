@@ -10,7 +10,7 @@ const HOST = process.env.HOST || "127.0.0.1";
 const PORT = process.env.PORT || "8888";
 
 loaders.push({
-  test: /\.scss$/,
+  test: /\.sass$/,
   loaders: ['style-loader', 'css-loader?importLoaders=1', 'resolve-url-loader', 'sass-loader?sourceMap'],
   exclude: ['node_modules']
 });

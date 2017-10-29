@@ -98,7 +98,10 @@ class TV extends Component {
 						            <div className="movie__poster"><img src={(movie.poster_path || movie.backdrop_path) ? 'https://image.tmdb.org/t/p/w185/' + (movie.poster_path || movie.backdrop_path) :  NoImg} alt={movie.title}/></div>
 					            </aside>
 					            <div className="overview">
-						            <p className="movie__overview">{movie.overview}</p>
+						            <div className="description">
+							            <h2 className="description__title">Сюжет</h2>
+						                <p className="description__text">{movie.overview}</p>
+						            </div>
 					            </div>
 				            </div>
 			            </div>

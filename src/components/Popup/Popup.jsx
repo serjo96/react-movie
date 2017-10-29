@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
+import '../../../styles/popup/popup.sass';
 
 class Popup extends Component {
     componentDidMount() {
-	    this.props.videoStatus? this.showModal() : null;
+	    setTimeout(()=>  this.showModal(), 500);
     }
 
 	showModal = (e)=>{

@@ -167,7 +167,7 @@ export function onLoadMovie(id) {
 				params: {
 					api_key: '5a1d310d575e516dd3c547048eb7abf1',
 					language: 'ru-RU',
-					include_image_language: 'ru',
+					include_image_language: 'ru,null',
 					append_to_response: 'credits,images,videos,recommendations,reviews,lists,keywords,release_dates'
 				}
 			}
@@ -185,7 +185,7 @@ export function onLoadTV(id) {
 				params: {
 					api_key: '5a1d310d575e516dd3c547048eb7abf1',
 					language: 'ru-RU',
-					include_image_language: 'ru',
+					include_image_language: 'ru,null',
 					append_to_response: 'content_ratings,credits,external_ids,images,keywords,recommendations,screened_theatrically,similar,translations,videos'
 				}
 			}

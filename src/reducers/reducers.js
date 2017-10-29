@@ -77,11 +77,12 @@ export default function rootReducer(state = initialState, action) {
                 }
             });
 
-        case MOVIE_DATA:
+	    case MOVIE_DATA:
             return update(state, {
                 MovieData: {$merge: {
                     isFetching: true,
-                    data: action.data
+                    data: action.data,
+	                images: action.data.images.backdrops.concat(action.data.images.posters)
                     }
                 }
             });
