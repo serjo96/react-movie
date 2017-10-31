@@ -68,7 +68,7 @@
 			color: #b70a0a
 
 .movie__summary
-	margin-left: 16.66666667%
+	margin-left: 17.666666%
 	text-shadow: 0 0 20px black
 
 .movie__title
@@ -81,7 +81,7 @@
 	font: 400 25px 'Proxima Nova', sans-serif
 
 .summary-ratings
-	margin-left: 16.66666667%
+	margin-left: 17.666666%
 
 .ratings
 	display: flex
@@ -99,7 +99,7 @@
 	flex-wrap: wrap
 
 .movie__aside
-	width: 173px
+	width: 190px
 	margin-top: -180px
 
 .movie__poster
@@ -123,8 +123,8 @@
 	padding-left: 20px
 
 .description__text
-	font-size: 16px
-	line-height: 23px
+	font-size: 17px
+	line-height: 25px
 
 .trailer
 	margin: 20px 0
@@ -144,6 +144,9 @@
 			background: rgba(0, 0, 0, 0)
 			i
 				transform: translateX(150px)
+
+
+
 .preview-base
 	position: absolute
 	top: 0
@@ -180,14 +183,19 @@
 		.actor__info
 			opacity: 1
 		.actor__role
-			color: #d8b16b
-
+			color: #fff
+			
 .actor__info
 	transition: all 0.6s
 
+.actor__role
+	color: #d8b16b
+	
+	
 .actor__name
 	transition: all 0.6s
 	margin-bottom: 3px
+	color: #e2e2e2
 
 .actor__img
 	padding-bottom: 100%
@@ -198,15 +206,61 @@
 	background-position: center
 
 .stills
+	margin: 15px 0
+
+.stills__list
 	display: flex
 	flex-wrap: wrap
 	align-items: flex-start
 
+
 .stills__img
 	cursor: pointer
 	width: 25%
-	padding-bottom: 15%
-	-webkit-background-size: cover
-	background-size: cover
-	background-repeat: no-repeat
-	background-position: center
+	padding-bottom: 14%
+	position: relative
+	overflow: hidden
+	&:hover
+		img
+			transform: scale3d(2, 2, 2)
+	img
+		transition: all 0.6s
+		filter: none
+		-webkit-filter: blur(0px)
+		width: 100%
+		position: absolute
+		top: 0
+		left: 0
+
+.crew-list
+	margin-top: 15px
+
+.crew__item
+	display: flex
+	justify-content: space-between
+	margin-top: 6px
+	&:first-child
+		margin-top: 0
+.crew__names
+	text-align: right
+	.crew__name
+		display: block
+
+
+.genres
+	margin-top: 20px
+
+.genres__list
+	display: flex
+	flex-wrap: wrap
+	margin: 0 -3px
+	margin-top: 5px
+
+.genres__item
+	transition: all 0.6s
+	padding: 4px
+	margin: 3px
+	border: 1px solid #fff
+	&:hover
+		color: #d8b16b
+		border: 1px solid #d8b16b

@@ -11,6 +11,7 @@ import {Helmet} from 'react-helmet';
 import { friendlyUrl } from '../../utils/utils';
 import Popup from '../Popup/Popup';
 import MovieBG from './MovieBg';
+import MovieAside from './MovieAside';
 
 class Movie extends Component {
     constructor(props) {
@@ -82,7 +83,8 @@ class Movie extends Component {
 	  const { imgIndex } = this.state;
 
 	  const movie = this.props.movie.data,
-		  images = this.props.movie.images;
+		  images = this.props.movie.images,
+		  crew = this.props.crew;
  	if (this.props.movie.isFetching) {
 		 return (
 			 <div className="movie">
@@ -136,9 +138,13 @@ class Movie extends Component {
 				 <div className="container">
 					 <div className="info-wrapper">
 
-						 <aside className="movie__aside">
-							 <div className="movie__poster"><img src={(movie.poster_path || movie.backdrop_path) ? 'https://image.tmdb.org/t/p/w185/' + (movie.poster_path || movie.backdrop_path) :  NoImg} alt={movie.title}/></div>
-						 </aside>
+						 <MovieAside
+							 title={movie.title}
+							 poster={movie.poster_path}
+							 backdrop={movie.backdrop_path}
+							 crew={this.props.crew}
+							 genres={movie.genres}
+						 />
 
 						 <div className="overview">
 							 <div className="description">
@@ -160,25 +166,30 @@ class Movie extends Component {
 								 </div> : null}
 
 							 <div className="stills">
-								 {images.map((backdrop, indx)=>
-								    <div className="stills__img"
-								         key={indx}
-								         data-index={indx}
-								         style={{backgroundImage: 'url(https://image.tmdb.org/t/p/original' + backdrop.file_path + ')'}}
-								         onClick={e=> this.setState({
-									         imgIndex: e.target.dataset.index,
-									         lightBox: !this.state.lightBox
-								         })}
-								    />
-								 )}
+								 <h2>Кадры из фильма</h2>
+								 <div className="stills__list">
+									 {images.map((backdrop, indx)=>
+										 indx <= 11 &&
+									    <div className="stills__img"
+									         key={indx}
+									    >
+										    <img src={'https://image.tmdb.org/t/p/original' + backdrop.file_path} data-index={indx}
+										         onClick={e=> this.setState({
+											         imgIndex: e.target.dataset.index,
+											         lightBox: !this.state.lightBox
+										         })} alt=""/>
+									    </div>
+									 )}
+								 </div>
 							 </div>
 
 							 <div className="credits">
 								 <div className="cast">
 									 <h2 className="cast__title">В ролях</h2>
+
 									 <Swiper {...SwiperParams}>
 									 {movie.credits.cast.map((actor, indx) =>
-										 (<Link to={'/actor/'+ friendlyUrl(actor.name)} className="actor" id={actor.id} key={indx}>
+										 (<Link to={'/actor/'+ friendlyUrl(actor.name)+ '-' + actor.id} className="actor" key={indx}>
 											 <div className="actor__img" style={{backgroundImage: actor.profile_path ? 'url(https://image.tmdb.org/t/p/w185/' + actor.profile_path + ')': 'url('+ NoImg + ')'}} />
 										    <div className="actor__info">
 											    <div className="actor__name">{actor.name}</div>
@@ -189,6 +200,7 @@ class Movie extends Component {
 										 </Link>)
 									 )}
 									 </Swiper>
+
 								 </div>
 							 </div>
 
@@ -206,6 +218,7 @@ class Movie extends Component {
 function mapStateToProps(state) {
     return {
         movie: state.MovieData,
+	    crew: state.MovieData.crew
     };
 }
 

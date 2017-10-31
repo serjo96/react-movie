@@ -1,4 +1,4 @@
-export const friendlyUrl = (e) => e.replace(/\s+/g, '-').toLowerCase();
+export const friendlyUrl = (e) => e.replace(/\s+/g, '_').toLowerCase();
 
 export const friendlyData = (e) => e.replace(/-/g, '.').toLowerCase();
 

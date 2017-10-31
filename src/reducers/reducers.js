@@ -82,7 +82,15 @@ export default function rootReducer(state = initialState, action) {
                 MovieData: {$merge: {
                     isFetching: true,
                     data: action.data,
-	                images: action.data.images.backdrops.concat(action.data.images.posters)
+	                images: action.data.images.backdrops.concat(action.data.images.posters),
+	                crew: {
+		                Director: action.data.credits.crew.filter(item => item.job === 'Director'),
+		                Screenplay: action.data.credits.crew.filter( item => item.department === 'Writing'),
+		                Producer: action.data.credits.crew.filter( item => item.job === 'Producer'),
+		                Director_of_Photography: action.data.credits.crew.filter( item => item.job === 'Director of Photography'),
+		                Music: action.data.credits.crew.filter( item => item.job === 'Music' || item.job === 'Original Music Composer'),
+		                Art: action.data.credits.crew.filter( item => item.department === 'Art')
+	                }
                     }
                 }
             });
