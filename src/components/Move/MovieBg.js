@@ -2,9 +2,9 @@ import React from 'react';
 import {declOfNum, kFormatter, friendlyData, formatTime} from '../../utils/utils';
 
 const MovieBg = (movie) => (
-    <div className="movie__bg img-loading" onLoad={e=> e.target.closest('.movie__bg').classList.remove('img-loading')}>
-        <div className="movie__cover " style={{backgroundImage: 'url(https://image.tmdb.org/t/p/original' + (movie.backdrop || movie.poster) + ')'}}/>
-        <img src={'https://image.tmdb.org/t/p/original/' + (movie.backdrop || movie.poster)} alt={movie.title} />
+    <div className="movie__bg" >
+        <div className="movie__cover img-loading" style={{backgroundImage: 'url(https://image.tmdb.org/t/p/original' + (movie.backdrop || movie.poster) + ')'}}/>
+        <img src={'https://image.tmdb.org/t/p/original/' + (movie.backdrop || movie.poster)} alt={movie.title} onLoad={e=> document.querySelector('.movie__cover').classList.remove('img-loading')}/>
         <div className="movie-info">
             <div className="shadow-base">
 
@@ -15,6 +15,7 @@ const MovieBg = (movie) => (
                             <div className="original-title">{movie.original_title === movie.title ? null : movie.original_title}</div>
                         </h1>
                         <span className="movie__year">{movie.release_date.substring(0, 4)}</span>
+                            <div className="tangle">{movie.tagline}</div>
                     </div>
                 </div>
             </div>

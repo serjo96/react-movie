@@ -45,34 +45,34 @@ function searchMovie(querySearch) {
 }
 
 function takeMovieData( data ) {
-	return {
-		type: MOVIE_DATA,
-		data
-	};
+    return {
+        type: MOVIE_DATA,
+        data
+    };
 }
 
 export function clearMovieData() {
-	return {
-		type: CLEAR_MOVIE_DATA
-	}
+    return {
+        type: CLEAR_MOVIE_DATA
+    };
 }
 
 function takeTvData( data ) {
-	return {
-		type: TV_DATA,
-		data
-	};
+    return {
+        type: TV_DATA,
+        data
+    };
 }
 
 export function clearTvData() {
-	return {
-		type: CLEAR_TV_DATA
-	}
+    return {
+        type: CLEAR_TV_DATA
+    };
 }
 export function clearSearch() {
-	return {
-		type: CLEAR_SEARCH
-	}
+    return {
+        type: CLEAR_SEARCH
+    };
 }
 
 export function onLoadPage() {
@@ -88,7 +88,6 @@ export function onLoadPage() {
                 }
             }
         ).then(response => {
-            console.log(response);
             dispatch(loadUpcomingMovies(response.data));
         });
 
@@ -102,7 +101,6 @@ export function onLoadPage() {
                 }
             }
         ).then(response => {
-            console.log(response);
             dispatch(loadTopMovies(response.data));
         });
 
@@ -116,7 +114,6 @@ export function onLoadPage() {
 		                }
 		            }
 		 ).then(response => {
-			 console.log(response);
 			 dispatch(loadPopularMovies(response.data));
 		 });
 
@@ -130,7 +127,6 @@ export function onLoadPage() {
                 }
             }
         ).then(response => {
-            console.log(response);
             dispatch(loadPlayingMovies(response.data));
         });
 
@@ -141,7 +137,7 @@ export function onLoadPage() {
 export function onSearch(words) {
     return ( dispatch ) => {
         dispatch(takeSearchValue(words));
-        if(words.length>0){
+        if (words.length>0) {
 		    axios.get('https://api.themoviedb.org/3/search/multi',
 			    {
 				    params: {
@@ -153,7 +149,6 @@ export function onSearch(words) {
 				    }
 			    }
 		    ).then(response => {
-			    console.log(response);
 			    dispatch(searchMovie(response.data));
 		    });
         }
@@ -161,37 +156,128 @@ export function onSearch(words) {
 }
 
 export function onLoadMovie(id) {
-	return ( dispatch ) => {
-		axios.get('https://api.themoviedb.org/3/movie/'+id,
-			{
-				params: {
-					api_key: '5a1d310d575e516dd3c547048eb7abf1',
-					language: 'ru-RU',
-					include_image_language: 'ru,null',
-					append_to_response: 'credits,images,videos,recommendations,reviews,lists,keywords,release_dates'
-				}
-			}
-		).then(response => {
-			console.log(response);
-			dispatch(takeMovieData(response.data));
-		});
-	};
-};
+    return ( dispatch ) => {
+        axios.get('https://api.themoviedb.org/3/movie/'+id,
+            {
+                params: {
+                    api_key: '5a1d310d575e516dd3c547048eb7abf1',
+                    language: 'ru-RU',
+                    include_image_language: 'ru,null',
+                    append_to_response: 'credits,images,videos,recommendations,reviews,lists,keywords,release_dates'
+                }
+            }
+        ).then(res => {
+            if (res.data.belongs_to_collection) {
+                axios.get('https://api.themoviedb.org/3/collection/' + res.data.belongs_to_collection.id,
+                    {
+                        params: {
+                            api_key: '5a1d310d575e516dd3c547048eb7abf1',
+                            language: 'ru-RU'
+                        }
+                    }
+                ).then(response=>{
+                    let data = Object.assign({collection: response.data}, res.data);
+                    dispatch(takeMovieData(data));
+                });
+            } else {
+                dispatch(takeMovieData(res.data));
+            }
+        });
+    };
+}
 
 export function onLoadTV(id) {
-	return ( dispatch ) => {
-		axios.get('https://api.themoviedb.org/3/tv/'+id,
-			{
-				params: {
-					api_key: '5a1d310d575e516dd3c547048eb7abf1',
-					language: 'ru-RU',
-					include_image_language: 'ru,null',
-					append_to_response: 'content_ratings,credits,external_ids,images,keywords,recommendations,screened_theatrically,similar,translations,videos'
-				}
-			}
-		).then(response => {
-			console.log(response);
-			dispatch(takeTvData(response.data));
-		});
-	};
-};
+    return ( dispatch ) => {
+        axios.get('https://api.themoviedb.org/3/tv/'+id,
+            {
+                params: {
+                    api_key: '5a1d310d575e516dd3c547048eb7abf1',
+                    language: 'ru-RU',
+                    include_image_language: 'ru,null',
+                    append_to_response: 'content_ratings,credits,external_ids,images,keywords,recommendations,screened_theatrically,similar,translations,videos'
+                }
+            }
+        ).then(response => {
+            dispatch(takeTvData(response.data));
+        });
+    };
+}
+
+
+export function movieUpcoming(page=1) {
+    return ( dispatch ) => {
+        axios.get('https://api.themoviedb.org/3/movie/upcoming',
+            {
+                params: {
+                    api_key: '5a1d310d575e516dd3c547048eb7abf1',
+                    language: 'ru-RU',
+                    page: page,
+                    region: 'RU'
+                }
+            }
+        ).then(response => {
+            dispatch(loadUpcomingMovies(response.data));
+        });
+    };
+}
+
+export function moviePlaying(page=1) {
+    return ( dispatch ) => {
+        axios.get('https://api.themoviedb.org/3/movie/now_playing',
+            {
+                params: {
+                    api_key: '5a1d310d575e516dd3c547048eb7abf1',
+                    language: 'ru-RU',
+                    page: page,
+                    region: 'RU'
+                }
+            }
+        ).then(response => {
+	        dispatch(loadPlayingMovies(response.data));
+        });
+    };
+}
+
+export function movieTop(page=1) {
+    return ( dispatch ) => {
+	    axios.get('https://api.themoviedb.org/3/movie/top_rated',
+		    {
+			    params: {
+				    api_key: '5a1d310d575e516dd3c547048eb7abf1',
+				    language: 'ru-RU',
+				    page: page,
+				    region: 'RU'
+			    }
+		    }
+	    ).then(response => {
+		    dispatch(loadTopMovies(response.data));
+	    });
+    };
+}
+export function moviePopular(page=1) {
+    return ( dispatch ) => {
+	    axios.all([
+		    axios.get('https://api.themoviedb.org/3/movie/popular',
+			    {
+				    params: {
+					    api_key: '5a1d310d575e516dd3c547048eb7abf1',
+					    language: 'ru-RU',
+					    page: page,
+					    region: 'RU'
+				    }
+			    }),
+		    axios.get('https://api.themoviedb.org/3/movie/popular',
+			    {
+				    params: {
+					    api_key: '5a1d310d575e516dd3c547048eb7abf1',
+					    language: 'ru-RU',
+					    page: page+1,
+					    region: 'RU'
+				    }
+			    })
+	    ]).then(axios.spread((pageOne, pageTwo) => {
+	    	let concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page});
+		    dispatch(loadPopularMovies(concatPages));
+	    }));
+    };
+}

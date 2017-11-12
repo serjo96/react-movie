@@ -4,9 +4,8 @@ import {Helmet} from 'react-helmet';
 import '../styles/main.sass';
 import Header from './containers/head/Head';
 import Nav from './components/Nav/nav';
-import Main from './containers/main/Main';
-import Movie from './components/Move/Movie';
-import TV from './components/TV/Tv';
+import Routes from './Routes/Routes'
+
 
 class App extends Component {
     render() {
@@ -15,14 +14,10 @@ class App extends Component {
 	            <Helmet>
 		            <title>Movie-search</title>
 	            </Helmet>
-                <Nav/>
+                <Nav location={this.props.location}/>
                 <Header/>
 
-	            <Switch>
-		            <Route exact path="/" component={Main} />
-		            <Route exact path="/movie/:urlRusLat" component={Movie} />
-		            <Route exact path="/tv/:urlRusLat" component={TV} />
-	            </Switch>
+	            <Routes/>
             </div>
         );
     }

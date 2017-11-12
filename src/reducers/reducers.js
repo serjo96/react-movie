@@ -48,10 +48,11 @@ export default function rootReducer(state = initialState, action) {
 			    }
 		    });
 	    case TOP_MOVIES:
+		    let results = action.movies.results.sort((a,b)=> b.vote_average - a.vote_average);
 		    return update(state, {
 			    TopMovies: {$merge: {
 				    isFetching: true,
-				    data: action.movies
+				    data: {...action.movies,  results: results}
 			        }
 			    }
 		    });
@@ -84,13 +85,13 @@ export default function rootReducer(state = initialState, action) {
                     data: action.data,
 	                images: action.data.images.backdrops.concat(action.data.images.posters),
 	                crew: {
-		                Director: action.data.credits.crew.filter(item => item.job === 'Director'),
-		                Screenplay: action.data.credits.crew.filter( item => item.department === 'Writing'),
-		                Producer: action.data.credits.crew.filter( item => item.job === 'Producer'),
-		                Director_of_Photography: action.data.credits.crew.filter( item => item.job === 'Director of Photography'),
-		                Music: action.data.credits.crew.filter( item => item.job === 'Music' || item.job === 'Original Music Composer'),
-		                Art: action.data.credits.crew.filter( item => item.department === 'Art')
-	                }
+			                Director: action.data.credits.crew.filter(item => item.job === 'Director'),
+			                Screenplay: action.data.credits.crew.filter( item => item.department === 'Writing'),
+			                Producer: action.data.credits.crew.filter( item => item.job === 'Producer'),
+			                Director_of_Photography: action.data.credits.crew.filter( item => item.job === 'Director of Photography'),
+			                Music: action.data.credits.crew.filter( item => item.job === 'Music' || item.job === 'Original Music Composer'),
+			                Art: action.data.credits.crew.filter( item => item.department === 'Art')
+	                    }
                     }
                 }
             });

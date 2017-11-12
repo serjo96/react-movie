@@ -5,12 +5,14 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import {onSearch, clearSearch} from '../../actions/movies-action';
 import { urlRusLat } from '../../utils/utils';
 import NoImg from '../../img/NoImg.png';
+import {DebounceInput} from 'react-debounce-input';
 
 class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            visabilityResult: false
+            visabilityResult: false,
+	        val: ''
         };
     }
 
@@ -40,6 +42,7 @@ class Search extends Component {
 	 onInput = (e) => {
 	     this.setState({visabilityResult: true});
 	     this.props.onInput(e);
+	     this.setState({val: e.target.value});
 	 };
 
 	 onKeyDown = (e) => {
@@ -53,7 +56,7 @@ class Search extends Component {
 
  renderResults = (item, index) =>{
      return (
-         <Link to={'/' + item.media_type + '/' + urlRusLat(item.title || item.name) + '-' + item.id} className="result-element" key={index} onClick={this.props.clearInput}>
+         <Link to={'/' + item.media_type + '/' + urlRusLat(item.title || item.name) + '-' + item.id} className="result-element" key={index} onClick={()=> this.setState({val: ''})}>
              <div className="result-element__poster">
                  <img src={(item.backdrop_path || item.poster_path) ? 'https://image.tmdb.org/t/p/w45_and_h67_bestv2/' + (item.backdrop_path || item.poster_path) :  NoImg} alt=""/>
              </div>
@@ -77,7 +80,15 @@ class Search extends Component {
 	    return (
          <div className="header__search search" onMouseDown={this.mouseDownHandler} onMouseUp={this.mouseUpHandler}>
 
-             <input className="search__field" type="text" name="Search" placeholder="Поиск фильмов и сериалов..." onKeyDown={this.onKeyDown} onInput={this.onInput} value={this.props.SearchFieldVal}/>
+             <DebounceInput className="search__field"
+                 name="Search"
+                 debounceTimeout={300}
+                 placeholder="Поиск фильмов и сериалов..."
+                 onKeyDown={this.onKeyDown}
+                 onInput={e => this.setState({val: e.target.value})}
+                 onChange={this.onInput}
+                 value={this.state.val}
+             />
 	            {this.state.visabilityResult &&
 		            <div className="search__result searchComboBox">
 			            {this.props.SearchResult.isFetching &&
@@ -100,7 +111,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 function mapStateToProps(state) {
     return {
-        SearchFieldVal: state.SearchField,
+    	SearchVal: state.SearchField,
         SearchResult: state.SearchResult
     };
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { urlRusLat } from '../../utils/utils';
+import NoImg from '../../img/NoImg.png';
 import MovieInfo from '../Popup/MovieInfo';
 
 
@@ -32,7 +33,7 @@ class MovieItem extends Component {
              <div className="movie-item__data">
                  <Link to={'/movie/' + urlRusLat(this.props.title) + '-' + this.props.id}>
                      <div className="movie-item__poster">
-                         <img src={'https://image.tmdb.org/t/p/w370_and_h556_bestv2' + this.props.poster} alt=""/>
+                         <img src={this.props.poster ? 'https://image.tmdb.org/t/p/w600_and_h900_bestv2' + this.props.poster : NoImg} alt={this.props.title}/>
                      </div>
                      <div className="movie-item__title">{this.props.title}</div>
                  </Link>
@@ -41,7 +42,9 @@ class MovieItem extends Component {
 	             <MovieInfo
 	             title={this.props.title}
 	             originalTitle={this.props.original_title}
-	             data={this.props.data}
+	             date={this.props.date}
+                 overview={this.props.overview}
+                 voteAverage={this.props.voteAverage}
                  el={this.el}
 	             /> : null}
          </div>

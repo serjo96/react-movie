@@ -24,7 +24,7 @@ class TV extends Component {
 
  sendRequest = () =>{
      let movieId = this.props.location.pathname.split('-');
-     this.props.loadTvData(movieId[1]);
+     this.props.loadTvData(movieId.pop());
  };
 
  render() {

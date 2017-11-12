@@ -75,3 +75,4 @@ export function formatTime( minutes ) {
         h = (minutes-m)/60;
     return h.toString() + ' ' + declOfNum(h.toString(),['час', 'часа', 'часов']) + ' ' + (m<10?'0':'') + m.toString();
 }
+

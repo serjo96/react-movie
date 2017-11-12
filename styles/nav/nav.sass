@@ -7,12 +7,18 @@
 	top: 0px
 	padding-top: 60px
 	background: #1b1d38
-	transition: transform .5s
+	transition: all .5s
 	transform: translate3d(-195px, 0, 0)
 	overflow: hidden
 	overflow-y: auto
 	&:hover
 		transform: translate3d(0,0,0)
+	.logo
+		display: none
+
+.nav--full
+	padding-top: 0
+
 
 .nav__element
 	padding: 0 10px
@@ -76,6 +82,11 @@
 		i
 			background: #4e2b5d
 			color: #ffffff
+		.sub-menu__item--active
+			i
+				background: #d8b16b
+				color: #f4f4f4
+
 
 
 .sub-menu
@@ -105,3 +116,4 @@
 		transition: all .4s linear
 	span
 		max-width: 156px
+

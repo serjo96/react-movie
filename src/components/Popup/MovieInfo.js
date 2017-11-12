@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+
 
 
 class MoviePopup extends Component   {
@@ -9,38 +9,40 @@ class MoviePopup extends Component   {
     }
     componentDidMount() {
         let target = this.props.el,
-            targetParent = target.parentNode,
+            targetParent = target.closest('.tooltip-parent'),
             coords = target.getBoundingClientRect(),
             tooltipElem = this.toltip,
-		    left = coords.left + target.offsetWidth,
+		    left = target.offsetLeft + target.offsetWidth,
             top = target.offsetTop;
+
+
 
         if (left < 0) {
             left =  0;
         }
-
         if ( coords.left > targetParent.offsetWidth - 30 - target.offsetWidth - tooltipElem.offsetWidth ) {
             left = target.offsetLeft - tooltipElem.offsetWidth ;
 	        tooltipElem.classList.add('movie-tooltip--right');
 	        tooltipElem.classList.remove('movie-tooltip--left');
         }
 
+	    tooltipElem.classList.remove('show-tooltip');
         tooltipElem.style.left = left + 'px';
         tooltipElem.style.top = top + 'px';
     }
     render() {
         return (
-            <div className="movie-tooltip movie-tooltip--left tooltip tooltip--movie" ref={el=> this.toltip = el}>
+            <div className="movie-tooltip movie-tooltip--left tooltip tooltip--movie show-tooltip" ref={el=> this.toltip = el}>
                 <div className="tooltip__content">
                     <div className="tooltip__title">
                         <div className="ru-title">{this.props.title}</div>
-                        <div className="original-title">{this.props.originalTitle}</div>
+                        <div className="original-title">{this.props.originalTitle !== this.props.title ? this.props.originalTitle : null}</div>
                     </div>
                     <div className="movie-tooltip__info">
-                        <div className="rating">Рейтинг {this.props.data.vote_average} из 10</div>
-                        <div className="time" />
+	                    {this.props.date ? <div className="tooltip__date">{this.props.date.substring(0, 4)}</div>: null}
+                        <div className="rating">Рейтинг {this.props.voteAverage} из 10</div>
                     </div>
-                    <div className="movie-tooltip__description">{this.props.data.overview.length > 475 ? this.props.data.overview.substring(0, 475) + '...' : this.props.data.overview}</div>
+                    <p className="movie-tooltip__description">{this.props.overview ? (this.props.overview.length > 475) ? this.props.overview.substring(0, 475) + '...' : this.props.overview : null}</p>
                 </div>
             </div>
         );
