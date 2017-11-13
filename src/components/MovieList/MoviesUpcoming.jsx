@@ -32,7 +32,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    loadUpcoming: (page) => dispatch(movieUpcoming())
+    loadUpcoming: (page) => dispatch(movieUpcoming(page))
 });
 
 

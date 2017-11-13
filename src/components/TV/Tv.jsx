@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import NoImg from '../../img/NoImg.png';
-import { onLoadTV } from '../../actions/movies-action';
-import { clearTvData } from '../../actions/movies-action';
+import { onLoadTV, clearTvData } from '../../actions/tv-actions';
+
 import {Helmet} from 'react-helmet';
 import {declOfNum, kFormatter} from '../../utils/utils';
 
