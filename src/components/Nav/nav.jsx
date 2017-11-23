@@ -28,12 +28,14 @@ export default class Nav extends React.PureComponent {
      };
 
 
+
+
      render() {
          return (
              <div className="nav">
                  <ul className="sidebar-menu sm-bordered sm-icons-block sm-icons-right">
                      <li className="hasSubmenu active hasSubmenu--open" >
-                         <div className="nav__element hasSubmenu-trigger js--submenuTrigger" >
+                         <div className="nav__element hasSubmenu-trigger js--submenuTrigger movie-collapse-trigger" >
                              <span>Фильмы</span>
                              <i className="fa fa-film"/>
                              <input name="firstCollapse" type="checkbox" onChange={e=> this.collapseNav(e)} checked={this.state.firstCollapse}/>
@@ -76,25 +78,25 @@ export default class Nav extends React.PureComponent {
                          <Collapse isOpened={this.state.secondCollapse}>
                              <ul className="sub-menu">
                                  <li className="sub-menu__item">
-                                     <NavLink to="/tv/airing_today">
-                                         <span>Ожидаемые сериалы</span>
+                                     <NavLink to="/tv/airing" activeClassName="sub-menu__item--active">
+                                         <span>Сериалы на тв</span>
                                          <i className="fa fa-calendar" aria-hidden="true"/>
                                      </NavLink>
                                  </li>
                                  <li className="sub-menu__item">
-                                     <NavLink to="/tv/on_the_air">
-                                         <span>Новинки сериалов</span>
+                                     <NavLink to="/tv/onAir" activeClassName="sub-menu__item--active">
+                                         <span>Текущие сериалы</span>
                                          <i className="fa fa-play-circle-o" aria-hidden="true"/>
                                      </NavLink>
                                  </li>
                                  <li className="sub-menu__item">
-                                     <NavLink to="/tv/top_rated">
+                                     <NavLink to="/tv/top" activeClassName="sub-menu__item--active">
                                          <span>Топ сериалы</span>
                                          <i className="fa fa-arrow-up" aria-hidden="true"/>
                                      </NavLink>
                                  </li>
                                  <li className="sub-menu__item">
-                                     <NavLink to="/tv/popular">
+                                     <NavLink to="/tv/popular" activeClassName="sub-menu__item--active">
                                          <span>Популярные сериалы</span>
                                          <i className="fa fa-fire" aria-hidden="true"/>
                                      </NavLink>

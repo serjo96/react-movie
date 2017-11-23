@@ -3,11 +3,31 @@
 
 .recommendations__list
 	padding-left: 55px
+	position: relative
 	.movie-item
 		margin: 0
 
+.scroll-notice
+	position: absolute
+	top: 0
+	right: 0
+	left: 0
+	bottom: 0
+	width: 100%
+	height: 100%
+	display: flex
+	justify-content: center
+	align-items: center
+	background: rgba(0,0,0,0.7)
+	color: #fff
+	z-index: 50
+	display: none
 
 .recommendations__title
 	font-weight: bold
 	font-size: 21px
 	margin-bottom: 15px
+
+.slider-container--centered
+	.swiper-wrapper
+		justify-content: center

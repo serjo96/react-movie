@@ -1,6 +1,8 @@
-.movie__aside
+.aside
 	width: 190px
 	margin-top: -180px
+
+
 
 .movie__poster
 	border: 4px solid #fff
@@ -8,33 +10,30 @@
 	img
 		display: block
 
+.infoTable-row
+	margin-top: 20px
+
+
+.infoTable-border
+	border-bottom: 1px solid #fff
+	padding-bottom: 5px
+
 .aside-row
 	display: flex
 	justify-content: space-between
-	margin-top: 6px
 	padding: 5px 0
+	padding-top: 6px
 
 .aside-row__right-col
 	text-align: right
 	width: 50%
-	a
-		display: block
 
-.crew-list
-	margin-top: 15px
 
-.crew__item
-	border-bottom: 1px solid #fff
-	&:first-child
-		margin-top: 0
+
 
 .crew__names
 	.crew__name
 		display: block
-
-
-.genres
-	margin-top: 20px
 
 .genres__list
 	display: flex
@@ -42,14 +41,8 @@
 	margin: 0 -3px
 	margin-top: 5px
 
-.keywords
-	margin-top: 20px
-
 .keywords__list
 	@extend .genres__list
-
-.movie-links
-	margin-top: 20px
 
 .movie-links__list
 	@extend .genres__list
@@ -59,9 +52,8 @@
 .movie__social-link
 	padding: 5px 8px
 	border-radius: 3px
-	background: #e2e2e2
+	background: #fbfbfb
 	border: solid 1px #ddd
-	background-color: #fbfbfb
 	color: #666
 	margin: 3px
 	transition: all 0.6s
@@ -74,3 +66,9 @@
 	margin: 3px 0
 	&:first-child
 		margin-top: 0
+
+
+.tv-release-date__date
+	display: flex
+	justify-content: space-between
+	margin-top: 5px

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
+import {Helmet} from 'react-helmet';
 import { movieUpcoming } from '../../actions/movies-action';
 import { connect } from 'react-redux';
-import MovieList from './MoviesList';
+import MovieList from '../MediaList/MediaList';
 
 
 class MovieUpcoming extends Component {
@@ -10,14 +11,17 @@ class MovieUpcoming extends Component {
     }
 
  sendRequest = () =>{
-     this.props.loadUpcoming();
+     this.props.loadList();
  };
 
  render() {
      return (
          <main className="main">
+             <Helmet>
+                 <title>Ожидаемые фильмы</title>
+             </Helmet>
              <div className="movies-content">
-                <MovieList movieListTitle={'Скоро в кино'} movieList={this.props.UpcomingList}/>
+                <MovieList movieListTitle={'Скоро в кино'} movieList={this.props.UpcomingList} typeList='movie'/>
              </div>
          </main>
      );
@@ -27,12 +31,12 @@ class MovieUpcoming extends Component {
 
 function mapStateToProps(state) {
     return {
-        UpcomingList: state.upcomingMovies
+        UpcomingList: state.movies.upcomingMovies
     };
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    loadUpcoming: (page) => dispatch(movieUpcoming(page))
+	loadList: (page) => dispatch(movieUpcoming(page))
 });
 
 

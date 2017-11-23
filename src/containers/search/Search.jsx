@@ -62,7 +62,7 @@ class Search extends Component {
              </div>
              <div className="result-element__title">
                  <div>{item.title || item.name}</div>
-                 <div className="result-element__release">{item.release_date ? item.release_date.substring(0, 4) : null}</div>
+                 <div className="result-element__release">{item.release_date  ? item.release_date.substring(0, 4) : item.first_air_date ? item.first_air_date.substring(0, 4).substring(0, 4) : null}</div>
              </div>
              <div className="result-element__type">{(item.media_type === 'tv') ? 'сериал' : (item.media_type === 'movie') ? 'фильм': 'актер'}</div>
          </Link>
@@ -111,8 +111,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 function mapStateToProps(state) {
     return {
-    	SearchVal: state.SearchField,
-        SearchResult: state.SearchResult
+    	SearchVal: state.movies.SearchField,
+        SearchResult: state.movies.SearchResult
     };
 }
 

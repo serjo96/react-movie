@@ -1,0 +1,39 @@
+.tv-seasons
+	background-repeat: no-repeat
+	background-size: cover
+	background-position: 50% 50%
+	padding: 50px 0
+	display: flex
+	justify-content: center
+	align-items: center
+	position: relative
+
+.tv-seasons__title
+	text-align: center
+	font-weight: bold
+	font-size: 24px
+	margin-bottom: 10px
+
+.tv-seasons__data
+	z-index: 25
+
+.seasons-list
+	display: flex
+	justify-content: center
+	flex-wrap: wrap
+
+.season
+	margin: 15px
+	width: 15%
+	text-align: center
+	&:hover
+		.season-number
+			color: #fff
+
+.season-number
+	transition: color .3s linear
+	text-align: center
+	margin-top: 10px
+	font-weight: bold
+	font-size: 16px
+	color: #7f858c

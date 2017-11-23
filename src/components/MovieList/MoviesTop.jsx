@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { movieListTop } from '../../actions/movies-action';
 import {Helmet} from 'react-helmet';
 import { connect } from 'react-redux';
-import MovieList from './MoviesList';
+import MovieList from '../MediaList/MediaList';
 
 
 class MoviesTop extends Component {
@@ -86,11 +86,11 @@ class MoviesTop extends Component {
      return (
 	     <main className="main">
              <Helmet>
-                 <title>В прокате</title>
+                 <title>Топ фильмы</title>
              </Helmet>
 		     {TopMovies.isFetching ?
                  <div className="movies-content">
-                     <MovieList movieListTitle={'Топ фильмы'} movieList={TopMovies}/>
+                     <MovieList movieListTitle={'Топ фильмы'} movieList={TopMovies} typeList='movie'/>
 	             {TopMovies.data.total_pages > 1 ?
                          <div className="pager-btns clearfix">
 			             {TopMovies.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
@@ -105,7 +105,7 @@ class MoviesTop extends Component {
 
 function mapStateToProps(state) {
     return {
-        TopMovies: state.TopMovies
+        TopMovies: state.movies.TopMovies
     };
 }
 

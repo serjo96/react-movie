@@ -1,12 +1,9 @@
-import { UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, SEARCH_VALUE, SEARCH_MOVIE, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA, TV_DATA, CLEAR_TV_DATA, CLEAR_SEARCH} from '../constants';
+import { UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, SEARCH_VALUE, SEARCH_MOVIE, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA, CLEAR_SEARCH} from '../constants';
 import update from 'react-addons-update';
 
 
 const initialState = {
 	MovieData: {
-		isFetching: false
-	},
-	TvData: {
 		isFetching: false
 	},
     upcomingMovies: {
@@ -28,7 +25,7 @@ const initialState = {
 
 };
 
-export default function rootReducer(state = initialState, action) {
+export default function movies(state = initialState, action) {
     console.log(action);
     switch (action.type) {
 	    case UPCOMING_MOVIES:
@@ -39,6 +36,7 @@ export default function rootReducer(state = initialState, action) {
 	                }
 	            }
             });
+
 	    case POPULAR_MOVIES:
 		    return update(state, {
 			    PopMovies: {$merge: {
@@ -47,6 +45,7 @@ export default function rootReducer(state = initialState, action) {
 			        }
 			    }
 		    });
+
 	    case TOP_MOVIES:
 		    let results = action.movies.results.sort((a,b)=> b.vote_average - a.vote_average);
 		    return update(state, {
@@ -56,6 +55,7 @@ export default function rootReducer(state = initialState, action) {
 			        }
 			    }
 		    });
+
 	    case PLAYING_MOVIES:
 		    return update(state, {
 			    PlayingMovies: {$merge: {
@@ -64,6 +64,7 @@ export default function rootReducer(state = initialState, action) {
 			        }
 			    }
 		    });
+
 	    case SEARCH_VALUE:
 		    return update(state, {
 			    SearchField: {$set: action.querySearch}
@@ -96,7 +97,6 @@ export default function rootReducer(state = initialState, action) {
                 }
             });
 
-
         case CLEAR_MOVIE_DATA:
             return update(state, {
                 MovieData: {$merge: {
@@ -105,25 +105,6 @@ export default function rootReducer(state = initialState, action) {
                     }
                 }
             });
-
-	    case TV_DATA:
-		    return update(state, {
-			    TvData: {$merge: {
-				    isFetching: true,
-				    data: action.data
-			    }
-			    }
-		    });
-
-
-	    case CLEAR_TV_DATA:
-		    return update(state, {
-			    TvData: {$merge: {
-				    isFetching: false,
-				    data: null
-			    }
-			    }
-		    });
 
 	    case CLEAR_SEARCH:
 		    return update(state, {

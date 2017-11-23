@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 
-export default class MovieStills extends Component {
+export default class MediaStills extends Component {
     constructor( props ) {
         super(props);
         this.state = {
@@ -12,7 +12,7 @@ export default class MovieStills extends Component {
         return (
 
             <div className="stills">
-                <h2>Кадры из фильма</h2>
+                <h2>{this.props.title}</h2>
                 <div className="stills__list">
                     {this.props.images.length > this.state.imgCount+1 ?
                         <div className="show-more show-more--stills">

@@ -42,7 +42,7 @@ class MoviePopup extends Component   {
 	                    {this.props.date ? <div className="tooltip__date">{this.props.date.substring(0, 4)}</div>: null}
                         <div className="rating">Рейтинг {this.props.voteAverage} из 10</div>
                     </div>
-                    <p className="movie-tooltip__description">{this.props.overview ? (this.props.overview.length > 475) ? this.props.overview.substring(0, 475) + '...' : this.props.overview : null}</p>
+                    <p className="movie-tooltip__description">{this.props.overview ? (this.props.overview.length > 475) ? this.props.overview.substring(0, 475) + '...' : this.props.overview : 'Ой! Кажется описание к этому произведению отсутствует'}</p>
                 </div>
             </div>
         );

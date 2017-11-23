@@ -1,20 +1,47 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import NoImg from '../../img/NoImg.png';
-import { onLoadTV, clearTvData } from '../../actions/tv-actions';
 
+import { connect } from 'react-redux';
+import { Link, Route, Switch } from 'react-router-dom';
+import YouTube  from 'react-youtube';
+import Popup from '../Popup/Popup';
+import Lightbox from 'react-image-lightbox';
+import { onLoadTV, clearTvData, clearTvImages } from '../../actions/tv-actions';
 import {Helmet} from 'react-helmet';
-import {declOfNum, kFormatter} from '../../utils/utils';
+import NoImg from '../../img/NoImg.png';
+import TVBg from './TVBg';
+import TVAside from './TVAside';
+import MediaStills from '../MediaPage/MediaStills';
+import MediaCast from '../MediaPage/MediaCast';
+import MediaRecommendations from '../MediaPage/MediaRecommendations';
+import TVSeason from './TVSeason';
+
 
 class TV extends Component {
-    componentDidUpdate(prevProps) {
-        if (this.props.location.pathname !== prevProps.location.pathname) {
-            this.sendRequest();
-        }
+    constructor(props) {
+        super(props);
+        this.state = {
+            modalTrailer: false,
+            trailerKey: '',
+            lightBox: false,
+            imgIndex: 0,
+            imgCount: 11,
+            intervalId: 0
+        };
     }
 
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.match.params.id !== this.props.match.params.id) {
+			this.props.clearTvImages();
+			this.sendRequest(nextProps.match.params.id);
+			this.scrollToTop();
+		}
+	}
+
+
     componentDidMount() {
+	    if (window.pageYOffset === 0) {
+		    clearInterval(this.state.intervalId);
+	    }
         this.sendRequest();
     }
 
@@ -22,106 +49,209 @@ class TV extends Component {
     	this.props.clearTvData();
     }
 
- sendRequest = () =>{
-     let movieId = this.props.location.pathname.split('-');
-     this.props.loadTvData(movieId.pop());
- };
+	 sendRequest = (id = this.props.match.params.id) =>{
+	     let movieId = id.split('-');
+	     this.props.loadTvData(movieId.pop());
+	 };
 
- render() {
-    	let movie = this.props.tv.data;
+	 showTrailerModal = (e) =>{
+	     this.setState({
+	         modalTrailer: !this.state.modalTrailer,
+	         trailerKey: e.target.closest('[id]').id
+	     });
+	 };
+
+
+	 closePopup = () =>{
+		 document.querySelector('.popup__content').classList.add('popup--is-hide');
+		 setTimeout(()=> this.setState({modalTrailer: false}), 500);
+	 };
+
+	 _onReady = (event) => {
+	     event.target.pauseVideo();
+	 };
+
+	 onClickImg = (e) =>{
+	     this.setState({
+	         imgIndex: e.target.dataset.index,
+	         lightBox: !this.state.lightBox
+	     });
+	 };
+
+	scrollStep = () => {
+		if (window.pageYOffset === 0) {
+			clearInterval(this.state.intervalId);
+		}
+		window.scroll(0, window.pageYOffset - 50);
+	};
+
+	scrollToTop = () => {
+		let intervalId = setInterval(this.scrollStep.bind(this), 16.66);
+		this.setState({ intervalId: intervalId });
+	};
+
+  render() {
+	        const { imgIndex } = this.state;
+	        const YouTubeParams = {
+				 height: '540',
+				 width: '640',
+				 playerVars: { // https://developers.google.com/youtube/player_parameters
+					 autoplay: 0
+				 }
+		    };
+    	let tv = this.props.tv.data,
+		    images = this.props.tv.images;
 	    if (this.props.tv.isFetching) {
+	    	console.log(this.props.match)
 	        return (
 		            <div className="movie">
 			            <Helmet>
-				            <title>{movie.title}</title>
+				            <title>{tv.name}</title>
 			            </Helmet>
-		                <div className="movie__bg img-loading" onLoad={e=> e.target.closest('.movie__bg').classList.remove('img-loading')}>
-			                <div className="movie__cover " style={{backgroundImage: 'url(https://image.tmdb.org/t/p/original' + (movie.backdrop_path || movie.poster_path) + ')'}}/>
-			                <img src={'https://image.tmdb.org/t/p/original/' + (movie.backdrop_path || movie.poster_path)} alt={movie.name} />
-			                <div className="movie-info">
-                                <div className="shadow-base">
-	                                 <div className="container">
-					                    <div className="movie__summary">
-						                    <h1 className="movie__title">
-							                    <div className="ru-title">{movie.name}</div>
-							                    <div className="original-title">{movie.original_name === movie.name ? null : movie.original_name}</div>
-						                    </h1>
-						                    <span className="movie__year">{movie.first_air_date.substring(0, 4)}</span>
-					                    </div>
-	                                 </div>
-                                </div>
-				                <div className="movie-ratings-wrap">
-					                <div className="container">
-						                <div className="summary-ratings">
-							                <div className="ratings" >
-							                    <div className="rating summary-item">
-								                    <div className={'icon fa fa-heart rating-' + Math.ceil(movie.vote_average)}/>
-								                    <div className="vote-numbers">
-									                    <div className="rating__vote-count">{movie.vote_average} из 10</div>
-									                    <div className="rating__count">{kFormatter(movie.vote_count)} {declOfNum(movie.vote_count, ['голос', 'голоса', 'голосов'])}</div>
-								                    </div>
-							                    </div>
-								                <div className="popularity summary-item">
-									                <div className="summary-item__title">Популярность</div>
-									                <div className="summary-item__number">{movie.popularity.toFixed(1)}</div>
-								                </div>
-								                <div className="summary-item">
-									                <div className="summary-item__title">Продолжиельность</div>
-									                <div className="summary-item__number">{movie.runtime ? movie.runtime + ' мин': '-'}</div>
-								                </div>
-								                <div className="summary-item">
-									                <div className="summary-item__title">Бюджет</div>
-									                <div className="summary-item__number">{movie.budget ? '$' + movie.budget.toString().replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g,"\$1 ") : '-'}</div>
-								                </div>
-								                <div className="summary-item">
-									                <div className="summary-item__title">Сборы в мире</div>
-									                <div className="summary-item__number">{movie.revenue ? '$'+ movie.revenue.toString().replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g,"\$1 ") : '-'}</div>
-								                </div>
-                                                <div className="summary-item">
-									                <div className="summary-item__title">Количество сезонов</div>
-									                <div className="summary-item__number">{movie.number_of_seasons ? movie.number_of_seasons : '-'}</div>
-								                </div>
-                                                <div className="summary-item">
-									                <div className="summary-item__title">Статус</div>
-									                <div className="summary-item__number">{movie.in_production ? 'Идет ' + movie.number_of_seasons + ' сезон' : 'Закончен'}</div>
-								                </div>
 
-							                </div>
-						                </div>
-					                </div>
-				                </div>
-			                </div>
-		                </div>
+			            <TVBg
+				            title={tv.original_name}
+				            original_title={tv.name}
+				            backdrop={tv.backdrop_path}
+				            poster={tv.poster_path}
+				            runtime={tv.episode_run_time}
+				            seasons={tv.seasons}
+				            vote_count={tv.vote_count}
+				            vote_average={tv.vote_average}
+				            popularity={tv.popularity}
+				            tagline={tv.tagline}
+				            number_of_seasons={tv.number_of_seasons}
+				            first_air_date={tv.first_air_date}
+				            in_production={tv.in_production}
+			            />
+
 			            <div className="container">
 				            <div className="info-wrapper">
-					            <aside className="movie__aside">
-						            <div className="movie__poster"><img src={(movie.poster_path || movie.backdrop_path) ? 'https://image.tmdb.org/t/p/w185/' + (movie.poster_path || movie.backdrop_path) :  NoImg} alt={movie.title}/></div>
-					            </aside>
+
+					            <TVAside
+						            title={tv.name}
+						            id={tv.id}
+						            poster={tv.poster_path}
+						            backdrop={tv.backdrop_path}
+						            created_by={tv.created_by}
+						            genres={tv.genres}
+						            keywords={tv.keywords.results}
+						            links={tv.external_ids}
+						            homepage={tv.homepage}
+						            origin_country={tv.origin_country}
+						            first_air_date={tv.first_air_date}
+						            last_air_date={tv.last_air_date}
+						            in_production={tv.in_production}
+					            />
+
 					            <div className="overview">
 						            <div className="description">
-							            <h2 className="description__title">Сюжет</h2>
-						                <p className="description__text">{movie.overview}</p>
+							            <p className="description__text">{tv.overview}</p>
 						            </div>
+
+						            {tv.videos.results.length >0 ?
+							            <div className="trailer">
+								            <h2>{tv.videos.results.length === 1 ? 'Трейлер' : 'Трейлеры'}</h2>
+
+								            <div className="trailer__list">
+									            {tv.videos.results.map((video, indx)=>
+										            video.site === 'YouTube' &&
+										            <div className="trailer__preview" id={video.key} key={indx}>
+											            <div className="preview-base" onClick={this.showTrailerModal}><i className="fa fa-play" aria-hidden="true"/></div>
+											            <img src={'http://i3.ytimg.com/vi/' + video.key + '/mqdefault.jpg'} alt=""/>
+										            </div>)}
+								            </div>
+							            </div> : null}
+
+
+						             <MediaStills images={images} title='Кадры из сериала' onClickImg={this.onClickImg}/>
+						             <MediaCast cast={tv.credits.cast}/>
+
 					            </div>
 				            </div>
 			            </div>
+
+			            <Switch>
+			            <Route path={'/tv/:id/season-:season_number'} component={TVSeason}/>
+			            </Switch>
+
+			            {tv.similar.total_results >0 ? <MediaRecommendations recommendations={tv.similar} listName='Похожие сериалы' typeList="tv"/> : null }
+
+
+			            {tv.seasons.length>0 ? <div className="tv-seasons" style={images.length > 0? {backgroundImage:  'url(https://image.tmdb.org/t/p/original' +  images[Math.floor(Math.random() * images.length)].file_path  + ')'}: null}>
+				            <div className="bg-base"/>
+				            <div className="tv-seasons__data">
+				            <div className="container">
+					            <h2 className='tv-seasons__title'>Сезоны</h2>
+					            <div className="seasons-list">
+							            {tv.seasons.sort((a,b)=> {
+								            if( a.season_number === 0) return 1;
+								            if( b.season_number === 0) return -1;
+								            if(new Date(a.season_number) === new Date(b.season_number)) return 0;
+								            return new Date(a.season_number) < new Date(b.season_number) ? -1 : 1;
+							            }).map((el, indx)=>
+								            <div className="season" key={indx}>
+									            <Link to={`${this.props.location.pathname}/season-${el.season_number}`}>
+										            <img src={el.poster_path ? 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + el.poster_path : NoImg} alt=""/>
+										            <div className="season-number">{el.season_number>0 ? el.season_number + ' сезон': 'special'}</div>
+									            </Link>
+								            </div>
+							            )}
+					            </div>
+				            </div>
+				            </div>
+			            </div>: null}
+
+			            {tv.recommendations.total_results >0 ? <MediaRecommendations recommendations={tv.recommendations} listName='Вам может понравиться' typeList="tv"/> : null }
+
+
+			            {this.state.lightBox ?
+				            <Lightbox
+					            mainSrc={'https://image.tmdb.org/t/p/w1280' + images[imgIndex].file_path}
+					            nextSrc={'https://image.tmdb.org/t/p/w1280' + images[(imgIndex + 1) % images.length].file_path}
+					            prevSrc={'https://image.tmdb.org/t/p/w1280' + images[(imgIndex + images.length - 1) % images.length].file_path}
+
+					            onCloseRequest={() => this.setState({ lightBox: false })}
+					            onMovePrevRequest={() => this.setState({
+						            imgIndex: (imgIndex + images.length - 1) % images.length
+					            })}
+					            onMoveNextRequest={() => this.setState({
+						            imgIndex: (imgIndex + 1) % images.length
+					            })}
+				            />: null}
+
+
+			            {this.state.modalTrailer ?
+				            <div className="popup-base" onClick={this.closePopup}>
+					            <div className="popup" onMouseDown={this.mouseDownHandler} onMouseUp={this.mouseUpHandler}>
+						            <div className="popup__close" onClick={this.closePopup}/>
+						            <Popup>
+							            <YouTube
+								            videoId={this.state.trailerKey}
+								            opts={YouTubeParams}
+								            onReady={this._onReady}
+							            />
+						            </Popup>
+					            </div>
+				            </div>:null}
 	                </div>
 	        );
-     } 
+      } 
 		    return null;
 	    
- }
+  }
 }
 
 function mapStateToProps(state) {
     return {
-        tv: state.TvData
+        tv: state.TVs.TvData
     };
 }
 
 const mapDispatchToProps = (dispatch) => ({
     loadTvData: (id) => dispatch(onLoadTV(id)),
-	clearTvData: () => dispatch(clearTvData())
+    clearTvData: () => dispatch(clearTvData()),
+	clearTvImages: () => dispatch(clearTvImages())
 });
 
 

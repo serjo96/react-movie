@@ -6,6 +6,10 @@ import MovieUpcoming from '../components/MovieList/MoviesUpcoming';
 import MoviePlaying from '../components/MovieList/MoviesPlaying';
 import MoviesTop from '../components/MovieList/MoviesTop';
 import MoviesPopular from '../components/MovieList/MoviesPopular';
+import TVAiring from '../components/TvLists/TVAiring';
+import TvPopular from '../components/TvLists/TvPopular';
+import TvTop from '../components/TvLists/TVTop';
+import TVonTheAir from '../components/TvLists/TVonTheAir';
 import TV from '../components/TV/Tv';
 
 
@@ -19,7 +23,11 @@ class Routes extends Component {
                 <Route exact path="/movies/top" component={MoviesTop} />
                 <Route exact path="/movies/popular" component={MoviesPopular} />
                 <Route exact path="/movie/:urlRusLat" component={Movie} />
-                <Route exact path="/tv/:urlRusLat" component={TV} />
+                <Route exact path="/tv/airing" component={TVAiring} />
+                <Route exact path="/tv/popular" component={TvPopular} />
+                <Route exact path="/tv/top" component={TvTop} />
+                <Route exact path="/tv/onAir" component={TVonTheAir} />
+                <Route exact path="/tv/:id" component={TV} />
             </Switch>
         )
     }

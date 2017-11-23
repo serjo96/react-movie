@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {declOfNum, kFormatter, friendlyData, formatTime} from '../../utils/utils';
 
 const MovieBg = (movie) => (
@@ -15,7 +16,7 @@ const MovieBg = (movie) => (
                             <div className="original-title">{movie.original_title === movie.title ? null : movie.original_title}</div>
                         </h1>
                         <span className="movie__year">{movie.release_date.substring(0, 4)}</span>
-                            <div className="tangle">{movie.tagline}</div>
+                        <div className="tangle">{movie.tagline}</div>
                     </div>
                 </div>
             </div>
@@ -61,5 +62,21 @@ const MovieBg = (movie) => (
         </div>
     </div>
 );
+
+MovieBg.propTypes = {
+    original_title: PropTypes.string,
+    title: PropTypes.string,
+    backdrop: PropTypes.string,
+    poster: PropTypes.string,
+    runtime: PropTypes.number,
+    budget: PropTypes.number,
+    revenue: PropTypes.number,
+    lists: PropTypes.object,
+    release_date: PropTypes.string,
+    vote_count: PropTypes.number,
+    vote_average: PropTypes.number,
+    popularity: PropTypes.number,
+    tagline: PropTypes.string
+};
 
 export default MovieBg;

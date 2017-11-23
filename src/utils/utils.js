@@ -59,7 +59,9 @@ export function urlRusLat(str) {
         });
         newStr += newCh;
     }
-
+    if(newStr.length === 0 || newStr === '__'){
+        newStr = 'media'
+    }
     return newStr.replace(/-/g, '_').replace(/[_]{2,}/gim, '_').replace(/\n/gim, '');
 }
 

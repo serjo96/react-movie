@@ -7,10 +7,10 @@ import {Helmet} from 'react-helmet';
 import Popup from '../Popup/Popup';
 import MovieBG from './MovieBg';
 import MovieAside from './MovieAside';
-import MovieStills from './MovieStills';
-import MovieCast from './MovieCast';
+import MediaStills from '../MediaPage/MediaStills';
+import MediaCast from '../MediaPage/MediaCast';
 import MovieCollection from './MovieCollection';
-import MovieRecommendations from './MovieRecommendations';
+import MediaRecommendations from '../MediaPage/MediaRecommendations';
 
 
 class Movie extends Component {
@@ -25,12 +25,13 @@ class Movie extends Component {
 	        intervalId: 0
         };
     }
-    componentDidUpdate(prevProps) {
-        if (this.props.location.pathname !== prevProps.location.pathname) {
-            this.sendRequest();
-	        this.scrollToTop();
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.match.params.id !== this.props.match.params.id) {
+            this.sendRequest(nextProps.match.params.id);
+            this.scrollToTop();
         }
     }
+
 
     componentDidMount() {
 	    if (window.pageYOffset === 0) {
@@ -56,10 +57,10 @@ class Movie extends Component {
 	     this.setState({ intervalId: intervalId });
 	 };
 
-	 sendRequest = () =>{
-	     let movieId = this.props.location.pathname.split('-');
-	     this.props.loadMovieData(movieId.pop());
-	 };
+ sendRequest = (id = this.props.match.params.id) =>{
+     let movieId = id.split('-');
+     this.props.loadTvData(movieId.pop());
+ };
 
 	 showTrailerModal = (e) =>{
 	     this.setState({
@@ -68,9 +69,10 @@ class Movie extends Component {
 	     });
 	 };
 
-	 closePopup = () =>{
-	     this.setState({modalTrailer: false});
-	 };
+ closePopup = () =>{
+     document.querySelector('.popup__content').classList.add('popup--is-hide');
+     setTimeout(()=> this.setState({modalTrailer: false}), 500);
+ };
 
 	 _onReady = (event) => {
 	     event.target.pauseVideo();
@@ -103,35 +105,6 @@ class Movie extends Component {
 				 <Helmet>
 					 <title>{movie.title}</title>
 				 </Helmet>
-				 {this.state.modalTrailer &&
-					 <div className="popup-base" onClick={this.closePopup}>
-						 <div className="popup" onMouseDown={this.mouseDownHandler} onMouseUp={this.mouseUpHandler}>
-							 <div className="popup__close" onClick={this.closePopup}/>
-							 <Popup>
-								 <YouTube
-									 videoId={this.state.trailerKey}
-									 opts={YouTubeParams}
-									 onReady={this._onReady}
-								 />
-							 </Popup>
-						 </div>
-					 </div>}
-
-				 {this.state.lightBox &&
-				 <Lightbox
-					 mainSrc={'https://image.tmdb.org/t/p/w1280' + images[imgIndex].file_path}
-					 nextSrc={'https://image.tmdb.org/t/p/w1280' + images[(imgIndex + 1) % images.length].file_path}
-					 prevSrc={'https://image.tmdb.org/t/p/w1280' + images[(imgIndex + images.length - 1) % images.length].file_path}
-
-					 onCloseRequest={() => this.setState({ lightBox: false })}
-					 onMovePrevRequest={() => this.setState({
-						 imgIndex: (imgIndex + images.length - 1) % images.length
-					 })}
-					 onMoveNextRequest={() => this.setState({
-						 imgIndex: (imgIndex + 1) % images.length
-					 })}
-				 />
-				 }
 
 				 <MovieBG original_title={movie.original_title}
 				          title={movie.title}
@@ -153,6 +126,7 @@ class Movie extends Component {
 
 						 <MovieAside
 							 title={movie.title}
+							 id={movie.id}
 							 poster={movie.poster_path}
 							 backdrop={movie.backdrop_path}
 							 crew={this.props.crew}
@@ -182,8 +156,8 @@ class Movie extends Component {
 								 </div> : null}
 
 
-							 <MovieStills images={images} onClickImg={this.onClickImg}/>
-							 <MovieCast cast={movie.credits.cast}/>
+							 <MediaStills images={images} title="Кадры из фильма" onClickImg={this.onClickImg}/>
+							 <MediaCast cast={movie.credits.cast}/>
 
 						 </div>
 					 </div>
@@ -193,9 +167,38 @@ class Movie extends Component {
 				 	: null
 				 }
 
-				 {movie.recommendations.total_results >0 ? <MovieRecommendations recommendations={movie.recommendations}/> : null }
+				 {movie.recommendations.total_results >0 ? <MediaRecommendations recommendations={movie.recommendations} listName="Вам может понравиться" typeList="movie"/> : null }
 
 
+				 {this.state.lightBox ?
+					 <Lightbox
+						 mainSrc={'https://image.tmdb.org/t/p/w1280' + images[imgIndex].file_path}
+						 nextSrc={'https://image.tmdb.org/t/p/w1280' + images[(imgIndex + 1) % images.length].file_path}
+						 prevSrc={'https://image.tmdb.org/t/p/w1280' + images[(imgIndex + images.length - 1) % images.length].file_path}
+
+						 onCloseRequest={() => this.setState({ lightBox: false })}
+						 onMovePrevRequest={() => this.setState({
+							 imgIndex: (imgIndex + images.length - 1) % images.length
+						 })}
+						 onMoveNextRequest={() => this.setState({
+							 imgIndex: (imgIndex + 1) % images.length
+						 })}
+					 />: null}
+
+
+				 {this.state.modalTrailer ?
+					 <div className="popup-base" onClick={this.closePopup}>
+						 <div className="popup" onMouseDown={this.mouseDownHandler} onMouseUp={this.mouseUpHandler}>
+							 <div className="popup__close" onClick={this.closePopup}/>
+							 <Popup>
+								 <YouTube
+									 videoId={this.state.trailerKey}
+									 opts={YouTubeParams}
+									 onReady={this._onReady}
+								 />
+							 </Popup>
+						 </div>
+					 </div>:null}
 			 </div>
 	        );
       }
@@ -206,8 +209,8 @@ class Movie extends Component {
 
 function mapStateToProps(state) {
     return {
-        movie: state.MovieData,
-	    crew: state.MovieData.crew
+        movie: state.movies.MovieData,
+	    crew: state.movies.MovieData.crew
     };
 }
 

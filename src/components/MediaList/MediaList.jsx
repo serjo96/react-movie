@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import MovieItem from '../../components/Move/MovieItem';
+import MovieItem from './MediaItem';
 import { Link } from 'react-router-dom';
 import { friendlyData } from '../../utils/utils';
 
-class MovieList extends Component {
+class MediaList extends Component {
 
     renderListTitle() {
         if (this.props.movieListMain) {
@@ -28,14 +28,15 @@ class MovieList extends Component {
      }
      return (
          <MovieItem
-             title={item.title}
-             original_title={item.original_title}
+             title={item.title || item.name}
+             original_title={item.original_title || item.original_name}
              overview={item.overview}
              voteAverage={item.vote_average}
              poster={item.poster_path}
-             date={item.release_date}
+             date={item.release_date || item.first_air_date}
              key={index}
              id={item.id}
+             typeList={this.props.typeList}
          />
      );
  };
@@ -65,9 +66,8 @@ class MovieList extends Component {
          );
      } 
      return null;
-			
  }
 }
 
 
-export default (MovieList);
+export default (MediaList);

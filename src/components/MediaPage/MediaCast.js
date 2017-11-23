@@ -11,17 +11,15 @@ const SwiperParams = {
         draggable: true
     },
     slidesPerView: 8,
-    spaceBetween: 20,
-    mousewheel: {
-        sensitivity: 150
-    }
+    spaceBetween: 20
+
 };
-const MovieCast = (movie) => (
+const MediaCast = (movie) => (
     <div className="credits">
         <div className="cast">
             <h2 className="cast__title">В ролях</h2>
 
-            <Swiper {...SwiperParams}  shouldSwiperUpdate={true}>
+            <Swiper {...SwiperParams}  shouldSwiperUpdate={true} mousewheel={movie.cast.length>7 ?{sensitivity: 150} : false}>
                 {movie.cast.map((actor, indx) =>
                     (<Link to={'/person/'+ friendlyUrl(actor.name)+ '-' + actor.id} className="actor" key={indx}>
                         <div className="actor__img" style={{backgroundImage: actor.profile_path ? 'url(https://image.tmdb.org/t/p/w185/' + actor.profile_path + ')': 'url('+ NoImg + ')'}} />
@@ -39,4 +37,4 @@ const MovieCast = (movie) => (
     </div>
 );
 
-export default (MovieCast);
+export default (MediaCast);

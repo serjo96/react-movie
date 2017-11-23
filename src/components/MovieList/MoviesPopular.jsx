@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
 import { movieListPopular } from '../../actions/movies-action';
 import { connect } from 'react-redux';
-import MovieList from './MoviesList';
+import MovieList from '../MediaList/MediaList';
 
 
 class MoviesPopular extends Component {
@@ -89,7 +89,7 @@ class MoviesPopular extends Component {
 			    </Helmet>
 			    {PopMovies.isFetching ?
 			    <div className="movies-content">
-					    <MovieList movieListTitle={'Популярные фильмы'} movieList={PopMovies}/>
+					    <MovieList movieListTitle={'Популярные фильмы'} movieList={PopMovies} typeList='movie'/>
 					    {PopMovies.data.total_pages > 1 ?
 					    <div className="pager-btns clearfix">
 						    {PopMovies.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
@@ -103,7 +103,7 @@ class MoviesPopular extends Component {
 
 function mapStateToProps(state) {
     return {
-        PopMovies: state.PopMovies
+        PopMovies: state.movies.PopMovies
     };
 }
 

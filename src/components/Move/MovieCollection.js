@@ -1,5 +1,6 @@
 import React from 'react';
-import MovieItem from './MovieItem';
+import PropTypes from 'prop-types';
+import MovieItem from '../MediaList/MediaItem';
 
 const MovieCollection = (movie) => (
     <div className="collection" style={{backgroundImage: 'url(https://image.tmdb.org/t/p/original' + (Math.round(Math.random()) ? (movie.collection.backdrop_path || movie.collection.poster_path) : (movie.collection.poster_path || movie.collection.backdrop_path)) + ')'}}>
@@ -24,6 +25,7 @@ const MovieCollection = (movie) => (
                             poster={el.poster_path}
                             id={el.id}
                             key={index}
+                            typeList='movie'
                         />)
                     )}
                 </div>
@@ -31,5 +33,10 @@ const MovieCollection = (movie) => (
         </div>
     </div>
 );
+
+
+MovieCollection.propTypes = {
+	collection: PropTypes.object
+};
 
 export default (MovieCollection);

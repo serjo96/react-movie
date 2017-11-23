@@ -21,6 +21,7 @@
     "has-flag": "^2.0.0",
     "imdb-api": "^3.1.2",
     "node-sass": "^4.6.0",
+    "prop-types": "^15.6.0",
     "react": "^15.6.2",
     "react-addons-update": "^15.6.2",
     "react-collapse": "^4.0.3",

@@ -1,5 +1,4 @@
 import {UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, SEARCH_VALUE, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA, SEARCH_MOVIE, CLEAR_SEARCH} from '../constants';
-
 import * as axios from 'axios';
 
 

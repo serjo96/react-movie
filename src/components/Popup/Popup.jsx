@@ -6,9 +6,9 @@ class Popup extends Component {
 	    setTimeout(()=>  this.showModal(), 500);
     }
 
-	showModal = (e)=>{
-		document.querySelector('.popup__content').classList.remove('popup--is-hide');
-	}
+
+	 showModal = (e)=> document.querySelector('.popup__content').classList.remove('popup--is-hide');
+
 
  render() {
      return (
@@ -18,8 +18,6 @@ class Popup extends Component {
      );
  }
 }
-
-
 
 
 export default  (Popup);
