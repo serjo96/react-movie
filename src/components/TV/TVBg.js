@@ -39,17 +39,13 @@ const TVBg = (tv) => (
                                 <div className="summary-item__title">Продолжиельность серий</div>
                                 <div className="summary-item__number">{tv.runtime.length > 1 ?  'от ' + tv.runtime.sort()[0] + ' до ' + tv.runtime.sort()[tv.runtime.length-1] + ' мин' : tv.runtime + ' мин'}</div>
                             </div>
-                            {/*<div className="summary-item">*/}
-                                {/*<div className="summary-item__title">Дата выхода</div>*/}
-                                {/*<div className="summary-item__number">{friendlyData(tv.first_air_date)}</div>*/}
-                            {/*</div>*/}
                             <div className="summary-item">
                                 <div className="summary-item__title">Количество сезонов</div>
                                 <div className="summary-item__number">{tv.number_of_seasons ? tv.number_of_seasons : '-'}</div>
                             </div>
                             <div className="summary-item">
                                 <div className="summary-item__title">Последняя серия</div>
-                                <div className="summary-item__number">{tv.seasons.length > 0 ? tv.seasons[tv.seasons.length-1].season_number + ' сезон ' + tv.seasons[tv.seasons.length-1].episode_count + ' серия' : '-'}</div>
+                                <div className="summary-item__number">{tv.seasons.length > 0 ? tv.seasons[tv.seasons.length-1].air_date !== null ? tv.seasons[tv.seasons.length-1].season_number + ' сезон ' + tv.seasons[tv.seasons.length-1].episode_count + ' серия' : tv.seasons[tv.seasons.length-2].season_number + ' сезон ' + tv.seasons[tv.seasons.length-2].episode_count + ' серия' : '-'}</div>
                             </div>
                             <div className="summary-item">
                                 <div className="summary-item__title">Статус</div>

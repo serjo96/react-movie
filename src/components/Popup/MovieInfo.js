@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-
-
 class MoviePopup extends Component   {
     constructor(props) {
         super(props);
@@ -14,7 +12,6 @@ class MoviePopup extends Component   {
             tooltipElem = this.toltip,
 		    left = target.offsetLeft + target.offsetWidth,
             top = target.offsetTop;
-
 
 
         if (left < 0) {

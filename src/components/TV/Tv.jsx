@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-
 import { connect } from 'react-redux';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import YouTube  from 'react-youtube';
 import Popup from '../Popup/Popup';
 import Lightbox from 'react-image-lightbox';
@@ -100,9 +99,9 @@ class TV extends Component {
 				 }
 		    };
     	let tv = this.props.tv.data,
-		    images = this.props.tv.images;
+		    images = this.props.tv.images,
+		    seasons = this.props.tv.sortSeasons;
 	    if (this.props.tv.isFetching) {
-	    	console.log(this.props.match)
 	        return (
 		            <div className="movie">
 			            <Helmet>
@@ -171,9 +170,9 @@ class TV extends Component {
 				            </div>
 			            </div>
 
-			            <Switch>
-			            <Route path={'/tv/:id/season-:season_number'} component={TVSeason}/>
-			            </Switch>
+
+			            <Route path={`${this.props.match.url}/season-:season_number`} component={TVSeason}/>
+
 
 			            {tv.similar.total_results >0 ? <MediaRecommendations recommendations={tv.similar} listName='Похожие сериалы' typeList="tv"/> : null }
 
@@ -184,14 +183,9 @@ class TV extends Component {
 				            <div className="container">
 					            <h2 className='tv-seasons__title'>Сезоны</h2>
 					            <div className="seasons-list">
-							            {tv.seasons.sort((a,b)=> {
-								            if( a.season_number === 0) return 1;
-								            if( b.season_number === 0) return -1;
-								            if(new Date(a.season_number) === new Date(b.season_number)) return 0;
-								            return new Date(a.season_number) < new Date(b.season_number) ? -1 : 1;
-							            }).map((el, indx)=>
+							            {seasons.map((el, indx)=>
 								            <div className="season" key={indx}>
-									            <Link to={`${this.props.location.pathname}/season-${el.season_number}`}>
+									            <Link to={`${this.props.match.url}/season-${el.season_number}`}>
 										            <img src={el.poster_path ? 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + el.poster_path : NoImg} alt=""/>
 										            <div className="season-number">{el.season_number>0 ? el.season_number + ' сезон': 'special'}</div>
 									            </Link>

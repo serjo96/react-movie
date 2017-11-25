@@ -47,7 +47,6 @@ class Search extends Component {
 
 	 onKeyDown = (e) => {
 	    if (e.keyCode === 13) {
-	        console.log(e);
 		    this.setState({visabilityResult: true});
 		    this.props.onInput(e);
 	    }

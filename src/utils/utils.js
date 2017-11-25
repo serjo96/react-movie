@@ -78,3 +78,9 @@ export function formatTime( minutes ) {
     return h.toString() + ' ' + declOfNum(h.toString(),['час', 'часа', 'часов']) + ' ' + (m<10?'0':'') + m.toString();
 }
 
+export function sortSeasons( a, b ) {
+	if( a.season_number === 0) return 1;
+	if( b.season_number === 0) return -1;
+	if(new Date(a.season_number) === new Date(b.season_number)) return 0;
+	return new Date(a.season_number) < new Date(b.season_number) ? -1 : 1;
+}

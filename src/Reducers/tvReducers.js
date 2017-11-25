@@ -25,11 +25,18 @@ export default function TVs(state = initialState, action) {
     switch (action.type) {
 
         case TV_DATA:
+	        let seasons = action.data.seasons.slice().sort((a,b) => {
+		        if( a.season_number === 0) return 1;
+		        if( b.season_number === 0) return -1;
+		        if(new Date(a.season_number) === new Date(b.season_number)) return 0;
+		        return new Date(a.season_number) < new Date(b.season_number) ? -1 : 1;
+	        });
             return update(state, {
                 TvData: {$merge: {
                     isFetching: true,
                     data: action.data,
-	                images: action.data.images.backdrops.concat(action.data.images.posters)
+	                images: action.data.images.backdrops.concat(action.data.images.posters),
+	                sortSeasons: seasons
                 }
                 }
             });

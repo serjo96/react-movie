@@ -22,7 +22,7 @@ const MovieAside = (tv) => (
                 <div>{tv.first_air_date ? friendlyData(tv.first_air_date): '-'}</div>
                 <div>-</div>
 
-                <div>{!tv.in_production ? tv.last_air_date : friendlyData(tv.last_air_date)? '-' : '...'}</div>
+                <div>{!tv.in_production ? tv.last_air_date : friendlyData(tv.last_air_date)? '...' : '...'}</div>
 
             </div>
 
