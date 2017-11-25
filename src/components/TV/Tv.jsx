@@ -170,9 +170,7 @@ class TV extends Component {
 				            </div>
 			            </div>
 
-
 			            <Route path={`${this.props.match.url}/season-:season_number`} component={TVSeason}/>
-
 
 			            {tv.similar.total_results >0 ? <MediaRecommendations recommendations={tv.similar} listName='Похожие сериалы' typeList="tv"/> : null }
 

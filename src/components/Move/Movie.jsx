@@ -59,7 +59,7 @@ class Movie extends Component {
 
  sendRequest = (id = this.props.match.params.id) =>{
      let movieId = id.split('-');
-     this.props.loadTvData(movieId.pop());
+     this.props.loadMovieData(movieId.pop());
  };
 
 	 showTrailerModal = (e) =>{

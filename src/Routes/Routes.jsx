@@ -22,12 +22,12 @@ class Routes extends Component {
                 <Route exact path="/movies/playing" component={MoviePlaying} />
                 <Route exact path="/movies/top" component={MoviesTop} />
                 <Route exact path="/movies/popular" component={MoviesPopular} />
-                <Route exact path="/movie/:urlRusLat" component={Movie} />
+                <Route exact path="/movie/:id" component={Movie} />
                 <Route exact path="/tv/airing" component={TVAiring} />
                 <Route exact path="/tv/popular" component={TvPopular} />
                 <Route exact path="/tv/top" component={TvTop} />
                 <Route exact path="/tv/onAir" component={TVonTheAir} />
-                <Route exact path="/tv/:id" component={TV} />
+                <Route path="/tv/:id" component={TV} />
             </Switch>
         )
     }

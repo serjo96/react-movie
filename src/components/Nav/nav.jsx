@@ -2,31 +2,26 @@ import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import {Collapse} from 'react-collapse';
 
-export default class Nav extends React.PureComponent {
+export default class Nav extends Component {
     constructor(props) {
         super(props);
         this.state = {
             firstCollapse: true,
-            secondCollapse: false,
-            reRender: false
+            secondCollapse: false
         };
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.location.pathname !== prevProps.location.pathname) {
-		    this.reRender();
-        }
-    }
+	componentDidMount(){
+      if(this.props.location.pathname.split('/')[1] === 'tv'){
 
-    reRender = () => {
-        this.setState({reRender: !this.state.reRender});
+      }
     };
+
 
      collapseNav = (e) => {
          e.target.closest('.hasSubmenu').classList.toggle('hasSubmenu--open');
          this.setState({[e.target.name]: e.target.checked});
      };
-
 
 
 
