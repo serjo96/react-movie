@@ -3,17 +3,21 @@ import PropTypes from 'prop-types';
 import {declOfNum, kFormatter} from '../../utils/utils';
 
 const TVBg = (tv) => (
-    <div className="movie__bg" >
-        <div className="movie__cover img-loading" style={{backgroundImage: 'url(https://image.tmdb.org/t/p/original' + (tv.backdrop || tv.poster) + ')'}}/>
-        <img src={'https://image.tmdb.org/t/p/original/' + (tv.backdrop || tv.poster)} alt={tv.title} onLoad={e=> document.querySelector('.movie__cover').classList.remove('img-loading')}/>
+    <div className="movie__bg">
+        <div className="movie__cover img-loading" style={{backgroundImage: 'url(https://image.tmdb.org/t/p/original' + (tv.bg.backdrop || tv.bg.poster) + ')'}}/>
+        <img src={'https://image.tmdb.org/t/p/original/' + (tv.bg.backdrop || tv.bg.poster)} alt={tv.title} onLoad={e=> document.querySelector('.movie__cover').classList.remove('img-loading')}/>
         <div className="movie-info">
             <div className="shadow-base">
 
                 <div className="container">
                     <div className="movie__summary">
-                        <h1 className="movie__title">
-                            <div className="ru-title">{tv.title}</div>
-                            <div className="original-title">{tv.original_title === tv.title ? null : tv.original_title}</div>
+                        <h1 className={`movie__title ${tv.titles.seasonTitle !== null ? 'movie__title--tv-season': ''}`}>
+                            <div className="ru-title">{tv.titles.title}</div>
+                            <div className="original-title">{tv.titles.original_title === tv.titles.title ? null : tv.titles.original_title}</div>
+                            {tv.titles.seasonTitle !== null ?
+                                <div className="season-title">{tv.titles.seasonTitle}</div>
+                            :null}
+
                         </h1>
                         <span className="movie__year">{tv.first_air_date ? tv.first_air_date.substring(0, 4): '-'}</span>
                         <div className="tangle">{tv.tagline}</div>
@@ -45,7 +49,7 @@ const TVBg = (tv) => (
                             </div>
                             <div className="summary-item">
                                 <div className="summary-item__title">Последняя серия</div>
-                                <div className="summary-item__number">{tv.seasons.length > 0 ? tv.seasons[tv.seasons.length-1].air_date !== null ? tv.seasons[tv.seasons.length-1].season_number + ' сезон ' + tv.seasons[tv.seasons.length-1].episode_count + ' серия' : tv.seasons[tv.seasons.length-2].season_number + ' сезон ' + tv.seasons[tv.seasons.length-2].episode_count + ' серия' : '-'}</div>
+                                <div className="summary-item__number">{tv.seasons.length > 0 ? tv.seasons[tv.seasons.length-1].air_date !== null ? tv.seasons[tv.seasons.length-1].season_number + ' сезон ' + tv.seasons[tv.seasons.length-1].episode_count + ' серия' : tv.seasons[tv.seasons.length-1].season_number + ' сезон ' + tv.seasons[tv.seasons.length-1].episode_count + ' серия' : '-'}</div>
                             </div>
                             <div className="summary-item">
                                 <div className="summary-item__title">Статус</div>

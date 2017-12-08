@@ -36,6 +36,7 @@ class MediaList extends Component {
              date={item.release_date || item.first_air_date}
              key={index}
              id={item.id}
+             genres={item.genre_ids}
              typeList={this.props.typeList}
          />
      );
@@ -64,7 +65,7 @@ class MediaList extends Component {
 
              </div>
          );
-     } 
+     }
      return null;
  }
 }

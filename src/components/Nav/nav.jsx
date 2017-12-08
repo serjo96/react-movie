@@ -11,18 +11,10 @@ export default class Nav extends Component {
         };
     }
 
-	componentDidMount(){
-      if(this.props.location.pathname.split('/')[1] === 'tv'){
-
-      }
-    };
-
-
      collapseNav = (e) => {
-         e.target.closest('.hasSubmenu').classList.toggle('hasSubmenu--open');
+	     e.target.closest('.hasSubmenu').classList.toggle('hasSubmenu--open');
          this.setState({[e.target.name]: e.target.checked});
      };
-
 
 
      render() {
@@ -65,7 +57,7 @@ export default class Nav extends Component {
                          </Collapse>
                      </li>
                      <li className="hasSubmenu active">
-                         <div className="nav__element hasSubmenu-trigger js--submenuTrigger">
+                         <div className="nav__element hasSubmenu-trigger js--submenuTrigger tv-collapse-trigger">
                              <span>Сериалы</span>
                              <i className="fa fa-television"/>
                              <input name="secondCollapse" type="checkbox" onChange={e=> this.collapseNav(e)}/>

@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 import { urlRusLat } from '../../utils/utils';
 import NoImg from '../../img/NoImg.png';
 import MovieInfo from '../Popup/MovieInfo';
-
+import Spinner from '../Spinner/Spinner';
 
 class MediaItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            popup: false
+            popup: false,
+            imgStatus: true
         };
         this.el = null;
     }
@@ -27,6 +28,11 @@ class MediaItem extends Component {
      });
  };
 
+ onLoadImg = (e) =>{
+     e.target.classList.remove('img-loading');
+     this.setState({imgStatus: false});
+ };
+
 
  render() {
      return (
@@ -34,9 +40,11 @@ class MediaItem extends Component {
              <div className="movie-item__data">
                  <Link to={'/' + this.props.typeList + '/' + urlRusLat(this.props.title) + '-' + this.props.id}>
                      <div className="movie-item__poster">
-                         <img src={this.props.poster ? 'https://image.tmdb.org/t/p/w600_and_h900_bestv2' + this.props.poster : NoImg} alt={this.props.title}/>
+                         <img className="img-loading" onLoad={this.onLoadImg} src={this.props.poster ? 'https://image.tmdb.org/t/p/w600_and_h900_bestv2' + this.props.poster : NoImg} alt={this.props.title}/>
+                         {this.state.imgStatus ? <Spinner/>: null}
                      </div>
                      <div className="movie-item__title">{this.props.title}</div>
+                     {this.props.job ? <div className="movie-item__crew">{this.props.job}</div> : null}
                  </Link>
              </div>
              {this.state.popup ?
@@ -47,6 +55,8 @@ class MediaItem extends Component {
                      overview={this.props.overview}
                      voteAverage={this.props.voteAverage}
                      el={this.el}
+                     typeItem={this.props.typeList}
+		             genres={this.props.genres}
 	             /> : null}
          </div>
      );

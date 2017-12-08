@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
-import { movieListPopular } from '../../actions/movies-action';
+import { movieListPopular } from '../../actions/movies-actions';
 import { connect } from 'react-redux';
 import MovieList from '../MediaList/MediaList';
 
@@ -47,12 +47,16 @@ class MoviesPopular extends Component {
     prevPage = () => {
 	    if (this.props.PopMovies.data.page > 1) {
 		    if (this.props.PopMovies.data.page <= 3) {
-			    this.props.history.push('/movies/top');
+			    this.props.history.push('/movies/popular');
 		    } else {
-			    this.props.history.push('/movies/top?page=' + (this.props.PopMovies.data.page-3));
+			    if (this.props.PopMovies.data.page >= 7) {
+				    this.props.history.push(`/movies/popular?page=${this.props.PopMovies.data.page - 4}`);
+			    } else{
+				    this.props.history.push(`/movies/popular?page=${this.props.PopMovies.data.page - 3}`);
+			    }
 		    }
 	    } else {
-		    this.props.history.push('/movies/top');
+		    this.props.history.push(`/movies/popular${this.props.PopMovies.data.page+1}`);
 	    }
     };
 
@@ -69,6 +73,7 @@ class MoviesPopular extends Component {
     };
 
 	 scrollStep = () => {
+
 	     if (window.pageYOffset === 0) {
 	         clearInterval(this.state.intervalId);
 	     }
@@ -83,7 +88,7 @@ class MoviesPopular extends Component {
  render() {
 	 let { PopMovies } = this.props;
 	    return (
-		    <main className="main">
+		    <main className="main main--media-list">
 			    <Helmet>
 				    <title>Популярные фильмы</title>
 			    </Helmet>
@@ -92,7 +97,7 @@ class MoviesPopular extends Component {
 					    <MovieList movieListTitle={'Популярные фильмы'} movieList={PopMovies} typeList='movie'/>
 					    {PopMovies.data.total_pages > 1 ?
 					    <div className="pager-btns clearfix">
-						    {PopMovies.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
+						    {PopMovies.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
 						    {PopMovies.data.page+1 < PopMovies.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
 					    </div> : null}
 			    </div> : null}
@@ -103,7 +108,7 @@ class MoviesPopular extends Component {
 
 function mapStateToProps(state) {
     return {
-        PopMovies: state.movies.PopMovies
+        PopMovies: state.Movies.PopMovies
     };
 }
 

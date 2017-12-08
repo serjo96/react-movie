@@ -47,12 +47,16 @@ class TvPopular extends Component {
     prevPage = () => {
 	    if (this.props.PopTv.data.page > 1) {
 		    if (this.props.PopTv.data.page <= 3) {
-			    this.props.history.push('/tv/top');
+			    this.props.history.push('/tv/popular');
 		    } else {
-			    this.props.history.push('/tv/top?page=' + (this.props.PopTv.data.page-3));
+			    if (this.props.PopTv.data.page >= 7) {
+			        this.props.history.push('/tv/popular?page=' + (this.props.PopTv.data.page-4));
+			    } else {
+				    this.props.history.push('/tv/popular?page=' + (this.props.PopTv.data.page-3));
+			    }
 		    }
 	    } else {
-		    this.props.history.push('/tv/top');
+		    this.props.history.push('/tv/popular');
 	    }
     };
 
@@ -83,7 +87,7 @@ class TvPopular extends Component {
  render() {
 	 let { PopTv } = this.props;
 	    return (
-		    <main className="main">
+		    <main className="main main--media-list">
 			    <Helmet>
 				    <title>Популярные сериалы</title>
 			    </Helmet>
@@ -92,7 +96,7 @@ class TvPopular extends Component {
 					    <MediaList movieListTitle={'Популярные сериалы'} movieList={PopTv} typeList='tv'/>
 					    {PopTv.data.total_pages > 1 ?
 					    <div className="pager-btns clearfix">
-						    {PopTv.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
+						    {PopTv.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
 						    {PopTv.data.page+1 < PopTv.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
 					    </div> : null}
 			    </div> : null}

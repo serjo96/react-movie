@@ -25,6 +25,7 @@ const MovieCollection = (movie) => (
                             poster={el.poster_path}
                             id={el.id}
                             key={index}
+                            genres={el.genre_ids}
                             typeList='movie'
                         />)
                     )}

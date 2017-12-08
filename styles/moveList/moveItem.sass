@@ -19,10 +19,12 @@
 		display: block
 		width: 100%
 		height: auto
+		max-height: 362px
 	a
 		display: block
 
 .movie-item__poster
+	position: relative
 	transition: border .3s linear
 	border: 1px solid #272f46
 
@@ -50,4 +52,7 @@
 	font-size: 16px
 	color: #7f858c
 
+
+.movie-item__crew
+	@extend  .movie-item__title
 

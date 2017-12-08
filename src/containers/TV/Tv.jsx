@@ -2,18 +2,21 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
 import YouTube  from 'react-youtube';
-import Popup from '../Popup/Popup';
+import Popup from '../../components/Popup/Popup';
 import Lightbox from 'react-image-lightbox';
-import { onLoadTV, clearTvData, clearTvImages } from '../../actions/tv-actions';
+import { onLoadTV, clearTvData, clearTvImages, clearTvSeason } from '../../actions/tv-actions';
 import {Helmet} from 'react-helmet';
 import NoImg from '../../img/NoImg.png';
-import TVBg from './TVBg';
-import TVAside from './TVAside';
-import MediaStills from '../MediaPage/MediaStills';
-import MediaCast from '../MediaPage/MediaCast';
-import MediaRecommendations from '../MediaPage/MediaRecommendations';
-import TVSeason from './TVSeason';
-
+import Spinner from '../../components/Spinner/Spinner';
+import TVBg from '../../components/TV/TVBg';
+import TVAside from '../../components/TV/TVAside';
+import TVvideos from '../../components/TV/TVvideos';
+import TVseasons from '../../components/TV/TVseasons';
+import MediaStills from '../../components/MediaPage/MediaStills';
+import MediaCast from '../../components/MediaPage/MediaCast';
+import MediaRecommendations from '../../components/MediaPage/MediaRecommendations';
+import TVSeason from '../../components/TV/TVSeason';
+import  { ReactCSSTransitionGroup, CSSTransition }  from 'react-transition-group';
 
 class TV extends Component {
     constructor(props) {
@@ -24,7 +27,9 @@ class TV extends Component {
             lightBox: false,
             imgIndex: 0,
             imgCount: 11,
-            intervalId: 0
+	        imgStatus: true,
+            intervalId: 0,
+
         };
     }
 
@@ -77,6 +82,11 @@ class TV extends Component {
 	     });
 	 };
 
+	onLoadImg = (e) =>{
+		e.target.classList.remove('img-loading');
+		setTimeout(()=> this.setState({imgStatus: false}), 500);
+	};
+
 	scrollStep = () => {
 		if (window.pageYOffset === 0) {
 			clearInterval(this.state.intervalId);
@@ -89,6 +99,7 @@ class TV extends Component {
 		this.setState({ intervalId: intervalId });
 	};
 
+
   render() {
 	        const { imgIndex } = this.state;
 	        const YouTubeParams = {
@@ -100,19 +111,17 @@ class TV extends Component {
 		    };
     	let tv = this.props.tv.data,
 		    images = this.props.tv.images,
-		    seasons = this.props.tv.sortSeasons;
+		    seasons = this.props.tv.sortSeasons,
+		    bgImages = this.props.tv.bgImages;
 	    if (this.props.tv.isFetching) {
 	        return (
 		            <div className="movie">
 			            <Helmet>
 				            <title>{tv.name}</title>
 			            </Helmet>
-
 			            <TVBg
-				            title={tv.original_name}
-				            original_title={tv.name}
-				            backdrop={tv.backdrop_path}
-				            poster={tv.poster_path}
+				            titles={this.props.tv.tvTitles}
+				            bg={bgImages}
 				            runtime={tv.episode_run_time}
 				            seasons={tv.seasons}
 				            vote_count={tv.vote_count}
@@ -130,8 +139,7 @@ class TV extends Component {
 					            <TVAside
 						            title={tv.name}
 						            id={tv.id}
-						            poster={tv.poster_path}
-						            backdrop={tv.backdrop_path}
+						            bg={bgImages}
 						            created_by={tv.created_by}
 						            genres={tv.genres}
 						            keywords={tv.keywords.results}
@@ -141,61 +149,29 @@ class TV extends Component {
 						            first_air_date={tv.first_air_date}
 						            last_air_date={tv.last_air_date}
 						            in_production={tv.in_production}
+						            imgStatus={this.state.imgStatus}
+						            onLoadImg={this.onLoadImg}
 					            />
 
 					            <div className="overview">
+						            {this.props.tv.tvTitles.seasonTitle !== null ? <div className="prev-page-link"><Link to={this.props.match.url} onClick={this.props.clearTvSeason} className='link-angle link-angle--left'><i className="fa fa-angle-left" aria-hidden="true" /><span>На страницу сериала</span></Link></div>:null}
 						            <div className="description">
-							            <p className="description__text">{tv.overview}</p>
+							            <p className="description__text">{tv.overview ? tv.overview : 'Ой! Кажется описание к этому произведению отсутствует'}</p>
 						            </div>
-
-						            {tv.videos.results.length >0 ?
-							            <div className="trailer">
-								            <h2>{tv.videos.results.length === 1 ? 'Трейлер' : 'Трейлеры'}</h2>
-
-								            <div className="trailer__list">
-									            {tv.videos.results.map((video, indx)=>
-										            video.site === 'YouTube' &&
-										            <div className="trailer__preview" id={video.key} key={indx}>
-											            <div className="preview-base" onClick={this.showTrailerModal}><i className="fa fa-play" aria-hidden="true"/></div>
-											            <img src={'http://i3.ytimg.com/vi/' + video.key + '/mqdefault.jpg'} alt=""/>
-										            </div>)}
-								            </div>
-							            </div> : null}
+						            {tv.videos.results.length >0 ? <TVvideos videos={this.props.tv.tvVideos} onClick={this.showTrailerModal}/> : null}
+						            {this.props.tv.tvCredits.cast.length>0 ? <MediaCast cast={this.props.tv.tvCredits.cast}/>: null}
+						            <Route path={`${this.props.match.url}/season-:season_number`} component={TVSeason}/>
 
 
-						             <MediaStills images={images} title='Кадры из сериала' onClickImg={this.onClickImg}/>
-						             <MediaCast cast={tv.credits.cast}/>
+						            {images.length>0 ? <MediaStills images={images} title='Кадры из сериала' imgCount={16} onClickImg={this.onClickImg}/>: null}
 
 					            </div>
 				            </div>
 			            </div>
 
-			            <Route path={`${this.props.match.url}/season-:season_number`} component={TVSeason}/>
-
 			            {tv.similar.total_results >0 ? <MediaRecommendations recommendations={tv.similar} listName='Похожие сериалы' typeList="tv"/> : null }
-
-
-			            {tv.seasons.length>0 ? <div className="tv-seasons" style={images.length > 0? {backgroundImage:  'url(https://image.tmdb.org/t/p/original' +  images[Math.floor(Math.random() * images.length)].file_path  + ')'}: null}>
-				            <div className="bg-base"/>
-				            <div className="tv-seasons__data">
-				            <div className="container">
-					            <h2 className='tv-seasons__title'>Сезоны</h2>
-					            <div className="seasons-list">
-							            {seasons.map((el, indx)=>
-								            <div className="season" key={indx}>
-									            <Link to={`${this.props.match.url}/season-${el.season_number}`}>
-										            <img src={el.poster_path ? 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + el.poster_path : NoImg} alt=""/>
-										            <div className="season-number">{el.season_number>0 ? el.season_number + ' сезон': 'special'}</div>
-									            </Link>
-								            </div>
-							            )}
-					            </div>
-				            </div>
-				            </div>
-			            </div>: null}
-
+			            {tv.seasons.length>0 ? <TVseasons imgStatus={this.state.imgStatus} onLoadImg={this.onLoadImg} images={images} seasons={seasons} url={this.props.match.url} location={this.props.location.pathname}/>: null}
 			            {tv.recommendations.total_results >0 ? <MediaRecommendations recommendations={tv.recommendations} listName='Вам может понравиться' typeList="tv"/> : null }
-
 
 			            {this.state.lightBox ?
 				            <Lightbox
@@ -228,22 +204,23 @@ class TV extends Component {
 				            </div>:null}
 	                </div>
 	        );
-      } 
-		    return null;
-	    
+      }
+		    return  <Spinner />;
+
   }
 }
 
 function mapStateToProps(state) {
     return {
-        tv: state.TVs.TvData
+        tv: state.TVs.TvData,
     };
 }
 
 const mapDispatchToProps = (dispatch) => ({
     loadTvData: (id) => dispatch(onLoadTV(id)),
     clearTvData: () => dispatch(clearTvData()),
-	clearTvImages: () => dispatch(clearTvImages())
+	clearTvImages: () => dispatch(clearTvImages()),
+	clearTvSeason: () => dispatch(clearTvSeason()),
 });
 
 

@@ -21,7 +21,7 @@ const MediaCast = (movie) => (
 
             <Swiper {...SwiperParams}  shouldSwiperUpdate={true} mousewheel={movie.cast.length>7 ?{sensitivity: 150} : false}>
                 {movie.cast.map((actor, indx) =>
-                    (<Link to={'/person/'+ friendlyUrl(actor.name)+ '-' + actor.id} className="actor" key={indx}>
+                    (<Link to={`/person/${friendlyUrl(actor.name)}-${actor.id}`} className="actor" key={indx}>
                         <div className="actor__img" style={{backgroundImage: actor.profile_path ? 'url(https://image.tmdb.org/t/p/w185/' + actor.profile_path + ')': 'url('+ NoImg + ')'}} />
                         <div className="actor__info">
                             <div className="actor__name">{actor.name}</div>

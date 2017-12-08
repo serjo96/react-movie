@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux';
-import movies from './movieReducers';
+import General from './generalReducer';
+import Movies from './movieReducers';
 import TVs from './tvReducers';
+import Peoples from './personReducer';
 
 export default combineReducers({
-	movies,
-	TVs
+	General,
+	Movies,
+	TVs,
+	Peoples,
 });

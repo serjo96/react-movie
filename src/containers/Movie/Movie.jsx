@@ -2,15 +2,16 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import YouTube  from 'react-youtube';
 import Lightbox from 'react-image-lightbox';
-import { onLoadMovie, clearMovieData } from '../../actions/movies-action';
+import { onLoadMovie, clearMovieData } from '../../actions/movies-actions';
 import {Helmet} from 'react-helmet';
-import Popup from '../Popup/Popup';
-import MovieBG from './MovieBg';
-import MovieAside from './MovieAside';
-import MediaStills from '../MediaPage/MediaStills';
-import MediaCast from '../MediaPage/MediaCast';
-import MovieCollection from './MovieCollection';
-import MediaRecommendations from '../MediaPage/MediaRecommendations';
+import Popup from '../../components/Popup/Popup';
+import MovieBG from '../../components/Move/MovieBg';
+import MovieAside from '../../components/Move/MovieAside';
+import MediaStills from '../../components/MediaPage/MediaStills';
+import MediaCast from '../../components/MediaPage/MediaCast';
+import MovieCollection from '../../components/Move/MovieCollection';
+import MediaRecommendations from '../../components/MediaPage/MediaRecommendations';
+import Spinner from '../../components/Spinner/Spinner';
 
 
 class Movie extends Component {
@@ -22,11 +23,13 @@ class Movie extends Component {
 	        lightBox: false,
 	        imgIndex: 0,
 	        imgCount: 11,
+	        imgStatus: true,
 	        intervalId: 0
         };
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.match.params.id !== this.props.match.params.id) {
+	        this.props.clearMovieData();
             this.sendRequest(nextProps.match.params.id);
             this.scrollToTop();
         }
@@ -57,10 +60,10 @@ class Movie extends Component {
 	     this.setState({ intervalId: intervalId });
 	 };
 
- sendRequest = (id = this.props.match.params.id) =>{
-     let movieId = id.split('-');
-     this.props.loadMovieData(movieId.pop());
- };
+	 sendRequest = (id = this.props.match.params.id) =>{
+	     let movieId = id.split('-');
+	     this.props.loadMovieData(movieId.pop());
+	 };
 
 	 showTrailerModal = (e) =>{
 	     this.setState({
@@ -69,10 +72,10 @@ class Movie extends Component {
 	     });
 	 };
 
- closePopup = () =>{
-     document.querySelector('.popup__content').classList.add('popup--is-hide');
-     setTimeout(()=> this.setState({modalTrailer: false}), 500);
- };
+	 closePopup = () =>{
+	     document.querySelector('.popup__content').classList.add('popup--is-hide');
+	     setTimeout(()=> this.setState({modalTrailer: false}), 500);
+	 };
 
 	 _onReady = (event) => {
 	     event.target.pauseVideo();
@@ -84,6 +87,11 @@ class Movie extends Component {
 			 lightBox: !this.state.lightBox
 		 });
 	 };
+
+	onLoadImg = (e) =>{
+		e.target.classList.remove('img-loading');
+		setTimeout(()=> this.setState({imgStatus: false}), 500);
+	};
 
   render() {
   	const YouTubeParams ={
@@ -134,11 +142,13 @@ class Movie extends Component {
 							 keywords={movie.keywords.keywords}
 							 imdb_id={movie.imdb_id}
 							 production_countries={movie.production_countries}
+							 imgStatus={this.state.imgStatus}
+							 onLoadImg={this.onLoadImg}
 						 />
 
 						 <div className="overview">
 							 <div className="description">
-								 <p className="description__text">{movie.overview}</p>
+								 <p className="description__text">{movie.overview ? movie.overview : 'Ой! Кажется описание к этому произведению отсутствует'}</p>
 							 </div>
 
 							 {movie.videos.results.length >0 ?
@@ -156,13 +166,13 @@ class Movie extends Component {
 								 </div> : null}
 
 
-							 <MediaStills images={images} title="Кадры из фильма" onClickImg={this.onClickImg}/>
 							 <MediaCast cast={movie.credits.cast}/>
+							 <MediaStills images={images} title="Кадры из фильма" imgCount={16} onClickImg={this.onClickImg}/>
 
 						 </div>
 					 </div>
 				 </div>
-				 {movie.belongs_to_collection ?
+				 {movie.belongs_to_collection && movie.collection.parts.length>0 ?
 					 <MovieCollection collection={movie.collection}/>
 				 	: null
 				 }
@@ -202,21 +212,21 @@ class Movie extends Component {
 			 </div>
 	        );
       }
-		    return null;
+		    return <Spinner/>;
 	    
   }
 }
 
 function mapStateToProps(state) {
     return {
-        movie: state.movies.MovieData,
-	    crew: state.movies.MovieData.crew
+        movie: state.Movies.MovieData,
+	    crew: state.Movies.MovieData.crew
     };
 }
 
 const mapDispatchToProps = (dispatch) => ({
     loadMovieData: (id) => dispatch(onLoadMovie(id)),
-    clearMovieData: () => dispatch(clearMovieData())
+    clearMovieData: () => dispatch(clearMovieData()),
 });
 
 

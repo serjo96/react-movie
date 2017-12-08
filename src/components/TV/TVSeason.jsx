@@ -1,19 +1,97 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { onSeasonTV, clearTvSeason } from '../../actions/tv-actions';
+import {friendlyData, kFormatter, declOfNum } from '../../utils/utils';
+import NoImg from '../../img/NoImg.png';
 
+class TVSeason extends Component {
+    constructor( props ) {
+        super(props);
+        this.state = {
+            imgCount: 11
+        };
+    }
 
-export default class TVSeason extends Component {
-	constructor( props ) {
-		super(props);
-		this.state = {
-			imgCount: 11
-		};
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.match.params.season_number !== this.props.match.params.season_number) {
+            this.sendRequest(this.props.match.url, nextProps.match.params.season_number);
+	        window.scroll(0,0);
+        }
+    }
+
+	componentWillUnmount() {
+		this.props.clearTvSeason();
 	}
+
+    componentDidMount() {
+	    window.scroll(0, 0);
+        this.sendRequest();
+    }
+
+	 sendRequest = (id = this.props.match.url, season = this.props.match.params.season_number ) =>{
+	     let tvUrl = id.split('-'),
+	         tvID = parseInt(tvUrl[1]),
+	         tvSeason = parseInt(season);
+		 this.props.loadSeasonTv(tvID, tvSeason);
+	 };
+
+
 	render() {
-		return (
-			<div className="stills">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur autem consectetur corporis earum error, est ex ipsum itaque laborum, non obcaecati officiis perspiciatis quaerat recusandae soluta sunt vel voluptates. Ab accusantium aliquam, aliquid amet blanditiis consequatur corporis culpa cupiditate deserunt dolor dolore error illo iure nobis obcaecati quae saepe soluta ullam velit voluptas. Dolore facere quod voluptatem? Aliquid, assumenda, fugiat harum ipsum labore nam nobis nulla odit quam sint tempora temporibus totam voluptatum. Alias amet, ea eos, est laudantium nam non numquam optio quas quia quod sed unde? Accusamus accusantium alias asperiores at atque cupiditate debitis deserunt dignissimos earum enim est excepturi explicabo facilis fuga fugit harum iste laboriosam maiores mollitia nam natus nesciunt nisi nobis non numquam odit officiis pariatur perspiciatis possimus quod reiciendis repellat reprehenderit saepe temporibus totam, ut vel. Ad commodi dignissimos quae quasi qui rem sint suscipit temporibus voluptas voluptatibus. Aperiam corporis dolores est eveniet laboriosam laudantium nulla pariatur reiciendis temporibus ut? A animi debitis doloremque, nemo rerum veniam voluptate? Ab atque cum deleniti deserunt dolorem enim exercitationem facilis iusto, labore laboriosam modi nam nesciunt qui quis sapiente totam, voluptatem! Aliquid, aperiam assumenda commodi, deserunt eveniet fugiat ipsum magnam numquam porro, quaerat qui quod repudiandae veritatis. Ab architecto atque autem consequuntur culpa cum ea esse est et fugiat hic, in omnis perspiciatis ratione reiciendis sit sunt suscipit voluptas voluptatem voluptatibus. A ad consectetur corporis expedita id illo ipsa maiores molestias nostrum, obcaecati optio possimus quis rem temporibus, tenetur. Amet dolor est id nam sit veritatis voluptatem! Aliquam atque aut autem consequatur cum eaque, eligendi enim error et fugit illo ipsa ipsam labore laudantium magnam maxime mollitia nesciunt non omnis perferendis porro praesentium qui quia quo quod quos recusandae sapiente soluta sunt tenetur velit veniam voluptates voluptatibus! Consequuntur dolores, dolorum ea eligendi est, eveniet harum incidunt molestias nobis officia quidem quod tenetur veniam vitae voluptatum. Atque consequuntur deleniti enim eos id nam quae ratione reiciendis similique, vero. Alias ea eveniet excepturi necessitatibus quo ratione vero! Adipisci assumenda cumque cupiditate debitis distinctio doloribus ea eligendi error et exercitationem fugit in inventore maxime minima neque odit pariatur perferendis placeat porro, possimus praesentium quo quos reprehenderit rerum sed tempore voluptatibus! Ad assumenda blanditiis delectus deserunt eum fuga, fugiat, inventore nesciunt provident quaerat reiciendis ut vel. Aliquam aliquid asperiores assumenda aut, consectetur deleniti eligendi, expedita fugiat inventore magni maiores officia pariatur placeat quae voluptas? Doloremque eum excepturi, expedita fugiat impedit laboriosam libero minus officia quae rem sed tenetur vel vitae. Aliquam commodi consectetur, deleniti dicta ducimus, facilis inventore obcaecati praesentium quidem quo rem similique. Architecto asperiores assumenda at beatae corporis cum cupiditate deserunt distinctio dolores eaque esse eum hic impedit, laudantium natus necessitatibus officia perferendis placeat quaerat, quasi quia quidem quis quos, recusandae repellendus reprehenderit temporibus totam. Assumenda aut culpa eius iusto soluta ut voluptatibus. Cupiditate inventore laborum neque perferendis quam quia repellat sed vel velit. Aliquam aperiam architecto, assumenda atque consectetur, deleniti ex illo incidunt laborum molestias nesciunt obcaecati odit quisquam quo ratione recusandae reprehenderit ullam voluptatum! Accusamus architecto corporis, distinctio eaque impedit perspiciatis unde.
-			</div>
-		);
+        let {season} = this.props;
 
-	}
+         return (
+             <div className="season">
+	             {season.isFetching ?
+		             <div className="season__wrapper">
+
+			             <div className='season__number-series'>{`${season.data.episodes.length} ${season.data.episodes.length > 1 ? 'серий' : 'серия'}`}</div>
+			             <div className="episodes-list">
+				             {season.data.episodes.map((el, indx)=>(
+				             	<div className="episodes-list__episode episode" key={indx}>
+					                <div className="episode__img" style={{backgroundImage: `url(${el.still_path ? `https://image.tmdb.org/t/p/original${el.still_path})` : NoImg}`}}/>
+					                <div className="episode__data">
+						                <div className="episode__header">
+							                <div className="episode-header--left">
+								                <div className="episode__title">
+									                <div className="episode__number">{`${el.season_number}x${el.episode_number}`}</div>
+									                <div className="episode__name"> {el.name}</div>
+								                </div>
+								                <div className="episode__date">{`Дата выхода ${el.air_date ? friendlyData(el.air_date) : '-'}`}</div>
+							                </div>
+							                <div className="episode-header--right">
+								                <div className="rating">
+									                <div className={'icon fa fa-heart rating-' + Math.ceil(el.vote_average)}/>
+									                <div className="vote-numbers">
+										                <div className="rating__vote-count">{el.vote_average.toString().substring(0, 3)} из 10</div>
+										                <div className="rating__count">{kFormatter(el.vote_count)} {declOfNum(el.vote_count, ['голос', 'голоса', 'голосов'])}</div>
+									                </div>
+								                </div>
+							                </div>
+						                </div>
+						                <div className="episode__overview">{el.overview ? el.overview : 'Описание к этой серии еще не добавлено.'}</div>
+					                </div>
+					                </div>
+					             ))}
+			             </div>
+		             </div>
+		             :null}
+             </div>
+
+         );
+ }
 }
+
+function mapStateToProps(state) {
+    return {
+        season: state.TVs.TvSeason
+    };
+}
+
+const mapDispatchToProps = (dispatch) => ({
+    loadSeasonTv: (id, season) => dispatch(onSeasonTV(id, season)),
+	clearTvSeason: () => dispatch(clearTvSeason())
+
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TVSeason);

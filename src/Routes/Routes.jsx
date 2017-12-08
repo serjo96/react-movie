@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {  Route, Switch } from 'react-router-dom';
 import Main from '../containers/main/Main';
-import Movie from '../components/Move/Movie';
+import Movie from '../containers/Movie/Movie';
 import MovieUpcoming from '../components/MovieList/MoviesUpcoming';
 import MoviePlaying from '../components/MovieList/MoviesPlaying';
 import MoviesTop from '../components/MovieList/MoviesTop';
@@ -10,7 +10,9 @@ import TVAiring from '../components/TvLists/TVAiring';
 import TvPopular from '../components/TvLists/TvPopular';
 import TvTop from '../components/TvLists/TVTop';
 import TVonTheAir from '../components/TvLists/TVonTheAir';
-import TV from '../components/TV/Tv';
+import TV from '../containers/TV/Tv';
+import People from '../components/Person/Person';
+import Search from '../containers/search/Search';
 
 
 class Routes extends Component {
@@ -27,7 +29,9 @@ class Routes extends Component {
                 <Route exact path="/tv/popular" component={TvPopular} />
                 <Route exact path="/tv/top" component={TvTop} />
                 <Route exact path="/tv/onAir" component={TVonTheAir} />
+                <Route exact path="/person/:id" component={People} />
                 <Route path="/tv/:id" component={TV} />
+                <Route path="/search" component={Search} />
             </Switch>
         )
     }

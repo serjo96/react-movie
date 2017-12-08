@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { movieListTop } from '../../actions/movies-action';
+import { movieListTop } from '../../actions/movies-actions';
 import {Helmet} from 'react-helmet';
 import { connect } from 'react-redux';
 import MovieList from '../MediaList/MediaList';
@@ -50,7 +50,11 @@ class MoviesTop extends Component {
 	     if (this.props.TopMovies.data.page <= 3) {
 		     this.props.history.push('/movies/top');
 	     } else {
-	         this.props.history.push('/movies/top?page=' + (this.props.TopMovies.data.page-3));
+		     if (this.props.TopMovies.data.page >= 7) {
+			     this.props.history.push(`/movies/top?page=${this.props.TopMovies.data.page - 4}`);
+		     } else {
+			     this.props.history.push(`/movies/top?page=${this.props.TopMovies.data.page - 3}`);
+		     }
          }
      } else {
          this.props.history.push('/movies/top');
@@ -84,7 +88,7 @@ class MoviesTop extends Component {
  render() {
      let { TopMovies } = this.props;
      return (
-	     <main className="main">
+	     <main className="main main--media-list">
              <Helmet>
                  <title>Топ фильмы</title>
              </Helmet>
@@ -93,7 +97,7 @@ class MoviesTop extends Component {
                      <MovieList movieListTitle={'Топ фильмы'} movieList={TopMovies} typeList='movie'/>
 	             {TopMovies.data.total_pages > 1 ?
                          <div className="pager-btns clearfix">
-			             {TopMovies.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
+			             {TopMovies.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
 			             {TopMovies.data.page+1 < TopMovies.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
                          </div> : null}
                  </div> : null}
@@ -105,7 +109,7 @@ class MoviesTop extends Component {
 
 function mapStateToProps(state) {
     return {
-        TopMovies: state.movies.TopMovies
+        TopMovies: state.Movies.TopMovies
     };
 }
 

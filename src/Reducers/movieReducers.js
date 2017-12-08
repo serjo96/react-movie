@@ -1,4 +1,7 @@
-import { UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, SEARCH_VALUE, SEARCH_MOVIE, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA, CLEAR_SEARCH} from '../constants';
+import {
+	UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA,
+	GENRES__MOVIE
+} from '../constants';
 import update from 'react-addons-update';
 
 
@@ -17,16 +20,11 @@ const initialState = {
     },
     PlayingMovies: {
         isFetching: false
-    },
-    SearchField: '',
-    SearchResult: {
-        isFetching: false
     }
 
 };
 
-export default function movies(state = initialState, action) {
-    console.log(action);
+export default function Movies(state = initialState, action) {
     switch (action.type) {
 	    case UPCOMING_MOVIES:
             return update(state, {
@@ -65,19 +63,6 @@ export default function movies(state = initialState, action) {
 			    }
 		    });
 
-	    case SEARCH_VALUE:
-		    return update(state, {
-			    SearchField: {$set: action.querySearch}
-		    });
-
-        case SEARCH_MOVIE:
-            return update(state, {
-                SearchResult: {$merge: {
-                    isFetching: true,
-                    data: action.querySearch
-                    }
-                }
-            });
 
 	    case MOVIE_DATA:
             return update(state, {
@@ -106,10 +91,6 @@ export default function movies(state = initialState, action) {
                 }
             });
 
-	    case CLEAR_SEARCH:
-		    return update(state, {
-			    $merge: {SearchField: ''}
-		    });
 
 
         default:

@@ -1,0 +1,75 @@
+.spinner-wrap
+	position: absolute
+	top: 0
+	left: 0
+	right: 0
+	bottom: 0
+	z-index: 150
+	width: 100%
+	height: 100%
+	background: #222
+	animation: fade-in 1s ease-in
+	overflow: hidden
+	display: flex
+	justify-content: center
+	align-items: center
+
+.spinner
+	display: block
+	position: relative
+	width: 150px
+	height: 150px
+	border-radius: 50%
+	border: 3px solid transparent
+	border-top-color: #9370DB
+	animation: spin 2s linear infinite
+	&:before
+		content: ""
+		position: absolute
+		top: 5px
+		left: 5px
+		right: 5px
+		bottom: 5px
+		border-radius: 50%
+		border: 3px solid transparent
+		border-top-color: #BA55D3
+		animation: spin 3s linear infinite
+	&:after
+		content: ""
+		position: absolute
+		top: 15px
+		left: 15px
+		right: 15px
+		bottom: 15px
+		border-radius: 50%
+		border: 3px solid transparent
+		border-top-color: #FF00FF
+		animation: spin 1.5s linear infinite
+
+
+
+
+
+
+@keyframes fade-in
+	0%
+		opacity: 0
+
+	100%
+		opacity: 1
+
+
+@-webkit-keyframes spin
+	0%
+		transform: rotate(0deg)
+
+	100%
+		transform: rotate(360deg)
+
+
+@keyframes spin
+	0%
+		transform: rotate(0deg)
+	100%
+		transform: rotate(360deg)
+

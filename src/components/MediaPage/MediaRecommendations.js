@@ -40,6 +40,7 @@ const MediaRecommendations = (movie) => (
                             date={el.release_date || el.first_air_date}
                             poster={el.poster_path}
                             id={el.id}
+                            genres={el.genre_ids}
                             typeList={movie.typeList}
                         />
 

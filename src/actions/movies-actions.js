@@ -1,4 +1,7 @@
-import {UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, SEARCH_VALUE, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA, SEARCH_MOVIE, CLEAR_SEARCH} from '../constants';
+import {
+	UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA,
+	GENRES__MOVIE
+} from '../constants';
 import * as axios from 'axios';
 
 
@@ -30,19 +33,6 @@ function loadPlayingMovies(movies) {
 }
 
 
-function takeSearchValue(querySearch) {
-    return {
-        type: SEARCH_VALUE,
-	    querySearch
-    };
-}
-function searchMovie(querySearch) {
-    return {
-        type: SEARCH_MOVIE,
-	    querySearch
-    };
-}
-
 function takeMovieData( data ) {
     return {
         type: MOVIE_DATA,
@@ -56,12 +46,6 @@ export function clearMovieData() {
     };
 }
 
-
-export function clearSearch() {
-    return {
-        type: CLEAR_SEARCH
-    };
-}
 
 export function onLoadPage() {
 
@@ -122,26 +106,7 @@ export function onLoadPage() {
 }
 
 
-export function onSearch(words) {
-    return ( dispatch ) => {
-        dispatch(takeSearchValue(words));
-        if (words.length>0) {
-		    axios.get('https://api.themoviedb.org/3/search/multi',
-			    {
-				    params: {
-					    api_key: '5a1d310d575e516dd3c547048eb7abf1',
-					    language: 'ru-RU',
-					    page: 1,
-					    region: 'RU',
-	                    query: words
-				    }
-			    }
-		    ).then(response => {
-			    dispatch(searchMovie(response.data));
-		    });
-        }
-    };
-}
+
 
 export function onLoadMovie(id) {
     return ( dispatch ) => {
@@ -213,6 +178,8 @@ export function movieListPopular(page=1) {
 				    }
 			    })
 	    ]).then(axios.spread((pageOne, pageTwo) => {
+		    console.log(pageOne.data.page)
+		    console.log(pageTwo.data.page)
 		    let concatPages;
 		    if (pageOne.data.total_pages > 1) {
 			    concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page});
@@ -289,3 +256,5 @@ export function movieListTop(page=1) {
 	    }));
     };
 }
+
+

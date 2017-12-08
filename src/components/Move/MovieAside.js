@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import NoImg from '../../img/NoImg.png';
+import Spinner from '../Spinner/Spinner';
 import { friendlyUrl } from '../../utils/utils';
 
 const MovieAside = (movie) => (
     <aside className="aside">
-        <div className="movie__poster"><img src={(movie.poster || movie.backdrop) ? 'https://image.tmdb.org/t/p/w185/' + (movie.poster || movie.backdrop) :  NoImg} alt={movie.title}/></div>
+        <div className="movie__poster">
+	        {movie.imgState ? <Spinner/>: null}
+            <img onLoad={movie.onLoadImg} className="img-loading" src={(movie.poster || movie.backdrop) ? 'https://image.tmdb.org/t/p/w185/' + (movie.poster || movie.backdrop) :  NoImg} alt={movie.title}/>
+        </div>
         <div className="crew-list infoTable-row">
 
             <div className="crew__item infoTable-border aside-row">
@@ -68,7 +72,9 @@ const MovieAside = (movie) => (
             <div className="genres__title">Жанр</div>
             <div className="genres__list">
                 {movie.genres.map((el, indx)=>
-                    <Link to={'/search/genres/'+ el.id} className="genre tag" key={indx} id={el.id}>{el.name}</Link>
+                    <div className='genre' key={indx}>
+                        <Link to={'/search?genre-'+ el.id} className="tag"  id={el.id}>{el.name}</Link>
+                    </div>
                 )}
             </div>
         </div>
@@ -76,16 +82,16 @@ const MovieAside = (movie) => (
         <div className="keywords infoTable-row">
             <div className="keywords__title">Теги</div>
             <div className="keywords__list">
-                {movie.keywords.map((el, indx)=> <Link to={'/search/keywords/'+ el.id} className="keyword tag" id={el.id} key={indx}>{el.name}</Link>)}
+                {movie.keywords.map((el, indx)=> <Link to={'/search?keywords-'+ el.id} className="keyword tag" id={el.id} key={indx}>{el.name}</Link>)}
             </div>
         </div>
 
         <div className="movie-links infoTable-row">
             <div className="movie-links__title">Ссылки</div>
             <div className="movie-links__list">
-                {movie.imdb_id ? <a href={'http://www.imdb.com/title/' + movie.imdb_id} target='_blank' className='movie__social-link'>imdb</a>: null}
-                <a href={'https://www.themoviedb.org/movie/' + movie.id} target='_blank' className='movie__social-link'>TMDB</a>
-                {movie.homepage ? <a href={movie.homepage} target='_blank' className='movie__social-link'>Страница фильма</a>: null}
+                {movie.imdb_id ? <a href={'http://www.imdb.com/title/' + movie.imdb_id} target='_blank' className='social-link'>imdb</a>: null}
+                <a href={'https://www.themoviedb.org/movie/' + movie.id} target='_blank' className='social-link'>TMDB</a>
+                {movie.homepage ? <a href={movie.homepage} target='_blank' className='social-link'>Страница фильма</a>: null}
             </div>
         </div>
 

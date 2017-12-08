@@ -4,9 +4,10 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto')
 @import './fonts/proximanova-semibold/stylesheet.css'
 @import './fonts/ProximaNova-Regular/stylesheet.css'
+@import "Spinner/Spinner.sass"
 @import "./nav/nav.sass"
 @import "./Header/header.sass"
-@import "./Header/search.sass"
+@import "search/searchHeader"
 @import "./moveList/moveList.sass"
 @import "./moveList/moveItem.sass"
 @import "./movie/movie.sass"
@@ -15,6 +16,10 @@
 @import "./movie/movieRecommendations.sass"
 @import "./popup/moviePopup"
 @import "./tv/tv-seasons"
+@import "stills/Stills.sass"
+@import "credits/Сredits.sass"
+@import "person/Person.sass"
+@import "search/search"
 
 
 body
@@ -24,6 +29,7 @@ body
 	font-family: 'PT Sans', sans-serif
 	color: #fff
 	font-size: 14px
+	min-width: 1500px
 
 h1,h2,h3,h4
 	font-family: 'proxima_novasemibold', Sans-Serif
@@ -32,6 +38,10 @@ p
 	font-family: 'Roboto', sans-serif
 
 .main
+	margin-top: 75px
+	margin-bottom: 30px
+
+.main--media-list
 	margin-left: 220px
 
 .container
@@ -52,35 +62,14 @@ p
 	&:hover
 		color: #fff
 
-.spinner-wrap
-	position: absolute
-	top: 0
-	left: 0
-	right: 0
-	bottom: 0
-	z-index: 150
-	width: 100%
-	height: 100%
-	background: #fff
 
-.spinner
-	position: fixed
-	top: 50%
-	margin: 0 auto
-	left: 0
-	right: 0
-	width: 50px
-	height: 50px
-	z-index: 155
-	background: url('../src/img/spinner.gif') no-repeat
-	-webkit-background-size: cover
-	background-size: cover
 
 .tag
 	transition: all 0.6s
 	padding: 4px
 	margin: 3px
 	border: 1px solid #fff
+	display: block
 	&:hover
 		color: #d8b16b
 		border: 1px solid #d8b16b
@@ -89,8 +78,10 @@ p
 	position: absolute
 	bottom: 0
 	width: 100%
-	background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.9) 100%)
+	background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 100%)
 	left: 0
+	right: 0
+	margin: 0 auto
 	text-align: center
 	z-index: 25
 	padding: 20px
@@ -153,8 +144,44 @@ p
 	&:hover
 		opacity: 1
 
-
-
 .slider-button--isDisabled
 	&:hover
 		opacity: .6
+
+
+.social-link
+	padding: 5px 8px
+	border-radius: 3px
+	background: #fbfbfb
+	border: solid 1px #ddd
+	color: #666
+	margin: 3px
+	transition: all 0.6s
+	&:hover
+		background: transparent
+		color: #fff
+
+		
+.track-vertical
+	background: #000
+
+
+.my-appear
+	opacity: 0.01
+
+
+.my-appear.my-appear-active
+	opacity: 1
+	transition: opacity 1000ms ease-in
+
+
+.my-exit 
+	opacity: 1
+
+
+.my-exit.my-exit-active 
+	opacity: 0.01
+	transition: opacity 800ms ease-in
+
+
+

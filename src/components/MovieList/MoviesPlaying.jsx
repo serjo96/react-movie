@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { movieListPlaying } from '../../actions/movies-action';
+import { movieListPlaying } from '../../actions/movies-actions';
 import {Helmet} from 'react-helmet';
 import { connect } from 'react-redux';
 import MovieList from '../MediaList/MediaList';
@@ -46,13 +46,19 @@ class MoviePlaying extends Component {
 	 };
 
 	 prevPage = () => {
-	     if (this.props.PlayMovies.data.page > 1) {
-	         this.props.history.push('/movies/playing?page=' + (this.props.PlayMovies.data.page-3));
-	     } else {
-		     if (this.props.PlayMovies.data.page <= 3) {
-			     this.props.history.push('/movies/playing');
-		     }
-	     }
+		 if (this.props.PlayMovies.data.page > 1) {
+			 if (this.props.PlayMovies.data.page <= 3) {
+				 this.props.history.push('/movies/playing');
+			 } else {
+				 if (this.props.PlayMovies.data.page >= 7) {
+					 this.props.history.push(`/movies/playing?page=${this.props.PlayMovies.data.page - 4}`);
+				 } else {
+					 this.props.history.push(`/movies/playing?page=${this.props.PlayMovies.data.page - 3}`);
+				 }
+			 }
+		 } else {
+			 this.props.history.push(`/movies/playing${this.props.PlayMovies.data.page+1}`);
+		 }
 	 };
 
 	 nextPage = () => {
@@ -82,7 +88,7 @@ class MoviePlaying extends Component {
  render() {
 	 let { PlayMovies } = this.props;
      return (
-         <main className="main">
+         <main className="main main--media-list">
              <Helmet>
                  <title>В прокате</title>
              </Helmet>
@@ -91,7 +97,7 @@ class MoviePlaying extends Component {
                      <MovieList movieListTitle={'Сейчас в кино'} movieList={PlayMovies} typeList='movie'/>
                      {PlayMovies.data.total_pages > 1 ?
                          <div className="pager-btns clearfix">
-                             {PlayMovies.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
+                             {PlayMovies.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
                              {PlayMovies.data.page+1 < PlayMovies.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
                          </div> : null}
                  </div> : null}
@@ -102,7 +108,7 @@ class MoviePlaying extends Component {
 
 function mapStateToProps(state) {
     return {
-        PlayMovies: state.movies.PlayingMovies
+        PlayMovies: state.Movies.PlayingMovies
     };
 }
 

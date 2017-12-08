@@ -19,7 +19,7 @@
 	display: block
 	transition: all .5s
 	background-size: cover
-	background-position: 50% 0
+	background-position: 50% 10%
 	background-attachment: fixed
 	opacity: 1
 
@@ -38,31 +38,32 @@
 	background: rgba(0,0,0,0.70)
 	padding: 15px 0
 	width: 100%
-	.rating
-		.icon
-			margin-right: 10px
-			font-size: 30px
-			text-shadow: 0 0 20px black
-		.rating-1
-			color: #616161
-		.rating-2
-			color: #675b5b
-		.rating-3
-			color: #705252
-		.rating-4
-			color: #7a4747
-		.rating-5
-			color: #863c3c
-		.rating-6
-			color: #922f30
-		.rating-7
-			color: #9e2424
-		.rating-8
-			color: #a81918
-		.rating-9
-			color: #b11010
-		.rating-10
-			color: #b70a0a
+
+.rating
+	.icon
+		margin-right: 10px
+		font-size: 30px
+		text-shadow: 0 0 20px black
+	.rating-1
+		color: #616161
+	.rating-2
+		color: #675b5b
+	.rating-3
+		color: #705252
+	.rating-4
+		color: #7a4747
+	.rating-5
+		color: #863c3c
+	.rating-6
+		color: #922f30
+	.rating-7
+		color: #9e2424
+	.rating-8
+		color: #a81918
+	.rating-9
+		color: #b11010
+	.rating-10
+		color: #b71a1a
 
 .movie__summary
 	margin-left: 17.666666%
@@ -71,11 +72,19 @@
 .movie__title
 	font-size: 34px
 	display: inline-block
+	.season-title
+		font-size: 30px
+
+.movie__title--tv-season
+	font-size: 19px
 
 .movie__year
 	margin-left: 7px
 	color: #999999
 	font: 400 25px 'Proxima Nova', sans-serif
+
+.tangle
+	margin-top: 5px
 
 .summary-ratings
 	margin-left: 17.666666%
@@ -136,6 +145,8 @@
 			background: rgba(0, 0, 0, 0)
 			i
 				transform: translateX(150px)
+	img
+		display: block
 
 
 
@@ -158,75 +169,4 @@
 	user-select: none
 	i
 		transition: all 0.6s
-
-.credits
-	margin-top: 40px
-
-.cast
-	.swiper-wrapper
-		margin-bottom: 25px
-		&:hover
-			.actor__info
-				opacity: 0.5
-
-.actor
-	width: 25%
-	&:hover
-		.actor__info
-			opacity: 1 !important
-		.actor__role
-			color: #fff
-			
-.actor__info
-	transition: all 0.6s
-
-.actor__role
-	color: #d8b16b
-	
-	
-.actor__name
-	transition: all 0.6s
-	margin-bottom: 3px
-	color: #a9a9a9
-
-.actor__img
-	padding-bottom: 100%
-	margin-bottom: 10px
-	-webkit-background-size: cover
-	background-size: cover
-	background-repeat: no-repeat
-	background-position: center
-
-.stills
-	margin: 15px 0
-
-.stills__list
-	display: flex
-	flex-wrap: wrap
-	align-items: flex-start
-	position: relative
-
-
-.stills__img
-	cursor: pointer
-	width: 25%
-	padding-bottom: 14%
-	position: relative
-	overflow: hidden
-	&:hover
-		img
-			transform: scale3d(2, 2, 2)
-	img
-		transition: all 0.6s
-		filter: none
-		-webkit-filter: blur(0px)
-		width: 100%
-		position: absolute
-		top: 0
-		left: 0
-		-webkit-backface-visibility: hidden
-		-ms-transform: translateZ(0)
-		-webkit-transform: translate3d(0,0,0)
-		transform: translate3d(0,0,0)
-		-webkit-font-smoothing: subpixel-antialiased
 
