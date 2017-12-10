@@ -17,9 +17,11 @@ class MediaItem extends Component {
     }
 
  outItem = (e) => {
-     this.setState({
-         popup: true
-     });
+        if(this.props.typeList !== "person"){
+             this.setState({
+                 popup: true
+             });
+        }
  };
 
  leaveItem = (e) => {

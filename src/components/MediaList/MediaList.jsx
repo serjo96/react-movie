@@ -32,12 +32,12 @@ class MediaList extends Component {
              original_title={item.original_title || item.original_name}
              overview={item.overview}
              voteAverage={item.vote_average}
-             poster={item.poster_path}
+             poster={item.profile_path || item.poster_path}
              date={item.release_date || item.first_air_date}
              key={index}
              id={item.id}
              genres={item.genre_ids}
-             typeList={this.props.typeList}
+             typeList={item.media_type || this.props.typeList}
          />
      );
  };

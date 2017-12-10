@@ -1,4 +1,4 @@
-import { SEARCH_VALUE, SEARCH_MEDIA, CLEAR_SEARCH, GENRES,  SEARCH_KEYWORDS_MOVIES, SEARCH_GENRES_MOVIES  } from '../constants';
+import { SEARCH_IN_PAGE, SEARCH_MEDIA, CLEAR_SEARCH, GENRES,  SEARCH_KEYWORDS_MOVIES, SEARCH_GENRES_MOVIES  } from '../constants';
 import update from 'react-addons-update';
 
 
@@ -20,9 +20,12 @@ export default function General(state = initialState, action) {
     console.log(action);
     switch (action.type) {
 
-        case SEARCH_VALUE:
+        case SEARCH_IN_PAGE:
             return update(state, {
-	            SearchHeaderField: {$set: action.querySearch}
+	            SearchPageResult: {$merge: {
+			            isFetching: true,
+			            data: action.results
+		            }}
             });
 
         case SEARCH_MEDIA:

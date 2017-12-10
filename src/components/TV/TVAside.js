@@ -59,7 +59,7 @@ const MovieAside = (tv) => (
         <div className="keywords infoTable-row">
             <div className="keywords__title">Теги</div>
             <div className="keywords__list">
-                {tv.keywords.map((el, indx)=> <Link to={'/search?keywords-'+ el.id} className="keyword tag" id={el.id} key={indx}>{el.name}</Link>)}
+                {tv.keywords.map((el, indx)=> <Link to={`/search?keywords-${el.id}-${el.name}`} className="keyword tag" id={el.id} key={indx}>{el.name}</Link>)}
             </div>
         </div>
 

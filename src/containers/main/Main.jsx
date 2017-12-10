@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {onLoadPage} from '../../actions/movies-actions';
 import MovieList from '../../components/MediaList/MediaList';
 import Spinner from '../../components/Spinner/Spinner';
+import {Helmet} from 'react-helmet';
 
 class Main extends Component {
     componentDidMount() {
@@ -13,6 +14,9 @@ class Main extends Component {
         if(this.props.UpcomingList.isFetching && this.props.TopMovies.isFetching && this.props.PopMovies.isFetching && this.props.PlayMovies.isFetching){
             return (
                 <main className="main main--media-list">
+	                <Helmet>
+		                <title>Movie Base</title>
+	                </Helmet>
                     <div className="movies-content">
                         <MovieList movieListTitle={'Скоро в кино'} movieList={this.props.UpcomingList} count={11} movieListMain={true} ListLink={'upcoming'} typeList='movie'/>
                         <MovieList movieListTitle={'Сейчас в кино'} movieList={this.props.PlayMovies} count={11} movieListMain={true} ListLink={'playing'} typeList='movie'/>

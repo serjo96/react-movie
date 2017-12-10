@@ -24,7 +24,7 @@ class SearchHeader extends Component {
     }
 
 	 pageClick = (e) => {
-	     if (this.mouseIsDownOnCalendar || e.target.className === 'search__field' || e.target.className === 'search-field-btn') {
+	     if (this.mouseIsDownOnCalendar || e.target.className === 'search__field--header') {
 	         return;
 	     }
 
@@ -47,7 +47,7 @@ class SearchHeader extends Component {
 	     this.setState({val: e.target.value});
 	     if(this.state.val.length >0){
 	        this.setState({visibilityResult: true});
-	        this.props.onInput(this.state.val);
+	        this.props.onInput(this.state.val, 'header-search');
 	     }
 	 };
 
@@ -56,7 +56,7 @@ class SearchHeader extends Component {
 	    if (e.keyCode === 13) {
 		    if(this.state.val.length >0){
 			    this.setState({visibilityResult: true});
-			    this.props.onInput(e);
+			    this.props.onInput(this.state.val, 'header-search');
 		    }
 	    }
 	 };
@@ -126,7 +126,7 @@ class SearchHeader extends Component {
 	    return (
          <div className="header__search search" onMouseDown={this.mouseDownHandler} onMouseUp={this.mouseUpHandler}>
 			<div className="search-field-wrapper">
-	             <DebounceInput className="search__field"
+	             <DebounceInput className="search__field search__field--header"
 	                 name="Search"
 	                 debounceTimeout={300}
 	                 placeholder="Поиск фильмов и сериалов..."
@@ -158,7 +158,7 @@ class SearchHeader extends Component {
 
 
 const mapDispatchToProps = (dispatch) => ({
-    onInput: (e) => dispatch(onSearch(e)),
+    onInput: (e, type) => dispatch(onSearch(e, type)),
     clearInput: () => dispatch(clearSearch())
 });
 

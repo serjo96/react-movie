@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {Helmet} from 'react-helmet';
 import MovieList from '../../components/MediaList/MediaList';
-import {keywordsReq, genreReq} from '../../actions/general-actions';
-import { urlRusLat } from '../../utils/utils';
-import NoImg from '../../img/NoImg.png';
+import {keywordsReq, genreReq, MainSearch} from '../../actions/general-actions';
+import { friendlyUrl } from '../../utils/utils';
 import {DebounceInput} from 'react-debounce-input';
 import Spinner from '../../components/Spinner/Spinner';
 
@@ -13,10 +12,10 @@ class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            visibilityResult: false,
             val: '',
             top: 0,
-            imgStatus: true
+            imgStatus: true,
+            fullSearch: false
         };
     }
     componentDidUpdate(prevProps) {
@@ -30,43 +29,69 @@ class Search extends Component {
         if (window.pageYOffset === 0) {
             clearInterval(this.state.intervalId);
         }
+	    if (this.props.location.search.match(/page/)) {
+		    this.setState({val: this.props.location.search.replace('_', ' ').substring(this.props.location.search.lastIndexOf("?")+1,this.props.location.search.lastIndexOf("%"))})
+        } else{
+            this.setState({val: this.props.location.search.replace('?','').replace('_', ' ')})
+        }
         this.sendRequest();
     }
 
+    typeRequest = () => {
+	let id =  this.props.location.search,
+        Request = id.split('-'),
+        idTarget = id.match(/\d+/)[0],
+        type = Request[0];
 
- sendRequest = () =>{
+    };
+
+
+ sendRequest = (searchType) =>{
      let id =  this.props.location.search,
          Request = id.split('-'),
-         idTarget = id.match(/\d+/)[0],
-         type = Request[0];
+         typeGenre = /genre/.test(id),
+         typeKeywords = /keywords/.test(id);
+         
+
+
      if (this.props.location.search.match(/page/)) {
          let pageNumber = parseFloat(this.props.location.search.split('=').pop());
          if (pageNumber <= 2) {
-             if (type === '?keywords') {
-                 this.props.sendKeywordsReq(idTarget, pageNumber+1);
-             } else if ( type === '?genre') {
-                 this.props.sendGenreReq(idTarget, pageNumber+1);
-             }
+             if (typeKeywords) {
+                 this.props.sendKeywordsReq( id.match(/\d+/)[0], pageNumber+1);
+             } else if ( typeGenre ) {
+                 this.props.sendGenreReq( id.match(/\d+/)[0], pageNumber+1);
+             }else {
+	             console.log(id.substring(id.lastIndexOf("?")+1,id.lastIndexOf("%")))
+	             this.props.onSearch(id.substring(id.lastIndexOf("?")+1,id.lastIndexOf("%")),pageNumber+1);
+            }
          } else {
              if (pageNumber <= 3) {
-                 if (type === '?keywords') {
-                     this.props.sendKeywordsReq(idTarget, pageNumber+2);
-                 } else if ( type === '?genre') {
-                     this.props.sendGenreReq(idTarget, pageNumber+2);
+                 if (typeKeywords) {
+                     this.props.sendKeywordsReq( id.match(/\d+/)[0], pageNumber+2);
+                 } else if ( typeGenre ) {
+                     this.props.sendGenreReq( id.match(/\d+/)[0], pageNumber+2);
+                 } else {
+	                 this.props.onSearch(id.substring(id.lastIndexOf("?")+1,id.lastIndexOf("%")), pageNumber+2);
                  }
              } else {
-                 if (type === '?keywords') {
-                     this.props.sendKeywordsReq(idTarget, pageNumber+3);
-                 } else if ( type === '?genre') {
-                     this.props.sendGenreReq(idTarget, pageNumber+3);
-                 }
+                 if (typeKeywords) {
+                     this.props.sendKeywordsReq( id.match(/\d+/)[0], pageNumber+3);
+                 } else if ( typeGenre ) {
+                     this.props.sendGenreReq( id.match(/\d+/)[0], pageNumber+3);
+                 } else {
+	                 this.props.onSearch(id.substring(id.lastIndexOf("?")+1,id.lastIndexOf("%")),pageNumber+3);
+                }
              }
          }
      } else {
-         if (type === '?keywords') {
-             this.props.sendKeywordsReq(idTarget);
-         } else if ( type === '?genre') {
-             this.props.sendGenreReq(idTarget);
+         if (typeKeywords) {
+             this.props.sendKeywordsReq( id.match(/\d+/)[0]);
+         } else if ( typeGenre ) {
+             this.props.sendGenreReq( id.match(/\d+/)[0]);
+         } else {
+
+	         this.props.onSearch(id.replace('?',''));
          }
      }
  };
@@ -106,8 +131,8 @@ class Search extends Component {
  onInput = (e) => {
      this.setState({val: e.target.value});
      if (this.state.val.length >0) {
-         this.setState({visibilityResult: true});
-         this.props.onInput(this.state.val);
+         this.props.history.push(`/search?${friendlyUrl(this.state.val)}`)
+         this.props.onSearch(this.state.val);
      }
  };
 
@@ -115,16 +140,16 @@ class Search extends Component {
  onKeyDown = (e) => {
      if (e.keyCode === 13) {
          if (this.state.val.length >0) {
-             this.setState({visibilityResult: true});
-             this.props.onInput(this.state.val);
+             this.props.history.push(`/search?${friendlyUrl(this.state.val)}`)
+             this.props.onSearch(this.state.val);
          }
      }
  };
 
  onClick = (e) =>{
      if (this.state.val.length >0) {
-         this.setState({visibilityResult: true});
-         this.props.onInput(this.state.val);
+         this.props.history.push(`/search?${friendlyUrl(this.state.val)}`)
+        this.props.onSearch(this.state.val);
      }
  };
 
@@ -148,14 +173,17 @@ class Search extends Component {
 
 
  render() {
+
      let {SearchResult} = this.props,
          {Genres} = this.props,
          titleSearch = '';
      if (SearchResult.isFetching && Genres.isFetching) {
          if (SearchResult.data.searchType.type === 'keywords') {
-             titleSearch = `ключевому слову - ${SearchResult.data.searchType.name}`;
+             titleSearch = `по ключевому слову - ${SearchResult.data.searchType.name}`;
          } else if (SearchResult.data.searchType.type === 'genres') {
-             titleSearch = `жанру - ${Genres.data[SearchResult.data.id]}`;
+             titleSearch = `по жанру - ${Genres.data[SearchResult.data.id]}`;
+         } else {
+             titleSearch = '';
          }
      }
      return (
@@ -181,7 +209,7 @@ class Search extends Component {
                  </div>
                  {SearchResult.isFetching ?
                      <div className="search-results">
-                         <MovieList movieListTitle={`Поиск фильмов по ${titleSearch}`} movieList={SearchResult} typeList="movie"/>
+                         <MovieList movieListTitle={`Поиск ${titleSearch} (${SearchResult.data.total_results})`} movieList={SearchResult} typeList="movie"/>
                          {SearchResult.data.total_pages > 1 ?
                              <div className="pager-btns clearfix">
                                  {SearchResult.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
@@ -197,7 +225,8 @@ class Search extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
     sendKeywordsReq: (id, page) => dispatch(keywordsReq(id, page)),
-    sendGenreReq: (id, page) => dispatch(genreReq(id, page))
+    sendGenreReq: (id, page) => dispatch(genreReq(id, page)),
+	onSearch: (id, page) => dispatch(MainSearch(id, page))
 });
 
 function mapStateToProps(state) {
