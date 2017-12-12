@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
 import { tvonTheAir } from '../../actions/tv-actions';
 import { connect } from 'react-redux';
-import MediaList from '../MediaList/MediaList';
+import MediaList from '../../components/MediaList/MediaList';
 
 
 class TVonTheAir extends Component {

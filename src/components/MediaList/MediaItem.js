@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { urlRusLat } from '../../utils/utils';
 import NoImg from '../../img/NoImg.png';
-import MovieInfo from '../Popup/MovieInfo';
+import MovieInfo from '../../containers/Tooltip/MovieInfo';
 import Spinner from '../Spinner/Spinner';
 
 class MediaItem extends Component {

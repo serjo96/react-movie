@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
 import { movieUpcoming } from '../../actions/movies-actions';
 import { connect } from 'react-redux';
-import MovieList from '../MediaList/MediaList';
+import MovieList from '../../components/MediaList/MediaList';
 
 
 class MovieUpcoming extends Component {

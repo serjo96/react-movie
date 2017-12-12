@@ -6,10 +6,10 @@ import {Helmet} from 'react-helmet';
 import Lightbox from 'react-image-lightbox';
 import { Timeline } from 'react-twitter-widgets'
 import NoImg from '../../img/NoImg.png';
-import Spinner from '../Spinner/Spinner';
-import MediaStills from '../MediaPage/MediaStills';
-import MediaItem from '../MediaList/MediaItem';
-import PersonMoviesList from './PersonMoviesList';
+import Spinner from '../../components/Spinner/Spinner';
+import MediaStills from '../../components/MediaPage/MediaStills';
+import MediaItem from '../../components/MediaList/MediaItem';
+import PersonMoviesList from '../../components/Person/PersonMoviesList';
 import { urlRusLat, declOfNum, friendlyData } from '../../utils/utils';
 
 class Person extends Component {
