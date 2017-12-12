@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import NoImg from '../../img/NoImg.png';
 import Spinner from '../Spinner/Spinner';
-import { friendlyUrl } from '../../utils/utils';
+import { friendlyUrl, urlRusLat } from '../../utils/utils';
 
 const MovieAside = (movie) => (
     <aside className="aside">
@@ -73,7 +73,7 @@ const MovieAside = (movie) => (
             <div className="genres__list">
                 {movie.genres.map((el, indx)=>
                     <div className='genre' key={indx}>
-                        <Link to={'/search?genre-'+ el.id} className="tag"  id={el.id}>{el.name}</Link>
+                        <Link to={`/lists/genres_movie/${urlRusLat(el.name)}-${el.id}`} className="tag"  id={el.id}>{el.name}</Link>
                     </div>
                 )}
             </div>
@@ -82,7 +82,7 @@ const MovieAside = (movie) => (
         <div className="keywords infoTable-row">
             <div className="keywords__title">Теги</div>
             <div className="keywords__list">
-                {movie.keywords.map((el, indx)=> <Link to={`/search?keywords-${el.id}-${el.name}`} className="keyword tag" id={el.id} key={indx}>{el.name}</Link>)}
+                {movie.keywords.map((el, indx)=> <Link to={`/lists/keywords_movie/${friendlyUrl(el.name)}-${el.id}`} className="keyword tag" id={el.id} key={indx}>{el.name}</Link>)}
             </div>
         </div>
 

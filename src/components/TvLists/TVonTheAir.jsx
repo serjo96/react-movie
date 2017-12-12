@@ -48,7 +48,7 @@ class TVonTheAir extends Component {
 	prevPage = () => {
 		if (this.props.OnTheAirTv.data.page > 1) {
 			if (this.props.OnTheAirTv.data.page <= 3) {
-				this.props.history.push('/onAir/onAir');
+				this.props.history.push('/tv/onAir');
 			} else {
 				if (this.props.OnTheAirTv.data.page >= 7) {
 					this.props.history.push('/tv/onAir?page=' + (this.props.OnTheAirTv.data.page-4));
@@ -69,7 +69,7 @@ class TVonTheAir extends Component {
 				this.props.history.push('/tv/onAir?page=' + (this.props.OnTheAirTv.data.page-1));
 			}
 		} else {
-			this.props.history.push('/Tv/onAir?page=' + (this.props.OnTheAirTv.data.page+1));
+			this.props.history.push('/tv/onAir?page=' + (this.props.OnTheAirTv.data.page+1));
 		}
 	};
 

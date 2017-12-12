@@ -11,6 +11,14 @@ const initialState = {
 		isFetching: false,
 		data: null
 	},
+	GenresList:{
+		isFetching: false,
+		data: null
+	},
+	KeywordsList:{
+		isFetching: false,
+		data: null
+	},
 	SearchPageResult: {
     	isFetching: false
 	}
@@ -53,21 +61,22 @@ export default function General(state = initialState, action) {
 			    }
 		    });
 
+		case SEARCH_GENRES_MOVIES:
+			return update(state, {
+				GenresList: {$merge: {
+					isFetching: true,
+						data: action.genres
+					}}
+			});
+
 	    case SEARCH_KEYWORDS_MOVIES:
 	    	return update(state, {
-	    		SearchPageResult: {$merge: {
+			    KeywordsList: {$merge: {
 	    			isFetching: true,
 					    data: action.keywords
 				    }}
 			    });
 
-		case SEARCH_GENRES_MOVIES:
-			return update(state, {
-				SearchPageResult: {$merge: {
-					isFetching: true,
-						data: action.genres
-					}}
-			});
 
 
         default:

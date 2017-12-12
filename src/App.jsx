@@ -17,6 +17,9 @@ class App extends Component {
     render() {
         return (
             <div>
+	            <Helmet>
+		            <title>Movie Base</title>
+	            </Helmet>
                 <Nav location={this.props.location}/>
                 <Header/>
 

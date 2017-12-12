@@ -14,10 +14,10 @@ class Search extends Component {
         this.state = {
             val: '',
             top: 0,
-            imgStatus: true,
             fullSearch: false
         };
     }
+
     componentDidUpdate(prevProps) {
         if (this.props.location.search !== prevProps.location.search) {
             this.scrollToTop();
@@ -30,76 +30,43 @@ class Search extends Component {
             clearInterval(this.state.intervalId);
         }
 	    if (this.props.location.search.match(/page/)) {
-		    this.setState({val: this.props.location.search.replace('_', ' ').substring(this.props.location.search.lastIndexOf("?")+1,this.props.location.search.lastIndexOf("%"))})
-        } else{
-            this.setState({val: this.props.location.search.replace('?','').replace('_', ' ')})
+		    this.setState({val: decodeURI(this.props.location.search.substring(this.props.location.search.lastIndexOf('?')+1, this.props.location.search.lastIndexOf('%')).replace('?', '').replace(/_/g, ' '))});
+        } else {
+            this.setState({val: decodeURI(this.props.location.search.replace('?', '').replace(/_/g, ' '))});
         }
         this.sendRequest();
     }
 
-    typeRequest = () => {
-	let id =  this.props.location.search,
-        Request = id.split('-'),
-        idTarget = id.match(/\d+/)[0],
-        type = Request[0];
 
-    };
-
-
- sendRequest = (searchType) =>{
+ sendRequest = () =>{
      let id =  this.props.location.search,
          Request = id.split('-'),
-         typeGenre = /genre/.test(id),
-         typeKeywords = /keywords/.test(id);
-         
-
-
+         searchTarget;
+	 console.log('_asdasdas/'.match(/([^_])(.*?)(?=\/)/g))
      if (this.props.location.search.match(/page/)) {
-         let pageNumber = parseFloat(this.props.location.search.split('=').pop());
+
+         let pageNumber = parseFloat(this.props.location.search.split('=').pop()),
+	         searchTarget = decodeURI(id.substring(id.lastIndexOf('?')+1, id.lastIndexOf('%')).replace('?', '').replace(/_/g, ' '));
          if (pageNumber <= 2) {
-             if (typeKeywords) {
-                 this.props.sendKeywordsReq( id.match(/\d+/)[0], pageNumber+1);
-             } else if ( typeGenre ) {
-                 this.props.sendGenreReq( id.match(/\d+/)[0], pageNumber+1);
-             }else {
-	             console.log(id.substring(id.lastIndexOf("?")+1,id.lastIndexOf("%")))
-	             this.props.onSearch(id.substring(id.lastIndexOf("?")+1,id.lastIndexOf("%")),pageNumber+1);
-            }
+             this.props.onSearch(searchTarget, pageNumber+1);
          } else {
              if (pageNumber <= 3) {
-                 if (typeKeywords) {
-                     this.props.sendKeywordsReq( id.match(/\d+/)[0], pageNumber+2);
-                 } else if ( typeGenre ) {
-                     this.props.sendGenreReq( id.match(/\d+/)[0], pageNumber+2);
-                 } else {
-	                 this.props.onSearch(id.substring(id.lastIndexOf("?")+1,id.lastIndexOf("%")), pageNumber+2);
-                 }
+                 this.props.onSearch(searchTarget, pageNumber+2);
              } else {
-                 if (typeKeywords) {
-                     this.props.sendKeywordsReq( id.match(/\d+/)[0], pageNumber+3);
-                 } else if ( typeGenre ) {
-                     this.props.sendGenreReq( id.match(/\d+/)[0], pageNumber+3);
-                 } else {
-	                 this.props.onSearch(id.substring(id.lastIndexOf("?")+1,id.lastIndexOf("%")),pageNumber+3);
-                }
+                 this.props.onSearch(searchTarget, pageNumber+3);
              }
          }
      } else {
-         if (typeKeywords) {
-             this.props.sendKeywordsReq( id.match(/\d+/)[0]);
-         } else if ( typeGenre ) {
-             this.props.sendGenreReq( id.match(/\d+/)[0]);
-         } else {
-
-	         this.props.onSearch(id.replace('?',''));
-         }
+	     searchTarget = decodeURI(this.props.location.search.replace('?', '').replace(/_/g, ' '));
+         this.props.onSearch(searchTarget);
      }
  };
 
 
  prevPage = () => {
-     let path = this.props.location.search.split('?').pop().split('%')[0];
+     let path;
      if (this.props.SearchResult.data.page > 1) {
+	     path = decodeURI(this.props.location.search.substring(this.props.location.search.lastIndexOf('?')+1, this.props.location.search.lastIndexOf('%')));
          if (this.props.SearchResult.data.page <= 3) {
              this.props.history.push(`/search?${path}`);
          } else {
@@ -110,19 +77,23 @@ class Search extends Component {
              }
          }
      } else {
+	     path = decodeURI(this.props.location.search.replace('?', ''));
          this.props.history.push(`/search?${path}`);
      }
  };
 
  nextPage = () => {
-     let path = this.props.location.search.split('?').pop().split('%')[0];
+     let path;
+
      if (this.props.SearchResult.data.page > 1) {
+	     path = decodeURI(this.props.location.search.substring(this.props.location.search.lastIndexOf('?')+1, this.props.location.search.lastIndexOf('%')));
          if (this.props.SearchResult.data.page <= 3) {
              this.props.history.push(`/search?${path}%page=${this.props.SearchResult.data.page}`);
          } else {
              this.props.history.push(`/search?${path}%page=${this.props.SearchResult.data.page-1}`);
          }
      } else {
+	     path = decodeURI(this.props.location.search.replace('?', ''));
          this.props.history.push(`/search?${path}%page=${this.props.SearchResult.data.page+1}`);
      }
  };
@@ -131,7 +102,7 @@ class Search extends Component {
  onInput = (e) => {
      this.setState({val: e.target.value});
      if (this.state.val.length >0) {
-         this.props.history.push(`/search?${friendlyUrl(this.state.val)}`)
+         this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
          this.props.onSearch(this.state.val);
      }
  };
@@ -140,7 +111,7 @@ class Search extends Component {
  onKeyDown = (e) => {
      if (e.keyCode === 13) {
          if (this.state.val.length >0) {
-             this.props.history.push(`/search?${friendlyUrl(this.state.val)}`)
+             this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
              this.props.onSearch(this.state.val);
          }
      }
@@ -148,14 +119,9 @@ class Search extends Component {
 
  onClick = (e) =>{
      if (this.state.val.length >0) {
-         this.props.history.push(`/search?${friendlyUrl(this.state.val)}`)
-        this.props.onSearch(this.state.val);
+         this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
+         this.props.onSearch(this.state.val);
      }
- };
-
- onLoadImg = (e) =>{
-     e.target.classList.remove('img-loading');
-     this.setState({imgStatus: false});
  };
 
 
@@ -176,21 +142,13 @@ class Search extends Component {
 
      let {SearchResult} = this.props,
          {Genres} = this.props,
-         titleSearch = '';
-     if (SearchResult.isFetching && Genres.isFetching) {
-         if (SearchResult.data.searchType.type === 'keywords') {
-             titleSearch = `по ключевому слову - ${SearchResult.data.searchType.name}`;
-         } else if (SearchResult.data.searchType.type === 'genres') {
-             titleSearch = `по жанру - ${Genres.data[SearchResult.data.id]}`;
-         } else {
-             titleSearch = '';
-         }
-     }
+         titleSearch = `Результаты поиска «${SearchResult.data.qurySearch}»`;
+
      return (
          <div className="search-page main">
 
              <Helmet>
-                 <title>{`Поиск по ${titleSearch}`}</title>
+                 <title>{titleSearch}</title>
              </Helmet>
              <div className="container">
                  <div className="search-field-wrapper">
@@ -209,7 +167,7 @@ class Search extends Component {
                  </div>
                  {SearchResult.isFetching ?
                      <div className="search-results">
-                         <MovieList movieListTitle={`Поиск ${titleSearch} (${SearchResult.data.total_results})`} movieList={SearchResult} typeList="movie"/>
+                         <MovieList movieListTitle={`${titleSearch} (${SearchResult.data.total_results})`} movieList={SearchResult} typeList="movie"/>
                          {SearchResult.data.total_pages > 1 ?
                              <div className="pager-btns clearfix">
                                  {SearchResult.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
@@ -224,14 +182,11 @@ class Search extends Component {
 
 
 const mapDispatchToProps = (dispatch) => ({
-    sendKeywordsReq: (id, page) => dispatch(keywordsReq(id, page)),
-    sendGenreReq: (id, page) => dispatch(genreReq(id, page)),
-	onSearch: (id, page) => dispatch(MainSearch(id, page))
+    onSearch: (id, page) => dispatch(MainSearch(id, page))
 });
 
 function mapStateToProps(state) {
     return {
-        SearchVal: state.General.SearchField,
         SearchResult: state.General.SearchPageResult,
         Genres: state.General.Genres
     };

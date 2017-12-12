@@ -219,12 +219,12 @@ class Person extends Component {
 				             </div>
 
 
-							<button onClick={()=> this.setState({test: this.state.test+= 3})}>TEST</button>
+							{/*<button onClick={()=> this.setState({test: this.state.test+= 3})}>TEST</button>*/}
 
-			                 <MediaStills images={ person.images.profiles} title="Фото" imgCount={15} onClickImg={this.onClickImg}/>
+				             { person.images.profiles.length>0 ?<MediaStills images={ person.images.profiles} title="Фото" imgCount={15} onClickImg={this.onClickImg}/>: null}
 
-				             <PersonMoviesList title="Фильмография" typeList="movie" listData={ this.props.people.sortedMovies} />
-				             <PersonMoviesList title="Сериалы" typeList="tv" listData={this.props.people.sortedTV} />
+				             {this.props.people.sortedMovies.length>0 ?<PersonMoviesList title="Фильмография" typeList="movie" listData={ this.props.people.sortedMovies} />:null}
+				             {this.props.people.sortedTV.length>0 ?<PersonMoviesList title="Сериалы" typeList="tv" listData={this.props.people.sortedTV} />: null}
 
 
 				             {person.combined_credits.crew.length>0 ? <PersonMoviesList title="Учиствие в проектах" listData={person.combined_credits.crew}/>: null}

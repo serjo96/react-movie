@@ -78,6 +78,7 @@ export function MainSearch(words, page=1) {
                             language: 'ru-RU',
                             page: page,
                             region: 'RU',
+	                        include_adult: true,
                             query: words.replace('_', ' ')
                         }
                     }),
@@ -88,11 +89,12 @@ export function MainSearch(words, page=1) {
                             language: 'ru-RU',
                             page: page+1,
                             region: 'RU',
+	                        include_adult: true,
                             query: words.replace('_', ' ')
                         }
                     })
             ]).then(axios.spread((pageOne, pageTwo) => {
-                let addTypeRequest =  Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {type: 'main-search'}});
+                let addTypeRequest =  Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {type: 'main-search'}, qurySearch: words.replace('_', ' ')});
                 dispatch(searchPageResults(addTypeRequest));
             }));
         }
@@ -130,23 +132,25 @@ export function onGeneres() {
 }
 
 
-export function genreReq(id, page=1) {
+export function genreReq(id, type, page=1) {
     return ( dispatch ) => {
         axios.all([
-            axios.get(`https://api.themoviedb.org/3/genre/${id}/movies`,
+            axios.get(`https://api.themoviedb.org/3/discover/${type}`,
                 {
                     params: {
                         api_key: '5a1d310d575e516dd3c547048eb7abf1',
                         language: 'ru-RU',
+	                    with_genres: id,
                         page: page,
                         include_adult: true
                     }
                 }),
-            axios.get(`https://api.themoviedb.org/3/genre/${id}/movies`,
+            axios.get(`https://api.themoviedb.org/3/discover/${type}`,
                 {
                     params: {
                         api_key: '5a1d310d575e516dd3c547048eb7abf1',
                         language: 'ru-RU',
+	                    with_genres: id,
                         page: page+1,
                         include_adult: true
                     }
@@ -163,45 +167,81 @@ export function genreReq(id, page=1) {
     };
 }
 
-export function keywordsReq(id, page=1) {
-    return ( dispatch ) => {
-        axios.all([
-            axios.get(`https://api.themoviedb.org/3/keyword/${id}/movies`,
-                {
-                    params: {
-                        api_key: '5a1d310d575e516dd3c547048eb7abf1',
-                        language: 'ru-RU',
-                        page: page,
-                        include_adult: true
-                    }
-                }),
-            axios.get(`https://api.themoviedb.org/3/keyword/${id}/movies`,
-                {
-                    params: {
-                        api_key: '5a1d310d575e516dd3c547048eb7abf1',
-                        language: 'ru-RU',
-                        page: page+1,
-                        include_adult: true
-                    }
-                }),
-            axios.get(`https://api.themoviedb.org/3/keyword/${id}`,
-                {
-                    params: {
-                        api_key: '5a1d310d575e516dd3c547048eb7abf1'
-                    }
-                })
 
-        ]).then(axios.spread((pageOne, pageTwo, keywordInfo) => {
-            let concatPages;
-            if (pageOne.data.total_pages > 1) {
-                concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {name: keywordInfo.data.name, type: 'keywords'}});
-            } else {
-                concatPages = Object.assign({...pageOne.data, searchType: {name: keywordInfo.data.name, type: 'keywords'}});
-            }
-            dispatch(takeKeywordsMovies(concatPages));
-        }));
-    };
+export function keywordsReq(id, type, page=1) {
+	return ( dispatch ) => {
+		axios.all([
+			axios.get(`https://api.themoviedb.org/3/discover/${type}`,
+				{
+					params: {
+						api_key: '5a1d310d575e516dd3c547048eb7abf1',
+						language: 'ru-RU',
+						with_keywords: id,
+						page: page,
+						include_adult: true
+					}
+				}),
+			axios.get(`https://api.themoviedb.org/3/discover/${type}`,
+				{
+					params: {
+						api_key: '5a1d310d575e516dd3c547048eb7abf1',
+						language: 'ru-RU',
+						with_keywords: id,
+						page: page+1,
+						include_adult: true
+					}
+				})
+		]).then(axios.spread((pageOne, pageTwo) => {
+			let concatPages;
+			if (pageOne.data.total_pages > 1) {
+				concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {type: 'genres'}});
+			} else {
+				concatPages = pageOne.data;
+			}
+			dispatch(takeKeywordsMovies(concatPages));
+		}));
+	};
 }
+
+// export function keywordsReq(id, page=1) {
+//     return ( dispatch ) => {
+//         axios.all([
+//             axios.get(`https://api.themoviedb.org/3/keyword/${id}/movies`,
+//                 {
+//                     params: {
+//                         api_key: '5a1d310d575e516dd3c547048eb7abf1',
+//                         language: 'ru-RU',
+//                         page: page,
+//                         include_adult: true
+//                     }
+//                 }),
+//             axios.get(`https://api.themoviedb.org/3/keyword/${id}/movies`,
+//                 {
+//                     params: {
+//                         api_key: '5a1d310d575e516dd3c547048eb7abf1',
+//                         language: 'ru-RU',
+//                         page: page+1,
+//                         include_adult: true
+//                     }
+//                 }),
+//             axios.get(`https://api.themoviedb.org/3/keyword/${id}`,
+//                 {
+//                     params: {
+//                         api_key: '5a1d310d575e516dd3c547048eb7abf1'
+//                     }
+//                 })
+//
+//         ]).then(axios.spread((pageOne, pageTwo, keywordInfo) => {
+//             let concatPages;
+//             if (pageOne.data.total_pages > 1) {
+//                 concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {name: keywordInfo.data.name, type: 'keywords'}});
+//             } else {
+//                 concatPages = Object.assign({...pageOne.data, searchType: {name: keywordInfo.data.name, type: 'keywords'}});
+//             }
+//             dispatch(takeKeywordsMovies(concatPages));
+//         }));
+//     };
+// }
 
 
 export function FullSearch(type, genre='', page=1) {

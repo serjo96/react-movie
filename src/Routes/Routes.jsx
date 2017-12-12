@@ -13,6 +13,8 @@ import TVonTheAir from '../components/TvLists/TVonTheAir';
 import TV from '../containers/TV/Tv';
 import People from '../components/Person/Person';
 import Search from '../containers/search/Search';
+import GenresList from '../components/MediaList/GenresList';
+import KeywordsList from '../components/MediaList/KeywordsList';
 
 
 class Routes extends Component {
@@ -32,6 +34,10 @@ class Routes extends Component {
                 <Route exact path="/person/:id" component={People} />
                 <Route path="/tv/:id" component={TV} />
                 <Route path="/search" component={Search} />
+                <Route path="/lists/genres_movie/:id" component={GenresList} />
+                <Route path="/lists/genres_tv/:id" component={GenresList} />
+                <Route path="/lists/keywords_movie/:id" component={KeywordsList} />
+                <Route path="/lists/keywords_tv/:id" component={KeywordsList} />
             </Switch>
         )
     }

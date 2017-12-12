@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { urlRusLat } from '../../utils/utils';
 
 class MoviePopup extends Component   {
     constructor(props) {
@@ -30,7 +31,7 @@ class MoviePopup extends Component   {
         tooltipElem.style.top = top + 'px';
     }
     render() {
-        let {Allgenres} = this.props ;
+        let {Allgenres} = this.props;
         return (
             <div className="movie-tooltip movie-tooltip--left tooltip tooltip--movie show-tooltip" ref={el=> this.toltip = el}>
                 <div className="tooltip__content">
@@ -44,7 +45,7 @@ class MoviePopup extends Component   {
                             {this.props.genres? Allgenres.isFetching ?
                                 <div className='genres'>{this.props.genres.map((el, indx)=> indx<= 2 ?
                                     <div key={indx} className="genre">
-                                        <Link className='tag' to={`/search?genre-${el}`}>{Allgenres.data[el]}</Link>
+                                        <Link className='tag' to={`/lists/genres_${this.props.typeItem}/${urlRusLat(Allgenres.data[el])}-${el}`}>{Allgenres.data[el]}</Link>
                                     </div>  : null) }
                                     </div> :null :null}
                         </div>
