@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import {onSearch, clearSearch} from '../../actions/general-actions';
 import { urlRusLat } from '../../utils/utils';
 import NoImg from '../../img/NoImg.png';
-import {DebounceInput} from 'react-debounce-input';
+import { DebounceInput } from 'react-debounce-input';
 import Spinner from '../../components/Spinner/Spinner';
 
 class SearchHeader extends Component {
@@ -87,7 +87,7 @@ class SearchHeader extends Component {
 	handleUpdate = (values) => {
 		const { top } = values;
 		this.setState({ top });
-	}
+	};
 
 	renderView = ({ style, ...props }) => {
 		const { top } = this.state;
@@ -102,7 +102,7 @@ class SearchHeader extends Component {
 				style={{ ...style, ...viewStyle }}
 				{...props}/>
 		);
-	}
+	};
 
 	renderThumb = ({ style, ...props }) => {
 		const { top } = this.state;
@@ -114,12 +114,11 @@ class SearchHeader extends Component {
 				style={{ ...style, ...thumbStyle }}
 				{...props}/>
 		);
-	}
+	};
 
  render() {
 	 const myScrollbar = {
-		 width: 350,
-		 height: 300
+		 width: 350
 	 };
 
 
@@ -141,14 +140,15 @@ class SearchHeader extends Component {
 	            {this.state.visibilityResult &&
 		            <div className="search__result searchComboBox">
 			            {this.props.SearchResult.isFetching &&
-				            this.props.SearchResult.data.total_results >0 ?
-				            <Scrollbars style={myScrollbar} autoHide autoHideTimeout={1000} autoHideDuration={600}
+				            <Scrollbars style={myScrollbar} autoHide autoHeight
+				                        autoHeightMin={95}
+				                        autoHeightMax={300}  autoHideTimeout={1000} autoHideDuration={600}
 
 				                        onUpdate={this.handleUpdate}
 
 				            >
-					            {this.props.SearchResult.data.results.map((item, index)=> this.renderResults(item, index))}
-				            </Scrollbars> : null}
+					            {this.props.SearchResult.data.total_results >0 ? this.props.SearchResult.data.results.map((item, index)=> this.renderResults(item, index)): <div className='result-element'>Поиск не дал результатов, попробуйте уточнить поиск</div>}
+				            </Scrollbars> }
 		            </div> }
 
          </div>
