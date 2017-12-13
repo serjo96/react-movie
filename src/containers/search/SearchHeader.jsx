@@ -139,7 +139,8 @@ class SearchHeader extends Component {
 			</div>
 	            {this.state.visibilityResult &&
 		            <div className="search__result searchComboBox">
-			            {this.props.SearchResult.isFetching &&
+
+			            {this.props.SearchResult.isFetching ? this.props.SearchResult.data.total_results >0 ?
 				            <Scrollbars style={myScrollbar} autoHide autoHeight
 				                        autoHeightMin={95}
 				                        autoHeightMax={300}  autoHideTimeout={1000} autoHideDuration={600}
@@ -147,8 +148,8 @@ class SearchHeader extends Component {
 				                        onUpdate={this.handleUpdate}
 
 				            >
-					            {this.props.SearchResult.data.total_results >0 ? this.props.SearchResult.data.results.map((item, index)=> this.renderResults(item, index)): <div className='result-element'>Поиск не дал результатов, попробуйте уточнить поиск</div>}
-				            </Scrollbars> }
+					            { this.props.SearchResult.data.results.map((item, index)=> this.renderResults(item, index))}
+				            </Scrollbars> : <div className='result-element'>Поиск не дал результатов, попробуйте уточнить поиск</div> : null}
 		            </div> }
 
          </div>
