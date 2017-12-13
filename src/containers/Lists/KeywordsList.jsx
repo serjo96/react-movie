@@ -31,13 +31,9 @@ class KeywordsList extends Component {
  sendRequest = () =>{
      let pageNubmer = parseFloat(this.props.location.search.split('=').pop()),
          idRequest = this.props.match.params.id.split('-').pop(),
-         typeRequest;
+         typeRequest = this.props.match.url.match(/movie/) ? 'movie' : 'tv';
 
-     if (this.props.match.url.match(/movie/)) {
-         typeRequest = 'movie';
-     } else {
-         typeRequest = 'tv';
-     }
+
      if (this.props.location.search) {
          if (pageNubmer <= 2) {
              this.props.keywordsReq(idRequest, typeRequest, pageNubmer+1);

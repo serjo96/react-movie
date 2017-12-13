@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import {Helmet} from 'react-helmet';
 import '../styles/main.sass';
-import Header from './containers/head/Head';
+import Header from './components/head/Head';
 import Nav from './components/Nav/nav';
 import Routes from './Routes/Routes';
 import { connect } from 'react-redux';

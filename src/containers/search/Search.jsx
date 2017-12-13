@@ -39,12 +39,11 @@ class Search extends Component {
 
 
  sendRequest = () =>{
-     let id =  this.props.location.search,
-         Request = id.split('-'),
-         searchTarget = this.props.location.search.match(/page/) ? decodeURI(id.match(/([^_])(.*?)(?=\/)/g).replace('?', '').replace(/_/g, ' ')) : decodeURI(this.props.location.search.replace('?', '').replace(/_/g, ' '));
-     if (this.props.location.search.match(/page/)) {
+     let searchProps =  this.props.location.search,
+         searchTarget = searchProps.match(/page/) ? decodeURI(searchProps.substring(searchProps.lastIndexOf('?')+1, searchProps.lastIndexOf('%')).replace('?', '').replace(/_/g, ' ')[0]) : decodeURI(searchProps.replace('?', '').replace(/_/g, ' '));
+     if (searchProps.match(/page/)) {
 
-         let pageNumber = parseFloat(this.props.location.search.split('=').pop());
+         let pageNumber = parseFloat(searchProps.split('=').pop());
          if (pageNumber <= 2) {
              this.props.onSearch(searchTarget, pageNumber+1);
          } else {
@@ -61,7 +60,8 @@ class Search extends Component {
 
 
  prevPage = () => {
-	 let path = this.props.SearchResult.data.page > 1 ? decodeURI(this.props.location.search.substring(this.props.location.search.lastIndexOf('?')+1, this.props.location.search.lastIndexOf('%'))) : decodeURI(this.props.location.search.replace('?', ''));
+	 let searchProps =this.props.location.search,
+     path = this.props.SearchResult.data.page > 1 ? decodeURI(searchProps.substring(searchProps.lastIndexOf('?')+1,searchProps.lastIndexOf('%'))) : decodeURI(searchProps.replace('?', ''));
      if (this.props.SearchResult.data.page > 1) {
          if (this.props.SearchResult.data.page <= 3) {
              this.props.history.push(`/search?${path}`);

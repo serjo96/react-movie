@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import Search from '../search/SearchHeader';
+import Search from '../../containers/search/SearchHeader';
 
 export default class Header extends Component {
 	constructor(props) {
