@@ -20,7 +20,8 @@ const initialState = {
 		data: null
 	},
 	SearchPageResult: {
-    	isFetching: false
+    	isFetching: false,
+		data: {querySearch: ''}
 	}
 };
 
