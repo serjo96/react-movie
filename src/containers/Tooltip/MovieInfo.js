@@ -7,7 +7,7 @@ import { onLoadEngMedia } from '../../actions/general-actions';
 class MoviePopup extends Component   {
     constructor(props) {
         super(props);
-        this.toltip = null;
+        this.tooltip = null;
         this.EngDataStatus = true;
     }
 
@@ -16,7 +16,7 @@ class MoviePopup extends Component   {
         let target = this.props.el,
             targetParent = target.closest('.tooltip-parent'),
             coords = target.getBoundingClientRect(),
-            tooltipElem = this.toltip,
+            tooltipElem = this.tooltip,
 		    left = target.offsetLeft + target.offsetWidth,
             top = target.offsetTop;
 
@@ -37,13 +37,13 @@ class MoviePopup extends Component   {
     render() {
         let {Allgenres} = this.props,
 	        overview = this.props.EngData[this.props.typeItem][this.props.id] ? this.props.EngData[this.props.typeItem][this.props.id].overview : this.props.overview,
-            title = this.props.EngData[this.props.typeItem][this.props.id] ? this.props.EngData[this.props.typeItem][this.props.id].name !== this.props.title ? this.props.EngData[this.props.typeItem][this.props.id].name : this.props.title : this.props.title;
+            Originaltitle = this.props.EngData[this.props.typeItem][this.props.id] ?  this.props.EngData[this.props.typeItem][this.props.id].name : this.props.originalTitle;
         return (
-            <div className="movie-tooltip movie-tooltip--left tooltip tooltip--movie show-tooltip" ref={el=> this.toltip = el}>
+            <div className="movie-tooltip movie-tooltip--left tooltip tooltip--movie show-tooltip" ref={el=> this.tooltip = el}>
                 <div className="tooltip__content">
                     <div className="tooltip__title">
-                        <div className="ru-title">{title}</div>
-                        <div className="original-title">{this.props.originalTitle !== this.props.title ? this.props.originalTitle : null}</div>
+                        <div className="ru-title">{this.props.title}</div>
+                        <div className="original-title">{Originaltitle !== this.props.title ? Originaltitle: null}</div>
                     </div>
                     <div className="movie-tooltip__info">
                         <div className="tooltip__genre-data">

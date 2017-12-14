@@ -114,13 +114,16 @@ class TV extends Component {
 		    seasons = this.props.tv.sortSeasons,
 		    bgImages = this.props.tv.bgImages;
 	    if (this.props.tv.isFetching) {
+	    	let overview = this.props.EngData.tv[tv.id] ? this.props.EngData.tv[tv.id].overview : tv.overview,
+			    title = this.props.EngData.tv[tv.id] ? this.props.EngData.tv[tv.id].name !== this.props.tv.tvTitles.title ? this.props.EngData.tv[tv.id].name : this.props.tv.tvTitles.title : this.props.tv.tvTitles.title;
 	        return (
 		            <div className="movie">
 			            <Helmet>
-				            <title>{this.props.tv.tvTitles.title}</title>
+				            <title>{title}</title>
 			            </Helmet>
 			            <TVBg
 				            titles={this.props.tv.tvTitles}
+				            title={title}
 				            bg={bgImages}
 				            runtime={tv.episode_run_time}
 				            seasons={tv.seasons}
@@ -137,7 +140,6 @@ class TV extends Component {
 				            <div className="info-wrapper">
 
 					            <TVAside
-						            title={tv.name}
 						            id={tv.id}
 						            bg={bgImages}
 						            created_by={tv.created_by}
@@ -157,9 +159,8 @@ class TV extends Component {
 						            {this.props.tv.tvTitles.seasonTitle !== null ? <div className="prev-page-link"><Link to={this.props.match.url} onClick={this.props.clearTvSeason} className='link-angle link-angle--left'><i className="fa fa-angle-left" aria-hidden="true" /><span>На страницу сериала</span></Link></div>:null}
 
 						            <div className="description">
-							            {tv.overview ? <p className="description__text">{tv.overview}
-								            </p>:
-								            <div>
+							            {overview ? <p className="description__text">{overview}</p>
+								            :<div>
 									            <div>Ой! Кажется описание к этому произведению отсутствует</div>
 									            <div className='load-description-eng'>
 										            <span onClick={()=>this.props.loadTvData(tv.id, 'en-US')}>Загрузить описание на английском?</span>
@@ -178,7 +179,7 @@ class TV extends Component {
 			            </div>
 
 			            {tv.similar.total_results >0 ? <MediaRecommendations recommendations={tv.similar} listName='Похожие сериалы' typeList="tv"/> : null }
-			            {tv.seasons.length>0 ? <TVseasons imgStatus={this.state.imgStatus} images={images} seasons={seasons} url={this.props.match.url} location={this.props.location.pathname}/>: null}
+			            {tv.seasons.length>0 ? <TVseasons imgStatus={this.state.imgStatus} onLoadImg={this.onLoadImg} images={images} seasons={seasons} url={this.props.match.url} location={this.props.location.pathname}/>: null}
 			            {tv.recommendations.total_results >0 ? <MediaRecommendations recommendations={tv.recommendations} listName='Вам может понравиться' typeList="tv"/> : null }
 
 			            {this.state.lightBox ?
@@ -221,6 +222,7 @@ class TV extends Component {
 function mapStateToProps(state) {
     return {
         tv: state.TVs.TvData,
+	    EngData: state.General.EngDescription
     };
 }
 

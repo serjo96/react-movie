@@ -12,7 +12,7 @@ const TVBg = (tv) => (
                 <div className="container">
                     <div className="movie__summary">
                         <h1 className={`movie__title ${tv.titles.seasonTitle !== null ? 'movie__title--tv-season': ''}`}>
-                            <div className="ru-title">{tv.titles.title}</div>
+                            <div className="ru-title">{tv.title}</div>
                             <div className="original-title">{tv.titles.original_title === tv.titles.title ? null : tv.titles.original_title}</div>
                             {tv.titles.seasonTitle !== null ?
                                 <div className="season-title">{tv.titles.seasonTitle}</div>
