@@ -54,7 +54,9 @@ class Search extends Component {
              }
          }
      } else {
-         this.props.onSearch(searchTarget);
+         if(searchTarget.length >0){
+            this.props.onSearch(searchTarget);
+         }
      }
  };
 

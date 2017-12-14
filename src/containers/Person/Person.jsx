@@ -142,7 +142,7 @@ class Person extends Component {
 								             <div className="person-info-table__name-row">Дата рождения:</div>
 								             <div className="person-info-table__data-row person-dates__numbers">
 									             <div>{person.birthday ? friendlyData(person.birthday) : '-'}</div>
-									             {person.deathday ? <div>-</div> : null}
+									             {person.deathday ? <div className="death-date-hyphen">-</div> : null}
 									             {person.deathday ? <div>{friendlyData(person.deathday)}</div> : null}
 									             </div>
 							             </div>

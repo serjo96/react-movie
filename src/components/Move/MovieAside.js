@@ -8,7 +8,7 @@ const MovieAside = (movie) => (
     <aside className="aside">
         <div className="movie__poster">
 	        {movie.imgState ? <Spinner/>: null}
-            <img onLoad={movie.onLoadImg} className="img-loading" src={(movie.poster || movie.backdrop) ? 'https://image.tmdb.org/t/p/w185/' + (movie.poster || movie.backdrop) :  NoImg} alt={movie.title}/>
+            <img onLoad={movie.onLoadImg} className="img-loading" src={(movie.poster || movie.backdrop) ? 'https://image.tmdb.org/t/p/w185/' + (movie.poster || movie.backdrop) :  NoImg} alt="poster"/>
         </div>
         <div className="crew-list infoTable-row">
 

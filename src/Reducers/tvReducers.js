@@ -1,6 +1,6 @@
 import {
 	TV_DATA, CLEAR_TV_DATA, AIRING_TV, POPULAR_TV, ON_THE_AIR_TV, TOP_TV, CLEAR_TV_IMAGES, TV_SEASON,
-	CLEAR_TV_SEASON
+	CLEAR_TV_SEASON, TV_ENG_DATA
 } from '../constants';
 import update from 'react-addons-update';
 
@@ -62,6 +62,15 @@ export default function TVs(state = initialState, action) {
 	                sortSeasons: seasons
                 }}
             });
+
+	    case TV_ENG_DATA:
+		    return update(state, {
+			    TvData: {$merge: {
+					    data: {...state.TvData.data, overview: action.data.overview},
+					    tvTitles: {...state.TvData.tvTitles,  title: state.TvData.tvTitles.title !== action.data.name ? action.data.name : state.TvData.tvTitles.title}
+				    }
+			    }
+		    });
 
         case CLEAR_TV_DATA:
             return update(state, {

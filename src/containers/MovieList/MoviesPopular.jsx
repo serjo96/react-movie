@@ -3,6 +3,7 @@ import {Helmet} from 'react-helmet';
 import { movieListPopular } from '../../actions/movies-actions';
 import { connect } from 'react-redux';
 import MovieList from '../../components/MediaList/MediaList';
+import FilterList from '../../components/MediaList/FilterList';
 
 
 class MoviesPopular extends Component {
@@ -94,6 +95,7 @@ class MoviesPopular extends Component {
 			    </Helmet>
 			    {PopMovies.isFetching ?
 			    <div className="movies-content">
+				        {/*<FilterList genres={this.props.genres}/>*/}
 					    <MovieList movieListTitle={'Популярные фильмы'} movieList={PopMovies} typeList='movie'/>
 					    {PopMovies.data.total_pages > 1 ?
 					    <div className="pager-btns clearfix">
@@ -108,7 +110,8 @@ class MoviesPopular extends Component {
 
 function mapStateToProps(state) {
     return {
-        PopMovies: state.Movies.PopMovies
+        PopMovies: state.Movies.PopMovies,
+	    genres: state.General.Genres
     };
 }
 

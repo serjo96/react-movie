@@ -1,12 +1,19 @@
 import {
 	TV_DATA, CLEAR_TV_DATA, AIRING_TV, POPULAR_TV, ON_THE_AIR_TV, TOP_TV, CLEAR_TV_IMAGES, TV_SEASON,
-	CLEAR_TV_SEASON, GENRES__TV
+	CLEAR_TV_SEASON, TV_ENG_DATA
 } from '../constants';
 import * as axios from 'axios';
 
 function takeTvData( data ) {
     return {
         type: TV_DATA,
+        data
+    };
+}
+
+function takeEngTvData( data ) {
+    return {
+        type: TV_ENG_DATA,
         data
     };
 }
@@ -64,19 +71,23 @@ export function clearTvSeason() {
 
 
 
-export function onLoadTV(id) {
+export function onLoadTV(id, lang='ru-RU') {
     return ( dispatch ) => {
         axios.get('https://api.themoviedb.org/3/tv/'+id,
             {
                 params: {
                     api_key: '5a1d310d575e516dd3c547048eb7abf1',
-                    language: 'ru-RU',
+                    language: lang,
                     include_image_language: 'ru,null',
                     append_to_response: 'content_ratings,credits,external_ids,images,keywords,recommendations,screened_theatrically,similar,translations,videos'
                 }
             }
         ).then(response => {
-            dispatch(takeTvData(response.data));
+            if(lang === 'ru-RU'){
+                dispatch(takeTvData(response.data));
+            } else {
+              dispatch(takeEngTvData(response.data));
+            }
         });
     };
 }

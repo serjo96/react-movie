@@ -148,7 +148,14 @@ class Movie extends Component {
 
 						 <div className="overview">
 							 <div className="description">
-								 <p className="description__text">{movie.overview ? movie.overview : 'Ой! Кажется описание к этому произведению отсутствует'}</p>
+								 {movie.overview ? <p className="description__text">{movie.overview}
+								 </p>:
+									 <div>
+										 <div>Ой! Кажется описание к этому произведению отсутствует</div>
+										 <div className='load-description-eng'>
+											 <span onClick={()=>this.props.loadMovieData(movie.id, 'en-US')}>Загрузить описание на английском?</span>
+										 </div>
+									 </div>}
 							 </div>
 
 							 {movie.videos.results.length >0 ?
@@ -225,7 +232,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    loadMovieData: (id) => dispatch(onLoadMovie(id)),
+    loadMovieData: (id, lang) => dispatch(onLoadMovie(id, lang)),
     clearMovieData: () => dispatch(clearMovieData()),
 });
 

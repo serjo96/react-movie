@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { urlRusLat } from '../../utils/utils';
+import { onLoadEngMedia } from '../../actions/general-actions';
 
 class MoviePopup extends Component   {
     constructor(props) {
         super(props);
         this.toltip = null;
+        this.EngDataStatus = true;
     }
+
+
     componentDidMount() {
         let target = this.props.el,
             targetParent = target.closest('.tooltip-parent'),
@@ -31,12 +35,14 @@ class MoviePopup extends Component   {
         tooltipElem.style.top = top + 'px';
     }
     render() {
-        let {Allgenres} = this.props;
+        let {Allgenres} = this.props,
+	        overview = this.props.EngData[this.props.typeItem][this.props.id] ? this.props.EngData[this.props.typeItem][this.props.id].overview : this.props.overview,
+            title = this.props.EngData[this.props.typeItem][this.props.id] ? this.props.EngData[this.props.typeItem][this.props.id].name !== this.props.title ? this.props.EngData[this.props.typeItem][this.props.id].name : this.props.title : this.props.title;
         return (
             <div className="movie-tooltip movie-tooltip--left tooltip tooltip--movie show-tooltip" ref={el=> this.toltip = el}>
                 <div className="tooltip__content">
                     <div className="tooltip__title">
-                        <div className="ru-title">{this.props.title}</div>
+                        <div className="ru-title">{title}</div>
                         <div className="original-title">{this.props.originalTitle !== this.props.title ? this.props.originalTitle : null}</div>
                     </div>
                     <div className="movie-tooltip__info">
@@ -45,13 +51,20 @@ class MoviePopup extends Component   {
                             {this.props.genres? Allgenres.isFetching ?
                                 <div className='genres'>{this.props.genres.map((el, indx)=> indx<= 2 ?
                                     <div key={indx} className="genre">
-                                        <Link className='tag' to={`/lists/genres_${this.props.typeItem}/${urlRusLat(Allgenres.data[el])}-${el}`}>{Allgenres.data[el]}</Link>
+                                        {Allgenres.data.obj[el] ? <Link className='tag' to={`/lists/genres_${this.props.typeItem}/${urlRusLat(Allgenres.data.obj[el])}-${el}`}>{Allgenres.data.obj[el]}</Link> : null}
                                     </div>  : null) }
                                     </div> :null :null}
                         </div>
                         <div className="rating">Рейтинг {this.props.voteAverage} из 10</div>
                     </div>
-                    <p className="movie-tooltip__description">{this.props.overview ? (this.props.overview.length > 475) ? this.props.overview.substring(0, 475) + '...' : this.props.overview : 'Ой! Кажется описание к этому произведению отсутствует'}</p>
+	                {overview && overview !== 404?
+                        <p className="movie-tooltip__description">{overview.length > 475 ? overview.substring(0, 475) + '...' : overview }</p>
+                        :<div className="movie-tooltip__no-description">
+			                <div>Ой! Кажется описание к этому произведению отсутствует</div>
+                            {overview !== 404 ? <div className='load-description-eng'>
+				                <span onClick={()=>this.props.loadEngData(this.props.id, this.props.typeItem)}>Загрузить описание на английском?</span>
+			                </div>: null}
+		                </div>}
                 </div>
             </div>
         );
@@ -61,8 +74,13 @@ class MoviePopup extends Component   {
 function mapStateToProps(state) {
 	return {
 		Allgenres: state.General.Genres,
+        EngData: state.General.EngDescription
 	};
 }
 
 
-export default connect(mapStateToProps) (MoviePopup);
+const mapDispatchToProps = (dispatch) => ({
+	loadEngData: (id, lang) => dispatch(onLoadEngMedia(id, lang))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps) (MoviePopup);

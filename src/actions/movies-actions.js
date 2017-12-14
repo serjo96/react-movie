@@ -1,6 +1,6 @@
 import {
-	UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA,
-	GENRES__MOVIE
+    UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA,
+    MOVIE_ENG_DATA
 } from '../constants';
 import * as axios from 'axios';
 
@@ -36,6 +36,13 @@ function loadPlayingMovies(movies) {
 function takeMovieData( data ) {
     return {
         type: MOVIE_DATA,
+        data
+    };
+}
+
+function takeEngMovieData( data ) {
+    return {
+        type: MOVIE_ENG_DATA,
         data
     };
 }
@@ -106,15 +113,13 @@ export function onLoadPage() {
 }
 
 
-
-
-export function onLoadMovie(id) {
+export function onLoadMovie(id, lang='ru-RU') {
     return ( dispatch ) => {
         axios.get('https://api.themoviedb.org/3/movie/'+id,
             {
                 params: {
                     api_key: '5a1d310d575e516dd3c547048eb7abf1',
-                    language: 'ru-RU',
+                    language: lang,
                     include_image_language: 'ru,null',
                     append_to_response: 'credits,images,videos,recommendations,reviews,lists,keywords,release_dates'
                 }
@@ -125,7 +130,7 @@ export function onLoadMovie(id) {
                     {
                         params: {
                             api_key: '5a1d310d575e516dd3c547048eb7abf1',
-                            language: 'ru-RU'
+                            language: lang
                         }
                     }
                 ).then(response=>{
@@ -133,7 +138,11 @@ export function onLoadMovie(id) {
                     dispatch(takeMovieData(data));
                 });
             } else {
-                dispatch(takeMovieData(res.data));
+            	if (lang === 'ru-RU') {
+                    dispatch(takeMovieData(res.data));
+	            } else {
+            		dispatch(takeEngMovieData(res.data));
+	            }
             }
         });
     };
@@ -178,8 +187,6 @@ export function movieListPopular(page=1) {
 				    }
 			    })
 	    ]).then(axios.spread((pageOne, pageTwo) => {
-		    console.log(pageOne.data.page)
-		    console.log(pageTwo.data.page)
 		    let concatPages;
 		    if (pageOne.data.total_pages > 1) {
 			    concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page});

@@ -6,9 +6,9 @@ import { friendlyUrl, friendlyData, urlRusLat } from '../../utils/utils';
 
 const MovieAside = (tv) => (
     <aside className="aside ">
-        <div className="movie__poster">
-            {tv.imgState ? <Spinner/>: null}
-            <img onLoad={tv.onLoadImg} className="img-loading" src={(tv.bg.season_poster || tv.bg.poster || tv.bg.backdrop) ? 'https://image.tmdb.org/t/p/w185/' + (tv.bg.season_poster || tv.bg.poster || tv.bg.backdrop) :  NoImg} alt={tv.title}/>
+        <div className={`movie__poster${tv.imgStatus ? ' poster-loading' : ''}`}>
+            {tv.imgStatus ? <Spinner/>: null}
+            <img onLoad={tv.onLoadImg} className="img-loading" src={(tv.bg.season_poster || tv.bg.poster || tv.bg.backdrop) ? 'https://image.tmdb.org/t/p/w185/' + (tv.bg.season_poster || tv.bg.poster || tv.bg.backdrop) :  NoImg} alt="poster"/>
         </div>
 
         <div className="crew-list infoTable-row">

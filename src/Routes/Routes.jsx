@@ -15,6 +15,7 @@ import People from '../containers/Person/Person';
 import Search from '../containers/search/Search';
 import GenresList from '../containers/Lists/GenresList';
 import KeywordsList from '../containers/Lists/KeywordsList';
+import ListsPage from '../components/MediaList/ListsPage';
 
 
 class Routes extends Component {

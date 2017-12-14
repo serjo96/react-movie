@@ -1,6 +1,6 @@
 import {
 	UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA,
-	GENRES__MOVIE
+	MOVIE_ENG_DATA
 } from '../constants';
 import update from 'react-addons-update';
 
@@ -81,6 +81,16 @@ export default function Movies(state = initialState, action) {
                     }
                 }
             });
+
+
+	    case MOVIE_ENG_DATA:
+            return update(state, {
+                MovieData: {$merge: {
+                    data: {...state.MovieData.data, title: state.MovieData.data.title !== action.data.title ? action.data.title: state.MovieData.data.title, overview: action.data.overview}
+                    }
+                }
+            });
+
 
         case CLEAR_MOVIE_DATA:
             return update(state, {

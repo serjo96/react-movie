@@ -1,10 +1,10 @@
-import { CLEAR_SEARCH, GENRES, SEARCH_MEDIA, SEARCH_IN_PAGE, SEARCH_KEYWORDS_MOVIES, SEARCH_GENRES_MOVIES } from '../constants';
+import { CLEAR_SEARCH, GENRES, SEARCH_IN_HEADER, SEARCH_IN_PAGE, SEARCH_KEYWORDS_MOVIES, SEARCH_GENRES_MOVIES, MEDIA_ENG_DATA } from '../constants';
 import * as axios from 'axios/index';
 
 
 function searchMovie(querySearch) {
     return {
-        type: SEARCH_MEDIA,
+        type: SEARCH_IN_HEADER,
         querySearch
     };
 }
@@ -46,6 +46,13 @@ function takeKeywordsMovies(keywords) {
     };
 }
 
+function takeEngMedia(engData) {
+    return {
+        type: MEDIA_ENG_DATA,
+        engData
+    };
+}
+
 
 export function onSearch(words) {
     return ( dispatch ) => {
@@ -68,37 +75,37 @@ export function onSearch(words) {
 }
 
 export function MainSearch(words, page=1) {
-    return ( dispatch ) => {
-        if (words.length>0) {
-            axios.all([
-                axios.get('https://api.themoviedb.org/3/search/multi',
-                    {
-                        params: {
-                            api_key: '5a1d310d575e516dd3c547048eb7abf1',
-                            language: 'ru-RU',
-                            page: page,
-                            region: 'RU',
-	                        include_adult: true,
-                            query: words.replace('_', ' ')
-                        }
-                    }),
-                axios.get('https://api.themoviedb.org/3/search/multi',
-                    {
-                        params: {
-                            api_key: '5a1d310d575e516dd3c547048eb7abf1',
-                            language: 'ru-RU',
-                            page: page+1,
-                            region: 'RU',
-	                        include_adult: true,
-                            query: words.replace('_', ' ')
-                        }
-                    })
-            ]).then(axios.spread((pageOne, pageTwo) => {
-                let addTypeRequest =  Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {type: 'main-search'}, querySearch: words.replace('_', ' ')});
-                dispatch(searchPageResults(addTypeRequest));
-            }));
-        }
-    };
+	    return ( dispatch ) => {
+	        if (words.length>0) {
+	            axios.all([
+	                axios.get('https://api.themoviedb.org/3/search/multi',
+	                    {
+	                        params: {
+	                            api_key: '5a1d310d575e516dd3c547048eb7abf1',
+	                            language: 'ru-RU',
+	                            page: page,
+	                            region: 'RU',
+		                        include_adult: true,
+	                            query: words.replace('_', ' ')
+	                        }
+	                    }),
+	                axios.get('https://api.themoviedb.org/3/search/multi',
+	                    {
+	                        params: {
+	                            api_key: '5a1d310d575e516dd3c547048eb7abf1',
+	                            language: 'ru-RU',
+	                            page: page+1,
+	                            region: 'RU',
+		                        include_adult: true,
+	                            query: words.replace('_', ' ')
+	                        }
+	                    })
+	            ]).then(axios.spread((pageOne, pageTwo) => {
+	                let addTypeRequest =  Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {type: 'main-search'}, querySearch: words.replace('_', ' ')});
+	                dispatch(searchPageResults(addTypeRequest));
+	            }));
+	        }
+	    };
 }
 
 
@@ -203,46 +210,6 @@ export function keywordsReq(id, type, page=1) {
 	};
 }
 
-// export function keywordsReq(id, page=1) {
-//     return ( dispatch ) => {
-//         axios.all([
-//             axios.get(`https://api.themoviedb.org/3/keyword/${id}/movies`,
-//                 {
-//                     params: {
-//                         api_key: '5a1d310d575e516dd3c547048eb7abf1',
-//                         language: 'ru-RU',
-//                         page: page,
-//                         include_adult: true
-//                     }
-//                 }),
-//             axios.get(`https://api.themoviedb.org/3/keyword/${id}/movies`,
-//                 {
-//                     params: {
-//                         api_key: '5a1d310d575e516dd3c547048eb7abf1',
-//                         language: 'ru-RU',
-//                         page: page+1,
-//                         include_adult: true
-//                     }
-//                 }),
-//             axios.get(`https://api.themoviedb.org/3/keyword/${id}`,
-//                 {
-//                     params: {
-//                         api_key: '5a1d310d575e516dd3c547048eb7abf1'
-//                     }
-//                 })
-//
-//         ]).then(axios.spread((pageOne, pageTwo, keywordInfo) => {
-//             let concatPages;
-//             if (pageOne.data.total_pages > 1) {
-//                 concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {name: keywordInfo.data.name, type: 'keywords'}});
-//             } else {
-//                 concatPages = Object.assign({...pageOne.data, searchType: {name: keywordInfo.data.name, type: 'keywords'}});
-//             }
-//             dispatch(takeKeywordsMovies(concatPages));
-//         }));
-//     };
-// }
-
 
 export function FullSearch(type, genre='', page=1) {
 	return ( dispatch ) => {
@@ -273,5 +240,25 @@ export function FullSearch(type, genre='', page=1) {
 				dispatch(searchPageResults(addTypeRequest));
 			}));
 		}
+	};
+}
+
+
+export function onLoadEngMedia(id, type) {
+	return ( dispatch ) => {
+		axios.get(`https://api.themoviedb.org/3/${type}/${id}`,
+			{
+				params: {
+					api_key: '5a1d310d575e516dd3c547048eb7abf1',
+					language: 'en-US',
+					include_image_language: 'ru,null',
+					append_to_response: 'credits,images,videos,recommendations,reviews,lists,keywords,release_dates'
+				}
+			}
+		).then(res => {
+			let response = Object.assign({...res.data , typeResponse: type});
+			console.log(response)
+			dispatch(takeEngMedia(response));
+		});
 	};
 }

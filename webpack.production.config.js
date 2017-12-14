@@ -17,7 +17,7 @@ module.exports = {
     './styles/main.sass'
   ],
   output: {
-    publicPath: './',		
+    publicPath: '/',
     path: path.join(__dirname, 'movie-base'),
     filename: '[chunkhash].js'
   },

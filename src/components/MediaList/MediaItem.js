@@ -59,6 +59,7 @@ class MediaItem extends Component {
                      el={this.el}
                      typeItem={this.props.typeList}
 		             genres={this.props.genres}
+                     id={this.props.id}
 	             /> : null}
          </div>
      );

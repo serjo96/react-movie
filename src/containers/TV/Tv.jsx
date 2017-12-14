@@ -117,7 +117,7 @@ class TV extends Component {
 	        return (
 		            <div className="movie">
 			            <Helmet>
-				            <title>{tv.name}</title>
+				            <title>{this.props.tv.tvTitles.title}</title>
 			            </Helmet>
 			            <TVBg
 				            titles={this.props.tv.tvTitles}
@@ -155,8 +155,16 @@ class TV extends Component {
 
 					            <div className="overview">
 						            {this.props.tv.tvTitles.seasonTitle !== null ? <div className="prev-page-link"><Link to={this.props.match.url} onClick={this.props.clearTvSeason} className='link-angle link-angle--left'><i className="fa fa-angle-left" aria-hidden="true" /><span>На страницу сериала</span></Link></div>:null}
+
 						            <div className="description">
-							            <p className="description__text">{tv.overview ? tv.overview : 'Ой! Кажется описание к этому произведению отсутствует'}</p>
+							            {tv.overview ? <p className="description__text">{tv.overview}
+								            </p>:
+								            <div>
+									            <div>Ой! Кажется описание к этому произведению отсутствует</div>
+									            <div className='load-description-eng'>
+										            <span onClick={()=>this.props.loadTvData(tv.id, 'en-US')}>Загрузить описание на английском?</span>
+									            </div>
+								            </div>}
 						            </div>
 						            {tv.videos.results.length >0 ? <TVvideos videos={this.props.tv.tvVideos} onClick={this.showTrailerModal}/> : null}
 						            {this.props.tv.tvCredits.cast.length>0 ? <MediaCast cast={this.props.tv.tvCredits.cast}/>: null}
@@ -170,7 +178,7 @@ class TV extends Component {
 			            </div>
 
 			            {tv.similar.total_results >0 ? <MediaRecommendations recommendations={tv.similar} listName='Похожие сериалы' typeList="tv"/> : null }
-			            {tv.seasons.length>0 ? <TVseasons imgStatus={this.state.imgStatus} onLoadImg={this.onLoadImg} images={images} seasons={seasons} url={this.props.match.url} location={this.props.location.pathname}/>: null}
+			            {tv.seasons.length>0 ? <TVseasons imgStatus={this.state.imgStatus} images={images} seasons={seasons} url={this.props.match.url} location={this.props.location.pathname}/>: null}
 			            {tv.recommendations.total_results >0 ? <MediaRecommendations recommendations={tv.recommendations} listName='Вам может понравиться' typeList="tv"/> : null }
 
 			            {this.state.lightBox ?
@@ -217,7 +225,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    loadTvData: (id) => dispatch(onLoadTV(id)),
+    loadTvData: (id, lang) => dispatch(onLoadTV(id, lang)),
     clearTvData: () => dispatch(clearTvData()),
 	clearTvImages: () => dispatch(clearTvImages()),
 	clearTvSeason: () => dispatch(clearTvSeason()),
