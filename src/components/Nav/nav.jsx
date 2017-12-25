@@ -30,6 +30,12 @@ export default class Nav extends Component {
                          <Collapse isOpened={this.state.firstCollapse}>
                              <ul className="sub-menu">
                                  <li className="sub-menu__item">
+                                     <NavLink to="/movies"  activeClassName="sub-menu__item--active">
+                                         <span>Все фильмы</span>
+                                         <i className="fa fa-fire" aria-hidden="true"/>
+                                     </NavLink>
+                                 </li>
+                                 <li className="sub-menu__item">
                                      <NavLink to="/movies/upcoming"  activeClassName="sub-menu__item--active">
                                          <span>Ожидаемые фильмы</span>
                                          <i className="fa fa-calendar" aria-hidden="true"/>
@@ -45,12 +51,6 @@ export default class Nav extends Component {
                                      <NavLink to="/movies/top"  activeClassName="sub-menu__item--active">
                                          <span>Топ фильмы</span>
                                          <i className="fa fa-arrow-up" aria-hidden="true"/>
-                                     </NavLink>
-                                 </li>
-                                 <li className="sub-menu__item">
-                                     <NavLink to="/movies/popular"  activeClassName="sub-menu__item--active">
-                                         <span>Популярные фильмы</span>
-                                         <i className="fa fa-fire" aria-hidden="true"/>
                                      </NavLink>
                                  </li>
                              </ul>

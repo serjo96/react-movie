@@ -4,22 +4,23 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto')
 @import './fonts/proximanova-semibold/stylesheet.css'
 @import './fonts/ProximaNova-Regular/stylesheet.css'
-@import "Spinner/Spinner.sass"
+@import "./Spinner/Spinner.sass"
 @import "./nav/nav.sass"
 @import "./Header/header.sass"
-@import "search/searchHeader"
+@import "./search/searchHeader"
+@import "./search/search"
 @import "./moveList/moveList.sass"
 @import "./moveList/moveItem.sass"
+@import "./moveList/Filters"
 @import "./movie/movie.sass"
 @import "./movie/movie-aside.sass"
 @import "./movie/movieCollection.sass"
 @import "./movie/movieRecommendations.sass"
 @import "./popup/moviePopup"
 @import "./tv/tv-seasons"
-@import "stills/Stills.sass"
-@import "credits/Сredits.sass"
-@import "person/Person.sass"
-@import "search/search"
+@import "./stills/Stills.sass"
+@import "./credits/Сredits.sass"
+@import "./person/Person.sass"
 
 
 body
@@ -37,12 +38,14 @@ h1,h2,h3,h4
 p
 	font-family: 'Roboto', sans-serif
 
+.main--media-list
+	//margin-left: 220px
+	width: 1386px
+	margin: 0 auto
+
 .main
 	margin-top: 75px
 	margin-bottom: 30px
-
-.main--media-list
-	margin-left: 220px
 
 .container
 	width: 1160px

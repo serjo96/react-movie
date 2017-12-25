@@ -8,8 +8,8 @@ const initialState = {
         isFetching: false
     },
     Genres: {
-        isFetching: false,
-        data: null
+        isFetching: JSON.parse(localStorage.getItem('genres')) ? true : false,
+        data: JSON.parse(localStorage.getItem('genres')) || null
     },
     GenresList: {
         isFetching: false,
@@ -61,12 +61,15 @@ export default function General(state = initialState, action) {
 
 
 	    case GENRES:
-		    let hashObj = {};
-		    let hash = action.genres.map((item)=> hashObj[item.id] = item.name);
+		    let hashObj = {},
+			    concatArr = action.genres.movie.concat(action.genres.tv),
+			    addNewValue =  action.genres.movie.unshift({id: 0 , name: 'Все жанры'});
+		    concatArr.map((item)=> hashObj[item.id] = item.name);
+		    localStorage.setItem('genres', JSON.stringify({obj: hashObj, arr: {AllGenres: concatArr ,movieGenres: action.genres.movie, tvGenres: action.genres.tv} }));
 		    return update(state, {
 			    Genres: {$merge: {
 					    isFetching: true,
-					    data: {obj: hashObj, arr: action.genres}
+					    data: {obj: hashObj, arr: {AllGenres: concatArr ,movieGenres: action.genres.movie, tvGenres: action.genres.tv} }
 				    }
 			    }
 		    });

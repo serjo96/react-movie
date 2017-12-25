@@ -6,6 +6,7 @@ export const TV_SEASON = 'TV_SEASON';
 export const PERSON_DATA = 'PERSON_DATA';
 export const GENRES = 'GENRES';
 export const MEDIA_ENG_DATA = 'MEDIA_ENG_DATA';
+export const CHANGE_MOVIES_PAGE = 'CHANGE_MOVIES_PAGE';
 
 
 export const CLEAR_MOVIE_DATA = 'CLEAR_MOVIE_DATA';

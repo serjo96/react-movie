@@ -11,8 +11,7 @@ import { onGeneres } from './actions/general-actions';
 
 class App extends Component {
 	componentDidMount() {
-		this.props.Genres();
-
+		JSON.parse(localStorage.getItem('genres')) ? null : this.props.Genres();
 	}
     render() {
         return (

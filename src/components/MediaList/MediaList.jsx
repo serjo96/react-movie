@@ -57,7 +57,6 @@ class MediaList extends Component {
 			                : null}
 	                </div>
                  <div className="movies__list tooltip-parent" >
-
 	                    {this.props.movieList.data.results.map((item, index) => this.renderMovie(item, index)
 	                    )}
                  </div>

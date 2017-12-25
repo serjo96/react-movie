@@ -5,7 +5,7 @@ import Movie from '../containers/Movie/Movie';
 import MovieUpcoming from '../containers/MovieList/MoviesUpcoming';
 import MoviePlaying from '../containers/MovieList/MoviesPlaying';
 import MoviesTop from '../containers/MovieList/MoviesTop';
-import MoviesPopular from '../containers/MovieList/MoviesPopular';
+import MoviesPopular from '../containers/MovieList/allMovies';
 import TVAiring from '../containers/TvLists/TVAiring';
 import TvPopular from '../containers/TvLists/TvPopular';
 import TvTop from '../containers/TvLists/TVTop';
@@ -26,7 +26,6 @@ class Routes extends Component {
                 <Route exact path="/movies/upcoming" component={MovieUpcoming} />
                 <Route exact path="/movies/playing" component={MoviePlaying} />
                 <Route exact path="/movies/top" component={MoviesTop} />
-                <Route exact path="/movies/popular" component={MoviesPopular} />
                 <Route exact path="/movie/:id" component={Movie} />
                 <Route exact path="/tv/airing" component={TVAiring} />
                 <Route exact path="/tv/popular" component={TvPopular} />
@@ -35,6 +34,7 @@ class Routes extends Component {
                 <Route exact path="/person/:id" component={People} />
                 <Route path="/tv/:id" component={TV} />
                 <Route path="/search" component={Search} />
+                <Route path="/movies" component={MoviesPopular} />
                 <Route path="/lists/genres_movie/:id" component={GenresList} />
                 <Route path="/lists/genres_tv/:id" component={GenresList} />
                 <Route path="/lists/keywords_movie/:id" component={KeywordsList} />

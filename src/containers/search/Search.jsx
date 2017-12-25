@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import {Helmet} from 'react-helmet';
 import MovieList from '../../components/MediaList/MediaList';
 import {keywordsReq, genreReq, MainSearch} from '../../actions/general-actions';
@@ -62,7 +61,7 @@ class Search extends Component {
 
 
  prevPage = () => {
-	 let searchProps =this.props.location.search,
+	 let searchProps = this.props.location.search,
      path = this.props.SearchResult.data.page > 1 ? decodeURI(searchProps.substring(searchProps.lastIndexOf('?')+1,searchProps.lastIndexOf('%'))) : decodeURI(searchProps.replace('?', ''));
      if (this.props.SearchResult.data.page > 1) {
          if (this.props.SearchResult.data.page <= 3) {
@@ -135,7 +134,6 @@ class Search extends Component {
  render() {
 
      let {SearchResult} = this.props,
-         {Genres} = this.props,
          titleSearch = SearchResult.data.querySearch.length>0  ? `Результаты поиска «${SearchResult.data.querySearch}»`: 'Поиск';
 
      return (
@@ -181,8 +179,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 function mapStateToProps(state) {
     return {
-        SearchResult: state.General.SearchPageResult,
-        Genres: state.General.Genres
+        SearchResult: state.General.SearchPageResult
     };
 }
 

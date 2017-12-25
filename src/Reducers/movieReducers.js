@@ -1,6 +1,6 @@
 import {
 	UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA,
-	MOVIE_ENG_DATA
+	MOVIE_ENG_DATA, CHANGE_MOVIES_PAGE
 } from '../constants';
 import update from 'react-addons-update';
 
@@ -36,10 +36,16 @@ export default function Movies(state = initialState, action) {
             });
 
 	    case POPULAR_MOVIES:
+	    	let data = action.movies.results,
+			    totalPages = action.movies.total_results;
+	    	if(action.movies.sortByDate > 0){
+	    		data = action.movies.results.filter(val=> action.movies.sortByDate === new Date(val.release_date).getFullYear());
+			    totalPages = data.length;
+		    }
 		    return update(state, {
 			    PopMovies: {$merge: {
 				    isFetching: true,
-				    data: action.movies
+				    data: {...action.movies,  results: data, total_results: totalPages}
 			        }
 			    }
 		    });
@@ -83,13 +89,22 @@ export default function Movies(state = initialState, action) {
             });
 
 
-	    case MOVIE_ENG_DATA:
+	    case CHANGE_MOVIES_PAGE:
             return update(state, {
-                MovieData: {$merge: {
-                    data: {...state.MovieData.data, title: state.MovieData.data.title !== action.data.title ? action.data.title: state.MovieData.data.title, overview: action.data.overview}
-                    }
-                }
+	            PopMovies: {$merge: {
+			            isFetching: false,
+
+		            }
+	            }
             });
+
+	    case MOVIE_ENG_DATA:
+		    return update(state, {
+			    MovieData: {$merge: {
+					    data: {...state.MovieData.data, original_title: state.MovieData.data.original_title !== action.data.title ? action.data.title: state.MovieData.data.original_title, overview: action.data.overview}
+				    }
+			    }
+		    });
 
 
         case CLEAR_MOVIE_DATA:

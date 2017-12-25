@@ -16,7 +16,6 @@ import MediaStills from '../../components/MediaPage/MediaStills';
 import MediaCast from '../../components/MediaPage/MediaCast';
 import MediaRecommendations from '../../components/MediaPage/MediaRecommendations';
 import TVSeason from '../../components/TV/TVSeason';
-import  { ReactCSSTransitionGroup, CSSTransition }  from 'react-transition-group';
 
 class TV extends Component {
     constructor(props) {
@@ -27,19 +26,18 @@ class TV extends Component {
             lightBox: false,
             imgIndex: 0,
             imgCount: 11,
-	        imgStatus: true,
-            intervalId: 0,
+            intervalId: 0
 
         };
     }
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.match.params.id !== this.props.match.params.id) {
-			this.props.clearTvImages();
-			this.sendRequest(nextProps.match.params.id);
-			this.scrollToTop();
-		}
-	}
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.match.params.id !== this.props.match.params.id) {
+            this.props.clearTvImages();
+            this.sendRequest(nextProps.match.params.id);
+            this.scrollToTop();
+        }
+    }
 
 
     componentDidMount() {
@@ -82,25 +80,20 @@ class TV extends Component {
 	     });
 	 };
 
-	onLoadImg = (e) =>{
-		e.target.classList.remove('img-loading');
-		setTimeout(()=> this.setState({imgStatus: false}), 500);
-	};
 
-	scrollStep = () => {
-		if (window.pageYOffset === 0) {
-			clearInterval(this.state.intervalId);
-		}
-		window.scroll(0, window.pageYOffset - 50);
-	};
+ scrollStep = () => {
+     if (window.pageYOffset === 0) {
+         clearInterval(this.state.intervalId);
+     }
+     window.scroll(0, window.pageYOffset - 50);
+ };
 
-	scrollToTop = () => {
-		let intervalId = setInterval(this.scrollStep.bind(this), 16.66);
-		this.setState({ intervalId: intervalId });
-	};
+ scrollToTop = () => {
+     let intervalId = setInterval(this.scrollStep.bind(this), 16.66);
+     this.setState({ intervalId: intervalId });
+ };
 
-
-  render() {
+ render() {
 	        const { imgIndex } = this.state;
 	        const YouTubeParams = {
 				 height: '540',
@@ -109,13 +102,13 @@ class TV extends Component {
 					 autoplay: 0
 				 }
 		    };
-    	let tv = this.props.tv.data,
-		    images = this.props.tv.images,
-		    seasons = this.props.tv.sortSeasons,
-		    bgImages = this.props.tv.bgImages;
-	    if (this.props.tv.isFetching) {
-	    	let overview = this.props.EngData.tv[tv.id] ? this.props.EngData.tv[tv.id].overview : tv.overview,
-			    title = this.props.EngData.tv[tv.id] ? this.props.EngData.tv[tv.id].name !== this.props.tv.tvTitles.title ? this.props.EngData.tv[tv.id].name : this.props.tv.tvTitles.title : this.props.tv.tvTitles.title;
+	        let tv = this.props.tv.data,
+			    images = this.props.tv.images,
+			    seasons = this.props.tv.sortSeasons,
+			    bgImages = this.props.tv.bgImages;
+		    if (this.props.tv.isFetching) {
+		        let overview = this.props.EngData.tv[tv.id] ? this.props.EngData.tv[tv.id].overview : tv.overview,
+				    title = this.props.EngData.tv[tv.id] ? this.props.EngData.tv[tv.id].name !== this.props.tv.tvTitles.title ? this.props.EngData.tv[tv.id].name : this.props.tv.tvTitles.title : this.props.tv.tvTitles.title;
 	        return (
 		            <div className="movie">
 			            <Helmet>
@@ -151,18 +144,16 @@ class TV extends Component {
 						            first_air_date={tv.first_air_date}
 						            last_air_date={tv.last_air_date}
 						            in_production={tv.in_production}
-						            imgStatus={this.state.imgStatus}
-						            onLoadImg={this.onLoadImg}
 					            />
 
 					            <div className="overview">
-						            {this.props.tv.tvTitles.seasonTitle !== null ? <div className="prev-page-link"><Link to={this.props.match.url} onClick={this.props.clearTvSeason} className='link-angle link-angle--left'><i className="fa fa-angle-left" aria-hidden="true" /><span>На страницу сериала</span></Link></div>:null}
+						            {this.props.tv.tvTitles.seasonTitle !== null ? <div className="prev-page-link"><Link to={this.props.match.url} onClick={this.props.clearTvSeason} className="link-angle link-angle--left"><i className="fa fa-angle-left" aria-hidden="true" /><span>На страницу сериала</span></Link></div>:null}
 
 						            <div className="description">
 							            {overview ? <p className="description__text">{overview}</p>
 								            :<div>
 									            <div>Ой! Кажется описание к этому произведению отсутствует</div>
-									            <div className='load-description-eng'>
+									            <div className="load-description-eng">
 										            <span onClick={()=>this.props.loadTvData(tv.id, 'en-US')}>Загрузить описание на английском?</span>
 									            </div>
 								            </div>}
@@ -172,15 +163,15 @@ class TV extends Component {
 						            <Route path={`${this.props.match.url}/season-:season_number`} component={TVSeason}/>
 
 
-						            {images.length>0 ? <MediaStills images={images} title='Кадры из сериала' imgCount={16} onClickImg={this.onClickImg}/>: null}
+						            {images.length>0 ? <MediaStills images={images} title="Кадры из сериала" imgCount={16} onClickImg={this.onClickImg}/>: null}
 
 					            </div>
 				            </div>
 			            </div>
 
-			            {tv.similar.total_results >0 ? <MediaRecommendations recommendations={tv.similar} listName='Похожие сериалы' typeList="tv"/> : null }
-			            {tv.seasons.length>0 ? <TVseasons imgStatus={this.state.imgStatus} onLoadImg={this.onLoadImg} images={images} seasons={seasons} url={this.props.match.url} location={this.props.location.pathname}/>: null}
-			            {tv.recommendations.total_results >0 ? <MediaRecommendations recommendations={tv.recommendations} listName='Вам может понравиться' typeList="tv"/> : null }
+			            {tv.similar.total_results >0 ? <MediaRecommendations recommendations={tv.similar} listName="Похожие сериалы" typeList="tv"/> : null }
+			            {tv.seasons.length>0 ? <TVseasons images={images} seasons={seasons} url={this.props.match.url} location={this.props.location.pathname}/>: null}
+			            {tv.recommendations.total_results >0 ? <MediaRecommendations recommendations={tv.recommendations} listName="Вам может понравиться" typeList="tv"/> : null }
 
 			            {this.state.lightBox ?
 				            <Lightbox
@@ -213,10 +204,10 @@ class TV extends Component {
 				            </div>:null}
 	                </div>
 	        );
-      }
+     }
 		    return  <Spinner />;
 
-  }
+ }
 }
 
 function mapStateToProps(state) {
@@ -229,8 +220,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch) => ({
     loadTvData: (id, lang) => dispatch(onLoadTV(id, lang)),
     clearTvData: () => dispatch(clearTvData()),
-	clearTvImages: () => dispatch(clearTvImages()),
-	clearTvSeason: () => dispatch(clearTvSeason()),
+    clearTvImages: () => dispatch(clearTvImages()),
+    clearTvSeason: () => dispatch(clearTvSeason())
 });
 
 

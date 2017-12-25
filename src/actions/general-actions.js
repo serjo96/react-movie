@@ -133,7 +133,7 @@ export function onGeneres() {
             } else {
                 concatData = genresMovie.data;
             }
-            dispatch(takeGenres(concatData));
+            dispatch(takeGenres({movie: genresMovie.data.genres, tv: genresTV.data.genres}));
         }));
     };
 }
@@ -176,89 +176,88 @@ export function genreReq(id, type, page=1) {
 
 
 export function keywordsReq(id, type, page=1) {
-	return ( dispatch ) => {
-		axios.all([
-			axios.get(`https://api.themoviedb.org/3/discover/${type}`,
-				{
-					params: {
-						api_key: '5a1d310d575e516dd3c547048eb7abf1',
-						language: 'ru-RU',
-						with_keywords: id,
-						page: page,
-						include_adult: true
-					}
-				}),
-			axios.get(`https://api.themoviedb.org/3/discover/${type}`,
-				{
-					params: {
-						api_key: '5a1d310d575e516dd3c547048eb7abf1',
-						language: 'ru-RU',
-						with_keywords: id,
-						page: page+1,
-						include_adult: true
-					}
-				})
-		]).then(axios.spread((pageOne, pageTwo) => {
-			let concatPages;
-			if (pageOne.data.total_pages > 1) {
-				concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {type: 'genres'}});
-			} else {
-				concatPages = pageOne.data;
-			}
-			dispatch(takeKeywordsMovies(concatPages));
-		}));
-	};
+    return ( dispatch ) => {
+        axios.all([
+            axios.get(`https://api.themoviedb.org/3/discover/${type}`,
+                {
+                    params: {
+                        api_key: '5a1d310d575e516dd3c547048eb7abf1',
+                        language: 'ru-RU',
+                        with_keywords: id,
+                        page: page,
+                        include_adult: true
+                    }
+                }),
+            axios.get(`https://api.themoviedb.org/3/discover/${type}`,
+                {
+                    params: {
+                        api_key: '5a1d310d575e516dd3c547048eb7abf1',
+                        language: 'ru-RU',
+                        with_keywords: id,
+                        page: page+1,
+                        include_adult: true
+                    }
+                })
+        ]).then(axios.spread((pageOne, pageTwo) => {
+            let concatPages;
+            if (pageOne.data.total_pages > 1) {
+                concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {type: 'genres'}});
+            } else {
+                concatPages = pageOne.data;
+            }
+            dispatch(takeKeywordsMovies(concatPages));
+        }));
+    };
 }
 
 
 export function FullSearch(type, genre='', page=1) {
-	return ( dispatch ) => {
-		if (words.length>0) {
-			axios.all([
-				axios.get(`https://api.themoviedb.org/3/discover/${type}`,
-					{
-						params: {
-							api_key: '5a1d310d575e516dd3c547048eb7abf1',
-							language: 'ru-RU',
-							region: 'RU',
+    return ( dispatch ) => {
+        if (words.length>0) {
+            axios.all([
+                axios.get(`https://api.themoviedb.org/3/discover/${type}`,
+                    {
+                        params: {
+                            api_key: '5a1d310d575e516dd3c547048eb7abf1',
+                            language: 'ru-RU',
+                            region: 'RU',
                             with_genres: genre,
-							page: page,
-						}
-					}),
-				axios.get(`https://api.themoviedb.org/3/discover/${type}`,
-					{
-						params: {
-							api_key: '5a1d310d575e516dd3c547048eb7abf1',
-							language: 'ru-RU',
-							region: 'RU',
+                            page: page
+                        }
+                    }),
+                axios.get(`https://api.themoviedb.org/3/discover/${type}`,
+                    {
+                        params: {
+                            api_key: '5a1d310d575e516dd3c547048eb7abf1',
+                            language: 'ru-RU',
+                            region: 'RU',
                             with_genres: genre,
-							page: page+1,
-						}
-					})
-			]).then(axios.spread((pageOne, pageTwo) => {
-				let addTypeRequest =  Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {type: 'main-search'}});
-				dispatch(searchPageResults(addTypeRequest));
-			}));
-		}
-	};
+                            page: page+1
+                        }
+                    })
+            ]).then(axios.spread((pageOne, pageTwo) => {
+                let addTypeRequest =  Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {type: 'main-search'}});
+                dispatch(searchPageResults(addTypeRequest));
+            }));
+        }
+    };
 }
 
 
 export function onLoadEngMedia(id, type) {
-	return ( dispatch ) => {
-		axios.get(`https://api.themoviedb.org/3/${type}/${id}`,
-			{
-				params: {
-					api_key: '5a1d310d575e516dd3c547048eb7abf1',
-					language: 'en-US',
-					include_image_language: 'ru,null',
-					append_to_response: 'credits,images,videos,recommendations,reviews,lists,keywords,release_dates'
-				}
-			}
-		).then(res => {
-			let response = Object.assign({...res.data , typeResponse: type});
-			console.log(response)
-			dispatch(takeEngMedia(response));
-		});
-	};
+    return ( dispatch ) => {
+        axios.get(`https://api.themoviedb.org/3/${type}/${id}`,
+            {
+                params: {
+                    api_key: '5a1d310d575e516dd3c547048eb7abf1',
+                    language: 'en-US',
+                    include_image_language: 'ru,null',
+                    append_to_response: 'credits,images,videos,recommendations,reviews,lists,keywords,release_dates'
+                }
+            }
+        ).then(res => {
+            let response = Object.assign({...res.data, typeResponse: type});
+            dispatch(takeEngMedia(response));
+        });
+    };
 }

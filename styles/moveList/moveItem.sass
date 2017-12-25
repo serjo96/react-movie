@@ -1,8 +1,12 @@
 .movie-item
-	margin: 15px
+	margin: 10px
 	transition: all .5s
 
-
+.movie-item--hover
+	.movie-item__poster
+		border: 1px solid #f7f7f7
+	.movie-item__title
+		color: #fff
 
 .movie-loading
 	opacity: 0
@@ -19,7 +23,7 @@
 		display: block
 		width: 100%
 		height: auto
-		max-height: 362px
+		max-height: 376px
 	a
 		display: block
 
@@ -29,25 +33,12 @@
 	border: 1px solid #272f46
 
 
-.popover
-	width: 320px
-	border: 1px solid #272f46
-	padding: 0 15px
-	box-shadow: 0 0 20px 5px rgba(0,0,0,.3)
-	position: absolute
-	z-index: 105
-	transition: opacity .2s,visibility .2s
-	animation-direction: normal
-	animation-duration: .2s
-	animation-iteration-count: 1
-	animation-name: fadeIn
-	animation-timing-function: ease-out
-
 
 .movie-item__title
 	transition: color .3s linear
 	text-align: center
 	margin-top: 10px
+	padding: 0 5px
 	font-weight: bold
 	font-size: 16px
 	color: #7f858c
