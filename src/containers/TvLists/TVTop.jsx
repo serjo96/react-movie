@@ -94,7 +94,7 @@ class TvTop extends Component {
               <Helmet>
                   <title>Топ сериалы</title>
               </Helmet>
-		     <ServiceBlock isLoading={TopTv.isFetching}>
+		     <ServiceBlock isLoading={TopTv.isFetching} isError={TopTv.status} fetch={this.sendRequest}>
 
 			     <div className="movies-content">
                       <MediaList movieListTitle={'Топ сериалы'} movieList={TopTv} typeList='tv'/>

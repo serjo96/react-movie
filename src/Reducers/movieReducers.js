@@ -153,8 +153,9 @@ export default function Movies(state = initialState, action) {
 		    let results = action.movies.data.results.sort((a, b)=> b.vote_average - a.vote_average);
 		    return update(state, {
 			    TopMovies: {$merge: {
-				    isFetching: true,
-				    data: {...action.movies.data,  results: results}
+					    isFetching: true,
+					    data: {...action.movies.data,  results: results},
+					    status: action.movies.status
 			        }
 			    }
 		    });

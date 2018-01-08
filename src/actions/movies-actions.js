@@ -76,7 +76,7 @@ export function onLoadPage() {
                 }
             }
         ).then(response => {
-            dispatch(loadUpcomingMovies({data: response.data, status: response.status}));
+            dispatch(loadUpcomingMovies({data: response.data, status: response.status  === 200}));
         });
 
         axios.get('https://api.themoviedb.org/3/movie/top_rated',
@@ -89,7 +89,7 @@ export function onLoadPage() {
                 }
             }
         ).then(response => {
-            dispatch(loadTopMovies({data: response.data, status: response.status}));
+            dispatch(loadTopMovies({data: response.data, status: response.status  === 200}));
         });
 
 		 axios.get('https://api.themoviedb.org/3/movie/popular',
@@ -102,7 +102,7 @@ export function onLoadPage() {
 		                }
 		            }
 		 ).then(response => {
-			 dispatch(loadPopularMovies({data: response.data, status: response.status}));
+			 dispatch(loadPopularMovies({data: response.data, status: response.status  === 200}));
 		 });
 
         axios.get('https://api.themoviedb.org/3/movie/now_playing',
@@ -115,7 +115,7 @@ export function onLoadPage() {
                 }
             }
         ).then(response => {
-            dispatch(loadPlayingMovies({data: response.data, status: response.status}));
+            dispatch(loadPlayingMovies({data: response.data, status: response.status  === 200}));
         });
 
     };
@@ -144,11 +144,11 @@ export function onLoadMovie(id, lang='ru-RU') {
                     }
                 ).then(response=>{
                     let data = Object.assign({collection: response.data}, res.data);
-                    dispatch(takeMovieData({data: data, status: {collection: response.status, movie: res.status}}));
+                    dispatch(takeMovieData({data: data, status: response.status  === 200 && res.status }));
                 });
             } else {
             	if (lang === 'ru-RU') {
-                    dispatch(takeMovieData({data: res.data, status: {movie: res.status}}));
+                    dispatch(takeMovieData({data: res.data, status: res.status === 200}));
 	            } else {
             		dispatch(takeEngMovieData(res.data));
 	            }
@@ -225,7 +225,7 @@ export function movieListPopular(page=1, genre, sortType = 'popularity.desc', da
 		    } else {
 			    concatPages = pageOne.data;
 		    }
-		    dispatch(loadPopularMovies({data: concatPages, status: { pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 }}));
+		    dispatch(loadPopularMovies({data: concatPages, status: pageOne.status === 200 && pageTwo.status === 200 }));
 	    }));
     };
 }
@@ -258,7 +258,7 @@ export function movieListPlaying(page=1) {
 		    } else {
 			    concatPages = pageOne.data;
 		    }
-		    dispatch(loadPlayingMovies({data: concatPages, status: { pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 }}));
+		    dispatch(loadPlayingMovies({data: concatPages, status: pageOne.status === 200 && pageTwo.status === 200 }));
 	    }));
     };
 }
@@ -291,7 +291,7 @@ export function movieListTop(page=1) {
 		    } else {
 			    concatPages = pageOne.data;
 		    }
-		    dispatch(loadTopMovies(concatPages));
+		    dispatch(loadTopMovies({data: concatPages, status: pageOne.status === 200 && pageTwo.status === 200 }));
 	    }));
     };
 }

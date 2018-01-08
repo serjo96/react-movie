@@ -94,7 +94,7 @@ class TVonTheAir extends Component {
              <Helmet>
                  <title>Текущие сериалы</title>
              </Helmet>
-	         <ServiceBlock isLoading={OnTheAirTv.isFetching} isError={OnTheAirTv.status.pageOne && OnTheAirTv.status.pageTwo} fetch={this.sendRequest}>
+	         <ServiceBlock isLoading={OnTheAirTv.isFetching} isError={OnTheAirTv.status} fetch={this.sendRequest}>
                  <div className="movies-content">
                      <MediaList movieListTitle={`Текущие сериалы (${OnTheAirTv.data.total_results})`} movieList={OnTheAirTv} typeList='tv'/>
 			         {OnTheAirTv.data.total_pages > 1 ?

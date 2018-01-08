@@ -1,13 +1,13 @@
 import {
-	TV_DATA, CLEAR_TV_DATA, AIRING_TV, ALL_TV, ON_THE_AIR_TV, TOP_TV, CLEAR_TV_IMAGES, TV_SEASON,
+	TV_DATA, CLEAR_TV_DATA, AIRING_TV, ALL_TV, ON_THE_AIR_TV, TOP_TV, TV_SEASON,
 	CLEAR_TV_SEASON, TV_ENG_DATA
 } from '../constants';
 import * as axios from 'axios';
 
-function takeTvData( data ) {
+function takeTvData( TVdata ) {
     return {
         type: TV_DATA,
-        data
+        TVdata
     };
 }
 
@@ -21,11 +21,6 @@ function takeEngTvData( data ) {
 export function clearTvData() {
     return {
         type: CLEAR_TV_DATA
-    };
-}
-export function clearTvImages() {
-    return {
-        type: CLEAR_TV_IMAGES
     };
 }
 
@@ -84,7 +79,7 @@ export function onLoadTV(id, lang='ru-RU') {
             }
         ).then(response => {
             if(lang === 'ru-RU'){
-                dispatch(takeTvData(response.data));
+                dispatch(takeTvData({data: response.data, status: response.status === 200}));
             } else {
               dispatch(takeEngTvData(response.data));
             }
@@ -120,7 +115,7 @@ export function tvAiring(page=1) {
 		    } else {
 			    concatPages = pageOne.data;
 		    }
-		    dispatch(loadAiringTV({data: concatPages, status:{ pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 }}));
+		    dispatch(loadAiringTV({data: concatPages, status: pageOne.status === 200 && pageTwo.status === 200}));
 	    }));
     };
 }
@@ -172,7 +167,7 @@ export function tvPopular(page=1, genre, sortType = 'popularity.desc', date) {
 			} else {
 				concatPages = pageOne.data;
 			}
-            dispatch(loadPopularTV({data: concatPages, status:{ pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 }}));
+            dispatch(loadPopularTV({data: concatPages, status: pageOne.status === 200 && pageTwo.status === 200 }));
         }));
     };
 }
@@ -205,7 +200,7 @@ export function tvOnTheAir(page=1) {
             } else {
                 concatPages = pageOne.data;
             }
-            dispatch(loadOnTheAirTV({data: concatPages, status:{ pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 }}));
+            dispatch(loadOnTheAirTV({data: concatPages, status: pageOne.status === 200 && pageTwo.status === 200}));
         }));
     };
 }
@@ -234,12 +229,11 @@ export function tvTop(page=1) {
         ]).then(axios.spread((pageOne, pageTwo) => {
             let concatPages;
             if (pageOne.data.total_pages > 1) {
-                concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, status: {pageOne: pageOne.status, pageTwo: pageTwo.status}});
+                concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page});
             } else {
                 concatPages = pageOne.data;
             }
-            console.log(pageOne)
-            dispatch(loadTopTV(concatPages));
+            dispatch(loadTopTV({data: concatPages, status: pageOne.status === 200 && pageTwo.status === 200}));
         }));
     };
 }

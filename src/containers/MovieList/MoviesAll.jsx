@@ -135,7 +135,7 @@ class MoviesAll extends Component {
 			    <Helmet>
 				    <title>Фильмы</title>
 			    </Helmet>
-			    <ServiceBlock isLoading={AllMovies.isFetching} isError={AllMovies.status.pageOne && AllMovies.status.pageTwo} fetch={this.sendRequest}>
+			    <ServiceBlock isLoading={AllMovies.isFetching} isError={AllMovies.status} fetch={this.sendRequest}>
 
 			    <div className="movies-content">
 				    <FilterList location={this.props.location}

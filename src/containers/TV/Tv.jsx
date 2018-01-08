@@ -4,9 +4,9 @@ import { Link, Route } from 'react-router-dom';
 import YouTube  from 'react-youtube';
 import Popup from '../../components/Popup/Popup';
 import Lightbox from 'lightbox-react';
-import { onLoadTV, clearTvData, clearTvImages, clearTvSeason } from '../../actions/tv-actions';
+import { onLoadTV, clearTvData, clearTvSeason } from '../../actions/tv-actions';
 import {Helmet} from 'react-helmet';
-import Spinner from '../../components/Spinner/Spinner';
+import ServiceBlock from '../../components/Service/ServiceBlock';
 import TVBg from '../../components/TV/TVBg';
 import TVAside from '../../components/TV/TVAside';
 import TVvideos from '../../components/TV/TVvideos';
@@ -32,7 +32,7 @@ class TV extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.match.params.id !== this.props.match.params.id) {
-            this.props.clearTvImages();
+            this.props.clearTvData();
             this.sendRequest(nextProps.match.params.id);
             this.scrollToTop();
         }
@@ -105,11 +105,12 @@ class TV extends Component {
 			    images = this.props.tv.images,
 			    seasons = this.props.tv.sortSeasons,
 			    bgImages = this.props.tv.bgImages;
-		    if (this.props.tv.isFetching) {
-		        let overview = this.props.EngData.tv[tv.id] ? this.props.EngData.tv[tv.id].overview : tv.overview,
-				    title = this.props.EngData.tv[tv.id] ? this.props.EngData.tv[tv.id].name !== this.props.tv.tvTitles.title ? this.props.EngData.tv[tv.id].name : this.props.tv.tvTitles.title : this.props.tv.tvTitles.title;
+
+	        let overview = this.props.EngData.tv[tv.id] ? this.props.EngData.tv[tv.id].overview : tv.overview,
+		        title = this.props.EngData.tv[tv.id] ? this.props.EngData.tv[tv.id].name !== this.props.tv.tvTitles.title ? this.props.EngData.tv[tv.id].name : this.props.tv.tvTitles.title : this.props.tv.tvTitles.title;
 	        return (
 		            <div className="movie">
+			            <ServiceBlock isLoading={this.props.tv.isFetching} isError={this.props.tv.status} fetch={this.sendRequest}>
 			            <Helmet>
 				            <title>{title}</title>
 			            </Helmet>
@@ -202,10 +203,10 @@ class TV extends Component {
 						            </Popup>
 					            </div>
 				            </div>:null}
+			            </ServiceBlock>
 	                </div>
 	        );
-     }
-		    return  <Spinner />;
+
 
  }
 }
@@ -220,7 +221,6 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch) => ({
     loadTvData: (id, lang) => dispatch(onLoadTV(id, lang)),
     clearTvData: () => dispatch(clearTvData()),
-    clearTvImages: () => dispatch(clearTvImages()),
     clearTvSeason: () => dispatch(clearTvSeason())
 });
 

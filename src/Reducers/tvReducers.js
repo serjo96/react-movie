@@ -1,5 +1,5 @@
 import {
-	TV_DATA, CLEAR_TV_DATA, AIRING_TV, ALL_TV, ON_THE_AIR_TV, TOP_TV, CLEAR_TV_IMAGES, TV_SEASON,
+	TV_DATA, CLEAR_TV_DATA, AIRING_TV, ALL_TV, ON_THE_AIR_TV, TOP_TV, TV_SEASON,
 	CLEAR_TV_SEASON, TV_ENG_DATA
 } from '../constants';
 import update from 'react-addons-update';
@@ -7,7 +7,69 @@ import update from 'react-addons-update';
 
 const initialState = {
     TvData: {
-        isFetching: false
+        isFetching: false,
+	    data: {
+		    original_name: '',
+		    name: '',
+		    created_by: {},
+		    backdrop_path: '',
+		    poster_path: '',
+		    episode_run_time: [],
+		    first_air_date: '',
+		    last_air_date: '',
+		    in_production: true,
+		    number_of_episodes: 0,
+		    number_of_seasons: 0,
+		    genres: [],
+		    id: '',
+		    imdb_id: '',
+		    overview: '',
+		    popularity: 0,
+		    production_companies: [],
+		    origin_country: [],
+		    vote_average: 0,
+		    vote_count: 0,
+		    keywords: {
+			    keywords: []
+		    },
+		    credits: {
+			    cast: []
+		    },
+		    videos: {
+			    results: []
+		    },
+		    recommendations: {
+			    page: 1,
+			    results: [],
+			    total_pages: '',
+			    total_results: ''
+		    },
+		    content_rating: {},
+		    external_ids: {},
+		    screened_theatrically: {},
+		    similar: {},
+		    seasons: {}
+	    },
+	    images: [],
+	    bgImages: {
+		    backdrop: '',
+		    poster: '',
+		    season_poster: ''
+	    },
+	    tvTitles: {
+		    title: '',
+		    original_title: '',
+		    seasonTitle: '',
+	    },
+	    tvCredits: {
+		    cast: '',
+		    crew: ''
+	    },
+	    tvVideos: {
+		    results: ''
+	    },
+	    sortSeasons: '',
+	    status: true
     },
 	TvSeason: {
 		isFetching: false
@@ -71,8 +133,8 @@ export default function TVs(state = initialState, action) {
 
     switch (action.type) {
 
-        case TV_DATA:
-	        let seasons = action.data.seasons.slice().sort((a,b) => {
+	    case TV_DATA:
+	        let seasons = action.TVdata.data.seasons.slice().sort((a,b) => {
 		        if( a.season_number === 0) return 1;
 		        if( b.season_number === 0) return -1;
 		        if(new Date(a.season_number) === new Date(b.season_number)) return 0;
@@ -80,27 +142,28 @@ export default function TVs(state = initialState, action) {
 	        });
             return update(state, {
                 TvData: {$merge: {
-                    isFetching: true,
-                    data: action.data,
-	                images: action.data.images.backdrops.concat(action.data.images.posters),
-	                bgImages: {
-		                backdrop: action.data.backdrop_path,
-		                poster: action.data.poster_path,
-		                season_poster: null
-	                },
-	                tvTitles: {
-                        title: action.data.name,
-		                original_title: action.data.original_name,
-		                seasonTitle: null,
-	                },
-	                tvCredits: {
-		                cast: action.data.credits.cast,
-		                crew: action.data.credits.crew
-	                },
-	                tvVideos: {
-                        results: action.data.videos.results
-	                },
-	                sortSeasons: seasons
+	                    isFetching: true,
+	                    data: action.TVdata.data,
+		                images: action.TVdata.data.images.backdrops.concat(action.TVdata.data.images.posters),
+		                bgImages: {
+			                backdrop: action.TVdata.data.backdrop_path,
+			                poster: action.TVdata.data.poster_path,
+			                season_poster: null
+		                },
+		                tvTitles: {
+	                        title: action.TVdata.data.name,
+			                original_title: action.TVdata.data.original_name,
+			                seasonTitle: null,
+		                },
+		                tvCredits: {
+			                cast: action.TVdata.data.credits.cast,
+			                crew: action.TVdata.data.credits.crew
+		                },
+		                tvVideos: {
+	                        results: action.TVdata.data.videos.results
+		                },
+		                sortSeasons: seasons,
+		                status: action.TVdata.status
                 }}
             });
 
@@ -113,21 +176,13 @@ export default function TVs(state = initialState, action) {
 			    }
 		    });
 
-        case CLEAR_TV_DATA:
+	    case CLEAR_TV_DATA:
             return update(state, {
                 TvData: {$merge: {
-                    isFetching: false,
-                    data: null
+		                ...initialState.TvData
                 }}
             });
 
-        case CLEAR_TV_IMAGES:
-            return update(state, {
-                TvData: {$merge: {
-                    isFetching: false,
-	                images: null
-                }}
-            });
 
 	    case TV_SEASON:
             return update(state, {

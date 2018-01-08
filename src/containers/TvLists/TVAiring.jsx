@@ -95,7 +95,7 @@ class TVAiring extends Component {
              <Helmet>
                  <title>Сейчас на тв</title>
              </Helmet>
-	         <ServiceBlock isLoading={AiringTv.isFetching} isError={AiringTv.status.pageOne && AiringTv.status.pageTwo} fetch={this.sendRequest}>
+	         <ServiceBlock isLoading={AiringTv.isFetching} isError={AiringTv.status} fetch={this.sendRequest}>
                  <div className="movies-content">
 	                 <MediaList movieListTitle={`Сейчас на тв (${AiringTv.data.total_results})`} movieList={AiringTv} typeList='tv'/>
                      {AiringTv.data.total_pages > 1 ?

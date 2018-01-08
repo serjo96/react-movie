@@ -51,10 +51,10 @@ const initialState = {
 	EngDescription: {
 		isFetching: false,
     	tv: {
-
+		    0: {mame: '', id: ''}
 	    },
 		movie: {
-
+			0: {mame: '', id: ''}
 		}
 	}
 };

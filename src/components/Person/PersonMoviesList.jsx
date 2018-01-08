@@ -38,8 +38,6 @@ export default class PersonMoviesList extends Component {
 
  render() {
  	let {listData} = this.props;
- 	console.log(this.state.MovieListCount+1)
- 	console.log(listData.length)
      return (
          <div className="filmography">
              <h2>{this.props.title}</h2>

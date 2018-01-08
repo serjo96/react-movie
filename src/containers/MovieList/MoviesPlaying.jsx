@@ -94,7 +94,7 @@ class MoviePlaying extends Component {
              <Helmet>
                  <title>В прокате</title>
              </Helmet>
-	         <ServiceBlock isLoading={PlayMovies.isFetching} isError={PlayMovies.status.pageOne && PlayMovies.status.pageTwo} fetch={this.sendRequest}>
+	         <ServiceBlock isLoading={PlayMovies.isFetching} isError={PlayMovies.status} fetch={this.sendRequest}>
                  <div className="movies-content">
                      <MovieList movieListTitle={`Сейчас в кино (${PlayMovies.data.total_results})`} movieList={PlayMovies} typeList='movie'/>
                      {PlayMovies.data.total_pages > 1 ?

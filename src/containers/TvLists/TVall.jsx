@@ -133,7 +133,7 @@ class TvPopular extends Component {
 			    <Helmet>
 				    <title>Популярные сериалы</title>
 			    </Helmet>
-			    <ServiceBlock isLoading={allTV.isFetching} isError={allTV.status.pageOne && allTV.status.pageTwo} fetch={this.sendRequest}>
+			    <ServiceBlock isLoading={allTV.isFetching} isError={allTV.status} fetch={this.sendRequest}>
 			    <div className="movies-content">
 				    <FilterList location={this.props.location}
 				                genresData={this.props.genres.isFetching ? this.props.genres.data.obj: {}}

@@ -6,7 +6,7 @@ import {Helmet} from 'react-helmet';
 import Lightbox from 'lightbox-react';
 import { Timeline } from 'react-twitter-widgets'
 import NoImg from '../../img/NoImg.png';
-import Spinner from '../../components/Spinner/Spinner';
+import ServiceBlock from '../../components/Service/ServiceBlock';
 import MediaStills from '../../components/MediaPage/MediaStills';
 import MediaItem from '../../components/MediaList/MediaItem';
 import PersonMoviesList from '../../components/Person/PersonMoviesList';
@@ -97,7 +97,7 @@ class Person extends Component {
  render() {
      let person = this.props.people.data;
      let {imgIndex} = this.state;
-     if (this.props.people.isFetching) {
+
      	let lastMovies = this.props.people.sortedMovies.concat().filter(a => new Date(a.release_date) < new Date()).splice(0, 3),
      	    lastTV = this.props.people.sortedTV.concat().filter(a => new Date(a.first_air_date) < new Date() ).splice(0, 3),
 	        bestMovies = person.movie_credits.cast.concat().filter(a => new Date(a.release_date) < new Date() ).sort((a, b) => b.vote_average - a.vote_average ).splice(0, 3),
@@ -106,6 +106,7 @@ class Person extends Component {
          return (
              <div className="container">
 	             <div className="person main">
+		             <ServiceBlock isLoading={this.props.people.isFetching} isError={this.props.people.status} fetch={this.sendRequest}>
 	                 <Helmet>
 	                     <title>{person.name}</title>
 	                 </Helmet>
@@ -252,11 +253,10 @@ class Person extends Component {
 	                             imgIndex: (imgIndex + 1) %  person.images.profiles.length
 	                         })}
 	                     />: null}
+		             </ServiceBlock>
 	             </div>
              </div>
          );
-     }
-     return <Spinner/>;
 
  }
 }

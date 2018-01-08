@@ -27,8 +27,8 @@ export function onLoadPerson(id) {
                     append_to_response: 'movie_credits,images,tv_credits,combined_credits,external_ids,images,tagged_images,latest'
                 }
             }
-        ).then(data => {
-            dispatch(loadPeople(data.data));
+        ).then(res => {
+            dispatch(loadPeople({data: res.data, status: res.status === 200}));
         });
     };
 }
