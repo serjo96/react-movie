@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { onLoadPerson, clearPersonData } from '../../actions/person-actions';
 import {Helmet} from 'react-helmet';
-import Lightbox from 'react-image-lightbox';
+import Lightbox from 'lightbox-react';
 import { Timeline } from 'react-twitter-widgets'
 import NoImg from '../../img/NoImg.png';
 import Spinner from '../../components/Spinner/Spinner';
@@ -21,8 +21,7 @@ class Person extends Component {
             imgCount: 11,
             intervalId: 0,
 	        tvListCount: 15,
-	        MovieListCount: 15,
-	        test: 3
+	        MovieListCount: 15
         };
     }
 
@@ -135,6 +134,12 @@ class Person extends Component {
 			             </div>
 			             <div className="person-content">
 
+				             <div className="mobile-person-info">
+					             <div className="person-photo">
+						             <img src={person.profile_path ? `https://image.tmdb.org/t/p/w185/${person.profile_path}` : NoImg} alt=""/>
+					             </div>
+				             </div>
+
 				             <div className="person-info-table">
 
 						             <div className="person-info-table__col">
@@ -218,8 +223,6 @@ class Person extends Component {
 					             <p className="description__text">{person.biography ? person.biography : 'Биография пока не добавленна'}</p>
 				             </div>
 
-
-							{/*<button onClick={()=> this.setState({test: this.state.test+= 3})}>TEST</button>*/}
 
 				             { person.images.profiles.length>0 ?<MediaStills images={ person.images.profiles} title="Фото" imgCount={15} onClickImg={this.onClickImg}/>: null}
 

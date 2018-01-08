@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {Helmet} from 'react-helmet';
 import MovieList from '../../components/MediaList/MediaList';
 import { keywordsReq } from '../../actions/general-actions';
-import Spinner from '../../components/Spinner/Spinner';
+import ServiceBlock from '../../components/Service/ServiceBlock';
 
 class KeywordsList extends Component {
     constructor(props) {
@@ -107,27 +107,26 @@ class KeywordsList extends Component {
          typeRequest = 'tv';
      }
 
-     if (KeywordsListData.isFetching) {
-         return (
-             <div className="main">
 
-                 <Helmet>
-                     <title>{`Ключевое слово: ${titleSearch}`}</title>
-                 </Helmet>
-                 <div className="container">
-                     <div className="search-results">
-                         <MovieList movieListTitle={`Ключевое слово: ${titleSearch} (${KeywordsListData.data.total_results})`} movieList={KeywordsListData} typeList={typeRequest}/>
-                         {KeywordsListData.data.total_pages > 1 ?
-                             <div className="pager-btns clearfix">
-                                 {KeywordsListData.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
-                                 {KeywordsListData.data.page+1 < KeywordsListData.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
-                             </div> : null}
+     return (
+         <div className="main">
+	             <ServiceBlock isLoading={KeywordsListData.isFetching} isError={KeywordsListData.status.pageOne && KeywordsListData.status.pageTwo} fetch={this.sendRequest}>
+                     <Helmet>
+                         <title>{`Ключевое слово: ${titleSearch}`}</title>
+                     </Helmet>
+                     <div className="container">
+                         <div className="search-results">
+                             <MovieList movieListTitle={`Ключевое слово: ${titleSearch} (${KeywordsListData.data.total_results})`} movieList={KeywordsListData} typeList={typeRequest}/>
+                             {KeywordsListData.data.total_pages > 1 ?
+                                 <div className="pager-btns clearfix">
+                                     {KeywordsListData.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
+                                     {KeywordsListData.data.page+1 < KeywordsListData.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
+                                 </div> : null}
+                         </div>
                      </div>
-                 </div>
-             </div>
-         );
-     } 
-     return (<Spinner/>);
+                 </ServiceBlock>
+         </div>
+     );
 		
  }
 }

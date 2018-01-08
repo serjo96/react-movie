@@ -68,7 +68,10 @@ class TVSeason extends Component {
 								                </div>
 							                </div>
 						                </div>
-						                <div className="episode__overview">{el.overview ? el.overview : 'Описание к этой серии еще не добавлено.'}</div>
+						                <div className="episode__overview-img-wrap">
+							                <div className="episode__img episode__img--mobile" style={{backgroundImage: `url(${el.still_path ? `https://image.tmdb.org/t/p/original${el.still_path})` : NoImg}`}}/>
+							                <div className="episode__overview">{el.overview ? el.overview : 'Описание к этой серии еще не добавлено.'}</div>
+						                </div>
 					                </div>
 					                </div>
 					             ))}

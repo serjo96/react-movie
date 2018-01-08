@@ -5,23 +5,48 @@ import update from 'react-addons-update';
 const initialState = {
     SearchHeaderField: '',
     SearchHeaderResult: {
-        isFetching: false
+        isFetching: false,
+	    data: {
+		    page: 1,
+		    total_results: '',
+		    total_pages: '',
+		    results: []
+	    },
+	    status: {
+		    pageOne: 200,
+		    pageTwo: 200
+	    }
     },
     Genres: {
         isFetching: JSON.parse(localStorage.getItem('genres')) ? true : false,
         data: JSON.parse(localStorage.getItem('genres')) || null
     },
-    GenresList: {
-        isFetching: false,
-        data: null
-    },
     KeywordsList: {
         isFetching: false,
-        data: null
+        data: {
+	        page: 1,
+	        total_results: '',
+	        total_pages: '',
+	        results: []
+        },
+	    status: {
+		    pageOne: 200,
+		    pageTwo: 200
+	    }
     },
     SearchPageResult: {
     	isFetching: false,
-        data: {querySearch: ''}
+        data: {
+    		querySearch: '',
+	        page: 1,
+	        total_results: '',
+	        total_pages: '',
+	        results: []
+        },
+	    status: {
+		    pageOne: 200,
+		    pageTwo: 200
+	    }
     },
 	EngDescription: {
 		isFetching: false,
@@ -42,7 +67,8 @@ export default function General(state = initialState, action) {
             return update(state, {
 	            SearchPageResult: {$merge: {
 			            isFetching: true,
-			            data: action.results
+			            data: action.results.data,
+			            status: action.results.status
 		            }}
             });
 
@@ -62,31 +88,29 @@ export default function General(state = initialState, action) {
 
 	    case GENRES:
 		    let hashObj = {},
-			    concatArr = action.genres.movie.concat(action.genres.tv),
-			    addNewValue =  action.genres.movie.unshift({id: 0 , name: 'Все жанры'});
+			    concatArr = action.genres.movie.concat(action.genres.tv);
 		    concatArr.map((item)=> hashObj[item.id] = item.name);
-		    localStorage.setItem('genres', JSON.stringify({obj: hashObj, arr: {AllGenres: concatArr ,movieGenres: action.genres.movie, tvGenres: action.genres.tv} }));
+		    let allGenres = Object.keys(hashObj).map(key => {return {id: key, name:hashObj[key]}});
+		    allGenres.unshift({id: 0, name: 'Все жанры'});
+		    action.genres.movie.unshift({id: 0, name: 'Все жанры'});
+
+		    localStorage.setItem('genres', JSON.stringify({obj: hashObj, arr: {AllGenres: allGenres ,movieGenres: action.genres.movie, tvGenres: action.genres.tv} }));
 		    return update(state, {
 			    Genres: {$merge: {
 					    isFetching: true,
-					    data: {obj: hashObj, arr: {AllGenres: concatArr ,movieGenres: action.genres.movie, tvGenres: action.genres.tv} }
+					    data: {obj: hashObj, arr: {AllGenres: allGenres ,movieGenres: action.genres.movie, tvGenres: action.genres.tv} },
+
 				    }
 			    }
 		    });
 
-        case SEARCH_GENRES_MOVIES:
-            return update(state, {
-                GenresList: {$merge: {
-                    isFetching: true,
-                    data: action.genres
-                }}
-            });
 
 	    case SEARCH_KEYWORDS_MOVIES:
 	    	return update(state, {
 			    KeywordsList: {$merge: {
 	    			isFetching: true,
-					    data: action.keywords
+					    data: action.keywords.data,
+					    status: action.keywords.status
 				    }}
 			    });
 

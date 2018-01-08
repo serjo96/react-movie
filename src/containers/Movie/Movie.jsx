@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import YouTube  from 'react-youtube';
-import Lightbox from 'react-image-lightbox';
+import Lightbox from 'lightbox-react';
 import { onLoadMovie, clearMovieData } from '../../actions/movies-actions';
 import {Helmet} from 'react-helmet';
 import Popup from '../../components/Popup/Popup';
@@ -11,7 +11,7 @@ import MediaStills from '../../components/MediaPage/MediaStills';
 import MediaCast from '../../components/MediaPage/MediaCast';
 import MovieCollection from '../../components/Move/MovieCollection';
 import MediaRecommendations from '../../components/MediaPage/MediaRecommendations';
-import Spinner from '../../components/Spinner/Spinner';
+import ServiceBlock from '../../components/Service/ServiceBlock';
 
 
 class Movie extends Component {
@@ -88,28 +88,26 @@ class Movie extends Component {
 		 });
 	 };
 
-	onLoadImg = (e) =>{
-		e.target.classList.remove('img-loading');
-		setTimeout(()=> this.setState({imgStatus: false}), 500);
-	};
+	 onLoadImg = (e) =>{
+	     e.target.classList.remove('img-loading');
+	     setTimeout(()=> this.setState({imgStatus: false}), 500);
+	 };
 
-  render() {
-  	const YouTubeParams ={
-		    height: '540',
-		    width: '640',
+ render() {
+  	const YouTubeParams = {
 		    playerVars: { // https://developers.google.com/youtube/player_parameters
 			    autoplay: 0
 		    }
-      };
+     };
 
 	  const { imgIndex } = this.state;
 
 	  const movie = this.props.movie.data,
-		  images = this.props.movie.images,
-		  crew = this.props.crew;
- 	if (this.props.movie.isFetching) {
+		  images = this.props.movie.images;
+
 		 return (
-			 <div className="movie">
+			 <ServiceBlock isLoading={this.props.movie.isFetching} isError={this.props.movie.status} fetch={this.sendRequest}>
+				 <div className="movie" >
 				 <Helmet>
 					 <title>{movie.title}</title>
 				 </Helmet>
@@ -141,7 +139,9 @@ class Movie extends Component {
 							 genres={movie.genres}
 							 keywords={movie.keywords.keywords}
 							 imdb_id={movie.imdb_id}
+							 homepage={movie.homepage}
 							 production_countries={movie.production_countries}
+							 production_companies={movie.production_companies}
 							 imgStatus={this.state.imgStatus}
 							 onLoadImg={this.onLoadImg}
 						 />
@@ -152,7 +152,7 @@ class Movie extends Component {
 								 </p>:
 									 <div>
 										 <div>Ой! Кажется описание к этому произведению отсутствует</div>
-										 <div className='load-description-eng'>
+										 <div className="load-description-eng">
 											 <span onClick={()=>this.props.loadMovieData(movie.id, 'en-US')}>Загрузить описание на английском?</span>
 										 </div>
 									 </div>}
@@ -205,7 +205,7 @@ class Movie extends Component {
 
 				 {this.state.modalTrailer ?
 					 <div className="popup-base" onClick={this.closePopup}>
-						 <div className="popup" onMouseDown={this.mouseDownHandler} onMouseUp={this.mouseUpHandler}>
+						 <div className="popup popup--video">
 							 <div className="popup__close" onClick={this.closePopup}/>
 							 <Popup>
 								 <YouTube
@@ -216,12 +216,10 @@ class Movie extends Component {
 							 </Popup>
 						 </div>
 					 </div>:null}
-			 </div>
-	        );
-      }
-		    return <Spinner/>;
-	    
-  }
+				 </div>
+			 </ServiceBlock>
+		 );
+ }
 }
 
 function mapStateToProps(state) {
@@ -233,7 +231,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => ({
     loadMovieData: (id, lang) => dispatch(onLoadMovie(id, lang)),
-    clearMovieData: () => dispatch(clearMovieData()),
+    clearMovieData: () => dispatch(clearMovieData())
 });
 
 

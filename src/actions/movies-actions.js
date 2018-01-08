@@ -1,5 +1,5 @@
 import {
-    UPCOMING_MOVIES, POPULAR_MOVIES, PLAYING_MOVIES, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA,
+    UPCOMING_MOVIES, ALL_MOVIES, PLAYING_MOVIES, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA,
     MOVIE_ENG_DATA, CHANGE_MOVIES_PAGE
 } from '../constants';
 import * as axios from 'axios';
@@ -20,7 +20,7 @@ function loadTopMovies(movies) {
 }
 function loadPopularMovies(movies) {
     return {
-        type: POPULAR_MOVIES,
+        type: ALL_MOVIES,
 	    movies
     };
 }
@@ -54,17 +54,18 @@ export function clearMovieData() {
 }
 
 
-export function changeMoviePage() {
+export function changeMoviePage(typeList) {
 	return {
-		type: CHANGE_MOVIES_PAGE
+		type: CHANGE_MOVIES_PAGE,
+		typeList
 	};
 }
 
 
 
 export function onLoadPage() {
-
     return ( dispatch ) => {
+
         axios.get('https://api.themoviedb.org/3/movie/upcoming',
             {
                 params: {
@@ -75,7 +76,7 @@ export function onLoadPage() {
                 }
             }
         ).then(response => {
-            dispatch(loadUpcomingMovies(response.data));
+            dispatch(loadUpcomingMovies({data: response.data, status: response.status}));
         });
 
         axios.get('https://api.themoviedb.org/3/movie/top_rated',
@@ -88,7 +89,7 @@ export function onLoadPage() {
                 }
             }
         ).then(response => {
-            dispatch(loadTopMovies(response.data));
+            dispatch(loadTopMovies({data: response.data, status: response.status}));
         });
 
 		 axios.get('https://api.themoviedb.org/3/movie/popular',
@@ -101,7 +102,7 @@ export function onLoadPage() {
 		                }
 		            }
 		 ).then(response => {
-			 dispatch(loadPopularMovies(response.data));
+			 dispatch(loadPopularMovies({data: response.data, status: response.status}));
 		 });
 
         axios.get('https://api.themoviedb.org/3/movie/now_playing',
@@ -114,7 +115,7 @@ export function onLoadPage() {
                 }
             }
         ).then(response => {
-            dispatch(loadPlayingMovies(response.data));
+            dispatch(loadPlayingMovies({data: response.data, status: response.status}));
         });
 
     };
@@ -143,11 +144,11 @@ export function onLoadMovie(id, lang='ru-RU') {
                     }
                 ).then(response=>{
                     let data = Object.assign({collection: response.data}, res.data);
-                    dispatch(takeMovieData(data));
+                    dispatch(takeMovieData({data: data, status: {collection: response.status, movie: res.status}}));
                 });
             } else {
             	if (lang === 'ru-RU') {
-                    dispatch(takeMovieData(res.data));
+                    dispatch(takeMovieData({data: res.data, status: {movie: res.status}}));
 	            } else {
             		dispatch(takeEngMovieData(res.data));
 	            }
@@ -168,12 +169,12 @@ export function movieUpcoming(page=1) {
                 }
             }
         ).then(response => {
-            dispatch(loadUpcomingMovies(response.data));
+            dispatch(loadUpcomingMovies({data: response.data, status: response.status === 200}));
         });
     };
 }
 
-export function movieListPopular(page=1, genre, sortType = 'popularity.desc', date, region='RU',adult) {
+export function movieListPopular(page=1, genre, sortType = 'popularity.desc', date, region, adult) {
 	let year,
 		rageDates,
 		startRangeDate,
@@ -224,7 +225,7 @@ export function movieListPopular(page=1, genre, sortType = 'popularity.desc', da
 		    } else {
 			    concatPages = pageOne.data;
 		    }
-		    dispatch(loadPopularMovies(concatPages));
+		    dispatch(loadPopularMovies({data: concatPages, status: { pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 }}));
 	    }));
     };
 }
@@ -257,7 +258,7 @@ export function movieListPlaying(page=1) {
 		    } else {
 			    concatPages = pageOne.data;
 		    }
-		    dispatch(loadPlayingMovies(concatPages));
+		    dispatch(loadPlayingMovies({data: concatPages, status: { pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 }}));
 	    }));
     };
 }

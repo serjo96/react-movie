@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {Helmet} from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import MovieList from '../../components/MediaList/MediaList';
-import {keywordsReq, genreReq, MainSearch} from '../../actions/general-actions';
+import { MainSearch } from '../../actions/general-actions';
 import { friendlyUrl } from '../../utils/utils';
-import {DebounceInput} from 'react-debounce-input';
-import Spinner from '../../components/Spinner/Spinner';
+import { DebounceInput } from 'react-debounce-input';
+import ServiceBlock from '../../components/Service/ServiceBlock';
 
 class Search extends Component {
     constructor(props) {
@@ -21,6 +21,11 @@ class Search extends Component {
         if (this.props.location.search !== prevProps.location.search) {
             this.scrollToTop();
             this.sendRequest(prevProps);
+	        if (this.props.location.search.match(/page/)) {
+		        this.setState({val: decodeURI(this.props.location.search.substring(this.props.location.search.lastIndexOf('?')+1, this.props.location.search.lastIndexOf('%')).replace('?', '').replace(/_/g, ' '))});
+	        } else {
+		        this.setState({val: decodeURI(this.props.location.search.replace('?', '').replace(/_/g, ' '))});
+	        }
         }
     }
 
@@ -137,12 +142,12 @@ class Search extends Component {
          titleSearch = SearchResult.data.querySearch.length>0  ? `Результаты поиска «${SearchResult.data.querySearch}»`: 'Поиск';
 
      return (
-         <div className="search-page main">
+         <div className="search-page main main--media-list ">
 
              <Helmet>
                  <title>{titleSearch}</title>
              </Helmet>
-             <div className="container">
+             <div className="movies-content iphonex">
                  <div className="search-field-wrapper">
                      <DebounceInput className="search__field"
 						               name="Search"
@@ -157,7 +162,7 @@ class Search extends Component {
                          <i className="fa fa-search" aria-hidden="true"/>
                      </div>
                  </div>
-                 {SearchResult.isFetching ?
+	             <ServiceBlock isLoading={SearchResult.isFetching} isError={SearchResult.status.pageOne && SearchResult.status.pageTwo} fetch={this.sendRequest}>
                      <div className="search-results">
                          <MovieList movieListTitle={`${titleSearch} (${SearchResult.data.total_results})`} movieList={SearchResult} typeList="movie"/>
                          {SearchResult.data.total_pages > 1 ?
@@ -165,7 +170,8 @@ class Search extends Component {
                                  {SearchResult.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
                                  {SearchResult.data.page+1 < SearchResult.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
                              </div> : null}
-                     </div> : null}
+                     </div>
+                 </ServiceBlock>
              </div>
          </div>
      );

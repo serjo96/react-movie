@@ -20,7 +20,7 @@ class App extends Component {
 		            <title>Movie Base</title>
 	            </Helmet>
                 <Nav location={this.props.location}/>
-                <Header/>
+                <Header history={this.props.history}/>
 
 	            <Routes/>
             </div>

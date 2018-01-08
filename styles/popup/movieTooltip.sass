@@ -79,6 +79,7 @@
 
 .tooltip__date
 	font-size: 14px
+	margin-right: 10px
 
 .tooltip__genre-data
 	display: flex
@@ -86,9 +87,13 @@
 	margin-bottom: 5px
 	.genres
 		font-weight: 400
-		margin-left: 10px
 		display: flex
 		flex-wrap: wrap
 
 .movie-tooltip__no-description
 	margin-top: 7px
+
+
+@media only screen and (max-width : 963px)
+	.movie-tooltip
+		display: none

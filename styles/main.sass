@@ -16,21 +16,24 @@
 @import "./movie/movie-aside.sass"
 @import "./movie/movieCollection.sass"
 @import "./movie/movieRecommendations.sass"
-@import "./popup/moviePopup"
+@import "popup/movieTooltip"
 @import "./tv/tv-seasons"
 @import "./stills/Stills.sass"
 @import "./credits/Сredits.sass"
 @import "./person/Person.sass"
+@import "./company/Company.sass"
 
+html
+	min-height: 100vh
 
 body
 	background-image: radial-gradient(circle closest-corner at 50% 20%,#272f46,#10101a)
 	background-color: #0f111e
 	background-attachment: fixed
+	min-height: 100vh
 	font-family: 'PT Sans', sans-serif
 	color: #fff
 	font-size: 14px
-	min-width: 1500px
 
 h1,h2,h3,h4
 	font-family: 'proxima_novasemibold', Sans-Serif
@@ -39,8 +42,7 @@ p
 	font-family: 'Roboto', sans-serif
 
 .main--media-list
-	//margin-left: 220px
-	width: 1386px
+	width: 1245px
 	margin: 0 auto
 
 .main
@@ -50,6 +52,7 @@ p
 .container
 	width: 1160px
 	margin: 0 auto
+
 
 .btn
 	cursor: pointer
@@ -64,7 +67,6 @@ p
 	color: #d8b16b
 	&:hover
 		color: #fff
-
 
 
 .tag
@@ -196,3 +198,35 @@ p
 
 
 
+.movies-content--main-page
+	.movies__list
+		.movie-item
+			width: 15.2%
+
+
+.try-again-wrap
+	position: fixed
+	z-index: 25
+	top: 0
+	right: 0
+	left: 0
+	bottom: 0
+	width: 100%
+	height: 100%
+	display: flex
+	justify-content: center
+	align-items: center
+	background: #000
+
+.try-again-btn
+	padding: 10px
+	cursor: pointer
+	border: 1px solid #d8b16b
+	background: #d8b16b
+	transition: all 1s
+	&:hover
+		background: transparent
+		color: #d8b16b
+
+
+@import "./Media/Media.sass"

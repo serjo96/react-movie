@@ -7,7 +7,7 @@ class Popup extends Component {
     }
 
 
-	 showModal = (e)=> document.querySelector('.popup__content').classList.remove('popup--is-hide');
+	 showModal = ()=> document.querySelector('.popup__content').classList.remove('popup--is-hide');
 
 
  render() {

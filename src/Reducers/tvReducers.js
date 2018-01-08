@@ -1,5 +1,5 @@
 import {
-	TV_DATA, CLEAR_TV_DATA, AIRING_TV, POPULAR_TV, ON_THE_AIR_TV, TOP_TV, CLEAR_TV_IMAGES, TV_SEASON,
+	TV_DATA, CLEAR_TV_DATA, AIRING_TV, ALL_TV, ON_THE_AIR_TV, TOP_TV, CLEAR_TV_IMAGES, TV_SEASON,
 	CLEAR_TV_SEASON, TV_ENG_DATA
 } from '../constants';
 import update from 'react-addons-update';
@@ -13,16 +13,57 @@ const initialState = {
 		isFetching: false
 	},
     airingTv: {
-        isFetching: false
+        isFetching: false,
+	    data: {
+		    page: 1,
+		    total_results: '',
+		    total_pages: '',
+		    results: []
+	    },
+	    status: {
+		    pageOne: true,
+		    pageTwo: true
+	    }
     },
     TopTv: {
-        isFetching: false
+        isFetching: false,
+	    data: {
+		    page: 1,
+		    total_results: '',
+		    total_pages: '',
+		    results: []
+	    },
+	    status: {
+		    pageOne: true,
+		    pageTwo: true
+	    }
     },
-    PopTv: {
-        isFetching: false
+    allTV: {
+	    isFetching: false,
+	    data: {
+		    page: 1,
+		    total_results: '',
+		    total_pages: '',
+		    results: [],
+		    sortByDate: {}
+	    },
+	    status: {
+		    pageOne: true,
+		    pageTwo: true
+	    }
     },
     OnTheAirTv: {
-        isFetching: false
+        isFetching: false,
+	    data: {
+		    page: 1,
+		    total_results: '',
+		    total_pages: '',
+		    results: []
+	    },
+	    status: {
+		    pageOne: true,
+		    pageTwo: true
+	    }
     }
 };
 
@@ -146,16 +187,18 @@ export default function TVs(state = initialState, action) {
 	    case AIRING_TV:
 		    return update(state, {
 			    airingTv: {$merge: {
-				    isFetching: true,
-				    data: action.TV
+					    isFetching: true,
+					    data: action.TV.data,
+					    status: action.TV.status
 			    }}
 		    });
 
-	    case POPULAR_TV:
+	    case ALL_TV:
 		    return update(state, {
-			    PopTv: {$merge: {
-				    isFetching: true,
-				    data: action.TV
+			    allTV: {$merge: {
+					    isFetching: true,
+					    data: action.TV.data,
+					    status: action.TV.status
 			    }}
 		    });
 
@@ -171,8 +214,9 @@ export default function TVs(state = initialState, action) {
 	    case ON_THE_AIR_TV:
 		    return update(state, {
 			    OnTheAirTv: {$merge: {
-				    isFetching: true,
-				    data: action.TV
+					    isFetching: true,
+					    data: action.TV.data,
+					    status: action.TV.status
 			    }}
 		    });
 

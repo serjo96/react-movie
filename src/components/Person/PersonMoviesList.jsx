@@ -38,10 +38,12 @@ export default class PersonMoviesList extends Component {
 
  render() {
  	let {listData} = this.props;
+ 	console.log(this.state.MovieListCount+1)
+ 	console.log(listData.length)
      return (
          <div className="filmography">
              <h2>{this.props.title}</h2>
-             <div className={`filmography-list ${listData.length <= this.state.MovieListCount+1? 'filmography-list--isMore':''} tooltip-parent`}>
+             <div className={`filmography-list ${listData.length >= 16? listData.length <= this.state.MovieListCount+1? 'filmography-list--isMore':'' : 'filmography-list--noMore'} tooltip-parent`}>
                  {listData.length > this.state.MovieListCount+1 ?
                      <div className="show-more show-more--stills">
                          <div className="show-more__btn" onClick={this.loadMoreMovies}>Больше</div>

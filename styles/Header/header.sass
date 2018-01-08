@@ -4,9 +4,9 @@
 	z-index: 60
 	width: 100%
 	height: 60px
-	padding: 20px 0
 	display: flex
 	align-items: center
+	justify-content: space-between
 	background: #534b77
 	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=13, Direction=0, Color=#000000)"
 	-moz-box-shadow: 0 7px 13px -5px rgba(0,0,0,0.6)
@@ -14,31 +14,88 @@
 	box-shadow: 0 7px 13px -5px rgba(0,0,0,0.6)
 	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=13, Direction=135, Color=#000000)
 	transition: all .5s
-	.logo
-		width: 150px
 
 
 .header--is-hide
-	transform: translate3d(0, -75px, 0)
+	transform: translate3d(0, -100%, 0)
 	.searchComboBox
-		>div
+		height: 0!important
+		opacity: 0
+		.comboBox-view-wrap
 			height: 1px!important
-			min-height: 1px !important
+
+
+
+
 
 .logo
 	text-align: center
-	margin-left: 15px
+	position: absolute
+	left: 0
+	right: 0
+	margin: 0 auto
+	width: 155px
+
 
 
 .logo__link
 	display: inline-block
+	transition: color .5s
+	font-family: 'Roboto', sans-serif
+	font-size: 20px
 
 
-.logo__img
-	width: 50px
-	height: 50px
-	background: url('../src/img/powered-by-square-green.svg') no-repeat
-	transition: all .3s linear
-	&:hover
-		background: url('../src/img/powered-by-square-blue.svg') no-repeat
+.mobile-nav-trigger
+	width: 60px
+	height: 100%
+	display: none
+	justify-content: center
+	align-items: center
+	flex-wrap: wrap
+	padding: 0 3px
+	cursor: pointer
+	overflow: hidden
+	transition: background .5s
+	span
+		width: 20px
+		height: 2px
+		position: relative
+		background: #d8b16b
+		&:before,&:after
+			position: absolute
+			content: ''
+			width: 100%
+			height: 2px
+			background: #d8b16b
+			transition: transform .5s
+			transform: translateZ(0)
+		&:before
+			transform: translateY(-6px)
+		&:after
+			transform: translateY(6px)
+
+.nav.nav--mobile-show
+	width: 100%
+	transform: translate3d(0, 0, 0) !important
+	opacity: 1
+
+.mobile-nav-trigger--isClicked
+	background: #141414
+	span
+		background: rgba(255, 255, 255, 0)
+		&:before
+			transform: translateY(0) rotate(-45deg)
+		&:after
+			transform: translateY(0) rotate(45deg)
+
+
+.search-mobile-trigger
+	width: 60px
+	height: 100%
+	display: none
+	justify-content: center
+	align-items: center
+	cursor: pointer
+
+.search-mobile-trigger--isClicked
 

@@ -2,14 +2,60 @@ import React from 'react';
 import Swiper from 'react-id-swiper';
 import MovieItem from '../MediaList/MediaItem';
 
-const SwiperParam = {
-    slidesPerView: 8,
-    setWrapperSize: true,
-    navigation: {
-        nextEl: '.slider-button-next',
-        prevEl: '.slider-button-prev',
-	    disabledClass: 'slider-button--isDisabled'
-    }
+let SwiperParam;
+
+let width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+switch (true){
+	case width <= 1100 && width >= 963:
+		SwiperParam = {
+			slidesPerView: 7,
+			navigation: {
+				nextEl: '.slider-button-next',
+				prevEl: '.slider-button-prev',
+				disabledClass: 'slider-button--isDisabled'
+			}
+		};
+		break;
+	case width <= 963 && width >= 753:
+		SwiperParam = {
+			slidesPerView: 5,
+			navigation: {
+				nextEl: '.slider-button-next',
+				prevEl: '.slider-button-prev',
+				disabledClass: 'slider-button--isDisabled'
+			}
+		};
+		break;
+	case width <= 763 && width >= 460:
+		SwiperParam = {
+			slidesPerView: 4,
+			navigation: {
+				nextEl: '.slider-button-next',
+				prevEl: '.slider-button-prev',
+				disabledClass: 'slider-button--isDisabled'
+			}
+		};
+		break;
+	case width <= 460:
+		SwiperParam = {
+			slidesPerView: 2,
+			navigation: {
+				nextEl: '.slider-button-next',
+				prevEl: '.slider-button-prev',
+				disabledClass: 'slider-button--isDisabled'
+			}
+		};
+		break;
+	default:
+		SwiperParam = {
+			slidesPerView: 8,
+			navigation: {
+				nextEl: '.slider-button-next',
+				prevEl: '.slider-button-prev',
+				disabledClass: 'slider-button--isDisabled'
+			}
+		}
 };
 
 const MediaRecommendations = (movie) => (

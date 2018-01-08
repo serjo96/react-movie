@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
-import { tvonTheAir } from '../../actions/tv-actions';
+import { tvOnTheAir } from '../../actions/tv-actions';
 import { connect } from 'react-redux';
 import MediaList from '../../components/MediaList/MediaList';
+import ServiceBlock from '../../components/Service/ServiceBlock';
 
 
 class TVonTheAir extends Component {
@@ -24,6 +25,7 @@ class TVonTheAir extends Component {
 		if (window.pageYOffset === 0) {
 			clearInterval(this.state.intervalId);
 		}
+		this.scrollToTop();
 		this.sendRequest();
 	}
 
@@ -92,15 +94,16 @@ class TVonTheAir extends Component {
              <Helmet>
                  <title>Текущие сериалы</title>
              </Helmet>
-	         {OnTheAirTv.isFetching ?
+	         <ServiceBlock isLoading={OnTheAirTv.isFetching} isError={OnTheAirTv.status.pageOne && OnTheAirTv.status.pageTwo} fetch={this.sendRequest}>
                  <div className="movies-content">
-                     <MediaList movieListTitle={'Текущие сериалы'} movieList={OnTheAirTv} typeList='tv'/>
+                     <MediaList movieListTitle={`Текущие сериалы (${OnTheAirTv.data.total_results})`} movieList={OnTheAirTv} typeList='tv'/>
 			         {OnTheAirTv.data.total_pages > 1 ?
                          <div className="pager-btns clearfix">
 					         {OnTheAirTv.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
 					         {OnTheAirTv.data.page+1 < OnTheAirTv.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
                          </div> : null}
-                 </div> : null}
+                 </div>
+	         </ServiceBlock>
          </main>
      );
 
@@ -114,7 +117,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	loadList: (page) => dispatch(tvonTheAir(page))
+	loadList: (page) => dispatch(tvOnTheAir(page))
 });
 
 

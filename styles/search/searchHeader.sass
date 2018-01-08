@@ -1,12 +1,26 @@
 .header__search
 	position: relative
 	width: 270px
+	margin-left: 55px
 
 
 .search__field
 	width: 100%
 	padding: 10px 12px
 	border: 1px solid #cbd1d4
+
+.search-btn
+	background: #d8b16b
+	font-size: 16px
+	display: flex
+	justify-content: center
+	align-items: center
+	width: 44px
+	cursor: pointer
+	&:active
+		background: #b49358
+
+
 
 .searchComboBox
 	position: absolute
@@ -20,7 +34,7 @@
 	color: #020411
 	font-size: 14px
 	box-shadow:  0 7px 34px -9px rgba(0,0,0,0.4)
-	transition: height .5s
+	transition: height, opacity .5s
 	>div
 		transition: height .5s
 		animation: slide-down .5s
@@ -44,6 +58,7 @@
 	img
 		display: block
 		width: 100%
+		max-height: 314.64px
 
 .result-element__title
 	margin-left: 10px
@@ -53,6 +68,40 @@
 .result-element__type
 	font-weight: bold
 
+
+.header__search--mobile
+	position: fixed
+	left: 0
+	right: 0
+	width: 100%
+	z-index: 55
+	top: 60px
+	margin: 0
+	.searchComboBox
+		max-height: calc(100vh - 100px)
+		width: 100%
+		.ComboBox-view
+			height: calc(100% - 100px)
+			max-height: calc(100vh - 100px)!important
+			display: flex
+			flex-wrap: wrap
+			padding-bottom: 50px
+		>div
+			width: 100% !important
+			max-height: 100vh!important
+			height: 100% !important
+		.result-element
+			width: 25%
+			text-align: center
+			align-items: flex-start
+			.result-element__poster
+				width: 100%
+	.result-element__title
+		margin: 5px 0
+		width: 100%
+		padding: 0 5px
+	.result-element__type
+		width: 100%
 
 @keyframes slide-down
 	0%

@@ -3,6 +3,7 @@ import {Helmet} from 'react-helmet';
 import { movieUpcoming } from '../../actions/movies-actions';
 import { connect } from 'react-redux';
 import MovieList from '../../components/MediaList/MediaList';
+import ServiceBlock from '../../components/Service/ServiceBlock';
 
 
 class MovieUpcoming extends Component {
@@ -24,6 +25,7 @@ class MovieUpcoming extends Component {
 		if (window.pageYOffset === 0) {
 			clearInterval(this.state.intervalId);
 		}
+		this.scrollToTop();
 		this.sendRequest();
 	}
 
@@ -88,15 +90,16 @@ class MovieUpcoming extends Component {
              <Helmet>
                  <title>Ожидаемые фильмы</title>
              </Helmet>
-	         {UpcomingList.isFetching ?
-             <div className="movies-content">
-                <MovieList movieListTitle={'Скоро в кино'} movieList={this.props.UpcomingList} typeList='movie'/>
-	             {UpcomingList.data.total_pages > 1 ?
-		             <div className="pager-btns clearfix">
-			             {UpcomingList.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
-			             {UpcomingList.data.page+1 < UpcomingList.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
-		             </div> : null}
-             </div> : null}
+	         <ServiceBlock isLoading={UpcomingList.isFetching} isError={UpcomingList.status} fetch={this.sendRequest}>
+	             <div className="movies-content">
+	                <MovieList movieListTitle={`Скоро в кино (${this.props.UpcomingList.data.total_results})`} movieList={this.props.UpcomingList} typeList='movie'/>
+		             {UpcomingList.data.total_pages > 1 ?
+			             <div className="pager-btns clearfix">
+				             {UpcomingList.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
+				             {UpcomingList.data.page+1 < UpcomingList.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
+			             </div> : null}
+	             </div>
+	         </ServiceBlock>
          </main>
      );
 

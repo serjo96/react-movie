@@ -42,8 +42,9 @@ module.exports = {
     inline: true,
     // serve index.html in place of 404 responses to allow HTML5 history
     historyApiFallback: true,
+      disableHostCheck: true,
     port: PORT,
-    host: HOST
+	  host: '0.0.0.0'
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),

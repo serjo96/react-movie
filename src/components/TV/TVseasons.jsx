@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import NoImg from '../../img/NoImg.png';
 import PropTypes from 'prop-types';
+import Spinner from '../Spinner/Spinner';
 
 class TVseasons extends Component {
 	constructor( props ) {
@@ -33,18 +34,22 @@ class TVseasons extends Component {
 										<Link to={`${this.props.url}/season-${el.season_number}`}>
 											<div
 												className={`season__img-cover ${this.props.location !== this.props.url ? 'season__img-cover--season-page' : ''}`}>
+												{this.state.imgStatus ? <Spinner/> : null}
 												<img onLoad={this.onLoadImg} className="img-loading"
 												     src={el.poster_path ? 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + el.poster_path : NoImg}
 												     alt=""/>
+
 											</div>
 											<div
 												className="season-number">{el.season_number > 0 ? el.season_number + ' сезон' : 'special'}</div>
 										</Link>
 										: <div className='active-season'>
 											<div className={`season__img-cover`}>
-												<img onLoad={this.onLoadImg} className="img-loading"
-												     src={el.poster_path ? 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + el.poster_path : NoImg}
-												     alt=""/>
+												{this.state.imgStatus ? <Spinner/> : null}
+													<img onLoad={this.onLoadImg} className="img-loading"
+													     src={el.poster_path ? 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + el.poster_path : NoImg}
+													     alt=""/>
+
 											</div>
 											<div className="season-number">{el.season_number > 0 ? el.season_number + ' сезон' : 'special'}</div>
 										</div>}

@@ -1,8 +1,5 @@
-export let storage = [
+export let storageCountries = [
     {
-        name: 'Все старны',
-        ico: ''
-    }, {
         name: 'Австралия',
         ico: 'AU'
     }, {
@@ -62,7 +59,7 @@ export let storage = [
     }, {
         name: 'Джерси',
         ico: 'JE'
-    },{
+    }, {
         name: 'Доминика',
         ico: 'DM'
     }, {
@@ -74,7 +71,7 @@ export let storage = [
     }, {
         name: 'Замбия',
         ico: 'ZM'
-    },{
+    }, {
         name: 'Зимбабве',
         ico: 'ZW'
     }, {
@@ -161,9 +158,6 @@ export let storage = [
     }, {
         name: 'Литва',
         ico: 'LT'
-    },{
-        name: 'Мальта',
-        ico: 'MT'
     }, {
         name: 'Марокко',
         ico: 'MA'
@@ -182,9 +176,6 @@ export let storage = [
     }, {
         name: 'Непал',
         ico: 'NP'
-    }, {
-        name: 'Нигер',
-        ico: 'NE'
     }, {
         name: 'Нигерия',
         ico: 'NG'
@@ -209,15 +200,12 @@ export let storage = [
     }, {
         name: 'Пакистан',
         ico: 'PK'
-    },{
+    }, {
         name: 'Парагвай',
         ico: 'PY'
     }, {
         name: 'Перу',
         ico: 'PE'
-    }, {
-        name: 'Питкэрн',
-        ico: 'PN'
     }, {
         name: 'Польша',
         ico: 'PL'
@@ -233,15 +221,12 @@ export let storage = [
     }, {
         name: 'Россия',
         ico: 'RU'
-    },{
+    }, {
         name: 'Румыния',
         ico: 'RO'
     }, {
         name: 'Сальвадор',
         ico: 'SV'
-    }, {
-        name: 'Самоа',
-        ico: 'WS'
     }, {
         name: 'Саудовская Аравия',
         ico: 'SA'
@@ -251,9 +236,6 @@ export let storage = [
     }, {
         name: 'Сингапур',
         ico: 'SG'
-    },{
-        name: 'Сирия',
-        ico: 'SY'
     }, {
         name: 'Словакия',
         ico: 'SK'
@@ -261,11 +243,8 @@ export let storage = [
         name: 'Словения',
         ico: 'SI'
     }, {
-        name: 'Соединенные Штаты',
+        name: 'США',
         ico: 'US'
-    },{
-        name: 'Сомали',
-        ico: 'SO'
     }, {
         name: 'Судан',
         ico: 'SD'
@@ -303,9 +282,6 @@ export let storage = [
         name: 'Украина',
         ico: 'UA'
     }, {
-        name: 'Уругвай',
-        ico: 'UY'
-    }, {
         name: 'Фиджи',
         ico: 'FJ'
     }, {
@@ -317,7 +293,7 @@ export let storage = [
     }, {
         name: 'Франция',
         ico: 'FR'
-    },{
+    }, {
         name: 'Хорватия',
         ico: 'HR'
     }, {
@@ -355,10 +331,32 @@ export let storage = [
         ico: 'JP'
     }];
 
-export let sortByDateList = [
+export let popularCountries = [
+	{
+		name: 'Россия',
+		ico: 'RU'
+	}, {
+        name: 'США',
+        ico: 'US'
+    }, {
+        name: 'Великобритания',
+        ico: 'GB'
+    }, {
+        name: 'Франция',
+        ico: 'FR'
+    }, {
+        name: 'Италия',
+        ico: 'IT'
+    },  {
+        name: 'Германия',
+        ico: 'DE'
+    }
+];
+
+export let sortBySingleDateList = [
     {
         name: 'Все года',
-        date: 0,
+        date: '',
         type: 'single'
     }, {
         name: '2017 год',
@@ -386,7 +384,27 @@ export let sortByDateList = [
         type: 'range'
     }];
 
-export let sortList = [
+export let sortByRangeDateList = [
+    {
+        name: '2000-2010',
+        date: '2000-01-01=2010-01-01',
+        type: 'range'
+    }, {
+        name: '1990-2000',
+        date: '1990-01-01=2000-01-01',
+        type: 'range'
+    }, {
+        name: '1980-1990',
+        date: '1980-01-01=1990-01-01',
+        type: 'range'
+    }, {
+        name: 'до 1980',
+        date: '=1980-01-01',
+        type: 'range'
+    }
+];
+
+export let sortListMovie = [
     {
         name: 'По популярности',
         type: 'popularity'
@@ -397,6 +415,24 @@ export let sortList = [
         name: 'Сборам',
         type: 'revenue'
     }, {
+        name: 'Оригинальному названию',
+        type: 'original_title'
+    }, {
+        name: 'Среднему голосу',
+        type: 'vote_average'
+    }, {
+        name: 'Количеству голосов',
+        type: 'vote_count'
+    }];
+
+export let sortListTV = [
+    {
+        name: 'По популярности',
+        type: 'popularity'
+    }, {
+        name: 'Дате выпуска',
+        type: 'primary_release_date'
+    },{
         name: 'Оригинальному названию',
         type: 'original_title'
     }, {

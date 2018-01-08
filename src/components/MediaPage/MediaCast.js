@@ -4,16 +4,48 @@ import Swiper from 'react-id-swiper';
 import NoImg from '../../img/NoImg.png';
 import { friendlyUrl } from '../../utils/utils';
 
-const SwiperParams = {
-    scrollbar: {
-        el: '.swiper-scrollbar',
-        hide: false,
-        draggable: true
-    },
-    slidesPerView: 8,
-    spaceBetween: 20
+let SwiperParams;
 
-};
+let width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+switch (true) {
+    case width <= 963 && width >= 463:
+        SwiperParams = {
+            scrollbar: {
+                el: '.swiper-scrollbar',
+                hide: false,
+                draggable: true
+            },
+            setWrapperSize: false,
+            slidesPerView: 4,
+            spaceBetween: 0
+        };
+        break;
+	case width <= 463:
+		SwiperParams = {
+			scrollbar: {
+				el: '.swiper-scrollbar',
+				hide: false,
+				draggable: true
+			},
+			setWrapperSize: false,
+			slidesPerView: 3,
+			spaceBetween: 0
+		};
+		break;
+
+    default:
+        SwiperParams = {
+            scrollbar: {
+                el: '.swiper-scrollbar',
+                hide: false,
+                draggable: true
+            },
+            slidesPerView: 7,
+            spaceBetween: 10
+        };
+}
+
 const MediaCast = (movie) => (
     <div className="credits">
         <div className="cast">

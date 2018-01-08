@@ -18,7 +18,7 @@ module.exports = {
   ],
   output: {
     publicPath: '/',
-    path: path.join(__dirname, 'movie-base'),
+    path: path.join(__dirname, 'build'),
     filename: '[chunkhash].js'
   },
   resolve: {
@@ -44,7 +44,7 @@ module.exports = {
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new ExtractTextPlugin({
-      filename: 'style.css',
+      filename: 'css/style.css',
       allChunks: true
     }),
     new HtmlWebpackPlugin({

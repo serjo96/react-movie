@@ -32,12 +32,6 @@ function takeGenres(genres) {
 }
 
 
-function takeGenresMovies(genres) {
-    return {
-        type: SEARCH_GENRES_MOVIES,
-        genres
-    };
-}
 
 function takeKeywordsMovies(keywords) {
     return {
@@ -54,6 +48,7 @@ function takeEngMedia(engData) {
 }
 
 
+
 export function onSearch(words) {
     return ( dispatch ) => {
         if (words.length>0) {
@@ -64,7 +59,8 @@ export function onSearch(words) {
                         language: 'ru-RU',
                         page: 1,
                         region: 'RU',
-                        query: words
+                        query: words,
+	                    include_adult: true
                     }
                 }
             ).then(response => {
@@ -102,7 +98,7 @@ export function MainSearch(words, page=1) {
 	                    })
 	            ]).then(axios.spread((pageOne, pageTwo) => {
 	                let addTypeRequest =  Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {type: 'main-search'}, querySearch: words.replace('_', ' ')});
-	                dispatch(searchPageResults(addTypeRequest));
+	                dispatch(searchPageResults({data: addTypeRequest, status: { pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 }}));
 	            }));
 	        }
 	    };
@@ -127,49 +123,7 @@ export function onGeneres() {
                     }
                 })
         ]).then(axios.spread((genresMovie, genresTV) => {
-            let concatData;
-            if (genresMovie.data) {
-                concatData = genresMovie.data.genres.concat(genresTV.data.genres);
-            } else {
-                concatData = genresMovie.data;
-            }
             dispatch(takeGenres({movie: genresMovie.data.genres, tv: genresTV.data.genres}));
-        }));
-    };
-}
-
-
-export function genreReq(id, type, page=1) {
-    return ( dispatch ) => {
-        axios.all([
-            axios.get(`https://api.themoviedb.org/3/discover/${type}`,
-                {
-                    params: {
-                        api_key: '5a1d310d575e516dd3c547048eb7abf1',
-                        language: 'ru-RU',
-	                    with_genres: id,
-                        page: page,
-                        include_adult: true
-                    }
-                }),
-            axios.get(`https://api.themoviedb.org/3/discover/${type}`,
-                {
-                    params: {
-                        api_key: '5a1d310d575e516dd3c547048eb7abf1',
-                        language: 'ru-RU',
-	                    with_genres: id,
-                        page: page+1,
-                        include_adult: true
-                    }
-                })
-        ]).then(axios.spread((pageOne, pageTwo) => {
-            let concatPages;
-            if (pageOne.data.total_pages > 1) {
-                concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {type: 'genres'}});
-            } else {
-                concatPages = pageOne.data;
-            }
-            dispatch(takeGenresMovies(concatPages));
         }));
     };
 }
@@ -205,41 +159,8 @@ export function keywordsReq(id, type, page=1) {
             } else {
                 concatPages = pageOne.data;
             }
-            dispatch(takeKeywordsMovies(concatPages));
+            dispatch(takeKeywordsMovies({data: concatPages,  status: { pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 }}));
         }));
-    };
-}
-
-
-export function FullSearch(type, genre='', page=1) {
-    return ( dispatch ) => {
-        if (words.length>0) {
-            axios.all([
-                axios.get(`https://api.themoviedb.org/3/discover/${type}`,
-                    {
-                        params: {
-                            api_key: '5a1d310d575e516dd3c547048eb7abf1',
-                            language: 'ru-RU',
-                            region: 'RU',
-                            with_genres: genre,
-                            page: page
-                        }
-                    }),
-                axios.get(`https://api.themoviedb.org/3/discover/${type}`,
-                    {
-                        params: {
-                            api_key: '5a1d310d575e516dd3c547048eb7abf1',
-                            language: 'ru-RU',
-                            region: 'RU',
-                            with_genres: genre,
-                            page: page+1
-                        }
-                    })
-            ]).then(axios.spread((pageOne, pageTwo) => {
-                let addTypeRequest =  Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {type: 'main-search'}});
-                dispatch(searchPageResults(addTypeRequest));
-            }));
-        }
     };
 }
 

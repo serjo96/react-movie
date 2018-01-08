@@ -16,6 +16,13 @@
 	&:active
 		background: #2e3854
 
+.filter-item--safe-filter
+	.fa
+		&:before
+			display: inline-block
+			width: 12px
+
+
 .filter-item--active
 	.filter-name
 		border-color: #d8b16b
@@ -76,7 +83,7 @@
 		pointer-events: none
 	&:before
 		border-color: rgba(194, 225, 245, 0)
-		border-bottom-color: #000000
+		border-bottom-color: transparent
 		border-width: 12px
 		margin-left: -6px
 	&:after
@@ -89,7 +96,8 @@
 	&:before,&:after
 		left: 50%
 		right: 50%
-
+.filter-item__catalog--sort-date
+	max-width: 112px
 
 .filter-catalog-col
 	width: 169px
@@ -117,7 +125,16 @@
 .filter-catalog__title
 	margin-bottom: 10px
 
+.filter-catalog__sub-title
+	padding: 10px 5px
+	text-transform: uppercase
+	font-family: 'Roboto', sans-serif
+	font-size: 10px
+	font-weight: bold
+	color: #7f858c
 
+.filter-catalog__sub-title--country
+	margin: 10px 0
 
 .sort-direction
 	font-size: 18px
@@ -131,7 +148,85 @@
 		transform: rotate(0)
 		color: #d8b16b
 
+.filter-filed-date
+	display: block
+	width: 100%
 
+.mobile-filter
+	background: #f4f4f4
+	padding: 15px
+
+.mobile-filter__title
+	font-size: 18px
+	color: #2e3854
+	font-weight: bold
+
+.mobile-filter-trigger
+	display: none
+	width: 100%
+	text-align: center
+	padding: 20px 0
+	cursor: pointer
+	span
+		margin-right: 10px
+
+.mobile-filter__select
+	position: relative
+	padding: 10px 0
+
+.mobile-filter-item__title
+	color: #0f111e
+
+.mobile-filter__name
+	display: flex
+	justify-content: space-between
+	align-items: center
+	color: #0f111e
+	font-weight: bold
+
+.mobile-filter__label
+	position: absolute
+	left: 0
+	top: 0
+	right: 0
+	bottom: 0
+	z-index: 1
+	select
+		opacity: 0
+		height: 100%
+		width: 100%
+
+.mobile__sort-direction
+	margin-top: 5px
+	padding: 10px 0
+	color: #2e3854
+	cursor: pointer
+	font-weight: bold
+
+	span
+		font-size: 15px
+	i
+		margin-left: 15px
+		font-size: 18px
+
+.restore-filters-btn
+	margin-top: 10px
+	padding: 10px
+	color: #f4f4f4
+	background: #0f111e
+	border-radius: 3px
+	text-align: center
+	cursor: pointer
+	font-weight: bold
+
+.mobile-filter__safeFiler
+	margin-top: 5px
+	padding: 10px 0
+	display: flex
+	justify-content: space-between
+	color: #2e3854
+	font-weight: bold
+	font-size: 15px
 
 @keyframes showFilterCatalog
 	0%

@@ -3,6 +3,7 @@ import { tvAiring } from '../../actions/tv-actions';
 import {Helmet} from 'react-helmet';
 import { connect } from 'react-redux';
 import MediaList from '../../components/MediaList/MediaList';
+import ServiceBlock from '../../components/Service/ServiceBlock';
 
 
 class TVAiring extends Component {
@@ -24,6 +25,7 @@ class TVAiring extends Component {
         if (window.pageYOffset === 0) {
             clearInterval(this.state.intervalId);
         }
+	    this.scrollToTop();
         this.sendRequest();
     }
 
@@ -93,15 +95,16 @@ class TVAiring extends Component {
              <Helmet>
                  <title>Сейчас на тв</title>
              </Helmet>
-             {AiringTv.isFetching ?
+	         <ServiceBlock isLoading={AiringTv.isFetching} isError={AiringTv.status.pageOne && AiringTv.status.pageTwo} fetch={this.sendRequest}>
                  <div className="movies-content">
-	                 <MediaList movieListTitle={'Сейчас на тв'} movieList={AiringTv} typeList='tv'/>
+	                 <MediaList movieListTitle={`Сейчас на тв (${AiringTv.data.total_results})`} movieList={AiringTv} typeList='tv'/>
                      {AiringTv.data.total_pages > 1 ?
                          <div className="pager-btns clearfix">
                              {AiringTv.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
                              {AiringTv.data.page+1 < AiringTv.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
                          </div> : null}
-                 </div> : null}
+                 </div>
+	         </ServiceBlock>
          </main>
      );
  }

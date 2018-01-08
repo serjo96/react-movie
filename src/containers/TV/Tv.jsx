@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
 import YouTube  from 'react-youtube';
 import Popup from '../../components/Popup/Popup';
-import Lightbox from 'react-image-lightbox';
+import Lightbox from 'lightbox-react';
 import { onLoadTV, clearTvData, clearTvImages, clearTvSeason } from '../../actions/tv-actions';
 import {Helmet} from 'react-helmet';
-import NoImg from '../../img/NoImg.png';
 import Spinner from '../../components/Spinner/Spinner';
 import TVBg from '../../components/TV/TVBg';
 import TVAside from '../../components/TV/TVAside';
@@ -144,6 +143,7 @@ class TV extends Component {
 						            first_air_date={tv.first_air_date}
 						            last_air_date={tv.last_air_date}
 						            in_production={tv.in_production}
+						            production_companies={tv.production_companies}
 					            />
 
 					            <div className="overview">
@@ -191,7 +191,7 @@ class TV extends Component {
 
 			            {this.state.modalTrailer ?
 				            <div className="popup-base" onClick={this.closePopup}>
-					            <div className="popup" onMouseDown={this.mouseDownHandler} onMouseUp={this.mouseUpHandler}>
+					            <div className="popup popup--video">
 						            <div className="popup__close" onClick={this.closePopup}/>
 						            <Popup>
 							            <YouTube

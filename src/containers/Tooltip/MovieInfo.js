@@ -51,7 +51,7 @@ class MoviePopup extends Component   {
                             {this.props.genres? Allgenres.isFetching ?
                                 <div className='genres'>{this.props.genres.map((el, indx)=> indx<= 2 ?
                                     <div key={indx} className="genre">
-                                        {Allgenres.data.obj[el] ? <Link className='tag' to={`/lists/genres_${this.props.typeItem}/${urlRusLat(Allgenres.data.obj[el])}-${el}`}>{Allgenres.data.obj[el]}</Link> : null}
+                                        {Allgenres.data.obj[el] ? <Link className='tag' to={`/${this.props.typeItem === 'movie' ? this.props.typeItem + 's' : this.props.typeItem}/all?genre-${urlRusLat(Allgenres.data.obj[el])}-${el}`}>{Allgenres.data.obj[el]}</Link> : null}
                                     </div>  : null) }
                                     </div> :null :null}
                         </div>

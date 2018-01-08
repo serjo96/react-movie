@@ -12,7 +12,7 @@
 	flex-wrap: wrap
 	margin: 0 -10px
 	.movie-item
-		width: 18.5%
+		width: 19.99%
 
 
 .movies__title-list
@@ -23,18 +23,18 @@
 
 
 .link-angle
+	transition: all .3s linear
+	color: #d8b16b
+	span
+		margin-right: 5px
+		vertical-align: middle
+	i
 		transition: all .3s linear
-		color: #d8b16b
-		span
-			margin-right: 5px
-			vertical-align: middle
+		vertical-align: middle
+	&:hover
+		color: #fff
 		i
-			transition: all .3s linear
-			vertical-align: middle
-		&:hover
-			color: #fff
-			i
-				transform: translateX(10px)
+			transform: translateX(10px)
 
 .link-angle--left
 	span

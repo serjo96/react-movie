@@ -11,19 +11,19 @@ class Main extends Component {
     }
     render() {
 
-        if(this.props.UpcomingList.isFetching && this.props.TopMovies.isFetching && this.props.PopMovies.isFetching && this.props.PlayMovies.isFetching){
+        if(this.props.UpcomingList.isFetching && this.props.TopMovies.isFetching && this.props.AllMovies.isFetching && this.props.PlayMovies.isFetching){
             return (
-                <main className="main main--media-list">
-                    <div className="movies-content">
-                        <MovieList movieListTitle={'Скоро в кино'} movieList={this.props.UpcomingList} count={11} movieListMain={true} ListLink={'upcoming'} typeList='movie'/>
+                <main className="main main--media-list iphonex">
+                    <div className="movies-content movies-content--main-page">
                         <MovieList movieListTitle={'Сейчас в кино'} movieList={this.props.PlayMovies} count={11} movieListMain={true} ListLink={'playing'} typeList='movie'/>
-                        <MovieList movieListTitle={'Топ фильмы'} movieList={this.props.TopMovies} count={11} movieListMain={true} ListLink={'top'} typeList='movie'/>
-                        <MovieList movieListTitle={'Популярные фильмы'} movieList={this.props.PopMovies} count={11} movieListMain={true} ListLink={'popular'} typeList='movie'/>
+                        <MovieList movieListTitle={'Скоро в кино'} movieList={this.props.UpcomingList} count={11} movieListMain={true} ListLink={'upcoming'} typeList='movie'/>
+                        <MovieList movieListTitle={'Топ фильмы'} movieList={this.props.TopMovies} count={11} movieListMain={false} ListLink={'top'} typeList='movie'/>
+                        <MovieList movieListTitle={'Все фильмы'} movieList={this.props.AllMovies} count={11} movieListMain={true} ListLink={'all'} typeList='movie'/>
                     </div>
                 </main>
             );
         }else {
-            return (<Spinner/>)
+            return (<Spinner/>);
         }
     }
 }
@@ -36,7 +36,7 @@ function mapStateToProps(state) {
     return {
         UpcomingList: state.Movies.upcomingMovies,
         TopMovies: state.Movies.TopMovies,
-        PopMovies: state.Movies.PopMovies,
+        AllMovies: state.Movies.AllMovies,
         PlayMovies: state.Movies.PlayingMovies
     };
 }

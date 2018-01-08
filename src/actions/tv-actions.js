@@ -1,5 +1,5 @@
 import {
-	TV_DATA, CLEAR_TV_DATA, AIRING_TV, POPULAR_TV, ON_THE_AIR_TV, TOP_TV, CLEAR_TV_IMAGES, TV_SEASON,
+	TV_DATA, CLEAR_TV_DATA, AIRING_TV, ALL_TV, ON_THE_AIR_TV, TOP_TV, CLEAR_TV_IMAGES, TV_SEASON,
 	CLEAR_TV_SEASON, TV_ENG_DATA
 } from '../constants';
 import * as axios from 'axios';
@@ -44,7 +44,7 @@ function loadTopTV(TV) {
 }
 function loadPopularTV(TV) {
     return {
-        type: POPULAR_TV,
+        type: ALL_TV,
         TV
     };
 }
@@ -120,45 +120,64 @@ export function tvAiring(page=1) {
 		    } else {
 			    concatPages = pageOne.data;
 		    }
-		    dispatch(loadAiringTV(concatPages));
+		    dispatch(loadAiringTV({data: concatPages, status:{ pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 }}));
 	    }));
     };
 }
 
-export function tvPopular(page=1) {
-    return ( dispatch ) => {
-        axios.all([
-            axios.get('https://api.themoviedb.org/3/tv/popular',
-                {
-                    params: {
-                        api_key: '5a1d310d575e516dd3c547048eb7abf1',
-                        language: 'ru-RU',
-                        page: page,
-                        region: 'RU'
-                    }
-                }),
-            axios.get('https://api.themoviedb.org/3/tv/popular',
-                {
-                    params: {
-                        api_key: '5a1d310d575e516dd3c547048eb7abf1',
-                        language: 'ru-RU',
-                        page: page+1,
-                        region: 'RU'
-                    }
-                })
-        ]).then(axios.spread((pageOne, pageTwo) => {
-            let concatPages;
-            if (pageOne.data.total_pages > 1) {
-                concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page});
-            } else {
-                concatPages = pageOne.data;
-            }
-            dispatch(loadPopularTV(concatPages));
+export function tvPopular(page=1, genre, sortType = 'popularity.desc', date) {
+	let year,
+		rageDates,
+		startRangeDate,
+		endRangeDate;
+	if(date.type === 'range'){
+		rageDates = date.date.split('=');
+		startRangeDate = rageDates[0];
+		endRangeDate = rageDates[1];
+	} else {
+		year = date.date;
+	}
+	return ( dispatch ) => {
+		axios.all([
+			axios.get('https://api.themoviedb.org/3/discover/tv',
+				{
+					params: {
+						api_key: '5a1d310d575e516dd3c547048eb7abf1',
+						language: 'ru-RU',
+						sort_by: sortType,
+						with_genres: genre,
+						first_air_date_year: year,
+						'first_air_date.gte': startRangeDate,
+						'first_air_date.lte': endRangeDate,
+						page: page
+					}
+				}),
+			axios.get('https://api.themoviedb.org/3/discover/tv',
+				{
+					params: {
+						api_key: '5a1d310d575e516dd3c547048eb7abf1',
+						language: 'ru-RU',
+						sort_by: sortType,
+						with_genres: genre,
+						first_air_date_year: year,
+						'first_air_date.gte': startRangeDate,
+						'first_air_date.lte': endRangeDate,
+						page: page+1
+					}
+				})
+		]).then(axios.spread((pageOne, pageTwo) => {
+			let concatPages;
+			if (pageOne.data.total_pages > 1) {
+				concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, sortByDate: date});
+			} else {
+				concatPages = pageOne.data;
+			}
+            dispatch(loadPopularTV({data: concatPages, status:{ pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 }}));
         }));
     };
 }
 
-export function tvonTheAir(page=1) {
+export function tvOnTheAir(page=1) {
     return ( dispatch ) => {
         axios.all([
             axios.get('https://api.themoviedb.org/3/tv/on_the_air',
@@ -186,7 +205,7 @@ export function tvonTheAir(page=1) {
             } else {
                 concatPages = pageOne.data;
             }
-            dispatch(loadOnTheAirTV(concatPages));
+            dispatch(loadOnTheAirTV({data: concatPages, status:{ pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 }}));
         }));
     };
 }
@@ -215,10 +234,11 @@ export function tvTop(page=1) {
         ]).then(axios.spread((pageOne, pageTwo) => {
             let concatPages;
             if (pageOne.data.total_pages > 1) {
-                concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page});
+                concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, status: {pageOne: pageOne.status, pageTwo: pageTwo.status}});
             } else {
                 concatPages = pageOne.data;
             }
+            console.log(pageOne)
             dispatch(loadTopTV(concatPages));
         }));
     };
