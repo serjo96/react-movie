@@ -2,26 +2,26 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700')
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
 @import url('https://fonts.googleapis.com/css?family=Roboto')
-@import './fonts/proximanova-semibold/stylesheet.css'
-@import './fonts/ProximaNova-Regular/stylesheet.css'
+@import '../src/assests/fonts/proximanova-semibold/stylesheet.css'
+@import '../src/assests/fonts/ProximaNova-Regular/stylesheet.css'
 @import "./Spinner/Spinner.sass"
-@import "./nav/nav.sass"
-@import "./Header/header.sass"
-@import "./search/searchHeader"
-@import "./search/search"
-@import "./moveList/moveList.sass"
-@import "./moveList/moveItem.sass"
-@import "./moveList/Filters"
-@import "./movie/movie.sass"
-@import "./movie/movie-aside.sass"
-@import "./movie/movieCollection.sass"
-@import "./movie/movieRecommendations.sass"
+@import "../src/Templates/Nav/nav"
+@import "../src/Templates/Head/header"
+@import "../src/Templates/Search/searchHeader"
+@import "../src/Templates/Search/search"
+@import "../src/Templates/MovieList/moveList"
+@import "../src/Templates/MovieList/moveItem"
+@import "../src/Templates/MovieList/Filters"
+@import "../src/Templates/Movie/movie"
+@import "../src/Templates/Movie/movie-aside"
+@import "../src/Templates/Movie/MovieCollection"
+@import "../src/Templates/Movie/MovieRecommendations"
 @import "popup/movieTooltip"
-@import "./tv/tv-seasons"
+@import "../src/Templates/TV/tv-seasons"
 @import "./stills/Stills.sass"
 @import "./credits/Сredits.sass"
-@import "./person/Person.sass"
-@import "./company/Company.sass"
+@import "../src/Templates/Person/Person"
+@import "../src/Templates/Company/Company"
 
 html
 	min-height: 100vh
@@ -166,7 +166,7 @@ p
 		background: transparent
 		color: #fff
 
-		
+
 .track-vertical
 	background: #000
 
@@ -188,11 +188,11 @@ p
 	transition: opacity 1000ms ease-in
 
 
-.my-exit 
+.my-exit
 	opacity: 1
 
 
-.my-exit.my-exit-active 
+.my-exit.my-exit-active
 	opacity: 0.01
 	transition: opacity 800ms ease-in
 
