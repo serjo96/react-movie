@@ -40,11 +40,12 @@ class ListsPage extends Component {
 	        },
 	        modalFilter: false
         };
+	    this.stringParse = (new URL(document.location)).searchParams;
     }
 
     componentDidMount() {
 
-        let genres =  this.props.location.search.match(/genre/g) ? parseInt(this.props.location.search.split(/-/).pop()) : '';
+        let genres =  this.stringParse.get('genre') ? parseInt(this.stringParse.get('genre')) : '';
         this.setState({
 	        genresListData: {
 		        name: this.props.genresData[genres] || 'Все жанры',
@@ -56,7 +57,7 @@ class ListsPage extends Component {
 
     componentDidUpdate(_, previousState) {
     	if (previousState.sortSettings !== this.state.sortSettings) {
-		    this.sortLists();
+		    this.onSortLists();
 	    }
 
     }
@@ -74,6 +75,11 @@ class ListsPage extends Component {
 			 }
 		 });
 	 };
+
+	onSortLists = () =>{
+		let fullType = this.state.sortSettings.sortBy.type + (this.state.sortSettings.SortDerection ? '.asc' : '.desc');
+		this.props.onClickSortList(fullType, this.state.sortSettings);
+	};
 
     onSortByDate = (el) =>{
 	    let newState = update(this.state.sortSettings, {$merge: {
@@ -121,9 +127,10 @@ class ListsPage extends Component {
 	    this.setState({
 		    sortSettings: {...newState},
 		    genresListData: {
-		    	id: id, name: el.name, status: id === 0 ? false : true
+		    	id: id, name: el.name, status: id === 0
 		    }
 	    });
+
 	    this.props.onClickGenres({
 		    type: 'genre',
 		    filterData: {id}
@@ -206,10 +213,7 @@ class ListsPage extends Component {
 	    });
     };
 
-	 sortLists = () =>{
-	    let fullType = this.state.sortSettings.sortBy.type + (this.state.sortSettings.SortDerection ? '.asc' : '.desc');
-	     this.props.SortList(fullType, this.state.sortSettings);
-	 };
+
 
  closePopup = (e) =>{
      if (e.target.className === 'popup-base' || e.target.className === 'popup__close') {
@@ -358,7 +362,7 @@ class ListsPage extends Component {
 						 </div>
 						 <div className="filter-item__catalog filter-item__catalog--col sort-catalog">
 							 <div className="filter-catalog__title">Сортировать</div>
-							 {this.props.sortList.map(( el, indx ) =>
+							 {this.props.sortListType.map(( el, indx ) =>
 								 (<div
 									 onClick={()=>this.onClickSort(el)}
 									 key={indx}
@@ -480,7 +484,7 @@ class ListsPage extends Component {
 									    name: e.target.value,
 									    type: e.target.options[e.target.selectedIndex].dataset.type
 								    })}>
-									    {this.props.sortList.map(( el, indx ) =>
+									    {this.props.sortListType.map(( el, indx ) =>
 										    (<option
 											    key={indx}
 											    value={el.name}

@@ -404,7 +404,7 @@ export let sortByRangeDateList = [
     }
 ];
 
-export let sortListMovie = [
+export let sortListType = [
     {
         name: 'По популярности',
         type: 'popularity'

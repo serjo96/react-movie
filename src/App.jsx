@@ -4,7 +4,7 @@ import {Helmet} from 'react-helmet';
 import '../styles/main.sass';
 import Header from './Templates/Head/Head';
 import Nav from './Templates/Nav/nav';
-import Routes from './Data/Routes/Routes';
+import Routes from './Routes/Routes';
 import { connect } from 'react-redux';
 import { onGeneres } from './Data/actions/general-actions';
 

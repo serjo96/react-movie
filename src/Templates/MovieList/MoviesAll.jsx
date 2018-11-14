@@ -6,7 +6,7 @@ import queryString from 'query-string';
 import { movieListPopular, changeMoviePage } from '../../Data/actions/movies-actions';
 import MovieList from '../MediaList/MediaList';
 import FilterList from '../MediaList/FilterList';
-import {sortListMovie} from '../../Data/localData';
+import {sortListType} from '../../Data/localData';
 import ServiceBlock from '../Service/ServiceBlock';
 
 class MoviesAll extends Component {
@@ -26,12 +26,13 @@ class MoviesAll extends Component {
 		        }
 	        }
         };
+        this.stringParse = (new URL(document.location)).searchParams;
     }
 
     componentDidUpdate(prevProps, previousState) {
         if (this.props.location.search !== prevProps.location.search) {
-        	console.count('props')
-            this.scrollToTop();
+
+            // this.scrollToTop();
 	        this.sendRequest();
         } else if (previousState.sortSettings !== this.state.sortSettings) {
 	        this.sendRequest();
@@ -39,22 +40,19 @@ class MoviesAll extends Component {
     }
 
     componentDidMount() {
-	    if (window.pageYOffset === 0) {
-		    clearInterval(this.state.intervalId);
-	    }
-	    this.scrollToTop();
+	    // if (window.pageYOffset === 0) {
+		 //    clearInterval(this.state.intervalId);
+	    // }
+	    // this.scrollToTop();
 	    this.sendRequest();
     }
 
-     sendRequest = () =>{
-	     let page = parseFloat(this.props.location.search.split('=').pop()) ? parseInt(this.props.location.search.split('=').pop()) : undefined,
-		     genres = queryString.parse(this.props.location.search).genre,
+     sendRequest = () => {
+	     let page = this.stringParse.get('page') ? parseInt(this.stringParse.get('page')) : null,
+		     genres = this.stringParse.get('genre'),
 		     {sortSettings} = this.state,
 		     {sortType} = this.state;
 
-	     let params = (new URL(document.location)).searchParams;
-	     let name = params.get("genre")
-console.log( queryString.parse(this.props.location.search));
 	      if (page) {
 	     	if (page <= 2) {
 		        this.props.loadList(page+1, genres, sortType, sortSettings.sortByDate, sortSettings.sortByCountry.ico, sortSettings.adult);
@@ -102,33 +100,53 @@ console.log( queryString.parse(this.props.location.search));
         }
     };
 
-
+// TODO: Сделать делегированный обработчик на фильтры и исправить перезапись url
  GenresFilter = (filter) => {
- 	// console.log(filter);
-	 console.log(filter)
+	 let url = queryString.parse(this.props.location.search);
+	 let stringified;
+	 if (url.genre) {
+		 url.country = filter.filterData.id;
+	 } else if (url.country) {
+		 url.country = filter.filterData;
+	 }
 	 if (filter.type === 'genre') {
 	     if (filter.filterData.id === 0) {
-	         this.props.history.push('/movies/all');
+	         this.props.history.push(this.props.location.pathname + this.props.location.search);
 	     } else {
-	         this.props.history.push(`/movies/all?genre-${filter.filterData.id}`);
+		     if (url.genre) {
+			     this.props.history.push(`/movies/all?genre=${filter.filterData.id}`);
+		     }
 	     }
-	 } else if (filter.type === 'country'){
-		 // this.props.history.push({
-			//  pathname: this.props.location.pathname,
-			//  search: this.props.location.search ? `${this.props.location.search}?country-${filter.filterData}` : `country-${filter.filterData}`,
-			//  state: null
-		 // });
-		 this.props.history.push(`/movies/all?country-${filter.filterData}`);
-// console.log(this.props.location)
+	 } else if (filter.type === 'country') {
+
+	 	if (url.country) {
+	 		url.country = filter.filterData;
+	 		stringified = queryString.stringify(url);
+	 		console.log(stringified)
+		    this.props.history.push({
+			    pathname: this.props.location.pathname,
+			    search: stringified,
+			    state: null
+		    });
+	    } else {
+			 this.props.history.push({
+	          pathname: this.props.location.pathname,
+	          search: this.props.location.search ? `${this.props.location.search}&country=${filter.filterData}` : `country=${filter.filterData}`,
+	          state: null
+			 });
+
+	    }
 	 }
+
  };
 
  sortList = (type, settings) =>{
-     let genres = this.props.location.search.match(/genre/g) ? parseInt(this.props.location.search.split(/-/).pop()) : '';
-     if (genres) {
-         this.props.history.push(`/movies/all?genre=${genres}`);
-     } else {
-         this.props.history.push('/movies/all');
+     if (this.props.location.search) {
+	     this.props.history.push({
+		     pathname: this.props.location.pathname,
+		     search: this.props.location.search,
+		     state: null
+	     });
      }
      this.setState({sortType: type, sortSettings: settings});
  };
@@ -160,10 +178,10 @@ console.log( queryString.parse(this.props.location.search));
 				                genresData={this.props.genres.isFetching ? this.props.genres.data.obj: {}}
 				                genres={this.props.genres.isFetching ?this.props.genres.data.arr.movieGenres : []}
 				                onClickGenres={this.GenresFilter}
-				                SortList={this.sortList}
+				                onClickSortList={this.sortList}
 				                sortByCountry={true}
 				                safeFilter={true}
-				                sortList={sortListMovie}
+				                sortListType={sortListType}
 				                MobileFilter={width >= 963}
 				    />
 					    <MovieList movieListTitle={`Всего фильмов (${AllMovies.data.total_results})`} movieList={AllMovies} typeList="movie"/>

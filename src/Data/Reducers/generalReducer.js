@@ -18,7 +18,7 @@ const initialState = {
 	    }
     },
     Genres: {
-        isFetching: JSON.parse(localStorage.getItem('genres')) ? true : false,
+        isFetching: !!JSON.parse(localStorage.getItem('genres')),
         data: JSON.parse(localStorage.getItem('genres')) || null
     },
     KeywordsList: {
@@ -89,11 +89,11 @@ export default function General(state = initialState, action) {
 		    let hashObj = {},
 			    concatArr = action.genres.movie.concat(action.genres.tv);
 		    concatArr.map((item)=> hashObj[item.id] = item.name);
-		    let allGenres = Object.keys(hashObj).map(key => {return {id: key, name:hashObj[key]}});
+		    let allGenres = Object.keys(hashObj).map(key => {return {id: key, name: hashObj[key]}});
 		    allGenres.unshift({id: 0, name: 'Все жанры'});
 		    action.genres.movie.unshift({id: 0, name: 'Все жанры'});
 
-		    localStorage.setItem('genres', JSON.stringify({obj: hashObj, arr: {AllGenres: allGenres ,movieGenres: action.genres.movie, tvGenres: action.genres.tv} }));
+		    localStorage.setItem('genres', JSON.stringify({obj: hashObj, arr: {AllGenres: allGenres, movieGenres: action.genres.movie, tvGenres: action.genres.tv} }));
 		    return update(state, {
 			    Genres: {$merge: {
 					    isFetching: true,
