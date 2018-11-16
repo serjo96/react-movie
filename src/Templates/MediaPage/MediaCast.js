@@ -18,7 +18,8 @@ switch (true) {
             },
             setWrapperSize: false,
             slidesPerView: 4,
-            spaceBetween: 0
+            spaceBetween: 0,
+					freeMode: true,
         };
         break;
 	case width <= 463:
@@ -29,6 +30,7 @@ switch (true) {
 				draggable: true
 			},
 			setWrapperSize: false,
+			freeMode: true,
 			slidesPerView: 3,
 			spaceBetween: 0
 		};
@@ -41,6 +43,7 @@ switch (true) {
                 hide: false,
                 draggable: true
             },
+						freeMode: true,
             slidesPerView: 7,
             spaceBetween: 10
         };
