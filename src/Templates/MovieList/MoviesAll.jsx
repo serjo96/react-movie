@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {Helmet} from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
 import { movieListPopular, changeMoviePage } from '../../Data/actions/movies-actions';
 import MovieList from '../MediaList/MediaList';
 import FilterList from '../MediaList/FilterList';
-import {sortListType} from '../../Data/localData';
+import { sortListType} from '../../Data/localData';
 import ServiceBlock from '../Service/ServiceBlock';
 
 class MoviesAll extends Component {
@@ -52,8 +52,8 @@ class MoviesAll extends Component {
 		     ? parseInt(this.stringParse.get('page'))
 		     : null,
 		     genres = this.stringParse.get('genre'),
-		     {sortSettings} = this.state,
-		     {sortType} = this.state;
+		     { sortSettings } = this.state,
+		     { sortType } = this.state;
 
 	     if (page) {
 	     	if (page <= 2) {

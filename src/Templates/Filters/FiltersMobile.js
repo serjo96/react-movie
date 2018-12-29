@@ -52,7 +52,7 @@ export default class FiltersMobile extends Component {
                                             <i className="fa fa-angle-down" aria-hidden="true"/>
                                         </div>
                                         <label className="mobile-filter__label" htmlFor="">
-                                            <select name="" id="" onChange={e=> this.onSortByDate({
+                                            <select name="" id="" onChange={e=> this.props.onSortByDate({
                                                 name: e.target.value,
                                                 date: e.target.options[e.target.selectedIndex].dataset.date,
                                                 type: e.target.options[e.target.selectedIndex].dataset.type
@@ -78,7 +78,7 @@ export default class FiltersMobile extends Component {
                                             <i className="fa fa-angle-down" aria-hidden="true"/>
                                         </div>
                                         <label className="mobile-filter__label" htmlFor="">
-                                            <select name="" id="" onChange={e=> this.onSortByCountry({
+                                            <select name="" id="" onChange={e=> this.props.onSortByCountry({
                                                 name: e.target.value,
                                                 ico: e.target.options[e.target.selectedIndex].dataset.ico
                                             })}>
@@ -103,7 +103,7 @@ export default class FiltersMobile extends Component {
                                             <i className="fa fa-angle-down" aria-hidden="true"/>
                                         </div>
                                         <label className="mobile-filter__label" htmlFor="">
-                                            <select name="sortBy" id="" onChange={e=> this.onClickSort({
+                                            <select name="sortBy" id="" onChange={e=> this.props.onClickSort({
                                                 name: e.target.value,
                                                 type: e.target.options[e.target.selectedIndex].dataset.type
                                             })}>
@@ -120,7 +120,7 @@ export default class FiltersMobile extends Component {
                                         </label>
                                     </div>
 
-                                    <div onClick={this.onClickChangeDir} className={`mobile__sort-direction sort-direction ${sortSettings.SortDerection
+                                    <div onClick={this.props.onClickChangeDir} className={`mobile__sort-direction sort-direction ${sortSettings.SortDerection
                                         ? 'sort-direction--asc'
                                         : ''}`}>
                                         <span>{`Сортировать по ${sortSettings.SortDerection
@@ -130,7 +130,7 @@ export default class FiltersMobile extends Component {
                                     </div>
 
                                     {this.props.safeFilter ?
-                                        <div className="mobile-filter__safeFiler" onClick={this.onClickAdult}>
+                                        <div className="mobile-filter__safeFiler" onClick={this.props.onClickAdult}>
 
                                             <span>Безопасный фильтр</span>
                                             <i className={`fa ${sortSettings.adult
@@ -140,7 +140,7 @@ export default class FiltersMobile extends Component {
 
                                         </div> : null}
 
-                                    <div onClick={this.restoreDefaultState} className="restore-filters-btn">Сбросить все фильтры</div>
+                                    <div onClick={this.props.restoreDefaultState} className="restore-filters-btn">Сбросить все фильтры</div>
 
                                 </div>
                             </Popup>
