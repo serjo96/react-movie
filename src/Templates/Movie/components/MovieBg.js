@@ -1,20 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import NoImg from '../../../assests/img/NoImg.png';
-import {declOfNum, kFormatter, friendlyData, formatTime} from '../../../utils/utils';
+import NoImg from './../../../assests/img/NoImg.png';
+import { declOfNum, kFormatter, friendlyData, formatTime } from './../../../utils/utils';
 
 const MovieBg = (movie) => (
     <div className="movie__bg" >
-        <div className="movie__cover img-loading" style={{backgroundImage: 'url(https://image.tmdb.org/t/p/original' + (movie.backdrop || movie.poster) + ')'}}/>
-        <img className="bgPoster" src={'https://image.tmdb.org/t/p/original/' + (movie.backdrop || movie.poster)} alt="poster" onLoad={()=> document.querySelector('.movie__cover').classList.remove('img-loading')}/>
+        <div
+            className="movie__cover img-loading"
+            style={{backgroundImage: 'url(https://image.tmdb.org/t/p/original' + (movie.backdrop || movie.poster) + ')'}}
+        />
+        <img
+            className="bgPoster"
+            src={'https://image.tmdb.org/t/p/original/' + (movie.backdrop || movie.poster)}
+            alt="poster"
+            onLoad={()=> document.querySelector('.movie__cover').classList.remove('img-loading')}
+        />
         <div className="movie-info">
             <div className="shadow-base">
 
                 <div className="container">
                     <div className="movie__summary">
                         <div className="mobile-poster">
-                            <img onLoad={e=> e.target.classList.remove('img-loading')} className="img-loading"
-                                 src={movie.poster || movie.backdrop ? `https://image.tmdb.org/t/p/w185/${(movie.poster || movie.backdrop)}`: NoImg}
+                            <img
+                                onLoad={e=> e.target.classList.remove('img-loading')}
+                                 className="img-loading"
+                                 src={movie.poster || movie.backdrop
+                                     ? `https://image.tmdb.org/t/p/w185/${(movie.poster || movie.backdrop)}`
+                                     : NoImg}
                                  alt="poster"/>
                         </div>
                         <h1 className="movie__title">

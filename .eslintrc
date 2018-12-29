@@ -169,6 +169,8 @@
     "space-before-blocks": 2,        // http://eslint.org/docs/rules/space-before-blocks
     "space-before-function-paren": [2, "never"], // http://eslint.org/docs/rules/space-before-function-paren
     "spaced-comment": [2, "always"],
+    "space-infix-ops": ["error", {"int32Hint": true }],
+    "max-len":  ["error", { "code": 160 }],
 
     /**
      * JSX style

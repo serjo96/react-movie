@@ -1,10 +1,10 @@
 import React, { Component  } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { urlRusLat } from '../../utils/utils';
-import NoImg from '../../assests/img/NoImg.png';
-import MovieInfo from '../Tooltip/MovieInfo';
-import Spinner from '../Spinner/Spinner';
+import { urlRusLat } from './../../utils/utils';
+import NoImg from './../../assests/img/NoImg.png';
+import MovieInfo from './../Tooltip/MovieInfo';
+import Spinner from './../Spinner/Spinner';
 
 class MediaItem extends Component {
     constructor(props) {
@@ -17,11 +17,11 @@ class MediaItem extends Component {
     }
 
  outItem = () => {
-        if(this.props.typeList !== "person"){
-             this.setState({
-                 popup: true
-             });
-        }
+    	if (this.props.typeList !== 'person') {
+    		this.setState({
+			    popup: true
+		    });
+    	}
  };
 
  leaveItem = () => {
@@ -38,12 +38,28 @@ class MediaItem extends Component {
 
  render() {
      return (
-         <div className={`movie-item${this.state.imgStatus ? ' movie-loading': ''} ${this.state.popup ? 'movie-item--hover' : ''}`} id={this.props.id} onMouseEnter={this.outItem} onMouseLeave={ this.leaveItem} ref={el=> this.el = el}>
+         <div
+             className={`movie-item${this.state.imgStatus
+                 ? ' movie-loading'
+                 : ''}
+                 ${this.state.popup
+	             ? 'movie-item--hover'
+	             : ''}`}
+             id={this.props.id}
+             onMouseEnter={this.outItem}
+             onMouseLeave={ this.leaveItem}
+             ref={el=> this.el = el}>
              <div className="movie-item__data">
                  <Link to={'/' + this.props.typeList + '/' + urlRusLat(this.props.title) + '-' + this.props.id}>
                      <div className="movie-item__poster">
-                         <img className="img-loading" onLoad={this.onLoadImg} src={this.props.poster ? 'https://image.tmdb.org/t/p/w600_and_h900_bestv2' + this.props.poster : NoImg} alt={this.props.title}/>
-                         {this.state.imgStatus ? <Spinner/>: null}
+                         <img
+	                         className="img-loading"
+	                         onLoad={this.onLoadImg}
+	                         src={this.props.poster
+		                         ? 'https://image.tmdb.org/t/p/w600_and_h900_bestv2' + this.props.poster
+		                         : NoImg}
+	                         alt={this.props.title}/>
+                         {this.state.imgStatus ? <Spinner/> : null}
                      </div>
                      <div className="movie-item__title">{this.props.title}</div>
                      {this.props.job ? <div className="movie-item__crew">{this.props.job}</div> : null}
