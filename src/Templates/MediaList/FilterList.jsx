@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import update from 'react-addons-update';
 import { chunkArr } from '../../utils/utils';
-import Popup from '../Popup/Popup';
 import {storageCountries, popularCountries, sortBySingleDateList, sortByRangeDateList} from '../../Data/localData';
+import FiltersMobile from './../Filters/FiltersMobile';
 
 
 class ListsPage extends Component {
@@ -117,7 +117,7 @@ class ListsPage extends Component {
 	    });
     };
 
-    onClickGenres = (el) =>{
+    onSelectGenres = (el) =>{
 	    let id = parseInt(el.id);
     	let newState = update(this.state.sortSettings, {$merge: {
 			    genresListName: {id: id, name: el.name}
@@ -213,7 +213,9 @@ class ListsPage extends Component {
 	    });
     };
 
-
+    onOpenFilterModal = ()=> {
+	    this.setState({modalFilter: !this.state.modalFilter});
+    };
 
  closePopup = (e) =>{
      if (e.target.className === 'popup-base' || e.target.className === 'popup__close') {
@@ -223,17 +225,14 @@ class ListsPage extends Component {
  };
 
  render() {
-	 let {sortSettings} = this.state;
-
+	 const {sortSettings} = this.state;
 	 if ( this.props.MobileFilter ) {
 		 return (
 
 			 <div className="filter-list-container">
 				 <div className="filter-list">
-
 					 {this.props.genres.length > 0 ?
-						 <div
-							 className={`genre-filter filter-item ${this.state.genresListData.status ? 'filter-item--active' : ''}`}>
+						 <div className={`genre-filter filter-item ${this.state.genresListData.status ? 'filter-item--active' : ''}`}>
 							 <div className="filter-name">
 								 <span>{this.state.genresListData.name}</span>
 								 <i className="fa fa-angle-down" aria-hidden="true"/>
@@ -246,9 +245,11 @@ class ListsPage extends Component {
 									 >
 										 {el.map(( item, index ) =>
 											 (<li
-												 className={`filter-catalog__item filter-genre ${this.state.genresListData.id === item.id ? 'filter-catalog__item--active' : ''}`}
+												 className={`filter-catalog__item filter-genre ${this.state.genresListData.id === item.id
+													 ? 'filter-catalog__item--active'
+													 : ''}`}
 												 id={item.id}
-												 onClick={()=> this.onClickGenres(item)}
+												 onClick={()=> this.onSelectGenres(item)}
 												 key={index}
 											 >
 												 {item.name}
@@ -258,7 +259,11 @@ class ListsPage extends Component {
 							 </div>
 						 </div> : null}
 
-					 <div className={`filter-item  ${sortSettings.sortByDate.date !== '' ? sortSettings.sortByDate.status ? 'filter-item--active' : '' : ''}`}>
+					 <div className={`filter-item  ${sortSettings.sortByDate.date !== ''
+						 ? sortSettings.sortByDate.status
+							 ? 'filter-item--active'
+							 : ''
+						 : ''}`}>
 						 <div className="filter-name">
 							 <span>{sortSettings.sortByDate.name}</span>
 							 <i className="fa fa-angle-down" aria-hidden="true"/>
@@ -297,7 +302,11 @@ class ListsPage extends Component {
 					 </div>
 
 					 {this.props.sortByCountry ? <div
-						 className={`filter-item ${sortSettings.sortByCountry.ico !== '' ? sortSettings.sortByCountry.status ? 'filter-item--active' : '' : ''}`}>
+						 className={`filter-item ${sortSettings.sortByCountry.ico !== ''
+							 ? sortSettings.sortByCountry.status
+								 ? 'filter-item--active'
+								 : ''
+							 : ''}`}>
 						 <div className="filter-name">
 							 <span>{sortSettings.sortByCountry.name}</span>
 							 <i className="fa fa-angle-down" aria-hidden="true"/>
@@ -317,7 +326,9 @@ class ListsPage extends Component {
 								 <ul>
 									 {popularCountries.map(( item, index ) =>
 										 (<li
-											 className={`filter-catalog__item ${sortSettings.sortByCountry.ico === item.ico ? 'filter-catalog__item--active' : ''}`}
+											 className={`filter-catalog__item ${sortSettings.sortByCountry.ico === item.ico
+												 ? 'filter-catalog__item--active'
+												 : ''}`}
 											 key={index}
 											 data-country={item.ico}
 											 onClick={() => this.onSortByCountry(item)}
@@ -334,7 +345,9 @@ class ListsPage extends Component {
 								 >
 									 {el.map(( item, index ) =>
 										 (<li
-											 className={`filter-catalog__item ${sortSettings.sortByCountry.ico === item.ico ? 'filter-catalog__item--active' : ''}`}
+											 className={`filter-catalog__item ${sortSettings.sortByCountry.ico === item.ico
+												 ? 'filter-catalog__item--active'
+												 : ''}`}
 											 key={index}
 											 data-country={item.ico}
 											 onClick={() => this.onSortByCountry(item)}
@@ -355,7 +368,10 @@ class ListsPage extends Component {
 							 </div>
 						 </div> : null}
 
-					 <div className={`filter-item ${sortSettings.sortBy.type !== 'popularity' ? sortSettings.sortBy.status ? 'filter-item--active' : '': ''}`}>
+					 <div className={`filter-item ${sortSettings.sortBy.type !== 'popularity'
+						 ? sortSettings.sortBy.status ? 'filter-item--active'
+							 : ''
+						 : ''}`}>
 						 <div className="filter-name">
 							 <span>{sortSettings.sortBy.name}</span>
 							 <i className="fa fa-angle-down" aria-hidden="true"/>
@@ -366,7 +382,9 @@ class ListsPage extends Component {
 								 (<div
 									 onClick={()=>this.onClickSort(el)}
 									 key={indx}
-									 className={`filter-catalog__item sort-catalog-item ${sortSettings.sortBy.type === el.type ? 'filter-catalog__item--active' : ''}`}
+									 className={`filter-catalog__item sort-catalog-item ${sortSettings.sortBy.type === el.type
+										 ? 'filter-catalog__item--active'
+										 : ''}`}
 								 >
 									 {el.name}
 								 </div>)
@@ -382,142 +400,22 @@ class ListsPage extends Component {
 		 );
 	 } 
 	 	return (
+		    <FiltersMobile
+			    safeFilter={this.props.safeFilter}
+			    sortSettings={sortSettings}
+			    modalFilter={this.state.modalFilter}
+			    genres={this.props.genres}
+			    sortListType={this.props.sortListType}
+			    genresListData={this.state.genresListData}
+			    sortByCountry={this.props.sortByCountry}
+			    onClickGenres={this.onSelectGenres}
+			    onSortByDate={this.onSortByDate}
+			    onClickSort={this.onClickSort}
+			    restoreDefaultState={this.restoreDefaultState}
+			    onOpenFilterModal={this.onOpenFilterModal}
+			    closePopup={this.closePopup}
+		    />
 
-	 		<div>
-
-			    <div className="mobile-filter-trigger link" onClick={()=> this.setState({modalFilter: !this.state.modalFilter})}>
-				    <span>Настроить фильтры</span><i className="fa fa-filter" aria-hidden="true"/>
-			    </div>
-
-			    {this.state.modalFilter ?
-		        <div className="popup-base" onClick={this.closePopup}>
-
-				    <div className="popup">
-					    <div className="popup__close" onClick={this.closePopup}/>
-					    <Popup>
-
-					    <div className="mobile-filter">
-						    <h2 className="mobile-filter__title">Фильтровать список</h2>
-						    {this.props.genres.length > 0 ?
-							    <div className="mobile-filter__select">
-								    <div className="mobile-filter-item__title">Жанр</div>
-								    <div className="mobile-filter__name">
-									    <span>{this.state.genresListData.name}</span>
-									    <i className="fa fa-angle-down" aria-hidden="true"/>
-								    </div>
-								    <label className="mobile-filter__label">
-									    <select name="" id="" onChange={(e)=> this.onClickGenres({
-										    name: e.target.value,
-										    id: e.target.options[e.target.selectedIndex].id
-									    })}>
-									    {this.props.genres.map(( el, indx ) =>
-												    (<option
-													    id={el.id}
-													    key={indx}
-												    >
-													    {el.name}
-												    </option>)
-									    )}
-									    </select>
-								    </label>
-							    </div> : null}
-
-							    <div className="mobile-filter__select">
-								    <div className="mobile-filter-item__title">Год</div>
-								    <div className="mobile-filter__name">
-									    <span>{sortSettings.sortByDate.name}</span>
-									    <i className="fa fa-angle-down" aria-hidden="true"/>
-								    </div>
-								    <label className="mobile-filter__label" htmlFor="">
-								    <select name="" id="" onChange={e=> this.onSortByDate({
-									    name: e.target.value,
-									    date: e.target.options[e.target.selectedIndex].dataset.date,
-									    type: e.target.options[e.target.selectedIndex].dataset.type
-								    })}>
-									    {sortBySingleDateList.concat(sortByRangeDateList).map(( el, indx ) =>
-										    (<option
-											    key={indx}
-											    value={el.date}
-											    data-type={el.type}
-											    data-date={el.date}
-										    >
-											    {el.name}
-										    </option>)
-									    )}
-								    </select>
-								    </label>
-							    </div>
-
-						    {this.props.sortByCountry ?<div className="mobile-filter__select">
-							    <div className="mobile-filter-item__title">Стране</div>
-							    <div className="mobile-filter__name">
-								    <span>{sortSettings.sortByCountry.name}</span>
-								    <i className="fa fa-angle-down" aria-hidden="true"/>
-							    </div>
-							    <label className="mobile-filter__label" htmlFor="">
-								    <select name="" id="" onChange={e=> this.onSortByCountry({
-									    name: e.target.value,
-									    ico: e.target.options[e.target.selectedIndex].dataset.ico
-								    })}>
-									    <option value="">Все страны</option>
-									    {storageCountries.map(( el, indx ) =>
-										    (<option
-											    key={indx}
-											    value={el.name}
-											    data-ico={el.ico}
-										    >
-											    {el.name}
-										    </option>)
-									    )}
-								    </select>
-							    </label>
-						    </div>:null}
-
-						    <div className="mobile-filter__select">
-							    <div className="mobile-filter-item__title">Сортировать</div>
-							    <div className="mobile-filter__name">
-								    <span>{sortSettings.sortBy.name}</span>
-								    <i className="fa fa-angle-down" aria-hidden="true"/>
-							    </div>
-							    <label className="mobile-filter__label" htmlFor="">
-								    <select name="" id="" onChange={e=> this.onClickSort({
-									    name: e.target.value,
-									    type: e.target.options[e.target.selectedIndex].dataset.type
-								    })}>
-									    {this.props.sortListType.map(( el, indx ) =>
-										    (<option
-											    key={indx}
-											    value={el.name}
-											    data-type={el.type}
-										    >
-											    {el.name}
-										    </option>)
-									    )}
-								    </select>
-							    </label>
-						    </div>
-
-						    <div onClick={this.onClickChangeDir} className={`mobile__sort-direction sort-direction ${sortSettings.SortDerection ? 'sort-direction--asc' : ''}`}>
-                                     <span>{`Сортировать по ${sortSettings.SortDerection ? 'убыванию' : 'возрастанию'}`}</span>
-							    <i className="fa fa-long-arrow-up" aria-hidden="true"/>
-						    </div>
-
-						    {this.props.safeFilter ?
-							    <div className="mobile-filter__safeFiler" onClick={this.onClickAdult}>
-
-								    <span>Безопасный фильтр</span>
-								    <i className={`fa ${sortSettings.adult ? 'fa-square-o' : 'fa-check-square'}`}
-								       aria-hidden="true"/>
-
-							    </div> : null}
-
-						    <div onClick={this.restoreDefaultState} className="restore-filters-btn">Сбросить все фильтры</div>
-
-					        </div>
-					    </Popup>
-				    </div>
-		        </div>: null}
-		    </div>
 	    );
 	 
  }
