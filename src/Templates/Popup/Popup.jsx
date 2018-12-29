@@ -6,15 +6,19 @@ class Popup extends Component {
 	    setTimeout(()=>  this.showModal(), 500);
     }
 
+    showModal = ()=> document.querySelector('.popup__content').classList.remove('popup--is-hide');
 
-	 showModal = ()=> document.querySelector('.popup__content').classList.remove('popup--is-hide');
 
-
- render() {
+    render() {
      return (
-         <div className="popup__content popup--is-hide" >
-             {this.props.children}
-         </div>
+	     <div className="popup-base" onClick={this.props.closePopup}>
+		     <div className="popup">
+			     {this.props.title ? <h3 className="popup__title">{this.props.title}</h3> : null}
+		         <div className="popup__content popup--is-hide">
+		             {this.props.children}
+		         </div>
+		     </div>
+	     </div>
      );
  }
 }
