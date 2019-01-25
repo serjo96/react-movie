@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import update from 'react-addons-update';
 
-import FiltersMobile from './../Filters/FiltersMobile';
-import Filters from './../Filters/Filters';
+import FiltersMobile from '../components/FiltersMobile';
+import Filters from '../components/Filters';
 
 
 class ListsPage extends Component {
@@ -135,7 +135,7 @@ class ListsPage extends Component {
 	    });
     };
 
- onClickChangeDir = () => {
+    onClickChangeDir = () => {
 	    let newState = update(this.state.sortSettings, {$merge: {
 			    SortDerection: !this.state.sortSettings.SortDerection
 		    }});
@@ -145,75 +145,75 @@ class ListsPage extends Component {
 			    ...newState
 		    }
 	    });
- };
-
- onClickAdult = () => {
-     let newState = update(this.state.sortSettings, {$merge: {
-         adult: !this.state.sortSettings.adult
-     }});
-     this.setState({
-         sortSettings: {
-             ...newState
-         }
-     });
- };
-
- onChangeRangeDate = (e) => {
-
-     let newState = update(this.state.sortSettings, {$merge: {
-         sortByDate: {
-             name: e.target.value,
-             date: e.target.value,
-             type: 'single',
-             status: true
-         }
-     }});
-
-     this.setState({
-         sortSettings: {
-             ...newState
-         }
-     });
-
- };
-
- restoreDefaultState = () => {
- 	this.setState({sortSettings: {
- 		genresListName: {
- 			name: 'Все жанры',
-		    id: 0,
-		    status: false
-	    },
-		    sortBy: {
- 			    name: 'По популярности',
-			    type: 'popularity',
-			    status: false
-		    },
-		    sortByDate: {
- 			    name: 'Все года',
-			    date: '',
-			    type: 'single',
-			    status: false
-		    },
-		    sortByCountry: {
-	            name: 'Все страны',
-			    ico: '',
-			    status: false
-		    },
-		    SortDerection: false,
-		        adult: false
-		    },
-		    genresListData: {
-			    name: 'Все жанры',
-			    id: 0
-		    },
-		    modalFilter: this.state.modalFilter
-	    });
- };
-
-    onOpenFilterModal = ()=> {
-	    this.setState({modalFilter: !this.state.modalFilter});
     };
+
+    onClickAdult = () => {
+	     let newState = update(this.state.sortSettings, {$merge: {
+	         adult: !this.state.sortSettings.adult
+	     }});
+	     this.setState({
+	         sortSettings: {
+	             ...newState
+	         }
+	     });
+    };
+
+    onChangeRangeDate = (e) => {
+
+	     let newState = update(this.state.sortSettings, {$merge: {
+	         sortByDate: {
+	             name: e.target.value,
+	             date: e.target.value,
+	             type: 'single',
+	             status: true
+	         }
+	     }});
+
+	     this.setState({
+	         sortSettings: {
+	             ...newState
+	         }
+	     });
+
+    };
+
+	 restoreDefaultState = () => {
+	    this.setState({sortSettings: {
+	        genresListName: {
+	            name: 'Все жанры',
+			    id: 0,
+			    status: false
+		    },
+			    sortBy: {
+	                name: 'По популярности',
+				    type: 'popularity',
+				    status: false
+			    },
+			    sortByDate: {
+	                name: 'Все года',
+				    date: '',
+				    type: 'single',
+				    status: false
+			    },
+			    sortByCountry: {
+		            name: 'Все страны',
+				    ico: '',
+				    status: false
+			    },
+			    SortDerection: false,
+			        adult: false
+			    },
+			    genresListData: {
+				    name: 'Все жанры',
+				    id: 0
+			    },
+			    modalFilter: this.state.modalFilter
+		    });
+	 };
+
+	 onOpenFilterModal = ()=> {
+	    this.setState({modalFilter: !this.state.modalFilter});
+	 };
 
  closePopup = (e) =>{
      if (e.target.className === 'popup-base' || e.target.className === 'popup__close') {
@@ -242,29 +242,28 @@ class ListsPage extends Component {
 			    restoreDefaultState={this.restoreDefaultState}
 		    />
 		 );
-	 } 
-	 	return (
-		    <FiltersMobile
-			    safeFilter={this.props.safeFilter}
-			    sortSettings={sortSettings}
-			    modalFilter={this.state.modalFilter}
-			    genres={this.props.genres}
-			    sortListType={this.props.sortListType}
-			    genresListData={this.state.genresListData}
-			    sortByCountry={this.props.sortByCountry}
-			    onClickGenres={this.onSelectGenres}
-			    onSortByDate={this.onSortByDate}
-			    onSortByCountry={this.onSortByCountry}
-			    onClickSort={this.onClickSort}
-			    restoreDefaultState={this.restoreDefaultState}
-			    onOpenFilterModal={this.onOpenFilterModal}
-			    onClickAdult={this.onClickAdult}
-			    onClickChangeDir={this.onClickChangeDir}
-			    closePopup={this.closePopup}
-		    />
+	 }
+	 return (
+	 	<FiltersMobile
+		    safeFilter={this.props.safeFilter}
+		    sortSettings={sortSettings}
+		    modalFilter={this.state.modalFilter}
+		    genres={this.props.genres}
+		    sortListType={this.props.sortListType}
+		    genresListData={this.state.genresListData}
+		    sortByCountry={this.props.sortByCountry}
+		    onClickGenres={this.onSelectGenres}
+		    onSortByDate={this.onSortByDate}
+		    onSortByCountry={this.onSortByCountry}
+		    onClickSort={this.onClickSort}
+		    restoreDefaultState={this.restoreDefaultState}
+		    onOpenFilterModal={this.onOpenFilterModal}
+		    onClickAdult={this.onClickAdult}
+		    onClickChangeDir={this.onClickChangeDir}
+		    closePopup={this.closePopup}
+	    />
+	 );
 
-	    );
-	 
  }
 }
 

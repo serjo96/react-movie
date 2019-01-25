@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { sortByRangeDateList, sortBySingleDateList, storageCountries } from '../../Data/localData';
-import Popup from './../Popup/Popup';
+import { sortByRangeDateList, sortBySingleDateList, storageCountries } from '../../../Data/localData';
+import Popup from '../../Popup/Popup';
 
 export default class FiltersMobile extends Component {
     render() {
@@ -130,17 +130,25 @@ export default class FiltersMobile extends Component {
                             </div>
 
                             {this.props.safeFilter ?
-                                <div className="mobile-filter__safeFiler" onClick={this.props.onClickAdult}>
-
+                                <div
+                                    className="mobile-filter__safeFiler"
+                                    onClick={this.props.onClickAdult}
+                                >
                                     <span>Безопасный фильтр</span>
-                                    <i className={`fa ${sortSettings.adult
-                                        ? 'fa-square-o'
-                                        : 'fa-check-square'}`}
-											   aria-hidden="true"/>
+                                    <i
+                                        className={`fa ${sortSettings.adult
+                                            ? 'fa-square-o'
+                                            : 'fa-check-square'}`}
+                                        aria-hidden="true"
+                                    />
+                                </div>
+                                : null}
 
-                                </div> : null}
-
-                            <div onClick={this.props.restoreDefaultState} className="restore-filters-btn">Сбросить все фильтры</div>
+                            <div
+                                onClick={this.props.restoreDefaultState}
+                                className="restore-filters-btn">
+                                Сбросить все фильтры
+                            </div>
 
                         </div>
                     </Popup>

@@ -5,7 +5,7 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 let DashboardPlugin = require('webpack-dashboard/plugin');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const HOST = process.env.HOST || '127.0.0.1';
+const HOST = process.env.HOST || '192.168.56.1';
 const PORT = process.env.PORT || '8888';
 
 loaders.push({
@@ -43,7 +43,6 @@ module.exports = {
         historyApiFallback: true,
         disableHostCheck: true,
         overlay: true,
-        open: true,
         port: PORT,
         host: HOST
     },

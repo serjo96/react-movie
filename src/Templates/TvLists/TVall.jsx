@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { tvPopular } from '../../Data/actions/tv-actions';
 import { connect } from 'react-redux';
 import MediaList from '../MediaList/MediaList';
-import FilterList from '../MediaList/FilterList';
+import FilterList from '../Filters/Containers/FilterList';
 import {sortListTV} from '../../Data/localData';
 import ServiceBlock from '../Service/ServiceBlock';
 
@@ -49,7 +49,7 @@ class TvPopular extends Component {
 		     genres = this.props.location.search.match(/genre/g) ? parseInt(this.props.location.search.split(/-/).pop()) : '',
 		     {sortSettings} = this.state,
 		     {sortType} = this.state;
-
+// TODO: добаваить генерируемый объект для отправки данных и изменять его в зависимости от условий, и оставить одну функцию отправки
 	     if (page) {
 		     if(page <= 2){
 			     this.props.loadList(page+1, genres, sortType, sortSettings.sortByDate, sortSettings.sortByCountry.ico, sortSettings.adult);

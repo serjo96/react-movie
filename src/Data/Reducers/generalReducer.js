@@ -1,4 +1,4 @@
-import { SEARCH_IN_PAGE, SEARCH_IN_HEADER, CLEAR_SEARCH, GENRES,  SEARCH_KEYWORDS_MOVIES, SEARCH_GENRES_MOVIES, MEDIA_ENG_DATA  } from '../constants/index';
+import { SEARCH_IN_PAGE, SEARCH_IN_HEADER, CLEAR_SEARCH, GENRES,  SEARCH_KEYWORDS_MOVIES, SEARCH_RESET_FETCH, MEDIA_ENG_DATA  } from './../constants/index';
 import update from 'react-addons-update';
 
 
@@ -48,15 +48,15 @@ const initialState = {
 		    pageTwo: 200
 	    }
     },
-	EngDescription: {
-		isFetching: false,
+    EngDescription: {
+        isFetching: false,
     	tv: {
 		    0: {mame: '', id: ''}
 	    },
-		movie: {
-			0: {mame: '', id: ''}
-		}
-	}
+        movie: {
+            0: {mame: '', id: ''}
+        }
+    }
 };
 
 export default function General(state = initialState, action) {
@@ -86,19 +86,27 @@ export default function General(state = initialState, action) {
 
 
 	    case GENRES:
-		    let hashObj = {},
-			    concatArr = action.genres.movie.concat(action.genres.tv);
+		    let hashObj = {};
+		    let concatArr = action.genres.movie.concat(action.genres.tv);
 		    concatArr.map((item)=> hashObj[item.id] = item.name);
-		    let allGenres = Object.keys(hashObj).map(key => {return {id: key, name: hashObj[key]}});
+		    let allGenres = Object.keys(hashObj).map(key => {return {id: key, name: hashObj[key]};});
 		    allGenres.unshift({id: 0, name: 'Все жанры'});
 		    action.genres.movie.unshift({id: 0, name: 'Все жанры'});
 
-		    localStorage.setItem('genres', JSON.stringify({obj: hashObj, arr: {AllGenres: allGenres, movieGenres: action.genres.movie, tvGenres: action.genres.tv} }));
+		    localStorage.setItem('genres', JSON.stringify(
+		    	{
+				    obj: hashObj,
+				    arr: {
+				    	AllGenres: allGenres,
+					    movieGenres: action.genres.movie,
+					    tvGenres: action.genres.tv
+				    }
+		    	}
+				    ));
 		    return update(state, {
 			    Genres: {$merge: {
 					    isFetching: true,
-					    data: {obj: hashObj, arr: {AllGenres: allGenres ,movieGenres: action.genres.movie, tvGenres: action.genres.tv} },
-
+					    data: {obj: hashObj, arr: {AllGenres: allGenres, movieGenres: action.genres.movie, tvGenres: action.genres.tv} }
 				    }
 			    }
 		    });
@@ -113,13 +121,21 @@ export default function General(state = initialState, action) {
 				    }}
 			    });
 
+	    case SEARCH_RESET_FETCH:
+	    	return update(state, {
+			    SearchPageResult: {$merge: {
+			    	isFetching: true,
+					    ...state.SearchPageResult.data
+				    }}
+			    });
+
 	    case MEDIA_ENG_DATA:
 		        return update(state, {
 			        EngDescription: {$merge: {
 		                isFetching: true,
 						    [action.engData.typeResponse]: {
 		                	...state.EngDescription[action.engData.typeResponse],
-							    [action.engData.id]:{name: action.engData.name ? action.engData.name: action.engData.title, overview:  action.engData.overview.length>0 ? action.engData.overview : 404}
+							    [action.engData.id]: {name: action.engData.name ? action.engData.name : action.engData.title, overview: action.engData.overview.length > 0 ? action.engData.overview : 404}
 		                    }
 					    }}
 				    });

@@ -8,7 +8,7 @@ class MediaList extends Component {
     renderListTitle() {
         if (this.props.movieListMain) {
             return (
-                <Link className="title-link link-angle" to={'/movies/'+ this.props.ListLink}>
+                <Link className="title-link link-angle" to={'/movies/' + this.props.ListLink}>
                     <span>{this.props.movieListTitle}</span>
                     <i className="fa fa-angle-right" aria-hidden="true" />
                 </Link>

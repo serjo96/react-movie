@@ -1,5 +1,6 @@
 import { CLEAR_SEARCH, GENRES, SEARCH_IN_HEADER, SEARCH_IN_PAGE, SEARCH_KEYWORDS_MOVIES, SEARCH_GENRES_MOVIES, MEDIA_ENG_DATA } from '../constants/index';
 import * as axios from 'axios/index';
+import { SEARCH_RESET_FETCH } from '../constants';
 
 
 function searchMovie(querySearch) {
@@ -32,7 +33,6 @@ function takeGenres(genres) {
 }
 
 
-
 function takeKeywordsMovies(keywords) {
     return {
         type: SEARCH_KEYWORDS_MOVIES,
@@ -47,11 +47,16 @@ function takeEngMedia(engData) {
     };
 }
 
-
+export function searchResetFetch( load ) {
+    return {
+        type: SEARCH_RESET_FETCH,
+        load
+    };
+}
 
 export function onSearch(words) {
     return ( dispatch ) => {
-        if (words.length>0) {
+        if (words.length > 0) {
             axios.get('https://api.themoviedb.org/3/search/multi',
                 {
                     params: {
@@ -70,9 +75,9 @@ export function onSearch(words) {
     };
 }
 
-export function MainSearch(words, page=1) {
+export function MainSearch(words, page = 1) {
 	    return ( dispatch ) => {
-	        if (words.length>0) {
+	        if (words.length > 0) {
 	            axios.all([
 	                axios.get('https://api.themoviedb.org/3/search/multi',
 	                    {
@@ -90,7 +95,7 @@ export function MainSearch(words, page=1) {
 	                        params: {
 	                            api_key: '5a1d310d575e516dd3c547048eb7abf1',
 	                            language: 'ru-RU',
-	                            page: page+1,
+	                            page: page + 1,
 	                            region: 'RU',
 		                        include_adult: true,
 	                            query: words.replace('_', ' ')
@@ -129,7 +134,7 @@ export function onGeneres() {
 }
 
 
-export function keywordsReq(id, type, page=1) {
+export function keywordsReq(id, type, page = 1) {
     return ( dispatch ) => {
         axios.all([
             axios.get(`https://api.themoviedb.org/3/discover/${type}`,
@@ -148,7 +153,7 @@ export function keywordsReq(id, type, page=1) {
                         api_key: '5a1d310d575e516dd3c547048eb7abf1',
                         language: 'ru-RU',
                         with_keywords: id,
-                        page: page+1,
+                        page: page + 1,
                         include_adult: true
                     }
                 })

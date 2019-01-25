@@ -5,7 +5,7 @@ import queryString from 'query-string';
 
 import { movieListPopular, changeMoviePage } from '../../Data/actions/movies-actions';
 import MovieList from '../MediaList/MediaList';
-import FilterList from '../MediaList/FilterList';
+import FilterList from '../Filters/Containers/FilterList';
 import { sortListType} from '../../Data/localData';
 import ServiceBlock from '../Service/ServiceBlock';
 
