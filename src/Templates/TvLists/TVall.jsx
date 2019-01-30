@@ -6,6 +6,7 @@ import MediaList from '../MediaList/MediaList';
 import FilterList from '../Filters/Containers/FilterList';
 import {sortListTV} from './../../Data/localData';
 import ServiceBlock from '../Service/ServiceBlock';
+import queryString from 'query-string';
 
 
 class TvPopular extends Component {
@@ -27,34 +28,53 @@ class TvPopular extends Component {
         };
     }
 
+    get genresData(){
+    	return this.props.genres.isFetching ? this.props.genres.data.obj : {};
+    }
+
+    get genres(){
+    	return this.props.genres.isFetching ? this.props.genres.data.arr.AllGenres : [];
+    }
+
     componentDidUpdate(prevProps, previousState) {
         if (this.props.location.search !== prevProps.location.search) {
-            this.scrollToTop();
+            // this.scrollToTop();
 	        this.sendRequest(prevProps);
-        } else if (previousState.sortSettings !== this.state.sortSettings){
+        } else if (previousState.sortSettings !== this.state.sortSettings) {
 	        this.sendRequest();
         }
     }
 
     componentDidMount() {
-	    if (window.pageYOffset === 0) {
-		    clearInterval(this.state.intervalId);
-	    }
-	    this.scrollToTop();
+	    // if (window.pageYOffset === 0) {
+		 //    clearInterval(this.state.intervalId);
+	    // }
+	    // this.scrollToTop();
         this.sendRequest();
     }
 
+    getUrlString() {
+        return {
+            genre: queryString.parse(this.props.location.search).genre,
+            country: queryString.parse(this.props.location.search).country,
+            sort_direction: queryString.parse(this.props.location.search).dir,
+            year: queryString.parse(this.props.location.search).year,
+            page: queryString.parse(this.props.location.search).page
+        };
+    }
+
      sendRequest = () =>{
-	     let page = parseFloat(this.props.location.search.split('=').pop()) ? parseInt(this.props.location.search.split('=').pop()) : undefined,
-		     genres = this.props.location.search.match(/genre/g) ? parseInt(this.props.location.search.split(/-/).pop()) : '',
-		     {sortSettings} = this.state,
-		     {sortType} = this.state;
-// TODO: добаваить генерируемый объект для отправки данных и изменять его в зависимости от условий, и оставить одну функцию отправки
+	     let page = +this.getUrlString().page;
+	     let genres = this.getUrlString().genre;
+	     let { sortSettings } = this.state;
+	     let { sortType } = this.state;
+
+         // TODO: добаваить генерируемый объект для отправки данных и изменять его в зависимости от условий, и оставить одну функцию отправки
 	     if (page) {
-		     if(page <= 2){
-			     this.props.loadList(page+1, genres, sortType, sortSettings.sortByDate, sortSettings.sortByCountry.ico, sortSettings.adult);
-		     } else{
-			     if(page <= 3) {
+		     if (page <= 2) {
+			     this.props.loadList(page + 1, genres, sortType, sortSettings.sortByDate, sortSettings.sortByCountry.ico, sortSettings.adult);
+		     } else {
+			     if (page <= 3) {
 				     this.props.loadList(page + 2, genres, sortType, sortSettings.sortByDate, sortSettings.sortByCountry.ico, sortSettings.adult);
 			     } else {
 				     this.props.loadList(page + 3, genres, sortType, sortSettings.sortByDate, sortSettings.sortByCountry.ico, sortSettings.adult);
@@ -66,52 +86,78 @@ class TvPopular extends Component {
      };
 
     prevPage = () => {
-	    let path = this.props.allTV.data.page > 1 ? this.props.location.search.substring(this.props.location.search.lastIndexOf('?')+1,this.props.location.search.lastIndexOf('%')) : this.props.location.search.replace('?', '');
-	    if (this.props.allTV.data.page > 1) {
-		    if (this.props.allTV.data.page <= 3) {
-			    this.props.history.push(`/tv?${path}`);
-		    } else {
-			    if (this.props.allTV.data.page >= 7) {
-				    this.props.history.push(`/tv/all?${path}%page=${this.props.allTV.data.page - 4}`);
-			    } else{
-				    this.props.history.push(`/tv/all?${path}%page=${this.props.allTV.data.page - 3}`);
-			    }
-		    }
-	    } else {
-		    this.props.history.push(`/tv/all${this.props.allTV.data.page+1}`);
+	    let urlObj = this.getUrlString();
+
+
+	    if (this.props.AllMovies.data.page <= 3) {
+		    delete urlObj.page;
 	    }
+
+	    if (this.props.AllMovies.data.page === 5 ) {
+		    urlObj.page = this.props.AllMovies.data.page - 3;
+	    }
+
+	    if ( this.props.AllMovies.data.page >= 7 ) {
+		    urlObj.page = this.props.AllMovies.data.page - 4;
+	    }
+
+	    this.props.history.push({
+		    search: queryString.stringify(urlObj)
+	    });
     };
 
     nextPage = () => {
-	    let path = this.props.allTV.data.page > 1 ? this.props.location.search.substring(this.props.location.search.lastIndexOf('?')+1,this.props.location.search.lastIndexOf('%')) : this.props.location.search.replace('?', '');
-	    if (this.props.allTV.data.page > 1) {
-		    if (this.props.allTV.data.page <= 3) {
-			    this.props.history.push(`/tv/all?${path}%page=${this.props.allTV.data.page}`);
-		    } else {
-			    this.props.history.push(`/tv/all?${path}%page=${this.props.allTV.data.page-1}`);
-		    }
-	    } else {
-		    this.props.history.push(`/tv/all?${path}%page=${this.props.allTV.data.page+1}`);
+	    let urlObj = this.getUrlString();
+
+	    if (this.props.AllMovies.data.page <= 3) {
+		    urlObj.page = this.props.AllMovies.data.page;
 	    }
+
+	    if (this.props.AllMovies.data.page === 5 ) {
+		    urlObj.page = this.props.AllMovies.data.page - 1;
+	    }
+
+	    if ( this.props.AllMovies.data.page >= 7 ) {
+		    urlObj.page = this.props.AllMovies.data.page - 2;
+	    }
+
+	    this.props.history.push({
+		    search: queryString.stringify(urlObj)
+	    });
     };
 
-	GenresFilter = (id) => {
-		if(id === 0){
-			this.props.history.push(`/tv/all`);
-		} else{
-			this.props.history.push(`/tv/all?genre-${id}`);
-		}
-	};
+ GenresFilter = (filterId) => {
+     let genreStr = this.getUrlString();
+     genreStr.genre = filterId;
 
-	sortList = (type, settings) =>{
-		let genres = this.props.location.search.match(/genre/g) ? parseInt(this.props.location.search.split(/-/).pop()) : '';
-		if(genres){
-			this.props.history.push(`/tv/all?genre-${genres}`);
-		} else {
-			this.props.history.push(`/tv/all`);
-		}
-		this.setState({sortType: type, sortSettings: settings});
-	};
+     if (filterId === 0) {
+         delete genreStr.genre;
+     }
+
+     this.props.history.push({
+         search: queryString.stringify(genreStr)
+     });
+ };
+
+ onClickCountry = (countryData) => {
+     let countryStr = this.getUrlString();
+     countryStr.country = countryData;
+
+     this.props.history.push({
+         search: queryString.stringify(countryStr)
+     });
+ };
+
+ sortList = (type, settings) =>{
+     if (this.props.location.search) {
+         this.props.history.push({
+             pathname: this.props.location.pathname,
+             search: this.props.location.search,
+             state: null
+         });
+     }
+     this.setState({sortType: type, sortSettings: settings});
+ };
 
 	 scrollStep = () => {
 	     if (window.pageYOffset === 0) {
@@ -125,7 +171,8 @@ class TvPopular extends Component {
 	     this.setState({ intervalId: intervalId });
 	 };
 
- render() {
+
+  render() {
 	 let width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 	 let { allTV } = this.props;
 	    return (
@@ -133,29 +180,50 @@ class TvPopular extends Component {
 			    <Helmet>
 				    <title>Популярные сериалы</title>
 			    </Helmet>
-			    <ServiceBlock isLoading={allTV.isFetching} isError={allTV.status} fetch={this.sendRequest}>
+
+			    <ServiceBlock
+				    isLoading={allTV.isFetching}
+				    isError={allTV.status}
+				    fetch={this.sendRequest}
+			    >
+
 			    <div className="movies-content">
 				    <FilterList location={this.props.location}
-				                genresData={this.props.genres.isFetching ? this.props.genres.data.obj: {}}
-				                genres={this.props.genres.isFetching ? this.props.genres.data.arr.AllGenres : []}
+				                genresData={this.genresData}
+				                genres={this.genres}
 				                onClickGenres={this.GenresFilter}
-				                SortList={this.sortList}
+				                onClickCountry={this.onClickCountry}
+				                onClickSortList={this.sortList}
 				                sortByCountry={false}
 				                safeFilter={false}
 				                sortListType={sortListTV}
 				                MobileFilter={width >= 963}
 				    />
-					    <MediaList movieListTitle={`Всего сериалов (${allTV.data.total_results})`} movieList={allTV} typeList='tv'/>
+					    <MediaList movieListTitle={`Всего сериалов (${allTV.data.total_results})`} movieList={allTV} typeList="tv"/>
 					    {allTV.data.total_pages > 1 ?
 					    <div className="pager-btns clearfix">
-						    {allTV.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
-						    {allTV.data.page+1 < allTV.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
+						    {allTV.data.page - 1 > 1
+							    ? <div
+								    className="pager-btn pager-btn--prev link-angle link-angle--left"
+								    onClick={this.prevPage}>
+								    <i className="fa fa-angle-left" aria-hidden="true" />
+								    <span>Предыдущая страница</span>
+							      </div>
+							    : null}
+						    {allTV.data.page + 1 < allTV.data.total_pages
+							    ? <div
+								    className="pager-btn pager-btn--next link-angle"
+								    onClick={this.nextPage}>
+								    <span>Следующая страница</span>
+								    <i className="fa fa-angle-right" aria-hidden="true" />
+							      </div>
+							    : null}
 					    </div> : null}
 			    </div>
 			    </ServiceBlock>
 		    </main>
 	    );
- }
+  }
 }
 
 function mapStateToProps(state) {
@@ -166,7 +234,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	loadList: (page, genre, sortType, date, country, adult) => dispatch(tvPopular(page, genre, sortType, date, country, adult))
+    loadList: (page, genre, sortType, date, country, adult) => dispatch(tvPopular(page, genre, sortType, date, country, adult))
 });
 
 

@@ -26,7 +26,6 @@ class MoviesAll extends Component {
 		        }
 	        }
         };
-        this.stringParse = (new URL(document.location)).searchParams;
     }
 
     componentDidUpdate(prevProps, previousState) {
@@ -47,14 +46,21 @@ class MoviesAll extends Component {
 	    this.sendRequest();
     }
 
-     sendRequest = () => {
-	     let page = this.getUrlString().page
-		     ? this.getUrlString().page
-		     : null;
-	     let genres = this.getUrlString().genre,
-		     { sortSettings } = this.state,
-		     { sortType } = this.state;
+    getUrlString() {
+        return {
+            genre: queryString.parse(this.props.location.search).genre,
+            country: queryString.parse(this.props.location.search).country,
+            sort_direction: queryString.parse(this.props.location.search).dir,
+            year: queryString.parse(this.props.location.search).year,
+            page: queryString.parse(this.props.location.search).page
+        };
+    }
 
+     sendRequest = () => {
+	     let page = +this.getUrlString().page;
+	     let genres = this.getUrlString().genre;
+		 let { sortSettings } = this.state;
+		 let { sortType } = this.state;
 
 	     if (page) {
 	     	if (page <= 2) {
@@ -69,56 +75,63 @@ class MoviesAll extends Component {
 	     } else {
 		     this.props.loadList(undefined, genres, sortType, sortSettings.sortByDate, sortSettings.sortByCountry.ico, sortSettings.adult);
 	     }
-    };
+     };
 
     prevPage = () => {
-	    let path = this.props.AllMovies.data.page > 1
-		    ? this.props.location.search.substring(this.props.location.search.lastIndexOf('?') + 1, this.props.location.search.lastIndexOf('%'))
-		    : this.props.location.search.replace('?', '');
+	    let urlObj = this.getUrlString();
 	    this.props.changeListStatus('AllMovies');
-	    if (this.props.AllMovies.data.page > 1) {
-		    if (this.props.AllMovies.data.page <= 3) {
-			    this.props.history.push(`/movies?${path}`);
-		    } else {
-			    if (this.props.AllMovies.data.page >= 7) {
-				    this.props.history.push(`/movies/all?${path}&page=${this.props.AllMovies.data.page - 4}`);
-			    } else {
-				    this.props.history.push(`/movies/all?${path}&page=${this.props.AllMovies.data.page - 3}`);
-			    }
-		    }
-	    } else {
-		    this.props.history.push(`/movies/all${this.props.AllMovies.data.page + 1}`);
+
+
+	    if (this.props.AllMovies.data.page <= 3) {
+		    delete urlObj.page;
 	    }
+
+	    if (this.props.AllMovies.data.page === 5 ) {
+		    urlObj.page = this.props.AllMovies.data.page - 3;
+	    }
+
+	    if ( this.props.AllMovies.data.page >= 7 ) {
+		    urlObj.page = this.props.AllMovies.data.page - 4;
+	    }
+
+	    this.props.history.push({
+		    search: queryString.stringify(urlObj)
+	    });
     };
 
     nextPage = () => {
-	    let path = this.props.AllMovies.data.page > 1
-		    ? this.props.location.search.substring(this.props.location.search.lastIndexOf('?') + 1, this.props.location.search.lastIndexOf('%'))
-		    : this.props.location.search.replace('?', '');
+	    let urlObj = this.getUrlString();
 	    this.props.changeListStatus('AllMovies');
-	    if (this.props.AllMovies.data.page > 1) {
-		    if (this.props.AllMovies.data.page <= 3) {
-			    this.props.history.push(`/movies/all?${path}&page=${this.props.AllMovies.data.page}`);
-		    } else {
-			    this.props.history.push(`/movies/all?${path}&page=${this.props.AllMovies.data.page - 1}`);
-		    }
-        } else {
-            this.props.history.push(`/movies/all?${path}&page=${this.props.AllMovies.data.page + 1}`);
-        }
+
+	    if (this.props.AllMovies.data.page <= 3) {
+		    urlObj.page = this.props.AllMovies.data.page;
+	    }
+
+	    if (this.props.AllMovies.data.page === 5 ) {
+		    urlObj.page = this.props.AllMovies.data.page - 1;
+	    }
+
+	    if ( this.props.AllMovies.data.page >= 7 ) {
+		    urlObj.page = this.props.AllMovies.data.page - 2;
+	    }
+
+	    this.props.history.push({
+		    search: queryString.stringify(urlObj)
+	    });
     };
 
-    // TODO: Сделать делегированный обработчик на фильтры и исправить перезапись url
 	 GenresFilter = (filterId) => {
 		 let genreStr = this.getUrlString();
 		 genreStr.genre = filterId;
 
 		 if (filterId === 0) {
-		    this.props.history.push(this.props.location.pathname + this.props.location.search);
-		 } else {
-			 this.props.history.push({
-				 search: queryString.stringify(genreStr)
-			 });
+			 delete genreStr.genre;
 		 }
+
+		 this.props.history.push({
+			 search: queryString.stringify(genreStr)
+		 });
+
 	 };
 
 	 onClickCountry = (countryData) => {
@@ -129,16 +142,6 @@ class MoviesAll extends Component {
 		    search: queryString.stringify(countryStr)
 	    });
 	 };
-
-	 getUrlString() {
-	     return {
-		     genre: queryString.parse(this.props.location.search).genre,
-		     country: queryString.parse(this.props.location.search).country,
-		     sort_direction: queryString.parse(this.props.location.search).dir,
-		     year: queryString.parse(this.props.location.search).year,
-	         page: queryString.parse(this.props.location.search).page
-	     };
-	 }
 
 	 sortList = (type, settings) =>{
 	     if (this.props.location.search) {

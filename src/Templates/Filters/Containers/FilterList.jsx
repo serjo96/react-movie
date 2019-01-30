@@ -144,9 +144,10 @@ class ListsPage extends Component {
     };
 
     onClickAdult = () => {
-	     let newState = update(this.state.sortSettings, {$merge: {
+	    let newState = update(this.state.sortSettings, {$merge: {
 	         adult: !this.state.sortSettings.adult
 	     }});
+
 	     this.setState({
 	         sortSettings: {
 	             ...newState
@@ -235,6 +236,7 @@ class ListsPage extends Component {
 			    onSortByDate={this.onSortByDate}
 			    onSortByCountry={this.onSortByCountry}
 			    onClickSort={this.onClickSort}
+			    onClickAdult={this.onClickAdult}
 			    onClickChangeDir={this.onClickChangeDir}
 			    restoreDefaultState={this.restoreDefaultState}
 		    />
