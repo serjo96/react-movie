@@ -48,12 +48,13 @@ class MoviesAll extends Component {
     }
 
      sendRequest = () => {
-	     let page = this.stringParse.get('page')
-		     ? parseInt(this.stringParse.get('page'))
-		     : null,
-		     genres = this.stringParse.get('genre'),
+	     let page = this.getUrlString().page
+		     ? this.getUrlString().page
+		     : null;
+	     let genres = this.getUrlString().genre,
 		     { sortSettings } = this.state,
 		     { sortType } = this.state;
+
 
 	     if (page) {
 	     	if (page <= 2) {
@@ -68,7 +69,7 @@ class MoviesAll extends Component {
 	     } else {
 		     this.props.loadList(undefined, genres, sortType, sortSettings.sortByDate, sortSettings.sortByCountry.ico, sortSettings.adult);
 	     }
-     };
+    };
 
     prevPage = () => {
 	    let path = this.props.AllMovies.data.page > 1
@@ -105,56 +106,50 @@ class MoviesAll extends Component {
             this.props.history.push(`/movies/all?${path}&page=${this.props.AllMovies.data.page + 1}`);
         }
     };
+
     // TODO: Сделать делегированный обработчик на фильтры и исправить перезапись url
- GenresFilter = (filter) => {
-	 let url = queryString.parse(this.props.location.search);
-	 let stringified;
-	 if (url.genre) {
-		 url.country = filter.filterData.id;
-	 } else if (url.country) {
-		 url.country = filter.filterData;
-	 }
-	 if (filter.type === 'genre') {
-	     if (filter.filterData.id === 0) {
-	         this.props.history.push(this.props.location.pathname + this.props.location.search);
-	     } else {
-		     if (url.genre) {
-			     this.props.history.push(`/movies/all?genre=${filter.filterData.id}`);
-		     }
-	     }
-	 } else if (filter.type === 'country') {
+	 GenresFilter = (filterId) => {
+		 let genreStr = this.getUrlString();
+		 genreStr.genre = filterId;
 
-	 	if (url.country) {
-	 		url.country = filter.filterData;
-	 		stringified = queryString.stringify(url);
-
-		    this.props.history.push({
-			    pathname: this.props.location.pathname,
-			    search: stringified,
-			    state: null
-		    });
-	    } else {
+		 if (filterId === 0) {
+		    this.props.history.push(this.props.location.pathname + this.props.location.search);
+		 } else {
 			 this.props.history.push({
-	          pathname: this.props.location.pathname,
-	          search: this.props.location.search ? `${this.props.location.search}&country=${filter.filterData}` : `country=${filter.filterData}`,
-	          state: null
+				 search: queryString.stringify(genreStr)
 			 });
+		 }
+	 };
 
-	    }
+	 onClickCountry = (countryData) => {
+	    let countryStr = this.getUrlString();
+	    countryStr.country = countryData;
+
+	    this.props.history.push({
+		    search: queryString.stringify(countryStr)
+	    });
+	 };
+
+	 getUrlString() {
+	     return {
+		     genre: queryString.parse(this.props.location.search).genre,
+		     country: queryString.parse(this.props.location.search).country,
+		     sort_direction: queryString.parse(this.props.location.search).dir,
+		     year: queryString.parse(this.props.location.search).year,
+	         page: queryString.parse(this.props.location.search).page
+	     };
 	 }
 
- };
-
- sortList = (type, settings) =>{
-     if (this.props.location.search) {
-	     this.props.history.push({
-		     pathname: this.props.location.pathname,
-		     search: this.props.location.search,
-		     state: null
-	     });
-     }
-     this.setState({sortType: type, sortSettings: settings});
- };
+	 sortList = (type, settings) =>{
+	     if (this.props.location.search) {
+		     this.props.history.push({
+			     pathname: this.props.location.pathname,
+			     search: this.props.location.search,
+			     state: null
+		     });
+	     }
+	     this.setState({sortType: type, sortSettings: settings});
+	 };
 
 	 scrollStep = () => {
 	     if (window.pageYOffset === 0) {
@@ -187,6 +182,7 @@ class MoviesAll extends Component {
 				                genresData={this.props.genres.isFetching ? this.props.genres.data.obj : {}}
 				                genres={this.props.genres.isFetching ? this.props.genres.data.arr.movieGenres : []}
 				                onClickGenres={this.GenresFilter}
+				                onClickCountry={this.onClickCountry}
 				                onClickSortList={this.sortList}
 				                sortByCountry={true}
 				                safeFilter={true}

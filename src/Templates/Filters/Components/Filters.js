@@ -139,14 +139,15 @@ export default class FiltersMobile extends Component {
                         </div>
                     </div> : null}
 
-                    {this.props.safeFilter ?
-                        <div className="filter-item filter-item--safe-filter" onClick={this.props.onClickAdult}>
+                    {this.props.safeFilter
+                        ? <div className="filter-item filter-item--safe-filter" onClick={this.props.onClickAdult}>
                             <div className="filter-name">
                                 <span>Безопасный фильтр</span>
                                 <i className={`fa ${sortSettings.adult ? 'fa-square-o' : 'fa-check-square'}`}
 								   aria-hidden="true"/>
                             </div>
-                        </div> : null}
+                        </div>
+                        : null}
 
                     <div className={`filter-item ${sortSettings.sortBy.type !== 'popularity'
                         ? sortSettings.sortBy.status ? 'filter-item--active'
@@ -156,6 +157,8 @@ export default class FiltersMobile extends Component {
                             <span>{sortSettings.sortBy.name}</span>
                             <i className="fa fa-angle-down" aria-hidden="true"/>
                         </div>
+
+
                         <div className="filter-item__catalog filter-item__catalog--col sort-catalog">
                             <div className="filter-catalog__title">Сортировать</div>
                             {this.props.sortListType.map(( el, indx ) =>

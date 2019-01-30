@@ -110,10 +110,9 @@ class ListsPage extends Component {
 		    }
 	    });
 
-	    this.props.onClickGenres({
-		    type: 'country',
-		    filterData: el.ico
-	    });
+	    this.props.onClickCountry(
+		     el.ico
+	    );
     };
 
     onSelectGenres = (el) => {
@@ -129,10 +128,7 @@ class ListsPage extends Component {
 		    }
 	    });
 
-	    this.props.onClickGenres({
-		    type: 'genre',
-		    filterData: {id}
-	    });
+	    this.props.onClickGenres(id);
     };
 
     onClickChangeDir = () => {
