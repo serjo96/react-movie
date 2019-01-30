@@ -23,23 +23,26 @@ class MediaList extends Component {
     }
 
  renderMovie = (item, index) => {
- 	if (this.props.count) {
-         if (index > this.props.count) return;
+     // show only 11 movies on main page
+     if (this.props.count && index > this.props.count) {
+         return null;
      }
+
      return (
-         <MovieItem
-             title={item.title || item.name}
-             original_title={item.original_title || item.original_name}
-             overview={item.overview}
-             voteAverage={item.vote_average}
-             poster={item.profile_path || item.poster_path}
-             date={item.release_date || item.first_air_date}
-             key={index}
-             id={item.id}
-             genres={item.genre_ids}
-             typeList={item.media_type || this.props.typeList}
-         />
+	     <MovieItem
+		     title={item.title || item.name}
+		     original_title={item.original_title || item.original_name}
+		     overview={item.overview}
+		     voteAverage={item.vote_average}
+		     poster={item.profile_path || item.poster_path}
+		     date={item.release_date || item.first_air_date}
+		     key={index}
+		     id={item.id}
+		     genres={item.genre_ids}
+		     typeList={item.media_type || this.props.typeList}
+	     />
      );
+
  };
 
  render() {
@@ -56,11 +59,10 @@ class MediaList extends Component {
 		                    </div>
 			                : null}
 	                </div>
-                 <div className="movies__list tooltip-parent" >
-	                    {this.props.movieList.data.results.map((item, index) => this.renderMovie(item, index)
-	                    )}
-                 </div>
 
+                 <div className="movies__list tooltip-parent" >
+                     {this.props.movieList.data.results.map((item, index) => this.renderMovie(item, index))}
+                 </div>
 
              </div>
          );

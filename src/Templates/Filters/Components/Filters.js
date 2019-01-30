@@ -37,10 +37,9 @@ export default class FiltersMobile extends Component {
                             </div>
                         </div> : null}
 
-                    <div className={`filter-item  ${sortSettings.sortByDate.date !== ''
+                    <div className={`filter-item ${sortSettings.sortByDate.date !== ''
                         ? sortSettings.sortByDate.status
-                            ? 'filter-item--active'
-                            : ''
+                            ? 'filter-item--active' : ''
                         : ''}`}>
                         <div className="filter-name">
                             <span>{sortSettings.sortByDate.name}</span>
@@ -86,8 +85,7 @@ export default class FiltersMobile extends Component {
                     {this.props.sortByCountry ? <div
                         className={`filter-item ${sortSettings.sortByCountry.ico !== ''
                             ? sortSettings.sortByCountry.status
-                                ? 'filter-item--active'
-                                : ''
+                                ? 'filter-item--active' : ''
                             : ''}`}>
                         <div className="filter-name">
                             <span>{sortSettings.sortByCountry.name}</span>
@@ -173,7 +171,7 @@ export default class FiltersMobile extends Component {
                             )}
                         </div>
                     </div>
-                    <div className={`sort-direction ${sortSettings.SortDerection ? 'sort-direction--asc' : ''}`}>
+                    <div className={`sort-direction ${sortSettings.SortDirection ? 'sort-direction--asc' : ''}`}>
                         <i onClick={this.props.onClickChangeDir}
 						   className="fa fa-long-arrow-up" aria-hidden="true"/>
                     </div>

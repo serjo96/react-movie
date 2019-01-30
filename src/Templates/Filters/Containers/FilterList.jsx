@@ -31,7 +31,7 @@ class ListsPage extends Component {
 			        ico: '',
 			        status: false
 		        },
-		        SortDerection: false,
+		        SortDirection: false,
 		        adult: false
 	        },
 	        genresListData: {
@@ -76,7 +76,7 @@ class ListsPage extends Component {
     };
 
     onSortLists = () =>{
-    	let fullType = this.state.sortSettings.sortBy.type + (this.state.sortSettings.SortDerection ? '.asc' : '.desc');
+    	let fullType = this.state.sortSettings.sortBy.type + (this.state.sortSettings.SortDirection ? '.asc' : '.desc');
     	this.props.onClickSortList(fullType, this.state.sortSettings);
     };
 
@@ -137,7 +137,7 @@ class ListsPage extends Component {
 
     onClickChangeDir = () => {
 	    let newState = update(this.state.sortSettings, {$merge: {
-			    SortDerection: !this.state.sortSettings.SortDerection
+			    SortDirection: !this.state.sortSettings.SortDirection
 		    }});
 
 	    this.setState({
@@ -178,31 +178,32 @@ class ListsPage extends Component {
     };
 
 	 restoreDefaultState = () => {
-	    this.setState({sortSettings: {
-	        genresListName: {
-	            name: 'Все жанры',
-			    id: 0,
-			    status: false
-		    },
-			    sortBy: {
-	                name: 'По популярности',
-				    type: 'popularity',
-				    status: false
-			    },
-			    sortByDate: {
-	                name: 'Все года',
-				    date: '',
-				    type: 'single',
-				    status: false
-			    },
-			    sortByCountry: {
-		            name: 'Все страны',
-				    ico: '',
-				    status: false
-			    },
-			    SortDerection: false,
-			        adult: false
-			    },
+	    this.setState({
+		        sortSettings: {
+			        genresListName: {
+			            name: 'Все жанры',
+					    id: 0,
+					    status: false
+				    },
+				    sortBy: {
+		                name: 'По популярности',
+					    type: 'popularity',
+					    status: false
+				    },
+				    sortByDate: {
+		                name: 'Все года',
+					    date: '',
+					    type: 'single',
+					    status: false
+				    },
+				    sortByCountry: {
+			            name: 'Все страны',
+					    ico: '',
+					    status: false
+				    },
+				    SortDirection: false,
+				        adult: false
+				    },
 			    genresListData: {
 				    name: 'Все жанры',
 				    id: 0
@@ -215,12 +216,12 @@ class ListsPage extends Component {
 	    this.setState({modalFilter: !this.state.modalFilter});
 	 };
 
- closePopup = (e) =>{
-     if (e.target.className === 'popup-base' || e.target.className === 'popup__close') {
-         document.querySelector('.popup__content').classList.add('popup--is-hide');
-         setTimeout(()=> this.setState({modalFilter: false}), 500);
-     }
- };
+	 closePopup = (e) =>{
+	     if (e.target.className === 'popup-base' || e.target.className === 'popup__close') {
+	         document.querySelector('.popup__content').classList.add('popup--is-hide');
+	         setTimeout(()=> this.setState({modalFilter: false}), 500);
+	     }
+	 };
 
  render() {
 	 const {sortSettings} = this.state;

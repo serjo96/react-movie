@@ -120,10 +120,10 @@ export default class FiltersMobile extends Component {
                                 </label>
                             </div>
 
-                            <div onClick={this.props.onClickChangeDir} className={`mobile__sort-direction sort-direction ${sortSettings.SortDerection
+                            <div onClick={this.props.onClickChangeDir} className={`mobile__sort-direction sort-direction ${sortSettings.SortDirection
                                 ? 'sort-direction--asc'
                                 : ''}`}>
-                                <span>{`Сортировать по ${sortSettings.SortDerection
+                                <span>{`Сортировать по ${sortSettings.SortDirection
 	                                     ? 'убыванию'
 	                                     : 'возрастанию'}`}</span>
                                 <i className="fa fa-long-arrow-up" aria-hidden="true"/>

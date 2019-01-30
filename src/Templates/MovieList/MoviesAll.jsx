@@ -176,7 +176,11 @@ class MoviesAll extends Component {
 			    <Helmet>
 				    <title>Фильмы</title>
 			    </Helmet>
-			    <ServiceBlock isLoading={AllMovies.isFetching} isError={AllMovies.status} fetch={this.sendRequest}>
+			    <ServiceBlock
+				    isLoading={AllMovies.isFetching}
+				    isError={AllMovies.status}
+				    fetch={this.sendRequest}
+			    >
 
 			    <div className="movies-content">
 				    <FilterList location={this.props.location}
@@ -189,7 +193,11 @@ class MoviesAll extends Component {
 				                sortListType={sortListType}
 				                MobileFilter={width >= 963}
 				    />
-					    <MovieList movieListTitle={`Всего фильмов (${AllMovies.data.total_results})`} movieList={AllMovies} typeList="movie"/>
+					    <MovieList
+						    movieListTitle={`Всего фильмов (${AllMovies.data.total_results})`}
+						    movieList={AllMovies}
+						    typeList="movie"
+					    />
 					    {AllMovies.data.total_pages > 1
 						    ? <div className="pager-btns clearfix">
 							    {AllMovies.data.page - 1 > 1
