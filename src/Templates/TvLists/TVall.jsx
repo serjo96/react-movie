@@ -4,7 +4,7 @@ import { tvPopular } from '../../Data/actions/tv-actions';
 import { connect } from 'react-redux';
 import MediaList from '../MediaList/MediaList';
 import FilterList from '../Filters/Containers/FilterList';
-import {sortListTV} from '../../Data/localData';
+import {sortListTV} from './../../Data/localData';
 import ServiceBlock from '../Service/ServiceBlock';
 
 
@@ -142,7 +142,7 @@ class TvPopular extends Component {
 				                SortList={this.sortList}
 				                sortByCountry={false}
 				                safeFilter={false}
-				                sortList={sortListTV}
+				                sortListType={sortListTV}
 				                MobileFilter={width >= 963}
 				    />
 					    <MediaList movieListTitle={`Всего сериалов (${allTV.data.total_results})`} movieList={allTV} typeList='tv'/>

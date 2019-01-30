@@ -1,4 +1,5 @@
 import { SEARCH_IN_PAGE, SEARCH_IN_HEADER, CLEAR_SEARCH, GENRES,  SEARCH_KEYWORDS_MOVIES, SEARCH_RESET_FETCH, MEDIA_ENG_DATA  } from './../constants/index';
+import { capitalizeFirstLetter } from './../../utils/utils';
 import update from 'react-addons-update';
 
 
@@ -88,25 +89,44 @@ export default function General(state = initialState, action) {
 	    case GENRES:
 		    let hashObj = {};
 		    let concatArr = action.genres.movie.concat(action.genres.tv);
-		    concatArr.map((item)=> hashObj[item.id] = item.name);
+		    concatArr.forEach((item)=> {
+		    	hashObj[item.id] = capitalizeFirstLetter(item.name);
+		    });
 		    let allGenres = Object.keys(hashObj).map(key => {return {id: key, name: hashObj[key]};});
 		    allGenres.unshift({id: 0, name: 'Все жанры'});
-		    action.genres.movie.unshift({id: 0, name: 'Все жанры'});
+
+		    let moviesGenres = action.genres.movie.map(i=> {
+				   return {
+					    ...i,
+					    name: capitalizeFirstLetter(i.name)
+				   };
+			    }
+		    );
+
+		    moviesGenres.unshift({id: 0, name: 'Все жанры'});
+			console.log(action.genres.tv)
+		    let tvGenres = action.genres.tv.map(i=> {
+				    return {
+					    ...i,
+					    name: capitalizeFirstLetter(i.name)
+				    };
+			    }
+		    );
 
 		    localStorage.setItem('genres', JSON.stringify(
 		    	{
 				    obj: hashObj,
 				    arr: {
 				    	AllGenres: allGenres,
-					    movieGenres: action.genres.movie,
-					    tvGenres: action.genres.tv
+					    movieGenres: moviesGenres,
+					    tvGenres: tvGenres
 				    }
 		    	}
 				    ));
 		    return update(state, {
 			    Genres: {$merge: {
 					    isFetching: true,
-					    data: {obj: hashObj, arr: {AllGenres: allGenres, movieGenres: action.genres.movie, tvGenres: action.genres.tv} }
+					    data: {obj: hashObj, arr: {AllGenres: allGenres, movieGenres: moviesGenres, tvGenres: tvGenres} }
 				    }
 			    }
 		    });

@@ -441,4 +441,5 @@ export let sortListTV = [
     }, {
         name: 'Количеству голосов',
         type: 'vote_count'
-    }];
+    }
+    ];
