@@ -173,7 +173,7 @@ export function movieUpcoming(page=1) {
     };
 }
 
-export function movieListPopular(page=1, genre, sortType = 'popularity.desc', date, region, adult) {
+export function movieListPopular(page = 1, genre, sortType = 'popularity.desc', date, region, adult) {
     let year,
         rageDates,
         startRangeDate,
@@ -185,7 +185,8 @@ export function movieListPopular(page=1, genre, sortType = 'popularity.desc', da
     } else {
         year = date.date;
     }
-    return ( dispatch ) => {
+
+	return ( dispatch ) => {
 	    axios.all([
 		    axios.get('https://api.themoviedb.org/3/discover/movie',
 			    {
