@@ -2,16 +2,19 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import YouTube  from 'react-youtube';
 import Lightbox from 'lightbox-react';
-import { onLoadMovie, clearMovieData } from '../../../Data/actions/movies-actions';
-import {Helmet} from 'react-helmet';
-import Popup from '../../Popup/Popup';
-import MovieBG from '../components/MovieBg';
-import MovieAside from '../components/MovieAside';
-import MediaStills from '../../MediaPage/MediaStills';
-import MediaCast from '../../MediaPage/MediaCast';
-import MovieCollection from '../components/MovieCollection';
-import MediaRecommendations from '../../MediaPage/MediaRecommendations';
-import ServiceBlock from '../../Service/ServiceBlock';
+import { Helmet } from 'react-helmet';
+
+import { clearMovieData } from './../../../Data/actions/movies-actions';
+import { onLoadMovie } from './../../../Data/api/Movies.api';
+
+import Popup from './../../Popup/Popup';
+import MovieBG from './../components/MovieBg';
+import MovieAside from './../components/MovieAside';
+import MediaStills from './../../MediaPage/MediaStills';
+import MediaCast from './../../MediaPage/MediaCast';
+import MovieCollection from './../components/MovieCollection';
+import MediaRecommendations from './../../MediaPage/MediaRecommendations';
+import ServiceBlock from './../../Service/ServiceBlock';
 
 
 class Movie extends Component {
@@ -27,14 +30,6 @@ class Movie extends Component {
 	        intervalId: 0
         };
     }
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.match.params.id !== this.props.match.params.id) {
-	        this.props.clearMovieData();
-            this.sendRequest(nextProps.match.params.id);
-            this.scrollToTop();
-        }
-    }
-
 
     componentDidMount() {
 	    if (window.pageYOffset === 0) {
@@ -42,6 +37,14 @@ class Movie extends Component {
 	    }
         this.sendRequest();
     }
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.match.params.id !== this.props.match.params.id) {
+			this.props.clearMovieData();
+			this.sendRequest(nextProps.match.params.id);
+			this.scrollToTop();
+		}
+	}
 
     componentWillUnmount() {
     	this.props.clearMovieData();
@@ -95,10 +98,10 @@ class Movie extends Component {
 
  render() {
   	const YouTubeParams = {
-		    playerVars: { // https://developers.google.com/youtube/player_parameters
-			    autoplay: 0
-		    }
-     };
+  		playerVars: { // https://developers.google.com/youtube/player_parameters
+  			autoplay: 0
+	    }
+  	};
 
 	  const { imgIndex } = this.state;
 
@@ -148,9 +151,9 @@ class Movie extends Component {
 
 						 <div className="overview">
 							 <div className="description">
-								 {movie.overview ? <p className="description__text">{movie.overview}
-								 </p>:
-									 <div>
+								 {movie.overview
+									 ? <p className="description__text">{movie.overview}</p>
+									 : <div>
 										 <div>Ой! Кажется описание к этому произведению отсутствует</div>
 										 <div className="load-description-eng">
 											 <span onClick={()=>this.props.loadMovieData(movie.id, 'en-US')}>Загрузить описание на английском?</span>
@@ -158,8 +161,8 @@ class Movie extends Component {
 									 </div>}
 							 </div>
 
-							 {movie.videos.results.length >0 ?
-								 <div className="trailer">
+							 {movie.videos.results.length > 0
+								 ? <div className="trailer">
 									 <h2>{movie.videos.results.length === 1 ? 'Трейлер' : 'Трейлеры'}</h2>
 
 									 <div className="trailer__list">
@@ -170,7 +173,8 @@ class Movie extends Component {
 													 <img src={'http://i3.ytimg.com/vi/' + video.key + '/mqdefault.jpg'} alt=""/>
 												 </div>)}
 									 </div>
-								 </div> : null}
+								 </div>
+								 : null}
 
 
 							 <MediaCast cast={movie.credits.cast}/>
@@ -179,12 +183,15 @@ class Movie extends Component {
 						 </div>
 					 </div>
 				 </div>
-				 {movie.belongs_to_collection && movie.collection.parts.length>0 ?
+
+				 {movie.belongs_to_collection && movie.collection.parts.length > 0 ?
 					 <MovieCollection collection={movie.collection}/>
 				 	: null
 				 }
 
-				 {movie.recommendations.total_results >0 ? <MediaRecommendations recommendations={movie.recommendations} listName="Вам может понравиться" typeList="movie"/> : null }
+				 {movie.recommendations.total_results > 0
+					 ? <MediaRecommendations recommendations={movie.recommendations} listName="Вам может понравиться" typeList="movie"/>
+					 : null }
 
 
 				 {this.state.lightBox ?
@@ -203,8 +210,8 @@ class Movie extends Component {
 					 />: null}
 
 
-				 {this.state.modalTrailer ?
-					 <div className="popup-base" onClick={this.closePopup}>
+				 {this.state.modalTrailer
+					 ? <div className="popup-base" onClick={this.closePopup}>
 						 <div className="popup popup--video">
 							 <div className="popup__close" onClick={this.closePopup}/>
 							 <Popup>
@@ -215,11 +222,12 @@ class Movie extends Component {
 								 />
 							 </Popup>
 						 </div>
-					 </div>:null}
+					 </div>
+					 : null}
 				 </div>
 			 </ServiceBlock>
 		 );
- }
+    }
 }
 
 function mapStateToProps(state) {

@@ -1,9 +1,11 @@
-import React, {Component} from 'react';
-import { tvAiring } from '../../Data/actions/tv-actions';
-import {Helmet} from 'react-helmet';
+import React, { Component } from 'react';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import MediaList from '../MediaList/MediaList';
-import ServiceBlock from '../Service/ServiceBlock';
+
+import { tvAiring } from './../../Data/api/Tv.api';
+
+import MediaList from './../MediaList/MediaList';
+import ServiceBlock from './../Service/ServiceBlock';
 
 
 class TVAiring extends Component {

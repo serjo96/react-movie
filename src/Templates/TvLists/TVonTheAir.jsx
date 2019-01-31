@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
-import { tvOnTheAir } from '../../Data/actions/tv-actions';
 import { connect } from 'react-redux';
-import MediaList from '../MediaList/MediaList';
-import ServiceBlock from '../Service/ServiceBlock';
+
+import { tvOnTheAir } from './../../Data/api/Tv.api';
+import MediaList from './../MediaList/MediaList';
+import ServiceBlock from './../Service/ServiceBlock';
 
 
 class TVonTheAir extends Component {

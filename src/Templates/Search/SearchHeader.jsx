@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Scrollbars } from 'react-custom-scrollbars';
-import {onSearch, clearSearch} from '../../Data/actions/general-actions';
-import { friendlyUrl, urlRusLat } from '../../utils/utils';
-import NoImg from '../../assests/img/NoImg.png';
 import { DebounceInput } from 'react-debounce-input';
-import Spinner from '../Spinner/Spinner';
+import { Scrollbars } from 'react-custom-scrollbars';
+
+import { clearSearch} from './../../Data/actions/general-actions';
+import { onSearch} from './../../Data/api/Search.api';
+import { friendlyUrl, urlRusLat } from './../../utils/utils';
+import NoImg from './../../assests/img/NoImg.png';
+import Spinner from './../Spinner/Spinner';
 
 class SearchHeader extends Component {
     constructor(props) {
@@ -49,7 +51,7 @@ class SearchHeader extends Component {
 		     visibilityResult: true
 	     });
 
-	     if (this.state.val.length >0) {
+	     if (this.state.val.length > 0) {
 	        this.props.onInput(this.state.val, 'header-search');
 	     }
 	 };
@@ -81,19 +83,38 @@ class SearchHeader extends Component {
 
  renderResults = (item, index) =>{
      return (
-         <Link to={'/' + item.media_type + '/' + urlRusLat(item.title || item.name) + '-' + item.id} className="result-element" key={index} onClick={()=> this.setState({val: ''})}>
+         <Link
+	         to={'/' + item.media_type + '/' + urlRusLat(item.title || item.name) + '-' + item.id}
+	         className="result-element"
+	         key={index}
+	         onClick={()=> this.setState({val: ''})}
+         >
              <div className="result-element__poster">
-	             {this.state.imgStatus ? <Spinner/>: null}
-                 <img className="img-loading" onLoad={this.onLoadImg} src={(item.profile_path || item.backdrop_path || item.poster_path) ? 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + (item.profile_path || item.backdrop_path || item.poster_path) :  NoImg} alt=""/>
+	             {this.state.imgStatus ? <Spinner/> : null}
+                 <img
+	                 className="img-loading"
+	                 onLoad={this.onLoadImg}
+	                 src={(item.profile_path || item.backdrop_path || item.poster_path)
+		                 ? 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + (item.profile_path || item.backdrop_path || item.poster_path)
+		                 :  NoImg}
+	                 alt=""
+                 />
              </div>
              <div className="result-element__title">
                  <div>{item.title || item.name}</div>
-                 <div className="result-element__release">{item.release_date  ? item.release_date.substring(0, 4) : item.first_air_date ? item.first_air_date.substring(0, 4).substring(0, 4) : null}</div>
+                 <div className="result-element__release">
+	                 {item.release_date
+		                 ? item.release_date.substring(0, 4)
+		                 : item.first_air_date
+			                 ? item.first_air_date.substring(0, 4).substring(0, 4)
+			                 : null}
+	             </div>
              </div>
-             <div className="result-element__type">{(item.media_type === 'tv') ? 'сериал' : (item.media_type === 'movie') ? 'фильм': 'актер'}</div>
+             <div className="result-element__type">{(item.media_type === 'tv') ? 'сериал' : (item.media_type === 'movie') ? 'фильм' : 'актер'}</div>
          </Link>
      );
  };
+
  handleUpdate = (values) => {
      const { top } = values;
      this.setState({ top });
@@ -122,7 +143,8 @@ class SearchHeader extends Component {
      return (
          <div
              style={{ ...style, ...thumbStyle }}
-             {...props}/>
+             {...props}
+         />
      );
  };
 
@@ -133,7 +155,11 @@ class SearchHeader extends Component {
 
 
 	    return (
-         <div className="header__search search" onMouseDown={this.mouseDownHandler} onMouseUp={this.mouseUpHandler}>
+         <div
+	         className="header__search search"
+	         onMouseDown={this.mouseDownHandler}
+	         onMouseUp={this.mouseUpHandler}
+         >
              <div className="search-field-wrapper">
 	             <DebounceInput
 		             className="search__field search__field--header"
@@ -152,8 +178,8 @@ class SearchHeader extends Component {
 	            {this.state.visibilityResult &&
 		            <div className="search__result searchComboBox">
 
-			            {this.props.SearchResult.isFetching ? this.props.SearchResult.data.total_results >0 ?
-				            <Scrollbars style={myScrollbar} autoHeight
+			            {this.props.SearchResult.isFetching ? this.props.SearchResult.data.total_results > 0
+				            ? <Scrollbars style={myScrollbar} autoHeight
 				                        autoHeightMin={95}
 				                        autoHeightMax={300}  autoHideTimeout={1000} autoHideDuration={600}
 				                        renderView={props => <div {...props} className="ComboBox-view"/>}
@@ -162,7 +188,9 @@ class SearchHeader extends Component {
 
 				            >
 					            { this.props.SearchResult.data.results.map((item, index)=> this.renderResults(item, index))}
-				            </Scrollbars> : <div className="result-element">Поиск не дал результатов, попробуйте уточнить поиск</div> : null}
+				            </Scrollbars>
+				            : <div className="result-element">Поиск не дал результатов, попробуйте уточнить поиск</div>
+				            : null}
 		            </div> }
 
          </div>

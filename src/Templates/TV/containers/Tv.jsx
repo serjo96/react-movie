@@ -1,20 +1,23 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import YouTube  from 'react-youtube';
-import Popup from '../../Popup/Popup';
 import Lightbox from 'lightbox-react';
-import { onLoadTV, clearTvData, clearTvSeason } from '../../../Data/actions/tv-actions';
-import {Helmet} from 'react-helmet';
-import ServiceBlock from '../../Service/ServiceBlock';
-import TVBg from '../components/TVBg';
-import TVAside from '../components/TVAside';
-import TVvideos from '../components/TVvideos';
-import TVseasons from '../components/TVseasons';
-import MediaStills from '../../MediaPage/MediaStills';
-import MediaCast from '../../MediaPage/MediaCast';
-import MediaRecommendations from '../../MediaPage/MediaRecommendations';
-import TVSeason from '../components/TVSeason';
+
+import { onLoadTV } from './../../../Data/api/Tv.api';
+import { clearTvData, clearTvSeason } from './../../../Data/actions/tv-actions';
+
+import Popup from './../../Popup/Popup';
+import ServiceBlock from './../../Service/ServiceBlock';
+import TVBg from './../components/TVBg';
+import TVAside from './../components/TVAside';
+import TVvideos from './../components/TVvideos';
+import TVseasons from './../components/TVseasons';
+import MediaStills from './../../MediaPage/MediaStills';
+import MediaCast from './../../MediaPage/MediaCast';
+import MediaRecommendations from './../../MediaPage/MediaRecommendations';
+import TVSeason from './../components/TVSeason';
 
 class TV extends Component {
     constructor(props) {
@@ -30,21 +33,20 @@ class TV extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.match.params.id !== this.props.match.params.id) {
-            this.props.clearTvData();
-            this.sendRequest(nextProps.match.params.id);
-            this.scrollToTop();
-        }
-    }
-
-
     componentDidMount() {
 	    if (window.pageYOffset === 0) {
 		    clearInterval(this.state.intervalId);
 	    }
         this.sendRequest();
     }
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.match.params.id !== this.props.match.params.id) {
+			this.props.clearTvData();
+			this.sendRequest(nextProps.match.params.id);
+			this.scrollToTop();
+		}
+	}
 
     componentWillUnmount() {
     	this.props.clearTvData();

@@ -1,16 +1,19 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { onLoadPerson, clearPersonData } from '../../../Data/actions/person-actions';
-import {Helmet} from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import Lightbox from 'lightbox-react';
-import { Timeline } from 'react-twitter-widgets'
-import NoImg from '../../../assests/img/NoImg.png';
-import ServiceBlock from '../../Service/ServiceBlock';
-import MediaStills from '../../MediaPage/MediaStills';
-import MediaItem from '../../MediaList/MediaItem';
-import PersonMoviesList from '../components/PersonMoviesList';
-import { urlRusLat, declOfNum, friendlyData } from '../../../utils/utils';
+import { Timeline } from 'react-twitter-widgets';
+
+import { clearPersonData } from './../../../Data/actions/person-actions';
+import { onLoadPerson } from './../../../Data/api/Perosn.api';
+import { urlRusLat, declOfNum, friendlyData } from './../../../utils/utils';
+import NoImg from './../../../assests/img/NoImg.png';
+
+import ServiceBlock from './../../Service/ServiceBlock';
+import MediaStills from './../../MediaPage/MediaStills';
+import MediaItem from './../../MediaList/MediaItem';
+import PersonMoviesList from './../components/PersonMoviesList';
 
 class Person extends Component {
     constructor(props) {

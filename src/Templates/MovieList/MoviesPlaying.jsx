@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { movieListPlaying } from '../../Data/actions/movies-actions';
+import { movieListPlaying } from '../../Data/api/Movies.api';
 import {Helmet} from 'react-helmet';
 import { connect } from 'react-redux';
 import MovieList from '../MediaList/MediaList';

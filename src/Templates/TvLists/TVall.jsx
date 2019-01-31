@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
-import { tvPopular } from '../../Data/actions/tv-actions';
 import { connect } from 'react-redux';
-import MediaList from '../MediaList/MediaList';
-import FilterList from '../Filters/Containers/FilterList';
-import {sortListTV} from './../../Data/localData';
-import ServiceBlock from '../Service/ServiceBlock';
 import queryString from 'query-string';
+
+import { tvPopular } from '../../Data/api/Tv.api';
+import { sortListTV } from './../../Data/localData';
+
+import MediaList from './../MediaList/MediaList';
+import FilterList from './../Filters/Containers/FilterList';
+import ServiceBlock from './../Service/ServiceBlock';
 
 
 class TvPopular extends Component {
@@ -28,11 +30,11 @@ class TvPopular extends Component {
         };
     }
 
-    get genresData(){
+    get genresData() {
     	return this.props.genres.isFetching ? this.props.genres.data.obj : {};
     }
 
-    get genres(){
+    get genres() {
     	return this.props.genres.isFetching ? this.props.genres.data.arr.AllGenres : [];
     }
 

@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {onLoadPage} from '../../Data/actions/movies-actions';
-import MovieList from '../MediaList/MediaList';
-import Spinner from '../Spinner/Spinner';
+
+import { onLoadMainPage } from './../../Data/api/General.api';
+
+import MovieList from './../MediaList/MediaList';
+import Spinner from './../Spinner/Spinner';
 
 
 class Main extends Component {
@@ -29,7 +31,7 @@ class Main extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    loadUpcomingMovies: () => dispatch(onLoadPage())
+    loadUpcomingMovies: () => dispatch(onLoadMainPage())
 });
 
 function mapStateToProps(state) {

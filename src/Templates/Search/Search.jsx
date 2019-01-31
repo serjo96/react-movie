@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import MovieList from '../MediaList/MediaList';
-import { MainSearch, searchResetFetch } from '../../Data/actions/general-actions';
-import { friendlyUrl } from '../../utils/utils';
 import { DebounceInput } from 'react-debounce-input';
-import ServiceBlock from '../Service/ServiceBlock';
+
+import { MainSearch } from './../../Data/api/Search.api';
+import { searchResetFetch } from './../../Data/actions/general-actions';
+
+import MovieList from './../MediaList/MediaList';
+import { friendlyUrl } from './../../utils/utils';
+import ServiceBlock from './../Service/ServiceBlock';
 
 class Search extends Component {
     constructor(props) {
@@ -23,7 +26,10 @@ class Search extends Component {
 	        this.scrollToTop();
 	        this.sendRequest(prevProps);
 	        if (this.props.location.search.match(/page/)) {
-		        this.setState({val: decodeURI(this.props.location.search.substring(this.props.location.search.lastIndexOf('?') + 1, this.props.location.search.lastIndexOf('%')).replace('?', '').replace(/_/g, ' '))});
+		        this.setState({val: decodeURI(
+		                this.props.location.search.substring(this.props.location.search.lastIndexOf('?') + 1,
+                        this.props.location.search.lastIndexOf('%')).replace('?', '').replace(/_/g, ' ')
+                    )});
 	        } else {
 		        this.setState({val: decodeURI(this.props.location.search.replace('?', '').replace(/_/g, ' '))});
 	        }
@@ -35,7 +41,10 @@ class Search extends Component {
             clearInterval(this.state.intervalId);
         }
 	    if (this.props.location.search.match(/page/)) {
-		    this.setState({val: decodeURI(this.props.location.search.substring(this.props.location.search.lastIndexOf('?') + 1, this.props.location.search.lastIndexOf('%')).replace('?', '').replace(/_/g, ' '))});
+		    this.setState({val: decodeURI(
+		            this.props.location.search.substring(this.props.location.search.lastIndexOf('?') + 1,
+                    this.props.location.search.lastIndexOf('%')).replace('?', '').replace(/_/g, ' ')
+                )});
         } else {
             this.setState({val: decodeURI(this.props.location.search.replace('?', '').replace(/_/g, ' '))});
         }

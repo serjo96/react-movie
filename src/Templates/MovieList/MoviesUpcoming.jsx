@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Helmet} from 'react-helmet';
-import { movieUpcoming } from '../../Data/actions/movies-actions';
+import { movieUpcoming } from './../../Data/api/Movies.api';
 import { connect } from 'react-redux';
 import MovieList from '../MediaList/MediaList';
 import ServiceBlock from '../Service/ServiceBlock';

@@ -3,11 +3,12 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { movieListPopular, changeMoviePage } from '../../Data/actions/movies-actions';
-import MovieList from '../MediaList/MediaList';
-import FilterList from '../Filters/Containers/FilterList';
-import { sortListType} from '../../Data/localData';
-import ServiceBlock from '../Service/ServiceBlock';
+import { changeMoviePage } from './../../Data/actions/movies-actions';
+import { movieListPopular } from './../../Data/api/Movies.api';
+import MovieList from './../MediaList/MediaList';
+import FilterList from './../Filters/Containers/FilterList';
+import { sortListType } from './../../Data/localData';
+import ServiceBlock from './../Service/ServiceBlock';
 
 class MoviesAll extends Component {
     constructor(props) {
@@ -59,12 +60,12 @@ class MoviesAll extends Component {
     }
 
 
-    // TODO: Убрать портянку из if else, и найти по какой причине добавляется sort_by в урл
+    // TODO: Убрать портянку из if else, и решить вопрос с локальным стейтом в фильтрах(нужен ли он или использовать стейт урл)
+    // TODO: Добавить adult to URL
+    // TODO: Добавить правельный парсинг sort_by
+    // TODO: Добавить правельный парсинг direction
      sendRequest = () => {
 	     let page = +this.getUrlString.page;
-	     let genres = this.getUrlString.genre;
-		 let { sortSettings } = this.state;
-		 let { sortType } = this.state;
 
 		 let UrlStateObj = {
 			 page: +this.getUrlString.page,
@@ -85,10 +86,10 @@ class MoviesAll extends Component {
 		        }
 	        }
 	     } else {
-	     	UrlStateObj.page = 1;
+	     	delete UrlStateObj.page;
 	     }
 
-	     this.props.loadList(UrlStateObj);
+	     this.props.loadList(UrlStateObj.page, UrlStateObj.genres, UrlStateObj.sort_by, UrlStateObj.year, UrlStateObj.country, UrlStateObj.adult);
      };
 
     prevPage = () => {
@@ -135,55 +136,66 @@ class MoviesAll extends Component {
     };
 
 	 GenresFilter = (filterId) => {
-		 let genreStr = this.getUrlString;
-		 genreStr.genre = filterId;
+		 let UrlObj = this.getUrlString;
+		 UrlObj.genre = filterId;
 
 		 if (filterId === 0) {
-			 delete genreStr.genre;
+			 delete UrlObj.genre;
 		 }
 
 		 this.props.history.push({
-			 search: queryString.stringify(genreStr)
+			 search: queryString.stringify(UrlObj)
 		 });
 
 	 };
 
 	 onClickCountry = (countryData) => {
-	    let countryStr = this.getUrlString;
-	    countryStr.country = countryData;
+	    let UrlObj = this.getUrlString;
+		 UrlObj.country = countryData;
 
 	    this.props.history.push({
-		    search: queryString.stringify(countryStr)
+		    search: queryString.stringify(UrlObj)
 	    });
 	 };
 
 	 onSortByDate = (date) => {
 	 	let newDate;
-		 let sortDate = this.getUrlString;
+		 let UrlObj = this.getUrlString;
 		 if (date.type === 'range') {
 			 newDate = date.date.split('=');
-		    sortDate.year = newDate[0].split('-')[0] + '-' + newDate[1].split('-')[0];
+			 UrlObj.year = new Date(newDate[0]).getFullYear() + '-' + new Date(newDate[1]).getFullYear();
 		 } else {
-			 sortDate.year = date.date;
+			 UrlObj.year = date.date;
 		 }
 
-		 console.log(sortDate)
 		 this.props.history.push({
-			 search: queryString.stringify(sortDate)
+			 search: queryString.stringify(UrlObj)
 		 });
 	 };
 
 	 sortList = (type, settings) =>{
-		 let sortDir = this.getUrlString;
-		 sortDir.sort_by = type;
+
+		 let UrlObj = this.getUrlString;
+		 UrlObj.sort_by = type;
 
 		 this.props.history.push({
-			 search: queryString.stringify(sortDir)
+			 search: queryString.stringify(UrlObj)
 		 });
 
 
 	     this.setState({sortType: type, sortSettings: settings});
 	 };
+
+	 onClickAdult(adult) {
+
+		 let UrlObj = this.getUrlString;
+		 UrlObj.adult = adult;
+
+		 this.props.history.push({
+			 search: queryString.stringify(UrlObj)
+		 });
+
+	 }
 
 	 scrollStep = () => {
 	     if (window.pageYOffset === 0) {
@@ -257,7 +269,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    loadList: (UrlStateObj) => dispatch(movieListPopular(UrlStateObj)),
+    loadList: (page, genre, sortType, date, country, adult) => dispatch(movieListPopular(page, genre, sortType, date, country, adult)),
     changeListStatus: (type) => dispatch(changeMoviePage(type))
 });
 

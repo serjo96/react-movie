@@ -1,9 +1,11 @@
-import React, {Component} from 'react';
-import { tvTop } from '../../Data/actions/tv-actions';
-import {Helmet} from 'react-helmet';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import MediaList from '../MediaList/MediaList';
-import ServiceBlock from '../Service/ServiceBlock';
+import { Helmet } from 'react-helmet';
+
+import { tvTop } from './../../Data/api/Tv.api';
+
+import MediaList from './../MediaList/MediaList';
+import ServiceBlock from './../Service/ServiceBlock';
 
 
 class TvTop extends Component {
@@ -14,12 +16,6 @@ class TvTop extends Component {
         };
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.location.search !== prevProps.location.search) {
-            this.scrollToTop();
-            this.sendRequest(prevProps);
-        }
-    }
 
     componentDidMount() {
         if (window.pageYOffset === 0) {
@@ -29,6 +25,12 @@ class TvTop extends Component {
         this.sendRequest();
     }
 
+	componentDidUpdate(prevProps) {
+		if (this.props.location.search !== prevProps.location.search) {
+			this.scrollToTop();
+			this.sendRequest(prevProps);
+		}
+	}
 
 	 sendRequest = () =>{
 		 let movieId = parseFloat(this.props.location.search.split('=').pop());
