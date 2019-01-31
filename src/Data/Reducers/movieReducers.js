@@ -1,7 +1,7 @@
 import {
     UPCOMING_MOVIES, ALL_MOVIES, PLAYING_MOVIES, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA,
     MOVIE_ENG_DATA, CHANGE_MOVIES_PAGE
-} from '../constants/index';
+} from '../constants';
 import update from 'react-addons-update';
 
 
@@ -13,7 +13,7 @@ const initialState = {
 		    backdrop_path: '',
 		    budget: 0,
 		    genres: [],
-			id: '',
+            id: '',
 		    imdb_id: '',
 		    original_title: '',
 		    overview: '',
@@ -203,7 +203,9 @@ export default function Movies(state = initialState, action) {
 		    return update(state, {
 			    MovieData: {$merge: {
 					    data: {...state.MovieData.data,
-						    original_title: state.MovieData.data.original_title !== action.data.title ? action.data.title: state.MovieData.data.original_title,
+						    original_title: state.MovieData.data.original_title !== action.data.title
+							    ? action.data.title
+							    : state.MovieData.data.original_title,
 						    overview: action.data.overview
 					    },
 					    status: {

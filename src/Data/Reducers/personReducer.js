@@ -48,18 +48,18 @@ export default function Peoples(state = initialState, action) {
                 sortedTV = action.person.data.tv_credits.cast.sort((a, b)=> new Date(b.first_air_date) - new Date(a.first_air_date));
             return update(state, {
                 peopleData: {$merge: {
-                        isFetching: true,
-                        data: action.person.data,
-                        sortedMovies: sortedMovies,
-                        sortedTV: sortedTV,
-                        status: action.person.status
+                    isFetching: true,
+                    data: action.person.data,
+                    sortedMovies: sortedMovies,
+                    sortedTV: sortedTV,
+                    status: action.person.status
                 }}
             });
 
         case CLEAR_PERSON_DATA:
             return update(state, {
                 peopleData: {$merge: {
-                        ...initialState.peopleData
+                    ...initialState.peopleData
                 }}
             });
 

@@ -54,7 +54,11 @@ export function tvAiring(page = 1) {
         ]).then(axios.spread((pageOne, pageTwo) => {
             let concatPages;
             if (pageOne.data.total_pages > 1) {
-                concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page});
+                concatPages = Object.assign({
+                    ...pageTwo.data,
+                    results: pageOne.data.results.concat(pageTwo.data.results),
+                    page: pageOne.data.page
+                });
             } else {
                 concatPages = pageOne.data;
             }
@@ -106,7 +110,12 @@ export function tvPopular(page = 1, genre, sortType = 'popularity.desc', date) {
         ]).then(axios.spread((pageOne, pageTwo) => {
             let concatPages;
             if (pageOne.data.total_pages > 1) {
-                concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, sortByDate: date});
+                concatPages = Object.assign({
+                    ...pageTwo.data,
+                    results: pageOne.data.results.concat(pageTwo.data.results),
+                    page: pageOne.data.page,
+                    sortByDate: date
+                });
             } else {
                 concatPages = pageOne.data;
             }
@@ -139,7 +148,11 @@ export function tvOnTheAir(page = 1) {
         ]).then(axios.spread((pageOne, pageTwo) => {
             let concatPages;
             if (pageOne.data.total_pages > 1) {
-                concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page});
+                concatPages = Object.assign({
+                    ...pageTwo.data,
+                    results: pageOne.data.results.concat(pageTwo.data.results),
+                    page: pageOne.data.page
+                });
             } else {
                 concatPages = pageOne.data;
             }
@@ -172,7 +185,11 @@ export function tvTop(page = 1) {
         ]).then(axios.spread((pageOne, pageTwo) => {
             let concatPages;
             if (pageOne.data.total_pages > 1) {
-                concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page});
+                concatPages = Object.assign({
+                    ...pageTwo.data,
+                    results: pageOne.data.results.concat(pageTwo.data.results),
+                    page: pageOne.data.page
+                });
             } else {
                 concatPages = pageOne.data;
             }

@@ -1,4 +1,4 @@
-import { SEARCH_IN_PAGE, SEARCH_IN_HEADER, CLEAR_SEARCH, GENRES,  SEARCH_KEYWORDS_MOVIES, SEARCH_RESET_FETCH, MEDIA_ENG_DATA  } from './../constants/index';
+import { SEARCH_IN_PAGE, SEARCH_IN_HEADER, CLEAR_SEARCH, GENRES,  SEARCH_KEYWORDS_MOVIES, SEARCH_RESET_FETCH, MEDIA_ENG_DATA  } from './../constants';
 import { capitalizeFirstLetter } from './../../utils/utils';
 import update from 'react-addons-update';
 
@@ -104,7 +104,6 @@ export default function General(state = initialState, action) {
 		    );
 
 		    moviesGenres.unshift({id: 0, name: 'Все жанры'});
-			console.log(action.genres.tv)
 		    let tvGenres = action.genres.tv.map(i=> {
 				    return {
 					    ...i,
@@ -155,7 +154,14 @@ export default function General(state = initialState, action) {
 		                isFetching: true,
 						    [action.engData.typeResponse]: {
 		                	...state.EngDescription[action.engData.typeResponse],
-							    [action.engData.id]: {name: action.engData.name ? action.engData.name : action.engData.title, overview: action.engData.overview.length > 0 ? action.engData.overview : 404}
+							    [action.engData.id]: {
+		                		    name: action.engData.name
+									    ? action.engData.name
+									    : action.engData.title,
+                                    overview: action.engData.overview.length > 0
+									 ? action.engData.overview
+									 : 404
+		                	    }
 		                    }
 					    }}
 				    });

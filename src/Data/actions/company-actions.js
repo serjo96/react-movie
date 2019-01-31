@@ -20,5 +20,3 @@ export function clearCompanyData() {
         type: CLEAR_COMPANY_DATA
     };
 }
-
-

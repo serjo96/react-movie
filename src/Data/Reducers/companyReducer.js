@@ -21,7 +21,7 @@ const initialState = {
 	        page: 1,
 	        total_results: '',
 	        total_pages: '',
-	        results: [],
+	        results: []
         },
 	    status: {
 		    pageOne: 200,
@@ -37,17 +37,17 @@ export default function Company(state = initialState, action) {
         case COMPANY_DATA:
             return update(state, {
                 companyData: {$merge: {
-                        isFetching: true,
-                        data: action.companyData.data,
-                        status: action.companyData.status
+                    isFetching: true,
+                    data: action.companyData.data,
+                    status: action.companyData.status
                 }}
             });
         case COMPANY_MOVIES:
             return update(state, {
                 companyMovies: {$merge: {
-                        isFetching: true,
-                        data: action.companyData.data,
-                        status: action.companyData.status
+                    isFetching: true,
+                    data: action.companyData.data,
+                    status: action.companyData.status
 
                 }}
             });

@@ -111,7 +111,12 @@ export function keywordsReq(id, type, page = 1) {
         ]).then(axios.spread((pageOne, pageTwo) => {
             let concatPages;
             if (pageOne.data.total_pages > 1) {
-                concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {type: 'genres'}});
+                concatPages = Object.assign({
+                    ...pageTwo.data,
+                    results: pageOne.data.results.concat(pageTwo.data.results),
+                    page: pageOne.data.page,
+                    searchType: {type: 'genres'}
+                });
             } else {
                 concatPages = pageOne.data;
             }

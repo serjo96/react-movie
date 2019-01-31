@@ -49,7 +49,13 @@ export function MainSearch(words, page = 1) {
                         }
                     })
             ]).then(axios.spread((pageOne, pageTwo) => {
-                let addTypeRequest =  Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, searchType: {type: 'main-search'}, querySearch: words.replace('_', ' ')});
+                let addTypeRequest =  Object.assign({
+                    ...pageTwo.data,
+                    results: pageOne.data.results.concat(pageTwo.data.results),
+                    page: pageOne.data.page,
+                    searchType: {type: 'main-search'},
+                    querySearch: words.replace('_', ' ')
+                });
                 dispatch(searchPageResults({data: addTypeRequest, status: { pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 }}));
             }));
         }

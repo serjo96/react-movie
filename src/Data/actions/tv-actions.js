@@ -1,6 +1,6 @@
 import {
-	TV_DATA, CLEAR_TV_DATA, AIRING_TV, ALL_TV, ON_THE_AIR_TV, TOP_TV, TV_SEASON,
-	CLEAR_TV_SEASON, TV_ENG_DATA
+    TV_DATA, CLEAR_TV_DATA, AIRING_TV, ALL_TV, ON_THE_AIR_TV, TOP_TV, TV_SEASON,
+    CLEAR_TV_SEASON, TV_ENG_DATA
 } from './../constants';
 
 export function takeTvData( TVdata ) {
@@ -58,9 +58,9 @@ export function loadSeasonTV(TV) {
 }
 
 export function clearTvSeason() {
-	return {
-		type: CLEAR_TV_SEASON
-	};
+    return {
+        type: CLEAR_TV_SEASON
+    };
 }
 
 
