@@ -38,7 +38,7 @@ class TvPopular extends Component {
 
     componentDidUpdate(prevProps, previousState) {
         if (this.props.location.search !== prevProps.location.search) {
-            // this.scrollToTop();
+            this.scrollToTop();
 	        this.sendRequest(prevProps);
         } else if (previousState.sortSettings !== this.state.sortSettings) {
 	        this.sendRequest();
@@ -46,10 +46,10 @@ class TvPopular extends Component {
     }
 
     componentDidMount() {
-	    // if (window.pageYOffset === 0) {
-		 //    clearInterval(this.state.intervalId);
-	    // }
-	    // this.scrollToTop();
+	    if (window.pageYOffset === 0) {
+		    clearInterval(this.state.intervalId);
+	    }
+	    this.scrollToTop();
         this.sendRequest();
     }
 
@@ -69,7 +69,7 @@ class TvPopular extends Component {
 	     let { sortSettings } = this.state;
 	     let { sortType } = this.state;
 
-         // TODO: добаваить генерируемый объект для отправки данных и изменять его в зависимости от условий, и оставить одну функцию отправки
+         // TODO: разобрать портянку из if else и отправлять целый объект из getUrlString, и использовать арифмитические действия только в if для page
 	     if (page) {
 		     if (page <= 2) {
 			     this.props.loadList(page + 1, genres, sortType, sortSettings.sortByDate, sortSettings.sortByCountry.ico, sortSettings.adult);
@@ -156,7 +156,11 @@ class TvPopular extends Component {
              state: null
          });
      }
-     this.setState({sortType: type, sortSettings: settings});
+
+     this.setState({
+	     sortType: type,
+	     sortSettings: settings
+     });
  };
 
 	 scrollStep = () => {
@@ -199,9 +203,15 @@ class TvPopular extends Component {
 				                sortListType={sortListTV}
 				                MobileFilter={width >= 963}
 				    />
-					    <MediaList movieListTitle={`Всего сериалов (${allTV.data.total_results})`} movieList={allTV} typeList="tv"/>
-					    {allTV.data.total_pages > 1 ?
-					    <div className="pager-btns clearfix">
+
+				    <MediaList
+					    movieListTitle={`Всего сериалов (${allTV.data.total_results})`}
+					    movieList={allTV}
+					    typeList="tv"
+				    />
+
+				    {allTV.data.total_pages > 1
+					    ? <div className="pager-btns clearfix">
 						    {allTV.data.page - 1 > 1
 							    ? <div
 								    className="pager-btn pager-btn--prev link-angle link-angle--left"
@@ -210,7 +220,8 @@ class TvPopular extends Component {
 								    <span>Предыдущая страница</span>
 							      </div>
 							    : null}
-						    {allTV.data.page + 1 < allTV.data.total_pages
+
+						        {allTV.data.page + 1 < allTV.data.total_pages
 							    ? <div
 								    className="pager-btn pager-btn--next link-angle"
 								    onClick={this.nextPage}>
@@ -218,7 +229,9 @@ class TvPopular extends Component {
 								    <i className="fa fa-angle-right" aria-hidden="true" />
 							      </div>
 							    : null}
-					    </div> : null}
+
+					        </div>
+					    : null}
 			    </div>
 			    </ServiceBlock>
 		    </main>

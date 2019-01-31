@@ -173,17 +173,18 @@ export function movieUpcoming(page=1) {
     };
 }
 
-export function movieListPopular(page = 1, genre, sortType = 'popularity.desc', date, region, adult) {
+export function movieListPopular(data) {
     let year,
         rageDates,
         startRangeDate,
         endRangeDate;
-    if (date.type === 'range') {
-        rageDates = date.date.split('=');
+
+    if (data.date && data.date.split('-').length > 0 ) {
+        rageDates = data.date.split('-');
         startRangeDate = rageDates[0];
         endRangeDate = rageDates[1];
     } else {
-        year = date.date;
+        year = data.date;
     }
 
 	return ( dispatch ) => {
@@ -193,14 +194,14 @@ export function movieListPopular(page = 1, genre, sortType = 'popularity.desc', 
 				    params: {
 					    api_key: '5a1d310d575e516dd3c547048eb7abf1',
 					    language: 'ru-RU',
-					    region: region,
-					    sort_by: sortType,
-					    with_genres: genre,
+					    region: data.country,
+					    sort_by: data.sort_by,
+					    with_genres: data.genre,
 					    primary_release_year: year,
 					    'primary_release_date.gte': startRangeDate,
 					    'primary_release_date.lte': endRangeDate,
-					    page: page,
-					    include_adult: adult
+					    page: data.page,
+					    include_adult: data.adult
 				    }
 			    }),
 		    axios.get('https://api.themoviedb.org/3/discover/movie',
@@ -208,20 +209,20 @@ export function movieListPopular(page = 1, genre, sortType = 'popularity.desc', 
 				    params: {
 					    api_key: '5a1d310d575e516dd3c547048eb7abf1',
 					    language: 'ru-RU',
-					    region: region,
-					    sort_by: sortType,
-					    with_genres: genre,
+					    region: data.country,
+					    sort_by: data.sort_by,
+					    with_genres: data.genre,
 					    primary_release_year: year,
 					    'primary_release_date.gte': startRangeDate,
 					    'primary_release_date.lte': endRangeDate,
-					    page: page+1,
-					    include_adult: adult
+					    page: data.page + 1,
+					    include_adult: data.adult
 				    }
 			    })
 	    ]).then(axios.spread((pageOne, pageTwo) => {
 		    let concatPages;
 		    if (pageOne.data.total_pages > 1) {
-			    concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, sortByDate: date});
+			    concatPages = Object.assign({...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results), page: pageOne.data.page, sortByDate: data.date});
 		    } else {
 			    concatPages = pageOne.data;
 		    }

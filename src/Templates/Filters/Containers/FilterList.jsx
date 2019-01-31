@@ -89,6 +89,11 @@ class ListsPage extends Component {
 				    status: true
 			    }
 		    }});
+
+	    this.props.onClickSortDate({
+		    date: el.date,
+		    type: el.type
+	    });
 	    this.setState({
 		    sortSettings: {
 			    ...newState
