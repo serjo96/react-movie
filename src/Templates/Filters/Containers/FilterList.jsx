@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import update from 'react-addons-update';
+import queryString from 'query-string';
 
-import FiltersMobile from '../components/FiltersMobile';
-import Filters from '../components/Filters';
+import { storageCountries } from './../../../Data/localData';
+
+import FiltersMobile from './../components/FiltersMobile';
+import Filters from './../components/Filters';
 
 
 class ListsPage extends Component {
@@ -40,26 +43,57 @@ class ListsPage extends Component {
 	        },
 	        modalFilter: false
         };
-	    this.stringParse = (new URL(document.location)).searchParams;
     }
 
     componentDidMount() {
-        let genres =  this.stringParse.get('genre') ? parseInt(this.stringParse.get('genre')) : '';
-
-        this.setState({
-	        genresListData: {
-		        name: this.props.genresData[genres] || 'Все жанры',
-		        id: genres,
-		        status: genres
-	        }
-        });
+    	this.getInitState();
     }
 
     componentDidUpdate(_, previousState) {
-    	if (previousState.sortSettings !== this.state.sortSettings) {
+    	if (previousState.sortSettings.sortBy !== this.state.sortSettings.sortBy || previousState.sortSettings.SortDirection !== this.state.sortSettings.SortDirection) {
 		    this.onSortLists();
 	    }
     }
+
+    getInitState() {
+
+	    let newState = update(this.state.sortSettings, {$merge: {
+
+			    sortByDate: {
+				    name: this.getUrlString.year ? this.getUrlString.year : 'Все года',
+				    date: this.getUrlString.year ? this.getUrlString.year : '',
+				    type: 'single',
+				    status: !!this.getUrlString.year
+			    },
+			    sortByCountry: {
+				    name: this.getUrlString.country ? storageCountries.filter(i=> i.ico === this.getUrlString.country).pop().name : 'Все страны',
+				    ico: this.getUrlString.country ? this.getUrlString.country : '',
+				    status: !!this.getUrlString.country
+			    },
+			    adult: this.getUrlString.adult
+		    }});
+
+	    this.setState({
+		    sortSettings: {...newState},
+		    genresListData: {
+			    name: this.props.genresData[this.getUrlString.genre] || 'Все жанры',
+			    id: this.getUrlString.genre,
+			    status: !!this.getUrlString.genre
+		    }
+	    });
+    }
+
+
+	get getUrlString() {
+		return {
+			genre: queryString.parse(this.props.location.search).genre,
+			country: queryString.parse(this.props.location.search).country,
+			sort_by: queryString.parse(this.props.location.search).sort_by,
+			year: queryString.parse(this.props.location.search).year,
+			page: queryString.parse(this.props.location.search).page,
+			adult: queryString.parse(this.props.location.search).adult
+		};
+	}
 
 
     onClickSort = (el) => {
@@ -129,7 +163,7 @@ class ListsPage extends Component {
 	    this.setState({
 		    sortSettings: {...newState},
 		    genresListData: {
-		    	id: id, name: el.name, status: id === 0
+		    	id: id, name: el.name, status: id !== 0
 		    }
 	    });
 

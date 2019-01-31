@@ -9,8 +9,8 @@ export default class FiltersMobile extends Component {
         return (
             <div className="filter-list-container">
                 <div className="filter-list">
-                    {this.props.genres.length > 0 ?
-                        <div className={`genre-filter filter-item ${this.props.genresListData.status ? 'filter-item--active' : ''}`}>
+                    {this.props.genres.length > 0
+                        ? <div className={`genre-filter filter-item ${this.props.genresListData.status ? 'filter-item--active' : ''}`}>
                             <div className="filter-name">
                                 <span>{this.props.genresListData.name}</span>
                                 <i className="fa fa-angle-down" aria-hidden="true"/>
@@ -35,7 +35,8 @@ export default class FiltersMobile extends Component {
                                         )}
                                     </ul>))}
                             </div>
-                        </div> : null}
+                        </div>
+                        : null}
 
                     <div className={`filter-item ${sortSettings.sortByDate.date !== ''
                         ? sortSettings.sortByDate.status
@@ -82,7 +83,8 @@ export default class FiltersMobile extends Component {
                         </div>
                     </div>
 
-                    {this.props.sortByCountry ? <div
+                    {this.props.sortByCountry
+                        ? <div
                         className={`filter-item ${sortSettings.sortByCountry.ico !== ''
                             ? sortSettings.sortByCountry.status
                                 ? 'filter-item--active' : ''
@@ -100,9 +102,8 @@ export default class FiltersMobile extends Component {
                                 >
 									Все страны
                                 </div>
-                                <div
-                                    className="filter-catalog__sub-title filter-catalog__sub-title--country">Популярное
-                                </div>
+
+                                <div className="filter-catalog__sub-title filter-catalog__sub-title--country">Популярное</div>
                                 <ul>
                                     {popularCountries.map(( item, index ) =>
                                         (<li
