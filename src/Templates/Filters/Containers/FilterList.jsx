@@ -111,10 +111,19 @@ class ListsPage extends Component {
 
     onSortLists = () =>{
     	let fullType = this.state.sortSettings.sortBy.type + (this.state.sortSettings.SortDirection ? '.asc' : '.desc');
-    	this.props.onClickSortList(fullType, this.state.sortSettings);
+
+	    let UrlObj = this.getUrlString;
+	    UrlObj.sort_by = fullType;
+
+	    this.props.history.push({
+		    search: queryString.stringify(UrlObj)
+	    });
+
     };
 
     onSortByDate = (el) => {
+    	//TODO: Удалить стейты
+
 	    let newState = update(this.state.sortSettings, {$merge: {
 			    sortByDate: {
 				    name: el.name,
@@ -124,15 +133,30 @@ class ListsPage extends Component {
 			    }
 		    }});
 
-	    this.props.onClickSortDate({
-		    date: el.date,
-		    type: el.type
-	    });
 	    this.setState({
 		    sortSettings: {
 			    ...newState
 		    }
 	    });
+
+	    let newDate;
+	    let UrlObj = this.getUrlString;
+
+	    if (el.type === 'range') {
+		    newDate = el.date.split('=');
+		    UrlObj.year = new Date(newDate[0]).getFullYear() + '-' + new Date(newDate[1]).getFullYear();
+	    } else {
+		    UrlObj.year = el.date;
+	    }
+
+	    if (el.date === 'All'){
+	    	delete UrlObj.year;
+	    }
+
+	    this.props.history.push({
+		    search: queryString.stringify(UrlObj)
+	    });
+
     };
 
     onSortByCountry = (el) => {
@@ -149,13 +173,20 @@ class ListsPage extends Component {
 		    }
 	    });
 
-	    this.props.onClickCountry(
-		     el.ico
-	    );
+	    let UrlObj = this.getUrlString;
+	    UrlObj.country = el.ico;
+
+	    if (el.ico === 'All') {
+		    delete UrlObj.country;
+	    }
+
+	    this.props.history.push({
+		    search: queryString.stringify(UrlObj)
+	    });
     };
 
     onSelectGenres = (el) => {
-	    let id = parseInt(el.id);
+	    let id = +el.id;
     	let newState = update(this.state.sortSettings, {$merge: {
 			    genresListName: {id: id, name: el.name}
 	    }});
@@ -167,7 +198,16 @@ class ListsPage extends Component {
 		    }
 	    });
 
-	    this.props.onClickGenres(id);
+	    let UrlObj = this.getUrlString;
+	    UrlObj.genre = id;
+
+	    if (id === 0) {
+		    delete UrlObj.genre;
+	    }
+
+	    this.props.history.push({
+		    search: queryString.stringify(UrlObj)
+	    });
     };
 
     onClickChangeDir = () => {
@@ -192,6 +232,14 @@ class ListsPage extends Component {
 	             ...newState
 	         }
 	     });
+
+
+	    let UrlObj = this.getUrlString;
+	    UrlObj.adult = this.state.sortSettings.adult;
+
+	    this.props.history.push({
+		    search: queryString.stringify(UrlObj)
+	    });
     };
 
     onChangeRangeDate = (e) => {

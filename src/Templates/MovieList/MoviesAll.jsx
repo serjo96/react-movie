@@ -31,8 +31,7 @@ class MoviesAll extends Component {
 
     componentDidUpdate(prevProps, previousState) {
         if (this.props.location.search !== prevProps.location.search) {
-
-            // this.scrollToTop();
+	        // this.scrollToTop();
 	        this.sendRequest();
         } else if (previousState.sortSettings !== this.state.sortSettings) {
 	        this.sendRequest();
@@ -46,7 +45,7 @@ class MoviesAll extends Component {
 	    // this.scrollToTop();
 	    this.sendRequest();
     }
-    
+
 
     get getUrlString() {
         return {
@@ -61,7 +60,6 @@ class MoviesAll extends Component {
 
 
     // TODO: Убрать портянку из if else, и решить вопрос с локальным стейтом в фильтрах(нужен ли он или использовать стейт урл)
-    // TODO: Добавить adult to URL
     // TODO: Добавить правельный парсинг sort_by
     // TODO: Добавить правельный парсинг direction
      sendRequest = () => {
@@ -72,21 +70,21 @@ class MoviesAll extends Component {
 			 country: this.getUrlString.country,
 			 genres: this.getUrlString.genre,
 			 sort_by: this.getUrlString.sort_by,
-			 year: this.getUrlString.year
+			 year: this.getUrlString.year,
+			 adult: this.getUrlString.adult
 		 };
 
-	     if (page) {
-	     	if (page <= 2) {
-		        UrlStateObj.page += 1;
-	        } else {
-		        if (page <= 3) {
-			        UrlStateObj.page += 2;
-		        } else {
-			        UrlStateObj.page += 3;
-		        }
-	        }
-	     } else {
-	     	delete UrlStateObj.page;
+
+	     if (!page) {
+		     delete UrlStateObj.page;
+	     }
+
+	     if (page <= 2) {
+		     UrlStateObj.page += 1;
+	     } else if (page === 3) {
+		     UrlStateObj.page += 2;
+	     } else if ( page >= 4) {
+		     UrlStateObj.page = UrlStateObj.page + UrlStateObj.page - 1;
 	     }
 
 	     this.props.loadList(UrlStateObj.page, UrlStateObj.genres, UrlStateObj.sort_by, UrlStateObj.year, UrlStateObj.country, UrlStateObj.adult);
@@ -96,17 +94,12 @@ class MoviesAll extends Component {
 	    let urlObj = this.getUrlString;
 	    this.props.changeListStatus('AllMovies');
 
+	    if (this.getUrlString.page > 2) {
+		    urlObj.page = +this.getUrlString.page - 1;
+	    }
 
-	    if (this.props.AllMovies.data.page <= 3) {
+	    if (this.getUrlString.page <= 2) {
 		    delete urlObj.page;
-	    }
-
-	    if (this.props.AllMovies.data.page === 5 ) {
-		    urlObj.page = this.props.AllMovies.data.page - 3;
-	    }
-
-	    if ( this.props.AllMovies.data.page >= 7 ) {
-		    urlObj.page = this.props.AllMovies.data.page - 4;
 	    }
 
 	    this.props.history.push({
@@ -118,16 +111,10 @@ class MoviesAll extends Component {
 	    let urlObj = this.getUrlString;
 	    this.props.changeListStatus('AllMovies');
 
-	    if (this.props.AllMovies.data.page <= 3) {
-		    urlObj.page = this.props.AllMovies.data.page;
-	    }
+	    urlObj.page = 2;
 
-	    if (this.props.AllMovies.data.page === 5 ) {
-		    urlObj.page = this.props.AllMovies.data.page - 1;
-	    }
-
-	    if ( this.props.AllMovies.data.page >= 7 ) {
-		    urlObj.page = this.props.AllMovies.data.page - 2;
+	    if (this.getUrlString.page >= 2) {
+		    urlObj.page = +this.getUrlString.page + 1;
 	    }
 
 	    this.props.history.push({
@@ -135,67 +122,6 @@ class MoviesAll extends Component {
 	    });
     };
 
-	 GenresFilter = (filterId) => {
-		 let UrlObj = this.getUrlString;
-		 UrlObj.genre = filterId;
-
-		 if (filterId === 0) {
-			 delete UrlObj.genre;
-		 }
-
-		 this.props.history.push({
-			 search: queryString.stringify(UrlObj)
-		 });
-
-	 };
-
-	 onClickCountry = (countryData) => {
-	    let UrlObj = this.getUrlString;
-		 UrlObj.country = countryData;
-
-	    this.props.history.push({
-		    search: queryString.stringify(UrlObj)
-	    });
-	 };
-
-	 onSortByDate = (date) => {
-	 	let newDate;
-		 let UrlObj = this.getUrlString;
-		 if (date.type === 'range') {
-			 newDate = date.date.split('=');
-			 UrlObj.year = new Date(newDate[0]).getFullYear() + '-' + new Date(newDate[1]).getFullYear();
-		 } else {
-			 UrlObj.year = date.date;
-		 }
-
-		 this.props.history.push({
-			 search: queryString.stringify(UrlObj)
-		 });
-	 };
-
-	 sortList = (type, settings) =>{
-
-		 let UrlObj = this.getUrlString;
-		 UrlObj.sort_by = type;
-
-		 this.props.history.push({
-			 search: queryString.stringify(UrlObj)
-		 });
-
-
-	     this.setState({sortType: type, sortSettings: settings});
-	 };
-
-	 onClickAdult(adult) {
-
-		 let UrlObj = this.getUrlString;
-		 UrlObj.adult = adult;
-
-		 this.props.history.push({
-			 search: queryString.stringify(UrlObj)
-		 });
-
-	 }
 
 	 scrollStep = () => {
 	     if (window.pageYOffset === 0) {
@@ -233,6 +159,7 @@ class MoviesAll extends Component {
 				                onClickSortDate={this.onSortByDate}
 				                sortByCountry={true}
 				                safeFilter={true}
+				                history={this.props.history}
 				                sortListType={sortListType}
 				                MobileFilter={width >= 963}
 				    />

@@ -55,7 +55,7 @@ class TvPopular extends Component {
         this.sendRequest();
     }
 
-    getUrlString() {
+    get getUrlString() {
         return {
             genre: queryString.parse(this.props.location.search).genre,
             country: queryString.parse(this.props.location.search).country,
@@ -66,104 +66,60 @@ class TvPopular extends Component {
     }
 
      sendRequest = () =>{
-	     let page = +this.getUrlString().page;
-	     let genres = this.getUrlString().genre;
-	     let { sortSettings } = this.state;
-	     let { sortType } = this.state;
+	     let page = +this.getUrlString.page;
+	     let UrlStateObj = {
+		     page: +this.getUrlString.page,
+		     country: this.getUrlString.country,
+		     genres: this.getUrlString.genre,
+		     sort_by: this.getUrlString.sort_by,
+		     year: this.getUrlString.year
+	     };
 
-         // TODO: разобрать портянку из if else и отправлять целый объект из getUrlString, и использовать арифмитические действия только в if для page
-	     if (page) {
-		     if (page <= 2) {
-			     this.props.loadList(page + 1, genres, sortType, sortSettings.sortByDate, sortSettings.sortByCountry.ico, sortSettings.adult);
-		     } else {
-			     if (page <= 3) {
-				     this.props.loadList(page + 2, genres, sortType, sortSettings.sortByDate, sortSettings.sortByCountry.ico, sortSettings.adult);
-			     } else {
-				     this.props.loadList(page + 3, genres, sortType, sortSettings.sortByDate, sortSettings.sortByCountry.ico, sortSettings.adult);
-			     }
-		     }
-	     } else {
-		     this.props.loadList(undefined, genres, sortType, sortSettings.sortByDate, sortSettings.sortByCountry.ico, sortSettings.adult);
+	     if (!page) {
+		     delete UrlStateObj.page;
 	     }
+
+	     if (page <= 2) {
+		     UrlStateObj.page += 1;
+	     } else if (page === 3) {
+		     UrlStateObj.page += 2;
+	     } else if ( page >= 4) {
+		     UrlStateObj.page = UrlStateObj.page + UrlStateObj.page - 1;
+	     }
+
+	     this.props.loadList(UrlStateObj.page, UrlStateObj.genres, UrlStateObj.sort_by, UrlStateObj.year, UrlStateObj.country, UrlStateObj.adult);
      };
 
-    prevPage = () => {
-	    let urlObj = this.getUrlString();
+ prevPage = () => {
+     let urlObj = this.getUrlString;
 
+     if (this.getUrlString.page > 2) {
+         urlObj.page = +this.getUrlString.page - 1;
+     }
 
-	    if (this.props.AllMovies.data.page <= 3) {
-		    delete urlObj.page;
-	    }
-
-	    if (this.props.AllMovies.data.page === 5 ) {
-		    urlObj.page = this.props.AllMovies.data.page - 3;
-	    }
-
-	    if ( this.props.AllMovies.data.page >= 7 ) {
-		    urlObj.page = this.props.AllMovies.data.page - 4;
-	    }
-
-	    this.props.history.push({
-		    search: queryString.stringify(urlObj)
-	    });
-    };
-
-    nextPage = () => {
-	    let urlObj = this.getUrlString();
-
-	    if (this.props.AllMovies.data.page <= 3) {
-		    urlObj.page = this.props.AllMovies.data.page;
-	    }
-
-	    if (this.props.AllMovies.data.page === 5 ) {
-		    urlObj.page = this.props.AllMovies.data.page - 1;
-	    }
-
-	    if ( this.props.AllMovies.data.page >= 7 ) {
-		    urlObj.page = this.props.AllMovies.data.page - 2;
-	    }
-
-	    this.props.history.push({
-		    search: queryString.stringify(urlObj)
-	    });
-    };
-
- GenresFilter = (filterId) => {
-     let genreStr = this.getUrlString();
-     genreStr.genre = filterId;
-
-     if (filterId === 0) {
-         delete genreStr.genre;
+     if (this.getUrlString.page <= 2) {
+         delete urlObj.page;
      }
 
      this.props.history.push({
-         search: queryString.stringify(genreStr)
+         search: queryString.stringify(urlObj)
      });
  };
 
- onClickCountry = (countryData) => {
-     let countryStr = this.getUrlString();
-     countryStr.country = countryData;
+ nextPage = () => {
+     let urlObj = this.getUrlString;
 
-     this.props.history.push({
-         search: queryString.stringify(countryStr)
-     });
- };
+     urlObj.page = 2;
 
- sortList = (type, settings) =>{
-     if (this.props.location.search) {
-         this.props.history.push({
-             pathname: this.props.location.pathname,
-             search: this.props.location.search,
-             state: null
-         });
+     if (this.getUrlString.page >= 2) {
+         urlObj.page = +this.getUrlString.page + 1;
      }
 
-     this.setState({
-	     sortType: type,
-	     sortSettings: settings
+     this.props.history.push({
+         search: queryString.stringify(urlObj)
      });
  };
+
 
 	 scrollStep = () => {
 	     if (window.pageYOffset === 0) {
@@ -204,6 +160,7 @@ class TvPopular extends Component {
 				                safeFilter={false}
 				                sortListType={sortListTV}
 				                MobileFilter={width >= 963}
+				                history={this.props.history}
 				    />
 
 				    <MediaList

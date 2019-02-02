@@ -85,60 +85,60 @@ export default class FiltersMobile extends Component {
 
                     {this.props.sortByCountry
                         ? <div
-                        className={`filter-item ${sortSettings.sortByCountry.ico !== ''
-                            ? sortSettings.sortByCountry.status
-                                ? 'filter-item--active' : ''
-                            : ''}`}>
-                        <div className="filter-name">
-                            <span>{sortSettings.sortByCountry.name}</span>
-                            <i className="fa fa-angle-down" aria-hidden="true"/>
-                        </div>
-                        <div className="filter-item__catalog filter-item__catalog--genres">
-                            <div className="filter-catalog-col">
-                                <div
-                                    className={`filter-catalog__item ${sortSettings.sortByCountry.ico === '' ? 'filter-catalog__item--active' : ''}`}
-                                    data-country=""
-                                    onClick={() => this.props.onSortByCountry({name: 'Все страны', ico: ''})}
-                                >
-									Все страны
-                                </div>
-
-                                <div className="filter-catalog__sub-title filter-catalog__sub-title--country">Популярное</div>
-                                <ul>
-                                    {popularCountries.map(( item, index ) =>
-                                        (<li
-                                            className={`filter-catalog__item ${sortSettings.sortByCountry.ico === item.ico
-                                                ? 'filter-catalog__item--active'
-                                                : ''}`}
-                                            key={index}
-                                            data-country={item.ico}
-                                            onClick={() => this.props.onSortByCountry(item)}
-                                        >
-                                            {item.name}
-                                        </li>)
-                                    )}
-                                </ul>
+                            className={`filter-item ${sortSettings.sortByCountry.ico !== ''
+                                ? sortSettings.sortByCountry.status
+                                    ? 'filter-item--active' : ''
+                                : ''}`}>
+                            <div className="filter-name">
+                                <span>{sortSettings.sortByCountry.name}</span>
+                                <i className="fa fa-angle-down" aria-hidden="true"/>
                             </div>
-                            {chunkArr(storageCountries, 10).map(( el, indx ) =>
-                                (<ul
-                                    className="filter-catalog-col"
-                                    key={indx}
-                                >
-                                    {el.map(( item, index ) =>
-                                        (<li
-                                            className={`filter-catalog__item ${sortSettings.sortByCountry.ico === item.ico
-                                                ? 'filter-catalog__item--active'
-                                                : ''}`}
-                                            key={index}
-                                            data-country={item.ico}
-                                            onClick={() => this.props.onSortByCountry(item)}
-                                        >
-                                            {item.name}
-                                        </li>)
-                                    )}
-                                </ul>))}
-                        </div>
-                    </div> : null}
+                            <div className="filter-item__catalog filter-item__catalog--genres">
+                                <div className="filter-catalog-col">
+                                    <div
+                                        className={`filter-catalog__item ${sortSettings.sortByCountry.ico ? 'filter-catalog__item--active' : ''}`}
+                                        data-country="All"
+                                        onClick={() => this.props.onSortByCountry({name: 'Все страны', ico: 'All'})}
+                                    >
+									Все страны
+                                    </div>
+
+                                    <div className="filter-catalog__sub-title filter-catalog__sub-title--country">Популярное</div>
+                                    <ul>
+                                        {popularCountries.map(( item, index ) =>
+                                            (<li
+                                                className={`filter-catalog__item ${sortSettings.sortByCountry.ico === item.ico
+                                                    ? 'filter-catalog__item--active'
+                                                    : ''}`}
+                                                key={index}
+                                                data-country={item.ico}
+                                                onClick={() => this.props.onSortByCountry(item)}
+                                            >
+                                                {item.name}
+                                            </li>)
+                                        )}
+                                    </ul>
+                                </div>
+                                {chunkArr(storageCountries, 10).map(( el, indx ) =>
+                                    (<ul
+                                        className="filter-catalog-col"
+                                        key={indx}
+                                    >
+                                        {el.map(( item, index ) =>
+                                            (<li
+                                                className={`filter-catalog__item ${sortSettings.sortByCountry.ico === item.ico
+                                                    ? 'filter-catalog__item--active'
+                                                    : ''}`}
+                                                key={index}
+                                                data-country={item.ico}
+                                                onClick={() => this.props.onSortByCountry(item)}
+                                            >
+                                                {item.name}
+                                            </li>)
+                                        )}
+                                    </ul>))}
+                            </div>
+                        </div> : null}
 
                     {this.props.safeFilter
                         ? <div className="filter-item filter-item--safe-filter" onClick={this.props.onClickAdult}>
