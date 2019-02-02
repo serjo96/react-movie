@@ -43,8 +43,8 @@ const initialState = {
 		    recommendations: {
         		page: 1,
 			    results: [],
-			    total_pages: '',
-			    total_results: ''
+			    total_pages: 0,
+			    total_results: 0
 		    }
 	    },
 	    images: [],
@@ -66,7 +66,7 @@ const initialState = {
 	    data: {
 		    results: [],
 		    page: 1,
-		    total_results: '',
+		    total_results: 0,
 		    dates: {
 			    maximum: '',
 			    minimum: ''
@@ -79,8 +79,8 @@ const initialState = {
         isFetching: false,
 	    data: {
 		    page: 1,
-		    total_results: '',
-		    total_pages: '',
+		    total_results: 0,
+		    total_pages: 0,
 		    results: []
 	    },
 	    status: {
@@ -92,8 +92,8 @@ const initialState = {
         isFetching: false,
         data: {
             page: 1,
-            total_results: '',
-            total_pages: '',
+            total_results: 0,
+            total_pages: 0,
             results: [],
             sortByDate: {}
         },
@@ -107,7 +107,7 @@ const initialState = {
 	    data: {
 		    results: [],
 		    page: 1,
-		    total_results: '',
+		    total_results: 0,
 		    dates: {
 			    maximum: '',
 			    minimum: ''

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import update from 'react-addons-update';
 import queryString from 'query-string';
+import { PageSwitcher } from '../../../ui-components/Page switching/Page-switcher';
 
 import { storageCountries, sortListType } from './../../../Data/localData';
 
@@ -8,7 +9,7 @@ import FiltersMobile from './../components/FiltersMobile';
 import Filters from './../components/Filters';
 
 
-class ListsPage extends Component {
+class FilterList extends Component {
     constructor( props ) {
         super(props);
         this.state = {
@@ -292,7 +293,7 @@ class ListsPage extends Component {
 			    safeFilter={this.props.safeFilter}
 			    modalFilter={this.state.modalFilter}
 			    genres={this.props.genres}
-			    sortListType={this.props.sortListType}
+			    sortListType={sortListType}
 			    genresListData={this.state.genresListData}
 			    sortByCountry={this.props.sortByCountry}
 			    onClickGenres={this.onSelectGenres}
@@ -310,7 +311,7 @@ class ListsPage extends Component {
 		    sortSettings={sortSettings}
 		    modalFilter={this.state.modalFilter}
 		    genres={this.props.genres}
-		    sortListType={this.props.sortListType}
+		    sortListType={sortListType}
 		    genresListData={this.state.genresListData}
 		    sortByCountry={this.props.sortByCountry}
 		    onClickGenres={this.onSelectGenres}
@@ -328,4 +329,28 @@ class ListsPage extends Component {
   }
 }
 
-export default (ListsPage);
+
+PageSwitcher.propTypes = {
+    location: React.PropTypes.object.isRequired,
+    history: React.PropTypes.object.isRequired,
+    genresData: React.PropTypes.object.isRequired,
+    genres: React.PropTypes.object.isRequired,
+    onClickGenres: React.PropTypes.func.isRequired,
+    onClickCountry: React.PropTypes.func.isRequired,
+    onClickSortList: React.PropTypes.func.isRequired,
+    onClickSortDate: React.PropTypes.func.isRequired,
+    sortByCountry: React.PropTypes.bool,
+    safeFilter: React.PropTypes.bool,
+    MobileFilter: React.PropTypes.bool
+
+};
+
+
+// onClickSortList={this.sortList}
+// onClickSortDate={this.onSortByDate}
+// sortByCountry={true}
+// safeFilter={true}
+// sortListType={sortListType}
+// MobileFilter={width >= 963}
+
+export default (FilterList);

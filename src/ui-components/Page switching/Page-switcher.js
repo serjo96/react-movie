@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 
 export const PageSwitcher  = (PagesData) => {
     if (PagesData.total_pages > 1) {
@@ -29,3 +29,9 @@ export const PageSwitcher  = (PagesData) => {
 	
 };
 
+PageSwitcher.propTypes = {
+    page: React.PropTypes.number,
+    total_pages: React.PropTypes.number,
+    prevPage: React.PropTypes.func,
+    nextPage: React.PropTypes.func
+};

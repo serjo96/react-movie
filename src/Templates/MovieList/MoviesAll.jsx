@@ -5,7 +5,7 @@ import queryString from 'query-string';
 
 import { changeMoviePage } from './../../Data/actions/movies-actions';
 import { movieListPopular } from './../../Data/api/Movies.api';
-import { sortListType } from './../../Data/localData';
+
 
 import MovieList from './../MediaList/MediaList';
 import FilterList from './../Filters/Containers/FilterList';
@@ -149,18 +149,18 @@ class MoviesAll extends Component {
 			    >
 
 			    <div className="movies-content">
-				    <FilterList location={this.props.location}
-				                genresData={this.props.genres.isFetching ? this.props.genres.data.obj : {}}
-				                genres={this.props.genres.isFetching ? this.props.genres.data.arr.movieGenres : []}
-				                onClickGenres={this.GenresFilter}
-				                onClickCountry={this.onClickCountry}
-				                onClickSortList={this.sortList}
-				                onClickSortDate={this.onSortByDate}
-				                sortByCountry={true}
-				                safeFilter={true}
-				                history={this.props.history}
-				                sortListType={sortListType}
-				                MobileFilter={width >= 963}
+				    <FilterList
+					    location={this.props.location}
+					    history={this.props.history}
+					    genresData={this.props.genres.isFetching ? this.props.genres.data.obj : {}}
+					    genres={this.props.genres.isFetching ? this.props.genres.data.arr.movieGenres : []}
+					    onClickGenres={this.GenresFilter}
+					    onClickCountry={this.onClickCountry}
+					    onClickSortList={this.sortList}
+					    onClickSortDate={this.onSortByDate}
+					    sortByCountry={true}
+					    safeFilter={true}
+					    MobileFilter={width >= 963}
 				    />
 					    <MovieList
 						    movieListTitle={`Всего фильмов (${AllMovies.data.total_results})`}
