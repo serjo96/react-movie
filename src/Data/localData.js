@@ -356,7 +356,7 @@ export let popularCountries = [
 export let sortBySingleDateList = [
     {
         name: 'Все года',
-        date: '',
+        date: 'All',
         type: 'single'
     }, {
         name: '2017 год',
