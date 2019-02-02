@@ -85,7 +85,7 @@ export default class FiltersMobile extends Component {
 
                     {this.props.sortByCountry
                         ? <div
-                            className={`filter-item ${sortSettings.sortByCountry.ico !== ''
+                            className={`filter-item ${sortSettings.sortByCountry.ico !== 'All'
                                 ? sortSettings.sortByCountry.status
                                     ? 'filter-item--active' : ''
                                 : ''}`}>
@@ -145,7 +145,8 @@ export default class FiltersMobile extends Component {
                             <div className="filter-name">
                                 <span>Безопасный фильтр</span>
                                 <i className={`fa ${sortSettings.adult ? 'fa-square-o' : 'fa-check-square'}`}
-								   aria-hidden="true"/>
+								   aria-hidden="true"
+                                />
                             </div>
                         </div>
                         : null}
