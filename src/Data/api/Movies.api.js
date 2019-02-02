@@ -18,14 +18,14 @@ export function movieUpcoming(page = 1) {
     };
 }
 
-export function movieListPopular(page = 1, genre, sortType = 'popularity.desc', date, region, adult) {
-    let year,
+export function movieListPopular(page = 1, genre, sortType = 'popularity.desc', date, region, adult = false) {
+    let year = date + '',
         rageDates,
         startRangeDate,
         endRangeDate;
 
-    if (date && date.split('-').length > 1 ) {
-	    rageDates = date.split('-');
+    if (year && year.split('-').length > 1 ) {
+	    rageDates = year.split('-');
         startRangeDate = rageDates[0];
         endRangeDate = rageDates[1];
     } else {
@@ -70,7 +70,7 @@ export function movieListPopular(page = 1, genre, sortType = 'popularity.desc', 
                 concatPages = Object.assign({
 	                ...pageTwo.data, results: pageOne.data.results.concat(pageTwo.data.results),
 	                page: pageOne.data.page,
-	                sortByDate: date
+	                sortByDate: year
                 });
             } else {
                 concatPages = pageOne.data;
