@@ -68,17 +68,19 @@ export function tvAiring(page = 1) {
 }
 
 export function tvPopular(page = 1, genre, sortType = 'popularity.desc', date) {
-    let year,
+    let year = date + '',
         rageDates,
         startRangeDate,
         endRangeDate;
-    if (date.type === 'range') {
-        rageDates = date.date.split('=');
+
+    if (year && year.split('-').length > 1 ) {
+        rageDates = year.split('-');
         startRangeDate = rageDates[0];
         endRangeDate = rageDates[1];
     } else {
-        year = date.date;
+        year = date;
     }
+
     return ( dispatch ) => {
         axios.all([
             axios.get('https://api.themoviedb.org/3/discover/tv',
