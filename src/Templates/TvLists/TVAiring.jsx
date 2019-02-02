@@ -7,6 +7,7 @@ import { tvAiring } from './../../Data/api/Tv.api';
 
 import MediaList from './../MediaList/MediaList';
 import ServiceBlock from './../Service/ServiceBlock';
+import { PageSwitcher } from './../../ui-components/Page switching/Page-switcher';
 
 
 class TVAiring extends Component {
@@ -27,89 +28,72 @@ class TVAiring extends Component {
 
     componentDidMount() {
 	    // if (window.pageYOffset === 0) {
-         //    clearInterval(this.state.intervalId);
+        //    clearInterval(this.state.intervalId);
 	    // }
 	    // this.scrollToTop();
         this.sendRequest();
     }
 
-	get getUrlString() {
-		return {
-			genre: queryString.parse(this.props.location.search).genre,
-			country: queryString.parse(this.props.location.search).country,
-			sort_by: queryString.parse(this.props.location.search).sort_by,
-			year: queryString.parse(this.props.location.search).year,
-			page: queryString.parse(this.props.location.search).page,
-			adult: queryString.parse(this.props.location.search).adult
-		};
-	}
+    get getUrlObjectState() {
+        return {
+            page: queryString.parse(this.props.location.search).page
+        };
+    }
 
 
-	 sendRequest = () =>{
-		 let page = +this.getUrlString.page;
+ sendRequest = () =>{
+     let page = +this.getUrlObjectState.page;
 
-		 let UrlStateObj = {
-			 page: +this.getUrlString.page,
-		 };
-
-		 if (page) {
-			 if (page <= 2) {
-				 UrlStateObj.page += 1;
-			 } else {
-				 if (page <= 3) {
-					 UrlStateObj.page += 2;
-				 } else {
-					 UrlStateObj.page += 3;
-				 }
-			 }
-		 } else {
-			 delete UrlStateObj.page;
-		 }
+     let UrlStateObj = {
+         page: +this.getUrlObjectState.page
+     };
 
 
+     if (!page) {
+         delete UrlStateObj.page;
+     }
 
-		 this.props.loadList(UrlStateObj.page);
-	 };
+     if (page <= 2) {
+         UrlStateObj.page += 1;
+     } else if (page === 3) {
+         UrlStateObj.page += 2;
+     } else if ( page >= 4) {
+         UrlStateObj.page = UrlStateObj.page + UrlStateObj.page - 1;
+     }
 
-	 prevPage = () => {
-		 let urlObj = this.getUrlString;
+     this.props.loadList(UrlStateObj.page);
+ };
 
-		 if (this.props.AiringTv.data.page <= 3) {
-			 delete urlObj.page;
-		 }
+ prevPage = () => {
+     let urlObj = this.getUrlObjectState;
 
-		 if (this.props.AiringTv.data.page === 5 ) {
-			 urlObj.page = this.props.AiringTv.data.page - 3;
-		 }
+     if (this.getUrlObjectState.page > 2) {
+         urlObj.page = +this.getUrlObjectState.page - 1;
+     }
 
-		 if ( this.props.AiringTv.data.page >= 7 ) {
-			 urlObj.page = this.props.AiringTv.data.page - 4;
-		 }
+     if (this.getUrlObjectState.page <= 2) {
+         delete urlObj.page;
+     }
 
-		 this.props.history.push({
-			 search: queryString.stringify(urlObj)
-		 });
-	 };
+     this.props.history.push({
+         search: queryString.stringify(urlObj)
+     });
+ };
 
-	 nextPage = () => {
-		 let urlObj = this.getUrlString;
+ nextPage = () => {
+     let urlObj = this.getUrlObjectState;
 
-		 // console.log(this.props.AiringTv.data.page);
+     urlObj.page = 2;
 
-		 if (this.props.AiringTv.data.page < 2) {
-			 urlObj.page = this.props.AiringTv.data.page + 1;
-		 }
+     if (this.getUrlObjectState.page >= 2) {
+         urlObj.page = +this.getUrlObjectState.page + 1;
+     }
 
-		 if (this.props.AiringTv.data.page >= 3) {
-			 urlObj.page = this.props.AiringTv.data.page;
-		 }
+     this.props.history.push({
+         search: queryString.stringify(urlObj)
+     });
+ };
 
-		 console.log(urlObj.page);
-
-		 this.props.history.push({
-			 search: queryString.stringify(urlObj)
-		 });
-	 };
 
  scrollStep = () => {
      if (window.pageYOffset === 0) {
@@ -130,27 +114,23 @@ class TVAiring extends Component {
              <Helmet>
                  <title>Сейчас на тв</title>
              </Helmet>
-	         <ServiceBlock isLoading={AiringTv.isFetching} isError={AiringTv.status} fetch={this.sendRequest}>
+	         <ServiceBlock
+                 isLoading={AiringTv.isFetching}
+                 isError={AiringTv.status}
+                 fetch={this.sendRequest}
+             >
                  <div className="movies-content">
-	                 <MediaList movieListTitle={`Сейчас на тв (${AiringTv.data.total_results})`} movieList={AiringTv} typeList='tv'/>
-                     {AiringTv.data.total_pages > 1 ?
-                         <div className="pager-btns clearfix">
-                             {AiringTv.data.page - 1 > 1
-	                             ? <div
-		                             className="pager-btn pager-btn--prev link-angle link-angle--left"
-		                             onClick={this.prevPage}>
-		                             <i className="fa fa-angle-left" aria-hidden="true" />
-		                             <span>Предыдущая страница</span>
-	                             </div>
-	                             : null}
-                             {AiringTv.data.page + 1 < AiringTv.data.total_pages
-	                             ? <div
-		                             className="pager-btn pager-btn--next link-angle"
-		                             onClick={this.nextPage}>
-		                             <span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" />
-	                             </div>
-	                             : null}
-                         </div> : null}
+	                 <MediaList
+                         movieListTitle={`Сейчас на тв (${AiringTv.data.total_results})`}
+                         movieList={AiringTv}
+                         typeList="tv"
+                     />
+	                 <PageSwitcher
+		                 total_pages={AiringTv.data.total_pages}
+		                 page={AiringTv.data.page}
+		                 prevPage={this.prevPage}
+		                 nextPage={this.nextPage}
+	                 />
                  </div>
 	         </ServiceBlock>
          </main>
@@ -165,7 +145,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	loadList: (page) => dispatch(tvAiring(page))
+    loadList: (page) => dispatch(tvAiring(page))
 });
 
 

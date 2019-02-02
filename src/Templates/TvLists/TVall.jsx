@@ -10,6 +10,7 @@ import { sortListTV } from './../../Data/localData';
 import MediaList from './../MediaList/MediaList';
 import FilterList from './../Filters/Containers/FilterList';
 import ServiceBlock from './../Service/ServiceBlock';
+import { PageSwitcher } from './../../ui-components/Page switching/Page-switcher';
 
 
 class TvPopular extends Component {
@@ -56,7 +57,7 @@ class TvPopular extends Component {
         this.sendRequest();
     }
 
-    get getUrlString() {
+    get getUrlObjectState() {
         return {
             genre: queryString.parse(this.props.location.search).genre,
             country: queryString.parse(this.props.location.search).country,
@@ -67,13 +68,13 @@ class TvPopular extends Component {
     }
 
      sendRequest = () =>{
-	     let page = +this.getUrlString.page;
+	     let page = +this.getUrlObjectState.page;
 	     let UrlStateObj = {
-		     page: +this.getUrlString.page,
-		     country: this.getUrlString.country,
-		     genres: this.getUrlString.genre,
-		     sort_by: this.getUrlString.sort_by,
-		     year: this.getUrlString.year
+		     page: +this.getUrlObjectState.page,
+		     country: this.getUrlObjectState.country,
+		     genres: this.getUrlObjectState.genre,
+		     sort_by: this.getUrlObjectState.sort_by,
+		     year: this.getUrlObjectState.year
 	     };
 
 	     if (!page) {
@@ -92,14 +93,14 @@ class TvPopular extends Component {
      };
 
  prevPage = () => {
-     let urlObj = this.getUrlString;
+     let urlObj = this.getUrlObjectState;
 	 this.props.changeListFetchStatus('allTV');
 
-     if (this.getUrlString.page > 2) {
-         urlObj.page = +this.getUrlString.page - 1;
+     if (this.getUrlObjectState.page > 2) {
+         urlObj.page = +this.getUrlObjectState.page - 1;
      }
 
-     if (this.getUrlString.page <= 2) {
+     if (this.getUrlObjectState.page <= 2) {
          delete urlObj.page;
      }
 
@@ -109,13 +110,13 @@ class TvPopular extends Component {
  };
 
  nextPage = () => {
-     let urlObj = this.getUrlString;
+     let urlObj = this.getUrlObjectState;
 	 this.props.changeListFetchStatus('allTV');
 
      urlObj.page = 2;
 
-     if (this.getUrlString.page >= 2) {
-         urlObj.page = +this.getUrlString.page + 1;
+     if (this.getUrlObjectState.page >= 2) {
+         urlObj.page = +this.getUrlObjectState.page + 1;
      }
 
      this.props.history.push({
@@ -172,28 +173,13 @@ class TvPopular extends Component {
 					    typeList="tv"
 				    />
 
-				    {allTV.data.total_pages > 1
-					    ? <div className="pager-btns clearfix">
-						    {allTV.data.page - 1 > 1
-							    ? <div
-								    className="pager-btn pager-btn--prev link-angle link-angle--left"
-								    onClick={this.prevPage}>
-								    <i className="fa fa-angle-left" aria-hidden="true" />
-								    <span>Предыдущая страница</span>
-							      </div>
-							    : null}
+				    <PageSwitcher
+					    total_pages={allTV.data.total_pages}
+					    page={allTV.data.page}
+					    prevPage={this.prevPage}
+					    nextPage={this.nextPage}
+				    />
 
-						        {allTV.data.page + 1 < allTV.data.total_pages
-							    ? <div
-								    className="pager-btn pager-btn--next link-angle"
-								    onClick={this.nextPage}>
-								    <span>Следующая страница</span>
-								    <i className="fa fa-angle-right" aria-hidden="true" />
-							      </div>
-							    : null}
-
-					        </div>
-					    : null}
 			    </div>
 			    </ServiceBlock>
 		    </main>

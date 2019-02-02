@@ -1,6 +1,8 @@
+import queryString from 'query-string';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { PageSwitcher } from '../../ui-components/Page switching/Page-switcher';
 
 import { tvTop } from './../../Data/api/Tv.api';
 
@@ -25,57 +27,72 @@ class TvTop extends Component {
         this.sendRequest();
     }
 
-	componentDidUpdate(prevProps) {
-		if (this.props.location.search !== prevProps.location.search) {
-			this.scrollToTop();
-			this.sendRequest(prevProps);
-		}
-	}
+    componentDidUpdate(prevProps) {
+        if (this.props.location.search !== prevProps.location.search) {
+            this.scrollToTop();
+            this.sendRequest(prevProps);
+        }
+    }
 
-	 sendRequest = () =>{
-		 let movieId = parseFloat(this.props.location.search.split('=').pop());
-		 if (this.props.location.search) {
-			 if (movieId <= 2) {
-				 this.props.loadList(movieId+1);
-			 } else {
-				 if (movieId <= 3) {
-					 this.props.loadList(movieId + 2);
-				 } else {
-					 this.props.loadList(movieId + 3);
-				 }
-			 }
-		 } else {
-			 this.props.loadList();
-		 }
-	 };
+    get getUrlObjectState() {
+        return {
+            page: queryString.parse(this.props.location.search).page
+        };
+    }
 
-	 prevPage = () => {
-	     if (this.props.TopTv.data.page > 1) {
-		     if (this.props.TopTv.data.page <= 3) {
-			     this.props.history.push('/tv/top');
-		     } else {
-			     if (this.props.TopTv.data.page >= 7) {
-		            this.props.history.push('/tv/top?page=' + (this.props.TopTv.data.page-4));
-			     } else {
-				     this.props.history.push('/tv/top?page=' + (this.props.TopTv.data.page-3));
-			     }
-	         }
-	     } else {
-	         this.props.history.push('/tv/top');
-	     }
-	 };
 
-	 nextPage = () => {
-	     if (this.props.TopTv.data.page > 1) {
-	         if (this.props.TopTv.data.page <= 3) {
-	             this.props.history.push('/tv/top?page=' + (this.props.TopTv.data.page));
-	         } else {
-	             this.props.history.push('/tv/top?page=' + (this.props.TopTv.data.page-1));
-	         }
-	     } else {
-	         this.props.history.push('/tv/top?page=' + (this.props.TopTv.data.page+1));
-	     }
-	 };
+ sendRequest = () =>{
+     let page = +this.getUrlObjectState.page;
+     let UrlStateObj = {
+         page: +this.getUrlObjectState.page
+     };
+
+
+     if (!page) {
+         delete UrlStateObj.page;
+     }
+
+     if (page <= 2) {
+         UrlStateObj.page += 1;
+     } else if (page === 3) {
+         UrlStateObj.page += 2;
+     } else if ( page >= 4) {
+         UrlStateObj.page = UrlStateObj.page + UrlStateObj.page - 1;
+     }
+
+     this.props.loadList(UrlStateObj.page);
+ };
+
+ prevPage = () => {
+     let urlObj = this.getUrlObjectState;
+
+     if (this.getUrlObjectState.page > 2) {
+         urlObj.page = +this.getUrlObjectState.page - 1;
+     }
+
+     if (this.getUrlObjectState.page <= 2) {
+         delete urlObj.page;
+     }
+
+     this.props.history.push({
+         search: queryString.stringify(urlObj)
+     });
+ };
+
+ nextPage = () => {
+     let urlObj = this.getUrlObjectState;
+
+     urlObj.page = 2;
+
+     if (this.getUrlObjectState.page >= 2) {
+         urlObj.page = +this.getUrlObjectState.page + 1;
+     }
+
+     this.props.history.push({
+         search: queryString.stringify(urlObj)
+     });
+ };
+
 
 	 scrollStep = () => {
 	     if (window.pageYOffset === 0) {
@@ -96,17 +113,26 @@ class TvTop extends Component {
               <Helmet>
                   <title>Топ сериалы</title>
               </Helmet>
-		     <ServiceBlock isLoading={TopTv.isFetching} isError={TopTv.status} fetch={this.sendRequest}>
-
+		     <ServiceBlock
+			     isLoading={TopTv.isFetching}
+			     isError={TopTv.status}
+			     fetch={this.sendRequest}
+		     >
 			     <div className="movies-content">
-                      <MediaList movieListTitle={'Топ сериалы'} movieList={TopTv} typeList='tv'/>
-	             {TopTv.data.total_pages > 1 ?
-                          <div className="pager-btns clearfix">
-			             {TopTv.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
-			             {TopTv.data.page+1 < TopTv.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
-                          </div> : null}
+                      <MediaList
+	                      movieListTitle={'Топ сериалы'}
+	                      movieList={TopTv}
+	                      typeList="tv"
+                      />
+
+				     <PageSwitcher
+					     total_pages={TopTv.data.total_pages}
+					     page={TopTv.data.page}
+					     prevPage={this.prevPage}
+					     nextPage={this.nextPage}
+				     />
                   </div>
-			     </ServiceBlock>
+		     </ServiceBlock>
 	     </main>
       );
 

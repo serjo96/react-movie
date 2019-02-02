@@ -5,9 +5,11 @@ import queryString from 'query-string';
 
 import { changeMoviePage } from './../../Data/actions/movies-actions';
 import { movieListPopular } from './../../Data/api/Movies.api';
+import { sortListType } from './../../Data/localData';
+
 import MovieList from './../MediaList/MediaList';
 import FilterList from './../Filters/Containers/FilterList';
-import { sortListType } from './../../Data/localData';
+import { PageSwitcher } from './../../ui-components/Page switching/Page-switcher';
 import ServiceBlock from './../Service/ServiceBlock';
 
 class MoviesAll extends Component {
@@ -47,7 +49,7 @@ class MoviesAll extends Component {
     }
 
 
-    get getUrlString() {
+    get getUrlObjectState() {
         return {
             genre: queryString.parse(this.props.location.search).genre,
             country: queryString.parse(this.props.location.search).country,
@@ -59,19 +61,16 @@ class MoviesAll extends Component {
     }
 
 
-    // TODO: Убрать портянку из if else, и решить вопрос с локальным стейтом в фильтрах(нужен ли он или использовать стейт урл)
-    // TODO: Добавить правельный парсинг sort_by
-    // TODO: Добавить правельный парсинг direction
      sendRequest = () => {
-	     let page = +this.getUrlString.page;
+	     let page = +this.getUrlObjectState.page;
 
 		 let UrlStateObj = {
-			 page: +this.getUrlString.page,
-			 country: this.getUrlString.country,
-			 genres: this.getUrlString.genre,
-			 sort_by: this.getUrlString.sort_by,
-			 year: this.getUrlString.year,
-			 adult: this.getUrlString.adult
+			 page: +this.getUrlObjectState.page,
+			 country: this.getUrlObjectState.country,
+			 genres: this.getUrlObjectState.genre,
+			 sort_by: this.getUrlObjectState.sort_by,
+			 year: this.getUrlObjectState.year,
+			 adult: this.getUrlObjectState.adult
 		 };
 
 
@@ -91,14 +90,14 @@ class MoviesAll extends Component {
      };
 
     prevPage = () => {
-	    let urlObj = this.getUrlString;
+	    let urlObj = this.getUrlObjectState;
 	    this.props.changeListStatus('AllMovies');
 
-	    if (this.getUrlString.page > 2) {
-		    urlObj.page = +this.getUrlString.page - 1;
+	    if (this.getUrlObjectState.page > 2) {
+		    urlObj.page = +this.getUrlObjectState.page - 1;
 	    }
 
-	    if (this.getUrlString.page <= 2) {
+	    if (this.getUrlObjectState.page <= 2) {
 		    delete urlObj.page;
 	    }
 
@@ -108,13 +107,13 @@ class MoviesAll extends Component {
     };
 
     nextPage = () => {
-	    let urlObj = this.getUrlString;
+	    let urlObj = this.getUrlObjectState;
 	    this.props.changeListStatus('AllMovies');
 
 	    urlObj.page = 2;
 
-	    if (this.getUrlString.page >= 2) {
-		    urlObj.page = +this.getUrlString.page + 1;
+	    if (this.getUrlObjectState.page >= 2) {
+		    urlObj.page = +this.getUrlObjectState.page + 1;
 	    }
 
 	    this.props.history.push({
@@ -168,19 +167,14 @@ class MoviesAll extends Component {
 						    movieList={AllMovies}
 						    typeList="movie"
 					    />
-					    {AllMovies.data.total_pages > 1
-						    ? <div className="pager-btns clearfix">
-							    {AllMovies.data.page - 1 > 1
-								    ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}>
-									    <i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span>
-								    </div>
-								    : null}
-							    {AllMovies.data.page + 1 < AllMovies.data.total_pages
-								    ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}>
-									    <span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div>
-								    : null}
-						    </div>
-						    : null}
+
+				    <PageSwitcher
+					    total_pages={AllMovies.data.total_pages}
+					    page={AllMovies.data.page}
+					    prevPage={this.prevPage}
+					    nextPage={this.nextPage}
+				    />
+
 			    </div>
 			    </ServiceBlock>
 		    </main>

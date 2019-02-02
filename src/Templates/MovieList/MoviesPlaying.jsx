@@ -1,7 +1,10 @@
+import queryString from 'query-string';
 import React, {Component} from 'react';
 import { movieListPlaying } from '../../Data/api/Movies.api';
 import {Helmet} from 'react-helmet';
 import { connect } from 'react-redux';
+
+import { PageSwitcher } from './../../ui-components/Page switching/Page-switcher';
 import MovieList from '../MediaList/MediaList';
 import ServiceBlock from '../Service/ServiceBlock';
 
@@ -29,53 +32,67 @@ class MoviePlaying extends Component {
         this.sendRequest();
     }
 
+	get getUrlObjectState() {
+		return {
+			page: queryString.parse(this.props.location.search).page,
+		};
+	}
+
 
 	 sendRequest = () =>{
-		 let movieId = parseFloat(this.props.location.search.split('=').pop());
-		 if (this.props.location.search) {
-			 if(movieId <= 2){
-				 this.props.loadList(movieId+1);
-			 } else{
-				 if(movieId <= 3) {
-					 this.props.loadList(movieId + 2);
-				 } else {
-					 this.props.loadList(movieId + 3);
-				 }
-			 }
-		 } else {
-			 this.props.loadList();
+		 let page = +this.getUrlObjectState.page;
+
+		 let UrlStateObj = {
+			 page: +this.getUrlObjectState.page,
+		 };
+
+
+		 if (!page) {
+			 delete UrlStateObj.page;
 		 }
-	 };
 
-	 prevPage = () => {
-		 if (this.props.PlayMovies.data.page > 1) {
-			 if (this.props.PlayMovies.data.page <= 3) {
-				 this.props.history.push('/movies/playing');
-			 } else {
-				 if (this.props.PlayMovies.data.page >= 7) {
-					 this.props.history.push(`/movies/playing?page=${this.props.PlayMovies.data.page - 4}`);
-				 } else {
-					 this.props.history.push(`/movies/playing?page=${this.props.PlayMovies.data.page - 3}`);
-				 }
-			 }
-		 } else {
-			 this.props.history.push(`/movies/playing${this.props.PlayMovies.data.page+1}`);
+		 if (page <= 2) {
+			 UrlStateObj.page += 1;
+		 } else if (page === 3) {
+			 UrlStateObj.page += 2;
+		 } else if ( page >= 4) {
+			 UrlStateObj.page = UrlStateObj.page + UrlStateObj.page - 1;
 		 }
+
+		 this.props.loadList(UrlStateObj.page);
 	 };
 
-	 nextPage = () => {
-	     if (this.props.PlayMovies.data.page > 1) {
-	         if (this.props.PlayMovies.data.page <= 3) {
-	             this.props.history.push('/movies/playing?page=' + (this.props.PlayMovies.data.page));
-	         } else {
-	             this.props.history.push('/movies/playing?page=' + (this.props.PlayMovies.data.page-1));
-	         }
-	     } else {
-	         this.props.history.push('/movies/playing?page=' + (this.props.PlayMovies.data.page+1));
-	     }
-	 };
+	prevPage = () => {
+		let urlObj = this.getUrlObjectState;
 
- scrollStep = () => {
+		if (this.getUrlObjectState.page > 2) {
+			urlObj.page = +this.getUrlObjectState.page - 1;
+		}
+
+		if (this.getUrlObjectState.page <= 2) {
+			delete urlObj.page;
+		}
+
+		this.props.history.push({
+			search: queryString.stringify(urlObj)
+		});
+	};
+
+	nextPage = () => {
+		let urlObj = this.getUrlObjectState;
+		urlObj.page = 2;
+
+		if (this.getUrlObjectState.page >= 2) {
+			urlObj.page = +this.getUrlObjectState.page + 1;
+		}
+
+		this.props.history.push({
+			search: queryString.stringify(urlObj)
+		});
+	};
+
+
+	scrollStep = () => {
      if (window.pageYOffset === 0) {
          clearInterval(this.state.intervalId);
      }
@@ -94,14 +111,26 @@ class MoviePlaying extends Component {
              <Helmet>
                  <title>В прокате</title>
              </Helmet>
-	         <ServiceBlock isLoading={PlayMovies.isFetching} isError={PlayMovies.status} fetch={this.sendRequest}>
+
+	         <ServiceBlock
+		         isLoading={PlayMovies.isFetching}
+		         isError={PlayMovies.status}
+		         fetch={this.sendRequest}
+	         >
                  <div className="movies-content">
-                     <MovieList movieListTitle={`Сейчас в кино (${PlayMovies.data.total_results})`} movieList={PlayMovies} typeList='movie'/>
-                     {PlayMovies.data.total_pages > 1 ?
-                         <div className="pager-btns clearfix">
-                             {PlayMovies.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
-                             {PlayMovies.data.page+1 < PlayMovies.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
-                         </div> : null}
+                     <MovieList
+	                     movieListTitle={`Сейчас в кино (${PlayMovies.data.total_results})`}
+	                     movieList={PlayMovies}
+	                     typeList='movie'
+                     />
+
+	                 <PageSwitcher
+		                 total_pages={PlayMovies.data.total_pages}
+		                 page={PlayMovies.data.page}
+		                 prevPage={this.prevPage}
+		                 nextPage={this.nextPage}
+	                 />
+
                  </div>
 	         </ServiceBlock>
          </main>
