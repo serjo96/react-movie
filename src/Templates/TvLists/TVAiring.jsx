@@ -1,3 +1,4 @@
+import queryString from 'query-string';
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -14,68 +15,100 @@ class TVAiring extends Component {
         this.state = {
             intervalId: 0
         };
+
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.location.search !== prevProps.location.search) {
-            this.scrollToTop();
+            // this.scrollToTop();
             this.sendRequest(prevProps);
         }
     }
 
     componentDidMount() {
-        if (window.pageYOffset === 0) {
-            clearInterval(this.state.intervalId);
-        }
-	    this.scrollToTop();
+	    // if (window.pageYOffset === 0) {
+         //    clearInterval(this.state.intervalId);
+	    // }
+	    // this.scrollToTop();
         this.sendRequest();
     }
 
+	get getUrlString() {
+		return {
+			genre: queryString.parse(this.props.location.search).genre,
+			country: queryString.parse(this.props.location.search).country,
+			sort_by: queryString.parse(this.props.location.search).sort_by,
+			year: queryString.parse(this.props.location.search).year,
+			page: queryString.parse(this.props.location.search).page,
+			adult: queryString.parse(this.props.location.search).adult
+		};
+	}
+
 
 	 sendRequest = () =>{
-		 let movieId = parseFloat(this.props.location.search.split('=').pop());
-		 if (this.props.location.search) {
-			 if(movieId <= 2){
-				 this.props.loadList(movieId+1);
-			 } else{
-				 if(movieId <= 3) {
-					 this.props.loadList(movieId + 2);
+		 let page = +this.getUrlString.page;
+
+		 let UrlStateObj = {
+			 page: +this.getUrlString.page,
+		 };
+
+		 if (page) {
+			 if (page <= 2) {
+				 UrlStateObj.page += 1;
+			 } else {
+				 if (page <= 3) {
+					 UrlStateObj.page += 2;
 				 } else {
-					 this.props.loadList(movieId + 3);
+					 UrlStateObj.page += 3;
 				 }
 			 }
 		 } else {
-			 this.props.loadList();
+			 delete UrlStateObj.page;
 		 }
+
+
+
+		 this.props.loadList(UrlStateObj.page);
 	 };
 
 	 prevPage = () => {
-		 if (this.props.AiringTv.data.page > 1) {
-			 if (this.props.AiringTv.data.page <= 3) {
-				 this.props.history.push('/tv/airing');
-			 } else {
-				 if (this.props.TopMovies.data.page >= 7) {
-					 this.props.history.push('/tv/airing?page=' + (this.props.TopMovies.data.page-4));
-				 } else {
-					 this.props.history.push('/tv/airing?page=' + (this.props.TopMovies.data.page-3));
-				 }
+		 let urlObj = this.getUrlString;
 
-			 }
-		 } else {
-			 this.props.history.push('/tv/airing');
+		 if (this.props.AiringTv.data.page <= 3) {
+			 delete urlObj.page;
 		 }
+
+		 if (this.props.AiringTv.data.page === 5 ) {
+			 urlObj.page = this.props.AiringTv.data.page - 3;
+		 }
+
+		 if ( this.props.AiringTv.data.page >= 7 ) {
+			 urlObj.page = this.props.AiringTv.data.page - 4;
+		 }
+
+		 this.props.history.push({
+			 search: queryString.stringify(urlObj)
+		 });
 	 };
 
 	 nextPage = () => {
-	     if (this.props.AiringTv.data.page > 1) {
-	         if (this.props.AiringTv.data.page <= 3) {
-	             this.props.history.push('/tv/airing?page=' + (this.props.AiringTv.data.page));
-	         } else {
-	             this.props.history.push('/tv/airing?page=' + (this.props.AiringTv.data.page-1));
-	         }
-	     } else {
-	         this.props.history.push('/tv/airing?page=' + (this.props.AiringTv.data.page+1));
-	     }
+		 let urlObj = this.getUrlString;
+
+		 // console.log(this.props.AiringTv.data.page);
+
+		 if (this.props.AiringTv.data.page < 2) {
+			 urlObj.page = this.props.AiringTv.data.page + 1;
+		 }
+
+		 if (this.props.AiringTv.data.page >= 3) {
+			 urlObj.page = this.props.AiringTv.data.page;
+		 }
+
+		 console.log(urlObj.page);
+
+		 this.props.history.push({
+			 search: queryString.stringify(urlObj)
+		 });
 	 };
 
  scrollStep = () => {
@@ -102,8 +135,21 @@ class TVAiring extends Component {
 	                 <MediaList movieListTitle={`Сейчас на тв (${AiringTv.data.total_results})`} movieList={AiringTv} typeList='tv'/>
                      {AiringTv.data.total_pages > 1 ?
                          <div className="pager-btns clearfix">
-                             {AiringTv.data.page-1 > 1 ? <div className="pager-btn pager-btn--prev link-angle link-angle--left" onClick={this.prevPage}><i className="fa fa-angle-left" aria-hidden="true" /><span>Предыдущая страница</span></div> :null}
-                             {AiringTv.data.page+1 < AiringTv.data.total_pages ? <div className="pager-btn pager-btn--next link-angle" onClick={this.nextPage}><span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" /></div> :null}
+                             {AiringTv.data.page - 1 > 1
+	                             ? <div
+		                             className="pager-btn pager-btn--prev link-angle link-angle--left"
+		                             onClick={this.prevPage}>
+		                             <i className="fa fa-angle-left" aria-hidden="true" />
+		                             <span>Предыдущая страница</span>
+	                             </div>
+	                             : null}
+                             {AiringTv.data.page + 1 < AiringTv.data.total_pages
+	                             ? <div
+		                             className="pager-btn pager-btn--next link-angle"
+		                             onClick={this.nextPage}>
+		                             <span>Следующая страница</span><i className="fa fa-angle-right" aria-hidden="true" />
+	                             </div>
+	                             : null}
                          </div> : null}
                  </div>
 	         </ServiceBlock>
