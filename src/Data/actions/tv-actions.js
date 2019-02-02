@@ -1,6 +1,6 @@
 import {
     TV_DATA, CLEAR_TV_DATA, AIRING_TV, ALL_TV, ON_THE_AIR_TV, TOP_TV, TV_SEASON,
-    CLEAR_TV_SEASON, TV_ENG_DATA
+    CLEAR_TV_SEASON, TV_ENG_DATA, CHANGE_TV_PAGE
 } from './../constants';
 
 export function takeTvData( TVdata ) {
@@ -64,3 +64,9 @@ export function clearTvSeason() {
 }
 
 
+export function changeMediaPage(typeList) {
+	return {
+		type: CHANGE_TV_PAGE,
+		typeList
+	};
+}

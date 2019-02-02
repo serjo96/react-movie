@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
+import { changeMediaPage } from '../../Data/actions/tv-actions';
 import { tvPopular } from '../../Data/api/Tv.api';
 import { sortListTV } from './../../Data/localData';
 
@@ -92,6 +93,7 @@ class TvPopular extends Component {
 
  prevPage = () => {
      let urlObj = this.getUrlString;
+	 this.props.changeListFetchStatus('allTV');
 
      if (this.getUrlString.page > 2) {
          urlObj.page = +this.getUrlString.page - 1;
@@ -108,6 +110,7 @@ class TvPopular extends Component {
 
  nextPage = () => {
      let urlObj = this.getUrlString;
+	 this.props.changeListFetchStatus('allTV');
 
      urlObj.page = 2;
 
@@ -206,7 +209,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    loadList: (page, genre, sortType, date, country, adult) => dispatch(tvPopular(page, genre, sortType, date, country, adult))
+    loadList: (page, genre, sortType, date, country, adult) => dispatch(tvPopular(page, genre, sortType, date, country, adult)),
+	changeListFetchStatus: (type) => dispatch(changeMediaPage(type))
 });
 
 

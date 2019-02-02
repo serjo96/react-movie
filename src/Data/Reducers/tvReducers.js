@@ -1,6 +1,6 @@
 import {
-    TV_DATA, CLEAR_TV_DATA, AIRING_TV, ALL_TV, ON_THE_AIR_TV, TOP_TV, TV_SEASON,
-    CLEAR_TV_SEASON, TV_ENG_DATA
+	TV_DATA, CLEAR_TV_DATA, AIRING_TV, ALL_TV, ON_THE_AIR_TV, TOP_TV, TV_SEASON,
+	CLEAR_TV_SEASON, TV_ENG_DATA, CHANGE_TV_PAGE
 } from '../constants';
 import update from 'react-addons-update';
 
@@ -283,6 +283,13 @@ export default function TVs(state = initialState, action) {
 			    }}
 		    });
 
+	    case CHANGE_TV_PAGE:
+		    return update(state, {
+			    [action.typeList]: {$merge: {
+					    isFetching: false
+				    }
+			    }
+		    });
 
         default:
             return state;
