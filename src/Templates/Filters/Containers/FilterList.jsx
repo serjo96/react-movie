@@ -234,37 +234,42 @@ class ListsPage extends Component {
 
 	 restoreDefaultState = () => {
 	    this.setState({
-		        sortSettings: {
-			        genresListName: {
-			            name: 'Все жанры',
-					    id: 0,
-					    status: false
-				    },
-				    sortBy: {
-		                name: 'По популярности',
-					    type: 'popularity',
-					    status: false
-				    },
-				    sortByDate: {
-		                name: 'Все года',
-					    date: 'All',
-					    type: 'single',
-					    status: false
-				    },
-				    sortByCountry: {
-			            name: 'Все страны',
-					    ico: 'All',
-					    status: false
-				    },
-				    SortDirection: false,
-				        adult: false
-				    },
-			    genresListData: {
-				    name: 'Все жанры',
-				    id: 0
+		    sortSettings: {
+		    	genresListName: {
+		    		name: 'Все жанры',
+				    id: 0,
+				    status: false
 			    },
-			    modalFilter: this.state.modalFilter
-		    });
+			    sortBy: {
+		    		name: 'По популярности',
+				    type: 'popularity',
+				    status: false
+			    },
+			    sortByDate: {
+		    		name: 'Все года',
+				    date: 'All',
+				    type: 'single',
+				    status: false
+			    },
+			    sortByCountry: {
+		    		name: 'Все страны',
+				    ico: 'All',
+				    status: false
+			    },
+			    SortDirection: false,
+				        adult: false
+		    },
+		    genresListData: {
+		    	name: 'Все жанры',
+			    id: 0
+		    },
+		    modalFilter: this.state.modalFilter
+	    });
+
+
+		 this.props.history.push({
+			 search: queryString.stringify({})
+		 });
 	 };
 
 	 onOpenFilterModal = ()=> {
