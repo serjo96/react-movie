@@ -22,6 +22,7 @@ class SearchHeader extends Component {
     }
 
     componentDidMount() {
+    	// TODO: fix header warring with setState
         window.addEventListener('click', this.pageClick, false);
     }
 
@@ -59,7 +60,7 @@ class SearchHeader extends Component {
 
 	 onKeyDown = (e) => {
 	    if (e.keyCode === 13) {
-		    if (this.state.val.length >0) {
+		    if (this.state.val.length > 0) {
 			    this.setState({visibilityResult: false});
 			    this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
 			    document.querySelector('.header__search').classList.remove('header__search--mobile');
@@ -68,7 +69,7 @@ class SearchHeader extends Component {
 	 };
 
 	 onClickSearch = () => {
-	     if (this.state.val.length >0) {
+	     if (this.state.val.length > 0) {
 	         this.setState({visibilityResult: false});
 	         this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
 		     document.querySelector('.header__search').classList.remove('header__search--mobile');
@@ -184,7 +185,7 @@ class SearchHeader extends Component {
 				                        autoHeightMax={300}  autoHideTimeout={1000} autoHideDuration={600}
 				                        renderView={props => <div {...props} className="ComboBox-view"/>}
 				                        onUpdate={this.handleUpdate}
-				                        className='comboBox-view-wrap'
+				                        className="comboBox-view-wrap"
 
 				            >
 					            { this.props.SearchResult.data.results.map((item, index)=> this.renderResults(item, index))}

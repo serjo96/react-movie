@@ -2,9 +2,9 @@ export const friendlyUrl = (e) => e.replace(/\s+/g, '_').toLowerCase();
 
 export const friendlyData = (e) => e.replace(/-/g, '.').toLowerCase();
 
-export const kFormatter = num => num > 999 ? (num/1000).toFixed(1) + 'k' : num;
+export const kFormatter = num => num > 999 ? (num / 1000).toFixed(1) + 'k' : num;
 
-export const declOfNum = (n, titles) => titles[(n%10==1 && n%100!=11) ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2];
+export const declOfNum = (n, titles) => titles[(n % 10 == 1 && n % 100 != 11) ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2];
 
 export function urlRusLat(str) {
     str = str.toLowerCase();
@@ -47,7 +47,7 @@ export function urlRusLat(str) {
             ['-', '-']
 
         ],
-        newStr ='';
+        newStr = '';
 
     for (let i = 0; i < str.length; i++) {
         let ch = str.charAt(i),
@@ -59,8 +59,8 @@ export function urlRusLat(str) {
         });
         newStr += newCh;
     }
-    if(newStr.length === 0 || newStr === '__'){
-        newStr = 'media'
+    if (newStr.length === 0 || newStr === '__') {
+        newStr = 'media';
     }
     return newStr.replace(/-/g, '_').replace(/[_]{2,}/gim, '_').replace(/\n/gim, '');
 }
@@ -74,27 +74,27 @@ export function isMatching(full, chunk) {
 
 export function formatTime( minutes ) {
     let m = minutes % 60,
-        h = (minutes-m)/60;
-    return h.toString() + ' ' + declOfNum(h.toString(),['час', 'часа', 'часов']) + ' ' + (m<10?'0':'') + m.toString();
+        h = (minutes - m) / 60;
+    return h.toString() + ' ' + declOfNum(h.toString(), ['час', 'часа', 'часов']) + ' ' + (m < 10 ? '0' : '') + m.toString();
 }
 
 export function sortSeasons( a, b ) {
-	if( a.season_number === 0) return 1;
-	if( b.season_number === 0) return -1;
-	if(new Date(a.season_number) === new Date(b.season_number)) return 0;
-	return new Date(a.season_number) < new Date(b.season_number) ? -1 : 1;
+    if ( a.season_number === 0) return 1;
+    if ( b.season_number === 0) return -1;
+    if (new Date(a.season_number) === new Date(b.season_number)) return 0;
+    return new Date(a.season_number) < new Date(b.season_number) ? -1 : 1;
 }
 
 
 export const chunkArr = (arr, chunkSize) => {
-	let groups = [], i;
-	for (i = 0; i < arr.length; i += chunkSize) {
-		groups.push(arr.slice(i, i + chunkSize));
-	}
-	return groups;
+    let groups = [], i;
+    for (i = 0; i < arr.length; i += chunkSize) {
+        groups.push(arr.slice(i, i + chunkSize));
+    }
+    return groups;
 };
 
 
 export function capitalizeFirstLetter(string) {
-	return string.charAt(0).toUpperCase() + string.slice(1);
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }

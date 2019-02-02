@@ -137,9 +137,10 @@ export default function Movies(state = initialState, action) {
 	    	let data = action.movies.data.results,
 			    totalPages = action.movies.data.total_results;
 	    	if (action.movies.data.sortByDate > 0) {
-	    		data = action.movies.data.results.filter(val=> +action.movies.data.sortByDate === +new Date(val.release_date).getFullYear());
+	    		data = action.movies.data.results.sort(val=> +action.movies.data.sortByDate - +new Date(val.release_date).getFullYear());
 			    totalPages = data.length;
 		    }
+
 		    return update(state, {
 			    AllMovies: {$merge: {
 					    isFetching: true,
