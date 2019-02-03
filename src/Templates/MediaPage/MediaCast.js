@@ -19,22 +19,22 @@ switch (true) {
             setWrapperSize: false,
             slidesPerView: 4,
             spaceBetween: 0,
-					freeMode: true,
+            freeMode: true
         };
         break;
-	case width <= 463:
-		SwiperParams = {
-			scrollbar: {
-				el: '.swiper-scrollbar',
-				hide: false,
-				draggable: true
-			},
-			setWrapperSize: false,
-			freeMode: true,
-			slidesPerView: 3,
-			spaceBetween: 0
-		};
-		break;
+    case width <= 463:
+        SwiperParams = {
+            scrollbar: {
+                el: '.swiper-scrollbar',
+                hide: false,
+                draggable: true
+            },
+            setWrapperSize: false,
+            freeMode: true,
+            slidesPerView: 3,
+            spaceBetween: 0
+        };
+        break;
 
     default:
         SwiperParams = {
@@ -43,33 +43,41 @@ switch (true) {
                 hide: false,
                 draggable: true
             },
-						freeMode: true,
+            freeMode: true,
             slidesPerView: 7,
             spaceBetween: 10
         };
 }
 
-const MediaCast = (movie) => (
-    <div className="credits">
-        <div className="cast">
-            <h2 className="cast__title">В ролях</h2>
+const MediaCast = (movie) => {
+    if (movie.cast.length <= 0) {
+        return null;
+    }
+    return (
+        <div className="credits">
+            <div className="cast">
+                <h2 className="cast__title">В ролях</h2>
 
-            <Swiper {...SwiperParams}  shouldSwiperUpdate={true} mousewheel={movie.cast.length>7 ?{sensitivity: 150} : false}>
-                {movie.cast.map((actor, indx) =>
-                    (<Link to={`/person/${friendlyUrl(actor.name)}-${actor.id}`} className="actor" key={indx}>
-                        <div className="actor__img" style={{backgroundImage: actor.profile_path ? 'url(https://image.tmdb.org/t/p/w185/' + actor.profile_path + ')': 'url('+ NoImg + ')'}} />
-                        <div className="actor__info">
-                            <div className="actor__name">{actor.name}</div>
-                            {actor.character  &&
-       <div className="actor__role">{actor.character}</div>
-                            }
-                        </div>
-                    </Link>)
-                )}
-            </Swiper>
+                <Swiper {...SwiperParams} shouldSwiperUpdate={true}
+					        mousewheel={movie.cast.length > 7 ? {sensitivity: 150} : false}>
+                    {movie.cast.map(( actor, indx ) =>
+                        (<Link to={`/person/${friendlyUrl(actor.name)}-${actor.id}`} className="actor" key={indx}>
+                            <div
+	                            className="actor__img"
+	                            style={{backgroundImage: actor.profile_path ? 'url(https://image.tmdb.org/t/p/w185/' + actor.profile_path + ')' : 'url(' + NoImg + ')'}}/>
+                            <div className="actor__info">
+                                <div className="actor__name">{actor.name}</div>
+                                {actor.character &&
+                                <div className="actor__role">{actor.character}</div>
+                                }
+                            </div>
+                        </Link>)
+                    )}
+                </Swiper>
 
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 export default (MediaCast);

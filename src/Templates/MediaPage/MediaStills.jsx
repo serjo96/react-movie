@@ -20,8 +20,10 @@ export default class MediaStills extends Component {
         this.setState({imgStatus: false});
     };
 
-
     render() {
+        if (this.props.images.length <= 0 ) {
+            return null;
+        }
         return (
 
             <div className="stills">
