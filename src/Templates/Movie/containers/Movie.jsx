@@ -7,6 +7,8 @@ import { Helmet } from 'react-helmet';
 import { clearMovieData } from './../../../Data/actions/movies-actions';
 import { onLoadMovie } from './../../../Data/api/Movies.api';
 
+import { LoadEngData } from './../../../ui-components/loadEngData/LoadEngData';
+
 import Popup from './../../Popup/Popup';
 import MovieBG from './../components/MovieBg';
 import MovieAside from './../components/MovieAside';
@@ -149,17 +151,16 @@ class Movie extends Component {
 							 onLoadImg={this.onLoadImg}
 						 />
 
+
+
 						 <div className="overview">
-							 <div className="description">
-								 {movie.overview
-									 ? <p className="description__text">{movie.overview}</p>
-									 : <div>
-										 <div>Ой! Кажется описание к этому произведению отсутствует</div>
-										 <div className="load-description-eng">
-											 <span onClick={()=>this.props.loadMovieData(movie.id, 'en-US')}>Загрузить описание на английском?</span>
-										 </div>
-									 </div>}
-							 </div>
+
+							 <LoadEngData
+								 id={movie.id}
+								 overview={movie.overview}
+								 lang="en-US"
+								 loadTvData={this.props.loadMovieData}
+							 />
 
 							 {movie.videos.results.length > 0
 								 ? <div className="trailer">

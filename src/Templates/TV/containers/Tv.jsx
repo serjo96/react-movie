@@ -8,6 +8,7 @@ import Lightbox from 'lightbox-react';
 import { onLoadTV } from './../../../Data/api/Tv.api';
 import { clearTvData, clearTvSeason } from './../../../Data/actions/tv-actions';
 
+import { LoadEngData } from './../../../ui-components/loadEngData/LoadEngData';
 import Popup from './../../Popup/Popup';
 import ServiceBlock from './../../Service/ServiceBlock';
 import TVBg from './../components/TVBg';
@@ -162,13 +163,13 @@ class TV extends Component {
 							            : null}
 
 						            <div className="description">
-							            {overview ? <p className="description__text">{overview}</p>
-								            :<div>
-									            <div>Ой! Кажется описание к этому произведению отсутствует</div>
-									            <div className="load-description-eng">
-										            <span onClick={()=>this.props.loadTvData(tv.id, 'en-US')}>Загрузить описание на английском?</span>
-									            </div>
-								            </div>}
+							            <LoadEngData
+								            id={tv.id}
+								            overview={overview}
+								            lang="en-US"
+								            loadTvData={this.props.loadMovieData}
+							            />
+
 						            </div>
 						            {tv.videos.results.length >0 ? <TVvideos videos={this.props.tv.tvVideos} onClick={this.showTrailerModal}/> : null}
 						            {this.props.tv.tvCredits.cast.length>0 ? <MediaCast cast={this.props.tv.tvCredits.cast}/>: null}
