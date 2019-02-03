@@ -18,13 +18,13 @@ class TVSeason extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.match.params.season_number !== this.props.match.params.season_number) {
             this.sendRequest(this.props.match.url, nextProps.match.params.season_number);
-	        window.scroll(0,0);
+	        window.scroll(0, 0);
         }
     }
 
-	componentWillUnmount() {
-		this.props.clearTvSeason();
-	}
+    componentWillUnmount() {
+        this.props.clearTvSeason();
+    }
 
     componentDidMount() {
 	    window.scroll(0, 0);
@@ -39,15 +39,15 @@ class TVSeason extends Component {
 	 };
 
 
-	render() {
-        let {season} = this.props;
+  render() {
+      let {season} = this.props;
 
-         return (
-             <div className="season">
+      return (
+          <div className="season">
 	             {season.isFetching ?
 		             <div className="season__wrapper">
 
-			             <div className='season__number-series'>{`${season.data.episodes.length} ${season.data.episodes.length > 1 ? 'серий' : 'серия'}`}</div>
+			             <div className="season__number-series">{`${season.data.episodes.length} ${season.data.episodes.length > 1 ? 'серий' : 'серия'}`}</div>
 			             <div className="episodes-list">
 				             {season.data.episodes.map((el, indx)=>(
 				             	<div className="episodes-list__episode episode" key={indx}>
@@ -80,11 +80,11 @@ class TVSeason extends Component {
 					             ))}
 			             </div>
 		             </div>
-		             :null}
-             </div>
+		             : null}
+          </div>
 
-         );
- }
+      );
+  }
 }
 
 function mapStateToProps(state) {
@@ -95,7 +95,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => ({
     loadSeasonTv: (id, season) => dispatch(onSeasonTV(id, season)),
-	clearTvSeason: () => dispatch(clearTvSeason())
+    clearTvSeason: () => dispatch(clearTvSeason())
 
 });
 

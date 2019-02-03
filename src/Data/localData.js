@@ -350,7 +350,10 @@ export let popularCountries = [
     },  {
         name: 'Германия',
         ico: 'DE'
-    }
+    },{
+		name: 'Япония',
+		ico: 'JP'
+	}
 ];
 
 export let sortBySingleDateList = [

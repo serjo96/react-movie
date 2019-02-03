@@ -68,18 +68,19 @@ export function tvAiring(page = 1) {
 }
 
 export function tvPopular(page = 1, genre, sortType = 'popularity.desc', date) {
-    let year = date + '',
-        rageDates,
-        startRangeDate,
-        endRangeDate;
-
-    if (year && year.split('-').length > 1 ) {
-        rageDates = year.split('-');
-        startRangeDate = rageDates[0];
-        endRangeDate = rageDates[1];
-    } else {
-        year = date;
-    }
+	let year =  date + '',
+		singleYear,
+		rageDates,
+		startRangeDate,
+		endRangeDate;
+console.log(sortType)
+	if (year && year.split('-').length > 1 ) {
+		rageDates = year.split('-');
+		startRangeDate = rageDates[0] ? rageDates[0] : '';
+		endRangeDate = rageDates[1];
+	} else {
+		singleYear = date;
+	}
 
     return ( dispatch ) => {
         axios.all([
@@ -90,7 +91,7 @@ export function tvPopular(page = 1, genre, sortType = 'popularity.desc', date) {
                         language: 'ru-RU',
                         sort_by: sortType,
                         with_genres: genre,
-                        first_air_date_year: year,
+                        first_air_date_year: singleYear,
                         'first_air_date.gte': startRangeDate,
                         'first_air_date.lte': endRangeDate,
                         page: page
@@ -103,7 +104,7 @@ export function tvPopular(page = 1, genre, sortType = 'popularity.desc', date) {
                         language: 'ru-RU',
                         sort_by: sortType,
                         with_genres: genre,
-                        first_air_date_year: year,
+                        first_air_date_year: singleYear,
                         'first_air_date.gte': startRangeDate,
                         'first_air_date.lte': endRangeDate,
                         page: page + 1

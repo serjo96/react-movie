@@ -18,19 +18,20 @@ export function movieUpcoming(page = 1) {
     };
 }
 
-export function movieListPopular(page = 1, genre, sortType = 'popularity.desc', date, region, adult = false) {
-    let year = date + '',
+export function movieListAll( page = 1, genre, sortType = 'popularity.desc', date, region, adult = false) {
+    let year =  date + '',
+        singleYear,
         rageDates,
         startRangeDate,
         endRangeDate;
-
     if (year && year.split('-').length > 1 ) {
 	    rageDates = year.split('-');
-        startRangeDate = rageDates[0];
+        startRangeDate = rageDates[0] ? rageDates[0] : '';
         endRangeDate = rageDates[1];
     } else {
-        year = date;
+	    singleYear = date;
     }
+console.log(singleYear)
 
     return ( dispatch ) => {
         axios.all([
@@ -42,7 +43,7 @@ export function movieListPopular(page = 1, genre, sortType = 'popularity.desc', 
                         region: region,
                         sort_by: sortType,
                         with_genres: genre,
-                        primary_release_year: year,
+                        primary_release_year: singleYear,
                         'primary_release_date.gte': startRangeDate,
                         'primary_release_date.lte': endRangeDate,
                         page: page,
@@ -57,7 +58,7 @@ export function movieListPopular(page = 1, genre, sortType = 'popularity.desc', 
                         region: region,
                         sort_by: sortType,
                         with_genres: genre,
-                        primary_release_year: year,
+                        primary_release_year: singleYear,
                         'primary_release_date.gte': startRangeDate,
                         'primary_release_date.lte': endRangeDate,
                         page: page + 1,
