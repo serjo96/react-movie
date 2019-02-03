@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { chunkArr } from '../../../utils/utils';
-import {storageCountries, popularCountries, sortBySingleDateList, sortByRangeDateList} from '../../../Data/localData';
+import { chunkArr } from './../../../utils/utils';
+import {storageCountries, popularCountries, sortBySingleDateList, sortByRangeDateList} from './../../../Data/localData';
 
 export default class FiltersMobile extends Component {
     render() {
         const {sortSettings} = this.props;
-
         return (
             <div className="filter-list-container">
                 <div className="filter-list">
@@ -75,9 +74,12 @@ export default class FiltersMobile extends Component {
                             <div className="filter-catalog__list">
                                 <div className="filter-catalog__sub-title">Своя дата</div>
                                 <input
-                                    type="text"
+	                                type="text"
+                                    pattern="[0-9]*"
                                     className="filter-filed-date"
                                     onChange={this.props.onChangeRangeDate}
+	                                onBlur={this.props.onBlur}
+                                    value={sortSettings.sortByDateInput}
                                 />
                             </div>
                         </div>

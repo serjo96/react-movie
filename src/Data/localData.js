@@ -404,7 +404,7 @@ export let sortByRangeDateList = [
     }
 ];
 
-export let sortListType = [
+export let sortListMovie = [
     {
         name: 'По популярности',
         type: 'popularity'
@@ -432,7 +432,7 @@ export let sortListTV = [
         type: 'popularity'
     }, {
         name: 'Дате выпуска',
-        type: 'primary_release_date'
+        type: 'first_air_date'
     },{
         name: 'Оригинальному названию',
         type: 'original_title'

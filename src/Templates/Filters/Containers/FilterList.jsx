@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import update from 'react-addons-update';
 import queryString from 'query-string';
-import { PageSwitcher } from '../../../ui-components/Page switching/Page-switcher';
+import { PageSwitcher } from '../../../ui-components/Page-switcher/Page-switcher';
 
-import { storageCountries, sortListType } from './../../../Data/localData';
+import { storageCountries } from './../../../Data/localData';
 
 import FiltersMobile from './../components/FiltersMobile';
 import Filters from './../components/Filters';
@@ -12,32 +11,34 @@ import Filters from './../components/Filters';
 class FilterList extends Component {
     constructor( props ) {
         super(props);
+        this.year = this.getUrlString.year ? this.getUrlString.year === '-1980' ? 'до ' + this.getUrlString.year.split('-').pop() : this.getUrlString.year : 'Все года';
+
         this.state = {
-        	sortSettings: {
 	            genresListName: {
 	                name: 'Все жанры',
 	                id: 0,
 		            status: false
 	            },
 	            sortBy: {
-	                name: this.getUrlString.sort_by ? sortListType.filter(i=> i.type === this.getUrlString.sort_by.split('.')[0]).pop().name : 'По популярности',
+	                name: this.getUrlString.sort_by ? this.props.sortListType.filter(i=> i.type === this.getUrlString.sort_by.split('.')[0]).pop().name : 'По популярности',
 	                type: this.getUrlString.sort_by ? this.getUrlString.sort_by.split('.')[0] : 'popularity',
 		            status: this.getUrlString.sort_by
 	            },
 		        sortByDate: {
-			        name: this.getUrlString.year ? this.getUrlString.year : 'Все года',
+			        name: this.year,
 			        date: this.getUrlString.year ? this.getUrlString.year : '',
 			        type: 'single',
 			        status: !!this.getUrlString.year
 		        },
+	            sortByDateInput: '',
 		        sortByCountry: {
 			        name: this.getUrlString.country ? storageCountries.filter(i=> i.ico === this.getUrlString.country).pop().name : 'Все страны',
 			        ico: this.getUrlString.country ? this.getUrlString.country : '',
 			        status: !!this.getUrlString.country
 		        },
 		        SortDirection: this.getUrlString.sort_by ? this.getUrlString.sort_by.split('.').pop() !== 'desc' : false,
-		        adult: this.getUrlString.adult
-	        },
+		        adult: this.getUrlString.adult,
+
 	        genresListData: {
 		        name: this.props.genresData[this.getUrlString.genre] || 'Все жанры',
 		        id: this.getUrlString.genre,
@@ -65,16 +66,14 @@ class FilterList extends Component {
 
 
     onSortLists = (el) =>{
-    	let fullType = el.type + (this.state.sortSettings.SortDirection ? '.asc' : '.desc');
-	    let newState = update(this.state.sortSettings, {$merge: {
+    	let fullType = el.type + (this.state.SortDirection ? '.asc' : '.desc');
+
+	    this.setState({
+
 			    sortBy: {
 				    name: el.name, type: el.type, status: true
 			    }
-		    }});
-	    this.setState({
-		    sortSettings: {
-			    ...newState
-		    }
+
 	    });
 
 	    let UrlObj = this.getUrlString;
@@ -86,46 +85,42 @@ class FilterList extends Component {
     };
 
 	 onClickChangeDir = () => {
-	     let newState = update(this.state.sortSettings, {$merge: {
-	         SortDirection: !this.state.sortSettings.SortDirection
-	     }});
-
 	     this.setState({
-	         sortSettings: {
-	             ...newState
-	         }
-	     });
 
-	     let UrlObj = this.getUrlString;
-	     UrlObj.sort_by = this.state.sortSettings.sortBy.type + (this.state.sortSettings.SortDirection ? '.asc' : '.desc');
+		         SortDirection: !this.state.SortDirection
 
-	     this.props.history.push({
-	         search: queryString.stringify(UrlObj)
-	     });
+	     }, () => {
+			     let UrlObj = this.getUrlString;
+			     UrlObj.sort_by = this.state.sortBy.type + (this.state.SortDirection ? '.asc' : '.desc');
+
+			     this.props.history.push({
+				     search: queryString.stringify(UrlObj)
+			     });
+		     });
+
 	 };
 
     onSortByDate = (el) => {
-	    let newState = update(this.state.sortSettings, {$merge: {
-	    	sortByDate: {
-	    		name: el.name,
-			    date: el.date,
-			    type: el.type,
-			    status: el.date !== 'All'
-		    }
-	    }});
-
 	    this.setState({
-		    sortSettings: {
-			    ...newState
-		    }
+
+			    sortByDate: {
+				    name: el.name,
+				    date: el.date,
+				    type: el.type,
+				    status: el.date !== 'All'
+			    }
+
 	    });
 
-	    let newDate;
+	    let startDate;
+	    let endDate;
 	    let UrlObj = this.getUrlString;
 
 	    if (el.type === 'range') {
-		    newDate = el.date.split('=');
-		    UrlObj.year = new Date(newDate[0]).getFullYear() + '-' + new Date(newDate[1]).getFullYear();
+		    startDate = el.date.split('=')[0] ? new Date(el.date.split('=')[0]).getFullYear() : '';
+		    endDate = new Date(el.date.split('=')[1]).getFullYear();
+
+		    UrlObj.year = startDate + '-' + endDate;
 	    } else {
 		    UrlObj.year = el.date;
 	    }
@@ -141,17 +136,14 @@ class FilterList extends Component {
     };
 
     onSortByCountry = (el) => {
-	    let newState = update(this.state.sortSettings, {$merge: {
-	    	sortByCountry: {
-	    		name: el.name,
-			    ico: el.ico,
-			    status: el.ico !== 'All'
-		    }
-	    }});
 	    this.setState({
-		    sortSettings: {
-			    ...newState
-		    }
+
+			    sortByCountry: {
+				    name: el.name,
+				    ico: el.ico,
+				    status: el.ico !== 'All'
+			    }
+
 	    });
 
 	    let UrlObj = this.getUrlString;
@@ -168,12 +160,10 @@ class FilterList extends Component {
 
     onSelectGenres = (el) => {
 	    let id = +el.id;
-    	let newState = update(this.state.sortSettings, {$merge: {
-			    genresListName: {id: id, name: el.name}
-	    }});
+
 
 	    this.setState({
-		    sortSettings: {...newState},
+		    genresListName: {id: id, name: el.name},
 		    genresListData: {
 		    	id: id, name: el.name, status: id !== 0
 		    }
@@ -191,20 +181,16 @@ class FilterList extends Component {
 	    });
     };
 
-
     onClickAdult = () => {
-	    let newState = update(this.state.sortSettings, {$merge: {
-	         adult: !this.state.sortSettings.adult
-	     }});
 	     this.setState({
-	         sortSettings: {
-	             ...newState
-	         }
+
+		     adult: !this.state.adult
+
 	     });
 
 
 	    let UrlObj = this.getUrlString;
-	    UrlObj.adult = !this.state.sortSettings.adult;
+	    UrlObj.adult = !this.state.adult;
 
 	    if (this.getUrlString.adult) {
 	    	delete UrlObj.adult;
@@ -216,26 +202,40 @@ class FilterList extends Component {
     };
 
     onChangeRangeDate = (e) => {
-	     let newState = update(this.state.sortSettings, {$merge: {
-	         sortByDate: {
-	             name: e.target.value,
-	             date: e.target.value,
-	             type: 'single',
-	             status: true
-	         }
-	     }});
+	    if ( e.target.value.length <= 4) {
+		    this.setState({
+			    sortByDateInput: e.target.value,
+			    sortByDate: {
+				    name: e.target.value,
+				    date: e.target.value,
+				    type: 'single',
+				    status: true
+			    }
+		    });
 
-	     this.setState({
-	         sortSettings: {
-	             ...newState
-	         }
-	     });
+		    if (+e.target.value >= 1910) {
+			    let UrlObj = this.getUrlString;
+			    UrlObj.year = +e.target.value;
 
+			    this.props.history.push({
+				    search: queryString.stringify(UrlObj)
+			    });
+		    }
+        }
     };
+
+ onBlur = (e) => {
+     if (e.target.value.length < 4 ) {
+         this.setState({
+             sortByDateInput: ''
+         });
+     }
+ };
+
 
 	 restoreDefaultState = () => {
 	    this.setState({
-		    sortSettings: {
+
 		    	genresListName: {
 		    		name: 'Все жанры',
 				    id: 0,
@@ -258,8 +258,7 @@ class FilterList extends Component {
 				    status: false
 			    },
 			    SortDirection: false,
-				        adult: false
-		    },
+			    adult: false,
 		    genresListData: {
 		    	name: 'Все жанры',
 			    id: 0
@@ -289,11 +288,11 @@ class FilterList extends Component {
 	 if ( this.props.MobileFilter ) {
 		 return (
 		 	<Filters
-			    sortSettings={sortSettings}
+			    sortSettings={this.state}
 			    safeFilter={this.props.safeFilter}
 			    modalFilter={this.state.modalFilter}
 			    genres={this.props.genres}
-			    sortListType={sortListType}
+			    sortListType={this.props.sortListType}
 			    genresListData={this.state.genresListData}
 			    sortByCountry={this.props.sortByCountry}
 			    onClickGenres={this.onSelectGenres}
@@ -302,16 +301,18 @@ class FilterList extends Component {
 			    onClickSort={this.onSortLists}
 			    onClickAdult={this.onClickAdult}
 			    onClickChangeDir={this.onClickChangeDir}
+			    onChangeRangeDate={this.onChangeRangeDate}
+			    onBlur={this.onBlur}
 		    />
 		 );
 	 }
 	 return (
 	 	<FiltersMobile
 		    safeFilter={this.props.safeFilter}
-		    sortSettings={sortSettings}
+		    sortSettings={this.state}
 		    modalFilter={this.state.modalFilter}
 		    genres={this.props.genres}
-		    sortListType={sortListType}
+		    sortListType={this.props.sortListType}
 		    genresListData={this.state.genresListData}
 		    sortByCountry={this.props.sortByCountry}
 		    onClickGenres={this.onSelectGenres}
