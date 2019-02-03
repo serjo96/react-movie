@@ -12,22 +12,31 @@ module.exports = [
     {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'file-loader'
+        loader: 'file-loader',
+	    options: {
+		    outputPath: 'fonts/'
+	    }
     },
     {
         test: /\.(woff|woff2)$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'url-loader?prefix=font/&limit=5000'
+        loader: 'url-loader?prefix=font/&limit=5000',
+	    options: {
+		    outputPath: 'fonts/'
+	    }
     },
     {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader?limit=10000&mimetype=application/octet-stream',
+	    options: {
+		    outputPath: 'fonts/'
+	    }
     },
     {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+        loader: 'url-loader?limit=10000&mimetype=image/svg+xml/',
     },
     {
         test: /\.gif/,
