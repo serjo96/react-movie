@@ -171,6 +171,7 @@ class Search extends Component {
                      <DebounceInput
                          className="search__field"
                          name="Search"
+                         type="search"
                          debounceTimeout={400}
                          placeholder="Поиск фильмов и сериалов..."
                          onKeyDown={this.onKeyDown}

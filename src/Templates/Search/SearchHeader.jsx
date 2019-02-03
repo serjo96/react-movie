@@ -21,31 +21,6 @@ class SearchHeader extends Component {
         };
     }
 
-    componentDidMount() {
-    	// TODO: fix header warring with setState
-        window.addEventListener('click', this.pageClick, false);
-    }
-
-	 pageClick = (e) => {
-	     if (this.mouseIsDownOnCalendar || e.target.className.indexOf('search__field--header') === 14) {
-	         return;
-	     }
-
-	     this.setState({
-	         visibilityResult: false
-	     });
-	 };
-
-
-	 mouseDownHandler = () => {
-	     this.mouseIsDownOnCalendar = true;
-	 };
-
-	 mouseUpHandler = () => {
-	     this.mouseIsDownOnCalendar = false;
-	 };
-
-
 	 onInput = (e) => {
 	     this.setState({
 		     val: e.target.value,
@@ -132,7 +107,8 @@ class SearchHeader extends Component {
          <div
              className="box"
              style={{ ...style, ...viewStyle }}
-             {...props}/>
+             {...props}
+         />
      );
  };
 
@@ -156,20 +132,18 @@ class SearchHeader extends Component {
 
 
 	    return (
-         <div
-	         className="header__search search"
-	         onMouseDown={this.mouseDownHandler}
-	         onMouseUp={this.mouseUpHandler}
-         >
+         <div className="header__search search">
              <div className="search-field-wrapper">
 	             <DebounceInput
 		             className="search__field search__field--header"
 	                 name="Search"
+		             type="search"
 	                 debounceTimeout={300}
 	                 placeholder="Поиск фильмов и сериалов..."
 	                 onKeyDown={this.onKeyDown}
 	                 onInput={e => this.setState({val: e.target.value})}
 	                 onChange={this.onInput}
+		             onBlur={()=> this.setState({visibilityResult: false})}
 	                 value={this.state.val}
 		             onFocus={e=> e.target.value.length > 0 ? this.setState({visibilityResult: true}) : null}
 	             />
@@ -179,18 +153,18 @@ class SearchHeader extends Component {
 	            {this.state.visibilityResult &&
 		            <div className="search__result searchComboBox">
 
-			            {this.props.SearchResult.isFetching ? this.props.SearchResult.data.total_results > 0
-				            ? <Scrollbars style={myScrollbar} autoHeight
-				                        autoHeightMin={95}
-				                        autoHeightMax={300}  autoHideTimeout={1000} autoHideDuration={600}
-				                        renderView={props => <div {...props} className="ComboBox-view"/>}
-				                        onUpdate={this.handleUpdate}
-				                        className="comboBox-view-wrap"
-
-				            >
-					            { this.props.SearchResult.data.results.map((item, index)=> this.renderResults(item, index))}
-				            </Scrollbars>
-				            : <div className="result-element">Поиск не дал результатов, попробуйте уточнить поиск</div>
+			            {this.props.SearchResult.isFetching
+				            ? this.props.SearchResult.data.total_results > 0
+					            ? <Scrollbars style={myScrollbar} autoHeight
+					                        autoHeightMin={95}
+					                        autoHeightMax={300}  autoHideTimeout={1000} autoHideDuration={600}
+					                        renderView={props => <div {...props} className="ComboBox-view"/>}
+					                        onUpdate={this.handleUpdate}
+					                        className="comboBox-view-wrap"
+					            >
+						            { this.props.SearchResult.data.results.map((item, index)=> this.renderResults(item, index))}
+					            </Scrollbars>
+				                : <div className="result-element">Поиск не дал результатов, попробуйте уточнить поиск</div>
 				            : null}
 		            </div> }
 
