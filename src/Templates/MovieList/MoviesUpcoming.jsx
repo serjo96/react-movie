@@ -7,7 +7,7 @@ import { movieUpcoming } from './../../Data/api/Movies.api';
 
 import MovieList from './../MediaList/MediaList';
 import ServiceBlock from './../Service/ServiceBlock';
-import { PageSwitcher } from './../../ui-components/Page switching/Page-switcher';
+import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
 
 
 class MovieUpcoming extends Component {

@@ -7,7 +7,7 @@ import { tvAiring } from './../../Data/api/Tv.api';
 
 import MediaList from './../MediaList/MediaList';
 import ServiceBlock from './../Service/ServiceBlock';
-import { PageSwitcher } from './../../ui-components/Page switching/Page-switcher';
+import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
 
 
 class TVAiring extends Component {

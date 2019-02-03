@@ -150,7 +150,16 @@ class TV extends Component {
 					            />
 
 					            <div className="overview">
-						            {this.props.tv.tvTitles.seasonTitle !== null ? <div className="prev-page-link"><Link to={this.props.match.url} onClick={this.props.clearTvSeason} className="link-angle link-angle--left"><i className="fa fa-angle-left" aria-hidden="true" /><span>На страницу сериала</span></Link></div>:null}
+						            {this.props.tv.tvTitles.seasonTitle !== null
+							            ? <div className="prev-page-link">
+								            <Link to={this.props.match.url}
+								                  onClick={this.props.clearTvSeason}
+								                  className="link-angle link-angle--left">
+									            <i className="fa fa-angle-left" aria-hidden="true" />
+									            <span>На страницу сериала</span>
+								            </Link>
+							            </div>
+							            : null}
 
 						            <div className="description">
 							            {overview ? <p className="description__text">{overview}</p>

@@ -4,7 +4,7 @@ import { movieListPlaying } from '../../Data/api/Movies.api';
 import {Helmet} from 'react-helmet';
 import { connect } from 'react-redux';
 
-import { PageSwitcher } from './../../ui-components/Page switching/Page-switcher';
+import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
 import MovieList from '../MediaList/MediaList';
 import ServiceBlock from '../Service/ServiceBlock';
 

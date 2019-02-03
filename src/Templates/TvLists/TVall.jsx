@@ -3,32 +3,21 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { changeMediaPage } from '../../Data/actions/tv-actions';
-import { tvPopular } from '../../Data/api/Tv.api';
-import { sortListTV } from './../../Data/localData';
+import { changeMediaPage } from './../../Data/actions/tv-actions';
+import { tvPopular } from './../../Data/api/Tv.api';
+import { sortListTV } from '././../../Data/localData';
 
-import MediaList from './../MediaList/MediaList';
+import MediaList from '././../MediaList/MediaList';
 import FilterList from './../Filters/Containers/FilterList';
-import ServiceBlock from './../Service/ServiceBlock';
-import { PageSwitcher } from './../../ui-components/Page switching/Page-switcher';
+import ServiceBlock from '././../Service/ServiceBlock';
+import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
 
 
 class TvPopular extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            intervalId: 0,
-	        sortType: 'popularity.desc',
-	        sortDate: 0,
-	        sortSettings: {
-		        sortType: null,
-		        sortByDate: {
-			        data: null
-		        },
-		        sortByCountry: {
-			        ico: null
-		        }
-	        }
+            intervalId: 0
         };
     }
 
@@ -60,8 +49,7 @@ class TvPopular extends Component {
     get getUrlObjectState() {
         return {
             genre: queryString.parse(this.props.location.search).genre,
-            country: queryString.parse(this.props.location.search).country,
-            sort_direction: queryString.parse(this.props.location.search).dir,
+	        sort_by: queryString.parse(this.props.location.search).sort_by,
             year: queryString.parse(this.props.location.search).year,
             page: queryString.parse(this.props.location.search).page
         };
@@ -71,7 +59,6 @@ class TvPopular extends Component {
 	     let page = +this.getUrlObjectState.page;
 	     let UrlStateObj = {
 		     page: +this.getUrlObjectState.page,
-		     country: this.getUrlObjectState.country,
 		     genres: this.getUrlObjectState.genre,
 		     sort_by: this.getUrlObjectState.sort_by,
 		     year: this.getUrlObjectState.year
@@ -89,7 +76,9 @@ class TvPopular extends Component {
 		     UrlStateObj.page = UrlStateObj.page + UrlStateObj.page - 1;
 	     }
 
-	     this.props.loadList(UrlStateObj.page, UrlStateObj.genres, UrlStateObj.sort_by, UrlStateObj.year, UrlStateObj.country, UrlStateObj.adult);
+	     console.log(UrlStateObj.sort_by)
+
+	     this.props.loadList(UrlStateObj.page, UrlStateObj.genres, UrlStateObj.sort_by, UrlStateObj.year);
      };
 
  prevPage = () => {
@@ -195,7 +184,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    loadList: (page, genre, sortType, date, country, adult) => dispatch(tvPopular(page, genre, sortType, date, country, adult)),
+    loadList: (page, genre, sortType, date) => dispatch(tvPopular(page, genre, sortType, date)),
 	changeListFetchStatus: (type) => dispatch(changeMediaPage(type))
 });
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { tvOnTheAir } from './../../Data/api/Tv.api';
 
-import { PageSwitcher } from './../../ui-components/Page switching/Page-switcher';
+import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
 import MediaList from './../MediaList/MediaList';
 import ServiceBlock from './../Service/ServiceBlock';
 

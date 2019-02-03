@@ -102,7 +102,7 @@ class Movie extends Component {
   			autoplay: 0
 	    }
   	};
-
+//TODO: add pre loader to request, and add loading text if don't have text in eng
 	  const { imgIndex } = this.state;
 
 	  const movie = this.props.movie.data,

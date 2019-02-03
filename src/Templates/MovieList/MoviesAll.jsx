@@ -4,30 +4,20 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 
 import { changeMoviePage } from './../../Data/actions/movies-actions';
-import { movieListPopular } from './../../Data/api/Movies.api';
+import { movieListAll } from './../../Data/api/Movies.api';
+import { sortListMovie } from './../../Data/localData';
 
 
 import MovieList from './../MediaList/MediaList';
 import FilterList from './../Filters/Containers/FilterList';
-import { PageSwitcher } from './../../ui-components/Page switching/Page-switcher';
+import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
 import ServiceBlock from './../Service/ServiceBlock';
 
 class MoviesAll extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            intervalId: 0,
-	        sortType: 'popularity.desc',
-	        sortDate: 0,
-	        sortSettings: {
-		        sortType: null,
-		        sortByDate: {
-		        	data: null
-		        },
-		        sortByCountry: {
-		        	ico: null
-		        }
-	        }
+            intervalId: 0
         };
     }
 
@@ -160,6 +150,7 @@ class MoviesAll extends Component {
 					    onClickSortDate={this.onSortByDate}
 					    sortByCountry={true}
 					    safeFilter={true}
+					    sortListType={sortListMovie}
 					    MobileFilter={width >= 963}
 				    />
 					    <MovieList
@@ -190,7 +181,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    loadList: (page, genre, sortType, date, country, adult) => dispatch(movieListPopular(page, genre, sortType, date, country, adult)),
+    loadList: (page, genre, sortType, date, country, adult) => dispatch(movieListAll(page, genre, sortType, date, country, adult)),
     changeListStatus: (type) => dispatch(changeMoviePage(type))
 });
 
