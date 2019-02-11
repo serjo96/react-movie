@@ -18,14 +18,14 @@ class MoviePopup extends Component   {
             coords = target.getBoundingClientRect(),
             tooltipElem = this.tooltip,
 		    left = target.offsetLeft + target.offsetWidth,
-            top = target.offsetTop;
+            top = target.offsetTop + 50;
 
 
         if (left < 0) {
             left =  0;
         }
         if ( coords.left > targetParent.offsetWidth - 30 - target.offsetWidth - tooltipElem.offsetWidth ) {
-            left = target.offsetLeft - tooltipElem.offsetWidth ;
+            left = target.offsetLeft - tooltipElem.offsetWidth;
 	        tooltipElem.classList.add('movie-tooltip--right');
 	        tooltipElem.classList.remove('movie-tooltip--left');
         }
@@ -35,7 +35,7 @@ class MoviePopup extends Component   {
         tooltipElem.style.top = top + 'px';
     }
     render() {
-        let {Allgenres} = this.props,
+        let { Allgenres } = this.props,
 	        overview = this.props.EngData[this.props.typeItem][this.props.id]
 		        ? this.props.EngData[this.props.typeItem][this.props.id].overview
 		        : this.props.overview;
@@ -48,21 +48,21 @@ class MoviePopup extends Component   {
                 <div className="tooltip__content">
                     <div className="tooltip__title">
                         <div className="ru-title">{this.props.title}</div>
-                        <div className="original-title">{Originaltitle !== this.props.title ? Originaltitle: null}</div>
+                        <div className="original-title">{Originaltitle !== this.props.title ? Originaltitle : null}</div>
                     </div>
                     <div className="movie-tooltip__info">
                         <div className="tooltip__genre-data">
-                            {this.props.date ? <div className="tooltip__date">{this.props.date.substring(0, 4)}</div>: null}
+                            {this.props.date ? <div className="tooltip__date">{this.props.date.substring(0, 4)}</div> : null}
                             {this.props.genres
 	                            ? Allgenres.isFetching
-	                            ? <div className='genres'>{this.props.genres.map((el, indx)=> indx <= 2
+	                            ? <div className="genres">{this.props.genres.map((el, indx)=> indx <= 2
 		                            ? <div key={indx} className="genre">
-                                        {Allgenres.data.obj[el]
-	                                        ? <Link className='tag' to={`/${this.props.typeItem === 'movie'
+                                            {Allgenres.data.obj[el]
+	                                        ? <Link className="tag" to={`/${this.props.typeItem === 'movie'
 		                                        ? this.props.typeItem + 's'
 		                                        : this.props.typeItem}/all?genre-${urlRusLat(Allgenres.data.obj[el])}-${el}`}>{Allgenres.data.obj[el]}</Link>
 	                                        : null}
-                                    </div>
+                                        </div>
 		                            : null) }
                                     </div>
 	                            : null
@@ -75,7 +75,7 @@ class MoviePopup extends Component   {
                         : <div className="movie-tooltip__no-description">
 			                <div>Ой! Кажется описание к этому произведению отсутствует</div>
                             {overview !== 404
-	                            ? <div className='load-description-eng'>
+	                            ? <div className="load-description-eng">
 				                <span onClick={()=>this.props.loadEngData(this.props.id, this.props.typeItem)}>Загрузить описание на английском?</span>
 			                </div>
 	                            : null}
@@ -87,15 +87,15 @@ class MoviePopup extends Component   {
 }
 
 function mapStateToProps(state) {
-	return {
-		Allgenres: state.General.Genres,
+    return {
+        Allgenres: state.General.Genres,
         EngData: state.General.EngDescription
-	};
+    };
 }
 
 
 const mapDispatchToProps = (dispatch) => ({
-	loadEngData: (id, lang) => dispatch(onLoadEngMedia(id, lang))
+    loadEngData: (id, lang) => dispatch(onLoadEngMedia(id, lang))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps) (MoviePopup);
+export default connect(mapStateToProps, mapDispatchToProps)(MoviePopup);
