@@ -11,7 +11,7 @@ export const LoadEngData  = (mediaData) => {
         <div>
             <div>Ой! Кажется описание к этому произведению отсутствует</div>
             <div className="load-description-eng">
-                <span onClick={()=>mediaData.loadTvData(mediaData.id, mediaData.lang)}>Загрузить описание на английском?</span>
+                <button onClick={()=>mediaData.loadTvData(mediaData.id, mediaData.lang)}>Загрузить описание на английском?</button>
             </div>
         </div>
     );
