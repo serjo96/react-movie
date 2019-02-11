@@ -39,16 +39,17 @@ class MediaItem extends Component {
  render() {
      return (
          <div
-             className={`movie-item${this.state.imgStatus
-                 ? ' movie-loading'
-                 : ''}
+             className={`movie-item${this.state.imgStatus ? ' movie-loading' : ''}
                  ${this.state.popup
 	             ? 'movie-item--hover'
 	             : ''}`}
              id={this.props.id}
              onMouseEnter={this.outItem}
              onMouseLeave={ this.leaveItem}
-             ref={el=> this.el = el}>
+             ref={el=> {
+             	this.el = el;
+             }}
+         >
              <div className="movie-item__data">
                  <Link to={'/' + this.props.typeList + '/' + urlRusLat(this.props.title) + '-' + this.props.id}>
                      <div className="movie-item__poster">
