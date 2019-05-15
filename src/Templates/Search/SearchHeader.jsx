@@ -11,23 +11,46 @@ import NoImg from './../../assests/img/NoImg.png';
 import Spinner from './../Spinner/Spinner';
 
 class SearchHeader extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-	        visibilityResult: false,
-	        val: '',
-	        top: 0,
-	        imgStatus: true
-        };
+    state = {
+        visibilityResult: false,
+        val: '',
+        top: 0,
+        imgStatus: true
+    };
+
+    //TODO: refactor this listiner for search combobox
+
+    componentDidMount() {
+        window.addEventListener('click', this.pageClick, false);
     }
 
-	 onInput = (e) => {
+    pageClick = (e) => {
+        if (this.mouseIsDownOnCalendar || e.target.className === 'header__search' ||  e.target.className === 'search__field search__field--header') {
+            return;
+        }
+
+        this.setState({
+            visibilityResult: false
+        });
+    };
+
+
+    mouseDownHandler = () => {
+        this.mouseIsDownOnCalendar = true;
+    };
+
+    mouseUpHandler =() => {
+        this.mouseIsDownOnCalendar = false;
+    };
+
+
+    onInput = (e) => {
 	     this.setState({
 		     val: e.target.value,
 		     visibilityResult: true
 	     });
 
-	     if (this.state.val.length > 0) {
+	     if (this.state.val.length) {
 	        this.props.onInput(this.state.val, 'header-search');
 	     }
 	 };
@@ -35,7 +58,7 @@ class SearchHeader extends Component {
 
 	 onKeyDown = (e) => {
 	    if (e.keyCode === 13) {
-		    if (this.state.val.length > 0) {
+		    if (this.state.val.length) {
 			    this.setState({visibilityResult: false});
 			    this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
 			    document.querySelector('.header__search').classList.remove('header__search--mobile');
@@ -44,8 +67,10 @@ class SearchHeader extends Component {
 	 };
 
 	 onClickSearch = () => {
-	     if (this.state.val.length > 0) {
-	         this.setState({visibilityResult: false});
+	     if (this.state.val.length) {
+	         this.setState({
+				 visibilityResult: false
+	         });
 	         this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
 		     document.querySelector('.header__search').classList.remove('header__search--mobile');
 	     }
@@ -57,10 +82,10 @@ class SearchHeader extends Component {
 	 };
 
 
- renderResults = (item, index) =>{
-     return (
+    renderResults = (item, index) =>{
+        return (
          <Link
-	         to={'/' + item.media_type + '/' + urlRusLat(item.title || item.name) + '-' + item.id}
+	         to={`/${item.media_type}/${urlRusLat(item.title || item.name)}-${item.id}`}
 	         className="result-element"
 	         key={index}
 	         onClick={()=> this.setState({val: ''})}
@@ -88,44 +113,44 @@ class SearchHeader extends Component {
              </div>
              <div className="result-element__type">{(item.media_type === 'tv') ? 'сериал' : (item.media_type === 'movie') ? 'фильм' : 'актер'}</div>
          </Link>
-     );
- };
+        );
+    };
 
- handleUpdate = (values) => {
-     const { top } = values;
-     this.setState({ top });
- };
+    handleUpdate = (values) => {
+        const { top } = values;
+        this.setState({ top });
+    };
 
- renderView = ({ style, ...props }) => {
-     const { top } = this.state;
-     const viewStyle = {
-         padding: 15,
-         backgroundColor: `rgb(${Math.round(255 - (top * 255))}, ${Math.round(top * 255)}, ${Math.round(255)})`,
-         color: `rgb(${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))})`
-     };
-     return (
+    renderView = ({ style, ...props }) => {
+        const { top } = this.state;
+        const viewStyle = {
+            padding: 15,
+            backgroundColor: `rgb(${Math.round(255 - (top * 255))}, ${Math.round(top * 255)}, ${Math.round(255)})`,
+            color: `rgb(${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))})`
+        };
+        return (
          <div
              className="box"
              style={{ ...style, ...viewStyle }}
              {...props}
          />
-     );
- };
+        );
+    };
 
- renderThumb = ({ style, ...props }) => {
-     const { top } = this.state;
-     const thumbStyle = {
-         backgroundColor: `rgb(${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))})`
-     };
-     return (
+    renderThumb = ({ style, ...props }) => {
+        const { top } = this.state;
+        const thumbStyle = {
+            backgroundColor: `rgb(${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))}, ${Math.round(255 - (top * 255))})`
+        };
+        return (
          <div
              style={{ ...style, ...thumbStyle }}
              {...props}
          />
-     );
- };
+        );
+    };
 
- render() {
+    render() {
 	 const myScrollbar = {
 		 width: 350
 	 };
@@ -133,7 +158,7 @@ class SearchHeader extends Component {
 
 	    return (
          <div className="header__search search">
-             <div className="search-field-wrapper">
+             <div className="search-field-wrapper" >
 	             <DebounceInput
 		             className="search__field search__field--header"
 	                 name="Search"
@@ -143,34 +168,39 @@ class SearchHeader extends Component {
 	                 onKeyDown={this.onKeyDown}
 	                 onInput={e => this.setState({val: e.target.value})}
 	                 onChange={this.onInput}
-		             onBlur={()=> this.setState({visibilityResult: false})}
 	                 value={this.state.val}
-		             onFocus={e=> e.target.value.length > 0 ? this.setState({visibilityResult: true}) : null}
+		             onFocus={e=> e.target.value.length && this.setState({visibilityResult: true})}
 	             />
-                 <div className="search-btn" onClick={this.onClickSearch}><i className="fa fa-search" aria-hidden="true"/></div>
-
+                 <div className="search-btn" onClick={this.onClickSearch}>
+					 <i className="fa fa-search" aria-hidden="true"/>
+                 </div>
              </div>
-	            {this.state.visibilityResult &&
-		            <div className="search__result searchComboBox">
 
-			            {this.props.SearchResult.isFetching
-				            ? this.props.SearchResult.data.total_results > 0
-					            ? <Scrollbars style={myScrollbar} autoHeight
-					                        autoHeightMin={95}
-					                        autoHeightMax={300}  autoHideTimeout={1000} autoHideDuration={600}
-					                        renderView={props => <div {...props} className="ComboBox-view"/>}
-					                        onUpdate={this.handleUpdate}
-					                        className="comboBox-view-wrap"
-					            >
-						            { this.props.SearchResult.data.results.map((item, index)=> this.renderResults(item, index))}
-					            </Scrollbars>
-				                : <div className="result-element">Поиск не дал результатов, попробуйте уточнить поиск</div>
-				            : null}
-		            </div> }
+
+		            <div className="search__result searchComboBox"  >
+						{this.state.visibilityResult &&
+							<div >
+								{this.props.SearchResult.isFetching
+									? this.props.SearchResult.data.total_results > 0
+										? <Scrollbars style={myScrollbar} autoHeight
+													  autoHeightMin={95}
+													  autoHeightMax={300}  autoHideTimeout={1000} autoHideDuration={600}
+													  renderView={props => <div {...props} className="ComboBox-view"/>}
+													  onUpdate={this.handleUpdate}
+													  className="comboBox-view-wrap"
+										>
+											{ this.props.SearchResult.data.results.map((item, index)=> this.renderResults(item, index))}
+										</Scrollbars>
+										: <div className="result-element">Поиск не дал результатов, попробуйте уточнить поиск</div>
+									: null}
+							</div>
+
+						}
+		            </div>
 
          </div>
-     );
- }
+    );
+    }
 }
 
 
