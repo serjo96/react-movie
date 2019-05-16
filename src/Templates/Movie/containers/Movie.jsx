@@ -102,7 +102,8 @@ class Movie extends Component {
   	const YouTubeParams = {
   		playerVars: { // https://developers.google.com/youtube/player_parameters
   			autoplay: 0
-	    }
+	    },
+		height: '100%'
   	};
 //TODO: add pre loader to request, and add loading text if don't have text in eng
 	  const { imgIndex } = this.state;
