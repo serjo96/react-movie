@@ -1,6 +1,11 @@
 {
   "extends": ["standard", "standard-react"],
   "rules": {
-    "semi": ["error", "always"]
-  }
+    "semi": ["error", "always"],
+    "space-in-brackets": ["error", "always"],
+    "space-before-blocks": "error",
+    "react/prop-types": ["warn"]
+  },
+  "plugins": ["react"],
+  "parser": "babel-eslint"
 }
