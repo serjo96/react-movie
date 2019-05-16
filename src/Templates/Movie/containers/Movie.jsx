@@ -20,18 +20,14 @@ import ServiceBlock from './../../Service/ServiceBlock';
 
 
 class Movie extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+    state = {
             modalTrailer: false,
 	        trailerKey: '',
-	        lightBox: false,
-	        imgIndex: 0,
 	        imgCount: 11,
 	        imgStatus: true,
 	        intervalId: 0
-        };
-    }
+    };
+
 
     componentDidMount() {
 	    if (window.pageYOffset === 0) {
@@ -86,12 +82,7 @@ class Movie extends Component {
 	     event.target.pauseVideo();
 	 };
 
-	 onClickImg = (e) =>{
-		 this.setState({
-			 imgIndex: e.target.dataset.index,
-			 lightBox: !this.state.lightBox
-		 });
-	 };
+
 
 	 onLoadImg = (e) =>{
 	     e.target.classList.remove('img-loading');
@@ -108,8 +99,9 @@ class Movie extends Component {
 //TODO: add pre loader to request, and add loading text if don't have text in eng
 	  const { imgIndex } = this.state;
 
-	  const movie = this.props.movie.data,
-		  images = this.props.movie.images;
+	  const movie = this.props.movie.data;
+      const { images } = this.props.movie;
+      const { posters } = this.props.movie;
 
 		 return (
 			 <ServiceBlock isLoading={this.props.movie.isFetching} isError={this.props.movie.status} fetch={this.sendRequest}>
@@ -180,7 +172,17 @@ class Movie extends Component {
 
 
 							 <MediaCast cast={movie.credits.cast}/>
-							 <MediaStills images={images} title="Кадры из фильма" imgCount={16} onClickImg={this.onClickImg}/>
+							 <MediaStills
+								 images={images}
+								 title="Кадры из фильма"
+								 imgCount={16}
+							 />
+							 <MediaStills
+                               images={posters}
+                               title="Постеры"
+							   posters={true}
+                               imgCount={8}
+                             />
 
 						 </div>
 					 </div>
@@ -191,29 +193,15 @@ class Movie extends Component {
 				 	: null
 				 }
 
-				 {movie.recommendations.total_results > 0
-					 ? <MediaRecommendations recommendations={movie.recommendations} listName="Вам может понравиться" typeList="movie"/>
-					 : null }
+				 {movie.recommendations.total_results &&
+					 <MediaRecommendations
+						 recommendations={movie.recommendations}
+						 listName="Вам может понравиться"
+						 typeList="movie"/>}
 
 
-				 {this.state.lightBox ?
-					 <Lightbox
-						 mainSrc={'https://image.tmdb.org/t/p/w1280' + images[imgIndex].file_path}
-						 nextSrc={'https://image.tmdb.org/t/p/w1280' + images[(imgIndex + 1) % images.length].file_path}
-						 prevSrc={'https://image.tmdb.org/t/p/w1280' + images[(imgIndex + images.length - 1) % images.length].file_path}
-
-						 onCloseRequest={() => this.setState({ lightBox: false })}
-						 onMovePrevRequest={() => this.setState({
-							 imgIndex: (imgIndex + images.length - 1) % images.length
-						 })}
-						 onMoveNextRequest={() => this.setState({
-							 imgIndex: (imgIndex + 1) % images.length
-						 })}
-					 />: null}
-
-
-				 {this.state.modalTrailer
-					 ? <div className="popup-base" onClick={this.closePopup}>
+				 {this.state.modalTrailer &&
+					  <div className="popup-base" onClick={this.closePopup}>
 						 <div className="popup popup--video">
 							 <div className="popup__close" onClick={this.closePopup}/>
 							 <Popup>
@@ -225,7 +213,7 @@ class Movie extends Component {
 							 </Popup>
 						 </div>
 					 </div>
-					 : null}
+					 }
 				 </div>
 			 </ServiceBlock>
 		 );
