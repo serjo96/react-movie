@@ -45,9 +45,9 @@ class Search extends Component {
 		            this.props.location.search.substring(this.props.location.search.lastIndexOf('?') + 1,
                     this.props.location.search.lastIndexOf('%')).replace('?', '').replace(/_/g, ' ')
                 )});
-        } else {
-            this.setState({val: decodeURI(this.props.location.search.replace('?', '').replace(/_/g, ' '))});
-        }
+    } else {
+        this.setState({val: decodeURI(this.props.location.search.replace('?', '').replace(/_/g, ' '))});
+    }
         if (this.props.location.search || this.state.val) {
 	        this.sendRequest();
         } else {
@@ -57,110 +57,110 @@ class Search extends Component {
     }
 
 
- sendRequest = () =>{
-     let searchProps =  this.props.location.search;
-     let searchTarget = searchProps.match(/page/)
+    sendRequest = () =>{
+        let searchProps =  this.props.location.search;
+        let searchTarget = searchProps.match(/page/)
          ? decodeURI(searchProps.substring(searchProps.lastIndexOf('?') + 1, searchProps.lastIndexOf('%')).replace('?', '').replace(/_/g, ' ')[0])
          : decodeURI(searchProps.replace('?', '').replace(/_/g, ' '));
 	 if (searchProps.match(/page/)) {
 
-         let pageNumber = parseFloat(searchProps.split('=').pop());
-         if (pageNumber <= 2) {
-             this.props.onSearch(searchTarget, pageNumber + 1);
-         } else {
-             if (pageNumber <= 3) {
-                 this.props.onSearch(searchTarget, pageNumber + 2);
-             } else {
-                 this.props.onSearch(searchTarget, pageNumber + 3);
-             }
-         }
+     let pageNumber = parseFloat(searchProps.split('=').pop());
+     if (pageNumber <= 2) {
+         this.props.onSearch(searchTarget, pageNumber + 1);
      } else {
-         if (searchTarget.length > 0) {
-	         this.props.onSearch(searchTarget);
+         if (pageNumber <= 3) {
+             this.props.onSearch(searchTarget, pageNumber + 2);
+         } else {
+             this.props.onSearch(searchTarget, pageNumber + 3);
          }
      }
- };
+ } else {
+     if (searchTarget.length > 0) {
+	         this.props.onSearch(searchTarget);
+     }
+ }
+    };
 
 
- prevPage = () => {
+    prevPage = () => {
 	 let searchProps = this.props.location.search;
 	 let path = this.props.SearchResult.data.page > 1
          ? decodeURI(searchProps.substring(searchProps.lastIndexOf('?') + 1, searchProps.lastIndexOf('%')))
          : decodeURI(searchProps.replace('?', ''));
 
-     if (this.props.SearchResult.data.page > 1) {
-         if (this.props.SearchResult.data.page <= 3) {
-             this.props.history.push(`/search?${path}`);
-         } else {
-             if (this.props.SearchResult.data.page >= 7) {
-                 this.props.history.push(`/search?${path}%page=${this.props.SearchResult.data.page - 4}`);
-             } else {
-                 this.props.history.push(`/search?${path}%page=${this.props.SearchResult.data.page - 3}`);
-             }
-         }
-     } else {
-         this.props.history.push(`/search?${path}`);
-     }
- };
+        if (this.props.SearchResult.data.page > 1) {
+            if (this.props.SearchResult.data.page <= 3) {
+                this.props.history.push(`/search?${path}`);
+            } else {
+                if (this.props.SearchResult.data.page >= 7) {
+                    this.props.history.push(`/search?${path}%page=${this.props.SearchResult.data.page - 4}`);
+                } else {
+                    this.props.history.push(`/search?${path}%page=${this.props.SearchResult.data.page - 3}`);
+                }
+            }
+        } else {
+            this.props.history.push(`/search?${path}`);
+        }
+    };
 
- nextPage = () => {
-     let path = this.props.SearchResult.data.page > 1
+    nextPage = () => {
+        let path = this.props.SearchResult.data.page > 1
          ? decodeURI(this.props.location.search.substring(this.props.location.search.lastIndexOf('?') + 1, this.props.location.search.lastIndexOf('%')))
          : decodeURI(this.props.location.search.replace('?', ''));
 
-     if (this.props.SearchResult.data.page > 1) {
-         if (this.props.SearchResult.data.page <= 3) {
-             this.props.history.push(`/search?${path}%page=${this.props.SearchResult.data.page}`);
-         } else {
-             this.props.history.push(`/search?${path}%page=${this.props.SearchResult.data.page - 1}`);
-         }
-     } else {
-         this.props.history.push(`/search?${path}%page=${this.props.SearchResult.data.page + 1}`);
-     }
- };
+        if (this.props.SearchResult.data.page > 1) {
+            if (this.props.SearchResult.data.page <= 3) {
+                this.props.history.push(`/search?${path}%page=${this.props.SearchResult.data.page}`);
+            } else {
+                this.props.history.push(`/search?${path}%page=${this.props.SearchResult.data.page - 1}`);
+            }
+        } else {
+            this.props.history.push(`/search?${path}%page=${this.props.SearchResult.data.page + 1}`);
+        }
+    };
 
 
- onInput = (e) => {
+    onInput = (e) => {
 
-     if (e.target.value.length > 0) {
-         this.props.history.push(`/search?${friendlyUrl(e.target.value)}`);
-     }
- };
-
-
- onKeyDown = (e) => {
-     if (e.keyCode === 13) {
-         if (this.state.val.length > 0) {
-             this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
-         }
-     }
- };
-
- onClick = () =>{
-     if (this.state.val.length > 0) {
-         this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
-     }
- };
+        if (e.target.value.length > 0) {
+            this.props.history.push(`/search?${friendlyUrl(e.target.value)}`);
+        }
+    };
 
 
- scrollStep = () => {
-     if (window.pageYOffset === 0) {
-         clearInterval(this.state.intervalId);
-     }
-     window.scroll(0, window.pageYOffset - 50);
- };
+    onKeyDown = (e) => {
+        if (e.keyCode === 13) {
+            if (this.state.val.length > 0) {
+                this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
+            }
+        }
+    };
 
- scrollToTop = () => {
-     let intervalId = setInterval(this.scrollStep.bind(this), 16.66);
-     this.setState({ intervalId: intervalId });
- };
+    onClick = () =>{
+        if (this.state.val.length > 0) {
+            this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
+        }
+    };
+
+
+    scrollStep = () => {
+        if (window.pageYOffset === 0) {
+            clearInterval(this.state.intervalId);
+        }
+        window.scroll(0, window.pageYOffset - 50);
+    };
+
+    scrollToTop = () => {
+        let intervalId = setInterval(this.scrollStep.bind(this), 16.66);
+        this.setState({ intervalId: intervalId });
+    };
 
 // TODO: Пофиксить value debounce input (value нужно для получения данных из урл при иницилизации компонента), на мобильной версии идет дублирование вводимых данных в поле
- render() {
-     let {SearchResult} = this.props;
-     let titleSearch = SearchResult.data.querySearch.length > 0  ? `Результаты поиска «${SearchResult.data.querySearch}»` : 'Поиск';
+    render() {
+        let {SearchResult} = this.props;
+        let titleSearch = SearchResult.data.querySearch.length > 0  ? `Результаты поиска «${SearchResult.data.querySearch}»` : 'Поиск';
 
-     return (
+        return (
          <div className="search-page main main--media-list ">
 
              <Helmet>
@@ -215,8 +215,8 @@ class Search extends Component {
                  </ServiceBlock>
              </div>
          </div>
-     );
- }
+        );
+    }
 }
 
 
