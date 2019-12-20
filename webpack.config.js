@@ -22,7 +22,8 @@ module.exports = {
     extensions: ['.js', '.jsx'],
     alias: {
       fonts: path.join(__dirname, 'src/assets/fonts/'),
-      images: path.join(__dirname, 'src/assets/images/')
+      images: path.join(__dirname, 'src/assets/images/'),
+      'react-dom': '@hot-loader/react-dom'
     }
   },
   module: {
