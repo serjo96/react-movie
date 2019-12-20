@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
+import PropTypes from 'prop-types';
 import { PageSwitcher } from '../../../ui-components/Page-switcher/Page-switcher';
 
 import { storageCountries } from './../../../Data/localData';
@@ -332,17 +333,17 @@ class FilterList extends Component {
 
 
 PageSwitcher.propTypes = {
-    location: React.PropTypes.object.isRequired,
-    history: React.PropTypes.object.isRequired,
-    genresData: React.PropTypes.object.isRequired,
-    genres: React.PropTypes.object.isRequired,
-    onClickGenres: React.PropTypes.func.isRequired,
-    onClickCountry: React.PropTypes.func.isRequired,
-    onClickSortList: React.PropTypes.func.isRequired,
-    onClickSortDate: React.PropTypes.func.isRequired,
-    sortByCountry: React.PropTypes.bool,
-    safeFilter: React.PropTypes.bool,
-    MobileFilter: React.PropTypes.bool
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+    genresData: PropTypes.object.isRequired,
+    genres: PropTypes.object.isRequired,
+    onClickGenres: PropTypes.func.isRequired,
+    onClickCountry: PropTypes.func.isRequired,
+    onClickSortList: PropTypes.func.isRequired,
+    onClickSortDate: PropTypes.func.isRequired,
+    sortByCountry: PropTypes.bool,
+    safeFilter: PropTypes.bool,
+    MobileFilter: PropTypes.bool
 
 };
 

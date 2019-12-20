@@ -24,14 +24,14 @@ export const PageSwitcher  = (PagesData) => {
                     : null}
             </div>
         );
-    } 
+    }
     return null;
-	
+
 };
 
 PageSwitcher.propTypes = {
-    page: React.PropTypes.number,
-    total_pages: React.PropTypes.number,
-    prevPage: React.PropTypes.func,
-    nextPage: React.PropTypes.func
+    page: PropTypes.number,
+    total_pages: PropTypes.number,
+    prevPage: PropTypes.func,
+    nextPage: PropTypes.func
 };

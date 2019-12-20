@@ -7,21 +7,20 @@ import App from './App.jsx';
 import configureStore from './Data/store/configureStore';
 
 const store = configureStore();
-render( <AppContainer><Provider store={store}><BrowserRouter><App/></BrowserRouter></Provider></AppContainer>, document.querySelector("#app"));
-
+render(<AppContainer><Provider store={store}><BrowserRouter><App /></BrowserRouter></Provider></AppContainer>, document.querySelector('#app'));
 
 if (module && module.hot) {
-    module.hot.accept('./App.jsx', () => {
-        const App = require('./App.jsx').default;
-        render(
-            <AppContainer>
-                <Provider store={store}>
-                    <BrowserRouter>
-                        <App/>
-                    </BrowserRouter>
-                </Provider>
-            </AppContainer>,
-            document.querySelector("#app")
-        );
-    });
+  module.hot.accept('./App.jsx', () => {
+    const App = require('./App.jsx').default;
+    render(
+      <AppContainer>
+        <Provider store={store}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </Provider>
+      </AppContainer>,
+      document.querySelector('#app')
+    );
+  });
 }

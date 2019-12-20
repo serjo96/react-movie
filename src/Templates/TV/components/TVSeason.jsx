@@ -5,7 +5,7 @@ import { clearTvSeason } from './../../../Data/actions/tv-actions';
 import { onSeasonTV } from './../../../Data/api/Tv.api';
 
 import {friendlyData, kFormatter, declOfNum } from './../../../utils/utils';
-import NoImg from './../../../assests/img/NoImg.png';
+import NoImg from 'images/NoImg.png';
 
 class TVSeason extends Component {
     constructor( props ) {

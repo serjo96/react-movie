@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { onLoadCompanyData, LoadCompanyMovies } from './../../Data/api/Company.api';
 import { clearCompanyData } from './../../Data/actions/company-actions';
 
-import NoImg from './../../assests/img/NoImg.png';
+import NoImg from 'images/NoImg.png';
 import ServiceBlock from './../Service/ServiceBlock';
 import MovieList from './../MediaList/MediaList';
 

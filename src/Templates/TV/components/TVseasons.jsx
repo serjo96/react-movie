@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import NoImg from '../../../assests/img/NoImg.png';
+import NoImg from 'images/NoImg.png';
 import PropTypes from 'prop-types';
 import Spinner from '../../Spinner/Spinner';
 

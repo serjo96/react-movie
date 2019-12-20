@@ -2,7 +2,7 @@ import React, { Component  } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { urlRusLat } from './../../utils/utils';
-import NoImg from './../../assests/img/NoImg.png';
+import NoImg from 'images/NoImg.png';
 import MovieInfo from './../Tooltip/MovieInfo';
 import Spinner from './../Spinner/Spinner';
 

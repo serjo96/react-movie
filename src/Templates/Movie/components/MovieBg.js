@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import NoImg from './../../../assests/img/NoImg.png';
+import NoImg from 'images/NoImg.png';
 import { declOfNum, kFormatter, friendlyData, formatTime } from './../../../utils/utils';
 
 const MovieBg = (movie) => (
