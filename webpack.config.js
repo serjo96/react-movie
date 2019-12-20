@@ -1,19 +1,12 @@
-let webpack = require('webpack');
-let path = require('path');
-let loaders = require('./webpack.loaders');
-let HtmlWebpackPlugin = require('html-webpack-plugin');
-let DashboardPlugin = require('webpack-dashboard/plugin');
-let ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
+const path = require('path');
+const loaders = require('./webpack.loaders');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const HOST = process.env.HOST || '0.0.0.0';
 const PORT = process.env.PORT || '8888';
-
-loaders.push({
-  test: /\.sass$/,
-  loaders: ['style-loader', 'css-loader?importLoaders=1', 'resolve-url-loader', 'sass-loader?sourceMap'],
-  exclude: ['node_modules']
-});
-
 module.exports = {
   entry: [
     'react-hot-loader/patch',
@@ -26,10 +19,14 @@ module.exports = {
     filename: 'bundle.js'
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    alias: {
+      fonts: path.join(__dirname, 'src/assets/fonts/'),
+      images: path.join(__dirname, 'src/assets/images/')
+    }
   },
   module: {
-    loaders
+    rules: loaders
   },
   devServer: {
     contentBase: './public',
@@ -49,7 +46,7 @@ module.exports = {
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: './style.css',
       allChunks: true
     }),
