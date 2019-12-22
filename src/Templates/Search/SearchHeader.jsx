@@ -43,7 +43,7 @@ class SearchHeader extends Component {
     };
 
     onInput = (e) => {
-	     this.setState({
+      this.setState({
 		     val: e.target.value,
 		     visibilityResult: true
 	     });
@@ -94,7 +94,7 @@ class SearchHeader extends Component {
           onClick={this.resetState}
         >
           <div className='result-element__poster'>
-            {this.state.imgStatus && <Spinner /> }
+            {this.state.imgStatus && <Spinner />}
             <img
               className='img-loading'
               onLoad={this.onLoadImg}
@@ -161,7 +161,7 @@ class SearchHeader extends Component {
 
 	    return (
   <div className='header__search search'>
-          <div className='search-field-wrapper' >
+          <div className='search-field-wrapper'>
       <DebounceInput
               className='search__field search__field--header'
               name='Search'
@@ -173,31 +173,30 @@ class SearchHeader extends Component {
               onChange={this.onInput}
               value={this.state.val}
               onFocus={e => e.target.value.length && this.setState({ visibilityResult: true })}
-	             />
+            />
       <div className='search-btn' onClick={this.onClickSearch}>
               <i className='fa fa-search' aria-hidden='true' />
             </div>
     </div>
 
-          <div className='search__result searchComboBox' >
+          <div className='search__result searchComboBox'>
       {this.state.visibilityResult &&
-            <div >
-        {SearchResult.isFetching
+              <div>
+          {SearchResult.isFetching
 							    ? SearchResult.data.total_results > 0
-							      ? <Scrollbars style={myScrollbar} autoHeight
-              autoHeightMin={95}
-              autoHeightMax={300} autoHideTimeout={1000} autoHideDuration={600}
-              renderView={props => <div {...props} className='ComboBox-view' />}
-              onUpdate={this.handleUpdate}
-              className='comboBox-view-wrap'
-							      >
-              { SearchResult.data.results.map((item, index) => this.renderResults(item, index))}
-							      </Scrollbars>
+							      ? <Scrollbars
+                style={myScrollbar} autoHeight
+                autoHeightMin={95}
+                autoHeightMax={300} autoHideTimeout={1000} autoHideDuration={600}
+                renderView={props => <div {...props} className='ComboBox-view' />}
+                onUpdate={this.handleUpdate}
+                className='comboBox-view-wrap'
+							        >
+                {SearchResult.data.results.map((item, index) => this.renderResults(item, index))}
+              </Scrollbars>
 							      : <div className='result-element'>Поиск не дал результатов, попробуйте уточнить поиск</div>
 							    : null}
-      </div>
-
-            }
+        </div>}
     </div>
 
         </div>
