@@ -2,7 +2,8 @@
   "extends": ["standard", "standard-react"],
   "rules": {
     "semi": ["error", "always"],
-    "space-in-brackets": ["error", "always"],
+    "array-bracket-spacing":  "error",
+    "space-in-parens": "error",
     "space-before-blocks": "error",
     "react/prop-types": ["warn"]
   },
