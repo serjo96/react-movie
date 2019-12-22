@@ -10,33 +10,30 @@ import MediaList from './../MediaList/MediaList';
 import ServiceBlock from './../Service/ServiceBlock';
 
 class TVonTheAir extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      intervalId: 0
-    };
-  }
+ state = {
+   intervalId: 0
+ };
 
-  componentDidMount () {
-    if (window.pageYOffset === 0) {
-      clearInterval(this.state.intervalId);
-    }
-    this.scrollToTop();
-    this.sendRequest();
-  }
+ componentDidMount () {
+   if (window.pageYOffset === 0) {
+     clearInterval(this.state.intervalId);
+   }
+   this.scrollToTop();
+   this.sendRequest();
+ }
 
-  componentDidUpdate (prevProps) {
-    if (this.props.location.search !== prevProps.location.search) {
-      this.scrollToTop();
-      this.sendRequest(prevProps);
-    }
-  }
+ componentDidUpdate (prevProps) {
+   if (this.props.location.search !== prevProps.location.search) {
+     this.scrollToTop();
+     this.sendRequest(prevProps);
+   }
+ }
 
-  get getUrlObjectState () {
-    return {
-      page: queryString.parse(this.props.location.search).page
-    };
-  }
+ get getUrlObjectState () {
+   return {
+     page: queryString.parse(this.props.location.search).page
+   };
+ }
 
  sendRequest = () => {
    const page = +this.getUrlObjectState.page;
@@ -102,7 +99,7 @@ class TVonTheAir extends Component {
  };
 
  render () {
-	 const { OnTheAirTv } = this.props;
+   const { OnTheAirTv } = this.props;
    return (
      <main className='main main--media-list'>
        <Helmet>
@@ -136,7 +133,7 @@ class TVonTheAir extends Component {
 
 function mapStateToProps (state) {
   return {
-	    OnTheAirTv: state.TVs.OnTheAirTv
+    OnTheAirTv: state.TVs.OnTheAirTv
   };
 }
 

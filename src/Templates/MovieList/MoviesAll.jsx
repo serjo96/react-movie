@@ -13,12 +13,9 @@ import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
 import ServiceBlock from './../Service/ServiceBlock';
 
 class MoviesAll extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      intervalId: 0
-    };
-  }
+  state = {
+    intervalId: 0
+  };
 
   componentDidUpdate (prevProps, previousState) {
     if (this.props.location.search !== prevProps.location.search) {

@@ -44,46 +44,46 @@ class SearchHeader extends Component {
 
     onInput = (e) => {
       this.setState({
-		     val: e.target.value,
-		     visibilityResult: true
-	     });
+        val: e.target.value,
+        visibilityResult: true
+      });
 
-	     if (this.state.val.length) {
-	        this.props.onInput(this.state.val, 'header-search');
-	     }
-	 };
+      if (this.state.val.length) {
+        this.props.onInput(this.state.val, 'header-search');
+      }
+    };
 
-	 onKeyDown = (e) => {
-	    if (e.keyCode === 13) {
-		    if (this.state.val.length) {
-			    this.setState({ visibilityResult: false });
-			    this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
-			    document.querySelector('.header__search').classList.remove('header__search--mobile');
-		    }
-	    }
-	 };
+    onKeyDown = (e) => {
+      if (e.keyCode === 13) {
+        if (this.state.val.length) {
+          this.setState({ visibilityResult: false });
+          this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
+          document.querySelector('.header__search').classList.remove('header__search--mobile');
+        }
+      }
+    };
 
-	 onClickSearch = () => {
-	     if (this.state.val.length) {
-	         this.setState({
-				 visibilityResult: false
-	         });
-	         this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
-		     document.querySelector('.header__search').classList.remove('header__search--mobile');
-	     }
-	 };
+    onClickSearch = () => {
+      if (this.state.val.length) {
+        this.setState({
+          visibilityResult: false
+        });
+        this.props.history.push(`/search?${friendlyUrl(this.state.val)}`);
+        document.querySelector('.header__search').classList.remove('header__search--mobile');
+      }
+    };
 
-	 onLoadImg = (e) => {
-	     e.target.classList.remove('img-loading');
-		 setTimeout(() => this.setState({ imgStatus: false }), 500);
-	 };
+    onLoadImg = (e) => {
+      e.target.classList.remove('img-loading');
+      setTimeout(() => this.setState({ imgStatus: false }), 500);
+    };
 
-	 resetState = () => {
-	   this.setState({
-	     val: '',
-	     visibilityResult: false
-	   });
-	 };
+    resetState = () => {
+      this.setState({
+        val: '',
+        visibilityResult: false
+      });
+    };
 
     renderResults = (item, index) => {
       return (
@@ -108,10 +108,10 @@ class SearchHeader extends Component {
             <div>{item.title || item.name}</div>
             <div className='result-element__release'>
               {item.release_date
-		                 ? item.release_date.substring(0, 4)
-		                 : item.first_air_date
-			                 ? item.first_air_date.substring(0, 4).substring(0, 4)
-			                 : null}
+                ? item.release_date.substring(0, 4)
+                : item.first_air_date
+                  ? item.first_air_date.substring(0, 4).substring(0, 4)
+                  : null}
             </div>
           </div>
           <div className='result-element__type'>{(item.media_type === 'tv') ? 'сериал' : (item.media_type === 'movie') ? 'фильм' : 'актер'}</div>
@@ -154,15 +154,15 @@ class SearchHeader extends Component {
     };
 
     render () {
-	 const myScrollbar = {
-		 width: 350
-	 };
+      const myScrollbar = {
+        width: 350
+      };
 	 const { SearchResult } = this.props;
 
-	    return (
-  <div className='header__search search'>
+	 return (
+        <div className='header__search search'>
           <div className='search-field-wrapper'>
-      <DebounceInput
+            <DebounceInput
               className='search__field search__field--header'
               name='Search'
               type='search'
@@ -174,31 +174,31 @@ class SearchHeader extends Component {
               value={this.state.val}
               onFocus={e => e.target.value.length && this.setState({ visibilityResult: true })}
             />
-      <div className='search-btn' onClick={this.onClickSearch}>
+            <div className='search-btn' onClick={this.onClickSearch}>
               <i className='fa fa-search' aria-hidden='true' />
             </div>
-    </div>
+          </div>
 
           <div className='search__result searchComboBox'>
-      {this.state.visibilityResult &&
+            {this.state.visibilityResult &&
               <div>
-          {SearchResult.isFetching
-							    ? SearchResult.data.total_results > 0
-							      ? <Scrollbars
-                style={myScrollbar} autoHeight
-                autoHeightMin={95}
-                autoHeightMax={300} autoHideTimeout={1000} autoHideDuration={600}
-                renderView={props => <div {...props} className='ComboBox-view' />}
-                onUpdate={this.handleUpdate}
-                className='comboBox-view-wrap'
-							        >
-                {SearchResult.data.results.map((item, index) => this.renderResults(item, index))}
-              </Scrollbars>
-							      : <div className='result-element'>Поиск не дал результатов, попробуйте уточнить поиск</div>
-							    : null}
-        </div>}
-    </div>
-
+                {SearchResult.isFetching
+                  ? SearchResult.data.total_results > 0
+                    ? <Scrollbars
+                      style={myScrollbar}
+                      autoHeight
+                      autoHeightMin={95}
+                      autoHeightMax={300} autoHideTimeout={1000} autoHideDuration={600}
+                      renderView={props => <div {...props} className='ComboBox-view' />}
+                      onUpdate={this.handleUpdate}
+                      className='comboBox-view-wrap'
+                    >
+                      {SearchResult.data.results.map((item, index) => this.renderResults(item, index))}
+                    </Scrollbars>
+                    : <div className='result-element'>Поиск не дал результатов, попробуйте уточнить поиск</div>
+                  : null}
+              </div>}
+          </div>
         </div>
       );
     }
@@ -211,7 +211,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 function mapStateToProps (state) {
   return {
-    	SearchVal: state.General.SearchHeaderField,
+    SearchVal: state.General.SearchHeaderField,
     SearchResult: state.General.SearchHeaderResult
   };
 }
