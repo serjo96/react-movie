@@ -6,7 +6,7 @@ import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
 
 import { tvTop } from './../../Data/api/Tv.api';
 
-import MediaList from './../MediaList/MediaList';
+import MediaList from '../MediaList/MediaList';
 import ServiceBlock from './../Service/ServiceBlock';
 
 class TvTop extends Component {

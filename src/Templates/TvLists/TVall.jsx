@@ -7,7 +7,7 @@ import { changeMediaPage } from './../../Data/actions/tv-actions';
 import { tvPopular } from './../../Data/api/Tv.api';
 import { sortListTV } from '././../../Data/localData';
 
-import MediaList from '././../MediaList/MediaList';
+import { MediaList } from '../MediaList/components';
 import FilterList from './../Filters/Containers/FilterList';
 import ServiceBlock from '././../Service/ServiceBlock';
 import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';

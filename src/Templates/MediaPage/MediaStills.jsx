@@ -36,7 +36,7 @@ export default class MediaStills extends Component {
       return null;
     }
     return (
-      <div>
+      <React.Fragment>
         <div className='stills'>
           <h2>{title}</h2>
           <div className={`stills__list ${images.length <= imgCount + 1 ? 'stills__list--moreLoaded' : ''} ${title === 'Фото' ? 'stills__list--person' : ''}`}>
@@ -75,7 +75,7 @@ export default class MediaStills extends Component {
               imgIndex: (imgIndex + 1) % images.length
             })}
           />}
-      </div>
+      </React.Fragment>
 
     );
   }

@@ -7,7 +7,7 @@ import { changeMoviePage } from './../../Data/actions/movies-actions';
 import { movieListAll } from './../../Data/api/Movies.api';
 import { sortListMovie } from './../../Data/localData';
 
-import MovieList from './../MediaList/MediaList';
+import { MediaList } from '../MediaList/components';
 import FilterList from './../Filters/Containers/FilterList';
 import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
 import ServiceBlock from './../Service/ServiceBlock';
@@ -145,7 +145,7 @@ class MoviesAll extends Component {
               sortListType={sortListMovie}
               MobileFilter={width >= 963}
             />
-            <MovieList
+            <MediaList
               movieListTitle={`Всего фильмов (${AllMovies.data.total_results})`}
               movieList={AllMovies}
               typeList='movie'

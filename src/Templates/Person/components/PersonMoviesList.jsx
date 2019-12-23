@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import MediaItem from '../../MediaList/MediaItem';
+import { MediaItem } from '../../MediaList/components';
 
 export default class PersonMoviesList extends Component {
   state = {

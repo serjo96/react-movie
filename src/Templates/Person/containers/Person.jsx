@@ -7,12 +7,12 @@ import { Timeline } from 'react-twitter-widgets';
 
 import { clearPersonData } from './../../../Data/actions/person-actions';
 import { onLoadPerson } from './../../../Data/api/Perosn.api';
-import { urlRusLat, declOfNum, friendlyData } from './../../../utils/utils';
+import { urlRusLat, declOfNum, friendlyData } from 'utils/index';
 import NoImg from 'images/NoImg.png';
 
 import ServiceBlock from './../../Service/ServiceBlock';
 import MediaStills from './../../MediaPage/MediaStills';
-import MediaItem from './../../MediaList/MediaItem';
+import { MediaItem } from './../../MediaList/components';
 import PersonMoviesList from './../components/PersonMoviesList';
 
 class Person extends Component {

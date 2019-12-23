@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import NoImg from 'images/NoImg.png';
-import { friendlyUrl, urlRusLat } from '../../utils/utils';
+import { friendlyUrl, urlRusLat } from 'utils/index';
 
 const ListsPage = () => (
   <div className='main'>

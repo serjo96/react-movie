@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Swiper from 'react-id-swiper';
 import NoImg from 'images/NoImg.png';
-import { friendlyUrl } from '../../utils/utils';
+import { friendlyUrl } from 'utils/index';
 
 let SwiperParams;
 

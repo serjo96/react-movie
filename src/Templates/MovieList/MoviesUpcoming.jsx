@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { movieUpcoming } from './../../Data/api/Movies.api';
 
-import MovieList from './../MediaList/MediaList';
+import { MediaList } from '../MediaList/components';
 import ServiceBlock from './../Service/ServiceBlock';
 import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
 
@@ -111,7 +111,7 @@ class MovieUpcoming extends Component {
           fetch={this.sendRequest}
         >
           <div className='movies-content'>
-            <MovieList
+            <MediaList
               movieListTitle={`Скоро в кино (${this.props.UpcomingList.data.total_results})`}
               movieList={this.props.UpcomingList}
               typeList='movie'

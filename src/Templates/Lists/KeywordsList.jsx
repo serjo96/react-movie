@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import MovieList from '../MediaList/MediaList';
+import { MediaList } from '../MediaList/components';
 import { keywordsReq } from './../../Data/api/General.api';
 import ServiceBlock from '../Service/ServiceBlock';
 
@@ -100,13 +100,20 @@ class KeywordsList extends Component {
 
     return (
       <div className='main'>
-        <ServiceBlock isLoading={KeywordsListData.isFetching} isError={KeywordsListData.status.pageOne && KeywordsListData.status.pageTwo} fetch={this.sendRequest}>
+        <ServiceBlock
+          isLoading={KeywordsListData.isFetching}
+          isError={KeywordsListData.status.pageOne && KeywordsListData.status.pageTwo}
+          fetch={this.sendRequest}
+        >
           <Helmet>
             <title>{`Ключевое слово: ${titleSearch}`}</title>
           </Helmet>
           <div className='container'>
             <div className='search-results'>
-              <MovieList movieListTitle={`Ключевое слово: ${titleSearch} (${KeywordsListData.data.total_results})`} movieList={KeywordsListData} typeList={typeRequest} />
+              <MediaList
+                movieListTitle={`Ключевое слово: ${titleSearch} (${KeywordsListData.data.total_results})`}
+                movieList={KeywordsListData} typeList={typeRequest}
+              />
               {KeywordsListData.data.total_pages > 1
                 ? <div className='pager-btns clearfix'>
                   {KeywordsListData.data.page - 1 > 1 ? <div className='pager-btn pager-btn--prev link-angle link-angle--left' onClick={this.prevPage}><i className='fa fa-angle-left' aria-hidden='true' /><span>Предыдущая страница</span></div> : null}

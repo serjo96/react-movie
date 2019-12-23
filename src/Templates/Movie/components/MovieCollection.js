@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MovieItem from './../../MediaList/MediaItem';
+import { MediaItem } from './../../MediaList/components';
 
 const MovieCollection = (movie) => (
   <div
@@ -23,7 +23,7 @@ const MovieCollection = (movie) => (
 	                    if (new Date(a.release_date) === new Date(b.release_date)) return 0;
 	                    return new Date(a.release_date) < new Date(b.release_date) ? -1 : 1;
           }).map((el, index) =>
-            (<MovieItem
+            (<MediaItem
               title={el.title}
               original_title={el.original_title}
               overview={el.overview}

@@ -1,5 +1,5 @@
 import { SEARCH_IN_PAGE, SEARCH_IN_HEADER, CLEAR_SEARCH, GENRES, SEARCH_KEYWORDS_MOVIES, SEARCH_RESET_FETCH, MEDIA_ENG_DATA } from './../constants';
-import { capitalizeFirstLetter } from './../../utils/utils';
+import { capitalizeFirstLetter } from 'utils/index';
 import update from 'react-addons-update';
 
 const initialState = {

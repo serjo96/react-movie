@@ -6,7 +6,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 
 import { clearSearch } from './../../Data/actions/general-actions';
 import { onSearch } from './../../Data/api/Search.api';
-import { friendlyUrl, urlRusLat } from './../../utils/utils';
+import { friendlyUrl, urlRusLat } from 'utils/index';
 import NoImg from 'images/NoImg.png';
 import Spinner from './../Spinner/Spinner';
 

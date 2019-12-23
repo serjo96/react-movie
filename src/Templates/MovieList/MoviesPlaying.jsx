@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 
 import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
-import MovieList from '../MediaList/MediaList';
+import { MediaList } from '../MediaList/components';
 import ServiceBlock from '../Service/ServiceBlock';
 
 class MoviePlaying extends Component {
@@ -111,7 +111,7 @@ class MoviePlaying extends Component {
           fetch={this.sendRequest}
         >
           <div className='movies-content'>
-            <MovieList
+            <MediaList
               movieListTitle={`Сейчас в кино (${PlayMovies.data.total_results})`}
               movieList={PlayMovies}
               typeList='movie'

@@ -1,6 +1,6 @@
 import React from 'react';
 import Swiper from 'react-id-swiper';
-import MovieItem from '../MediaList/MediaItem';
+import { MediaItem } from '../MediaList/components';
 
 let SwiperParam;
 
@@ -79,7 +79,7 @@ const MediaRecommendations = (movie) => (
       >
         {movie.recommendations.results.map((el, index) =>
           (<div key={index}>
-            <MovieItem
+            <MediaItem
               title={el.title || el.name}
               original_title={el.original_title || el.original_name}
               overview={el.overview}

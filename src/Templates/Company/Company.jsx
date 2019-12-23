@@ -7,7 +7,7 @@ import { clearCompanyData } from './../../Data/actions/company-actions';
 
 import NoImg from 'images/NoImg.png';
 import ServiceBlock from './../Service/ServiceBlock';
-import MovieList from './../MediaList/MediaList';
+import { MediaList } from '../MediaList/components';
 
 class Person extends Component {
   state = {
@@ -128,7 +128,11 @@ class Person extends Component {
 
             </div>
 
-            <MovieList movieListTitle={`Всего фильмов (${companyMovies.data.total_results})`} movieList={companyMovies} typeList='movie' />
+            <MediaList
+              movieListTitle={`Всего фильмов (${companyMovies.data.total_results})`}
+              movieList={companyMovies}
+              typeList='movie'
+            />
             {companyMovies.data.total_pages > 1
               ? <div className='pager-btns clearfix'>
                 {companyMovies.data.page - 1 > 1 ? <div className='pager-btn pager-btn--prev link-angle link-angle--left' onClick={this.prevPage}><i className='fa fa-angle-left' aria-hidden='true' /><span>Предыдущая страница</span></div> : null}

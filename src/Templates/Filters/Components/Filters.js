@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { chunkArr } from './../../../utils/utils';
+import { chunkArr } from 'utils/index';
 import { storageCountries, popularCountries, sortBySingleDateList, sortByRangeDateList } from './../../../Data/localData';
 
 export default class FiltersMobile extends Component {
