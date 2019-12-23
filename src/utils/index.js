@@ -8,7 +8,7 @@ export const declOfNum = (n, titles) => titles[(n % 10 === 1 && n % 100 !== 11) 
 
 export function urlRusLat (str) {
   str = str.toLowerCase();
-  let cyr2latChars = [
+  const cyr2latChars = [
     ['а', 'a'], ['б', 'b'], ['в', 'v'], ['г', 'g'],
     ['д', 'd'], ['е', 'e'], ['ё', 'yo'], ['ж', 'zh'], ['з', 'z'],
     ['и', 'i'], ['й', 'y'], ['к', 'k'], ['л', 'l'],
@@ -50,7 +50,7 @@ export function urlRusLat (str) {
   let newStr = '';
 
   for (let i = 0; i < str.length; i++) {
-    let ch = str.charAt(i);
+    const ch = str.charAt(i);
     let newCh = '';
     cyr2latChars.forEach((string) => {
       if (ch === string[0]) {
@@ -72,8 +72,8 @@ export function isMatching (full, chunk) {
 }
 
 export function formatTime (minutes) {
-  let m = minutes % 60;
-  let h = (minutes - m) / 60;
+  const m = minutes % 60;
+  const h = (minutes - m) / 60;
   return h.toString() + ' ' + declOfNum(h.toString(), ['час', 'часа', 'часов']) + ' ' + (m < 10 ? '0' : '') + m.toString();
 }
 
