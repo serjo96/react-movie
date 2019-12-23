@@ -75,7 +75,7 @@ class MoviePopup extends Component {
                <div>Ой! Кажется описание к этому произведению отсутствует</div>
                {overview !== 404
                  ? <div className='load-description-eng'>
-                   <span onClick={() => this.props.loadEngData(this.props.id, this.props.typeItem)}>Загрузить описание на английском?</span>
+                   <button onClick={() => this.props.loadEngData(this.props.id, this.props.typeItem)}>Загрузить описание на английском?</button>
                    </div>
                  : null}
                </div>}
