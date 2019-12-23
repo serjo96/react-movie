@@ -9,126 +9,126 @@ import MovieList from '../MediaList/MediaList';
 import ServiceBlock from '../Service/ServiceBlock';
 
 class MoviePlaying extends Component {
-    state = {
-      intervalId: 0
+  state = {
+    intervalId: 0
+  };
+
+  componentDidUpdate (prevProps) {
+    if (this.props.location.search !== prevProps.location.search) {
+      this.scrollToTop();
+      this.sendRequest(prevProps);
+    }
+  }
+
+  componentDidMount () {
+    if (window.pageYOffset === 0) {
+      clearInterval(this.state.intervalId);
+    }
+    this.scrollToTop();
+    this.sendRequest();
+  }
+
+  get getUrlObjectState () {
+    return {
+      page: queryString.parse(this.props.location.search).page
+    };
+  }
+
+  sendRequest = () => {
+    const page = +this.getUrlObjectState.page;
+
+    const UrlStateObj = {
+      page: +this.getUrlObjectState.page
     };
 
-    componentDidUpdate (prevProps) {
-      if (this.props.location.search !== prevProps.location.search) {
-        this.scrollToTop();
-        this.sendRequest(prevProps);
-      }
+    if (!page) {
+      delete UrlStateObj.page;
     }
 
-    componentDidMount () {
-      if (window.pageYOffset === 0) {
-        clearInterval(this.state.intervalId);
-      }
-	    this.scrollToTop();
-      this.sendRequest();
+    if (page <= 2) {
+      UrlStateObj.page += 1;
+    } else if (page === 3) {
+      UrlStateObj.page += 2;
+    } else if (page >= 4) {
+      UrlStateObj.page = UrlStateObj.page + UrlStateObj.page - 1;
     }
 
-    get getUrlObjectState () {
-      return {
-        page: queryString.parse(this.props.location.search).page
-      };
+    this.props.loadList(UrlStateObj.page);
+  };
+
+  prevPage = () => {
+    const urlObj = this.getUrlObjectState;
+
+    if (this.getUrlObjectState.page > 2) {
+      urlObj.page = +this.getUrlObjectState.page - 1;
     }
 
-	 sendRequest = () => {
-		 const page = +this.getUrlObjectState.page;
+    if (this.getUrlObjectState.page <= 2) {
+      delete urlObj.page;
+    }
 
-		 const UrlStateObj = {
-			 page: +this.getUrlObjectState.page
-		 };
+    this.props.history.push({
+      search: queryString.stringify(urlObj)
+    });
+  };
 
-		 if (!page) {
-			 delete UrlStateObj.page;
-		 }
+  nextPage = () => {
+    const urlObj = this.getUrlObjectState;
+    urlObj.page = 2;
 
-		 if (page <= 2) {
-			 UrlStateObj.page += 1;
-		 } else if (page === 3) {
-			 UrlStateObj.page += 2;
-		 } else if (page >= 4) {
-			 UrlStateObj.page = UrlStateObj.page + UrlStateObj.page - 1;
-		 }
+    if (this.getUrlObjectState.page >= 2) {
+      urlObj.page = +this.getUrlObjectState.page + 1;
+    }
 
-		 this.props.loadList(UrlStateObj.page);
-	 };
+    this.props.history.push({
+      search: queryString.stringify(urlObj)
+    });
+  };
 
-	prevPage = () => {
-	  const urlObj = this.getUrlObjectState;
+  scrollStep = () => {
+    if (window.pageYOffset === 0) {
+      clearInterval(this.state.intervalId);
+    }
+    window.scroll(0, window.pageYOffset - 50);
+  };
 
-	  if (this.getUrlObjectState.page > 2) {
-	    urlObj.page = +this.getUrlObjectState.page - 1;
-	  }
+  scrollToTop = () => {
+    const intervalId = setInterval(this.scrollStep.bind(this), 16.66);
+    this.setState({ intervalId: intervalId });
+  };
 
-	  if (this.getUrlObjectState.page <= 2) {
-	    delete urlObj.page;
-	  }
+  render () {
+    const { PlayMovies } = this.props;
+    return (
+      <main className='main main--media-list'>
+        <Helmet>
+          <title>В прокате</title>
+        </Helmet>
 
-	  this.props.history.push({
-	    search: queryString.stringify(urlObj)
-	  });
-	};
+        <ServiceBlock
+          isLoading={PlayMovies.isFetching}
+          isError={PlayMovies.status}
+          fetch={this.sendRequest}
+        >
+          <div className='movies-content'>
+            <MovieList
+              movieListTitle={`Сейчас в кино (${PlayMovies.data.total_results})`}
+              movieList={PlayMovies}
+              typeList='movie'
+            />
 
-	nextPage = () => {
-	  const urlObj = this.getUrlObjectState;
-	  urlObj.page = 2;
+            <PageSwitcher
+              page={PlayMovies.data.page}
+              totalPages={PlayMovies.data.total_pages}
+              handlePrevPage={this.prevPage}
+              handleNextPage={this.nextPage}
+            />
 
-	  if (this.getUrlObjectState.page >= 2) {
-	    urlObj.page = +this.getUrlObjectState.page + 1;
-	  }
-
-	  this.props.history.push({
-	    search: queryString.stringify(urlObj)
-	  });
-	};
-
-	scrollStep = () => {
-	  if (window.pageYOffset === 0) {
-	    clearInterval(this.state.intervalId);
-	  }
-	  window.scroll(0, window.pageYOffset - 50);
-	};
-
- scrollToTop = () => {
-   const intervalId = setInterval(this.scrollStep.bind(this), 16.66);
-   this.setState({ intervalId: intervalId });
- };
-
- render () {
-	 const { PlayMovies } = this.props;
-   return (
-     <main className='main main--media-list'>
-       <Helmet>
-         <title>В прокате</title>
-       </Helmet>
-
-       <ServiceBlock
-         isLoading={PlayMovies.isFetching}
-         isError={PlayMovies.status}
-         fetch={this.sendRequest}
-       >
-         <div className='movies-content'>
-           <MovieList
-             movieListTitle={`Сейчас в кино (${PlayMovies.data.total_results})`}
-             movieList={PlayMovies}
-             typeList='movie'
-           />
-
-           <PageSwitcher
-             total_pages={PlayMovies.data.total_pages}
-             page={PlayMovies.data.page}
-             prevPage={this.prevPage}
-             nextPage={this.nextPage}
-           />
-
-         </div>
-       </ServiceBlock>
-     </main>
-   );
- }
+          </div>
+        </ServiceBlock>
+      </main>
+    );
+  }
 }
 
 function mapStateToProps (state) {
