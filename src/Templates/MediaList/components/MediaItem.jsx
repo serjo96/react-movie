@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classNames from 'classNames';
+
 import { urlRusLat } from 'utils';
 import NoImg from 'images/NoImg.png';
 import MovieInfo from '../../Tooltip/MovieInfo';
-import Spinner from './../../Spinner/Spinner';
+import Spinner from 'ui/spinner/Spinner';
 
 class MediaItem extends Component {
   state = {
@@ -36,7 +37,7 @@ class MediaItem extends Component {
 
   render () {
     const { popup } = this.state;
-    const { id, title, typeList } = this.props;
+    const { id, title = '', typeList } = this.props;
     const parentClass = classNames('movie-item', {
       'movie-loading': this.state.imgStatus,
       'movie-item--hover': popup
@@ -69,31 +70,32 @@ class MediaItem extends Component {
             {this.props.job && <div className='movie-item__crew'>{this.props.job}</div>}
           </Link>
         </div>
-        {this.state.popup && <MovieInfo
-          title={this.props.title}
-          originalTitle={this.props.original_title}
-          date={this.props.date}
-          overview={this.props.overview}
-          voteAverage={this.props.voteAverage}
-          el={this.el}
-          typeItem={typeList}
-          genres={this.props.genres}
-          id={id}
-        />}
+        {this.state.popup &&
+          <MovieInfo
+            title={this.props.title}
+            originalTitle={this.props.original_title}
+            date={this.props.date}
+            overview={this.props.overview}
+            voteAverage={this.props.voteAverage}
+            el={this.el}
+            typeItem={typeList}
+            genres={this.props.genres}
+            id={id}
+          />}
       </div>
     );
   }
 }
 
 MediaItem.propTypes = {
-  title: PropTypes.string,
-  original_title: PropTypes.string,
-  date: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  original_title: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  poster: PropTypes.string,
+  poster: PropTypes.string.isRequired,
   voteAverage: PropTypes.number,
-  overview: PropTypes.string,
-  genres: PropTypes.string,
+  overview: PropTypes.string.isRequired,
+  genres: PropTypes.array.isRequired,
   typeList: PropTypes.string.isRequired
 };
 
