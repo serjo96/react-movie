@@ -5,6 +5,7 @@ import { PageSwitcher } from '../../../ui-components/Page-switcher/Page-switcher
 
 import { storageCountries } from './../../../Data/localData';
 
+import './filters.sass';
 import FiltersMobile from './../components/FiltersMobile';
 import Filters from './../components/Filters';
 
