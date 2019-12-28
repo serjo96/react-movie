@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import { onLoadMainPage } from './../../Data/api/General.api';
 
-import { MediaList } from './../MediaList/components';
-import Spinner from './../Spinner/Spinner';
+import { MoviesList } from '../MoviesList/components';
+import Spinner from '../../ui-components/spinner/Spinner';
 
 class Main extends Component {
   componentDidMount () {
@@ -16,10 +16,10 @@ class Main extends Component {
       return (
         <main className='main main--media-list iphonex'>
           <div className='movies-content movies-content--main-page'>
-            <MediaList movieListTitle='Сейчас в кино' movieList={this.props.PlayMovies} count={11} movieListMain ListLink='playing' typeList='movie' />
-            <MediaList movieListTitle='Скоро в кино' movieList={this.props.UpcomingList} count={11} movieListMain ListLink='upcoming' typeList='movie' />
-            <MediaList movieListTitle='Топ фильмы' movieList={this.props.TopMovies} count={11} movieListMain={false} ListLink='top' typeList='movie' />
-            <MediaList movieListTitle='Все фильмы' movieList={this.props.AllMovies} count={11} movieListMain ListLink='all' typeList='movie' />
+            <MoviesList movieListTitle='Сейчас в кино' movieList={this.props.PlayMovies} count={11} movieListMain ListLink='playing' typeList='movie' />
+            <MoviesList movieListTitle='Скоро в кино' movieList={this.props.UpcomingList} count={11} movieListMain ListLink='upcoming' typeList='movie' />
+            <MoviesList movieListTitle='Топ фильмы' movieList={this.props.TopMovies} count={11} movieListMain={false} ListLink='top' typeList='movie' />
+            <MoviesList movieListTitle='Все фильмы' movieList={this.props.AllMovies} count={11} movieListMain ListLink='all' typeList='movie' />
           </div>
         </main>
       );

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import NoImg from 'images/NoImg.png';
 import PropTypes from 'prop-types';
-import Spinner from '../../Spinner/Spinner';
+import Spinner from '../../../ui-components/spinner/Spinner';
 
 class TVseasons extends Component {
   state = {

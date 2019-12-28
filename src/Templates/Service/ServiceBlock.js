@@ -1,5 +1,5 @@
 import React from 'react';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../../ui-components/spinner/Spinner';
 import TryAgain from '../TryAgain/TryAgain';
 
 const ServiceBlock = ({

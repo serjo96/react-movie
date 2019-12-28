@@ -8,7 +8,7 @@ import { clearSearch } from './../../Data/actions/general-actions';
 import { onSearch } from './../../Data/api/Search.api';
 import { friendlyUrl, urlRusLat } from 'utils/index';
 import NoImg from 'images/NoImg.png';
-import Spinner from './../Spinner/Spinner';
+import Spinner from '../../ui-components/spinner/Spinner';
 
 class SearchHeader extends Component {
     state = {

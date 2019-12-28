@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Lightbox from 'lightbox-react';
 import PropTypes from 'prop-types';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../../ui-components/spinner/Spinner';
 
 export default class MediaStills extends Component {
     state = {
