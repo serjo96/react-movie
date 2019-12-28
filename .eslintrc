@@ -5,7 +5,8 @@
     "array-bracket-spacing":  "error",
     "space-in-parens": "error",
     "space-before-blocks": "error",
-    "react/prop-types": ["warn"]
+    "react/prop-types": ["warn"],
+    "react/jsx-fragments": ["warn", "element"]
   },
   "plugins": ["react"],
   "parser": "babel-eslint"
