@@ -3,14 +3,14 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { changeMoviePage } from './../../Data/actions/movies-actions';
-import { movieListAll } from './../../Data/api/Movies.api';
-import { sortListMovie } from './../../Data/localData';
+import { changeMoviePage } from '../../../Data/actions/movies-actions';
+import { movieListAll } from '../../../Data/api/Movies.api';
+import { sortListMovie } from '../../../Data/localData';
 
-import { MediaList } from '../MediaList/components';
-import FilterList from './../Filters/Containers/FilterList';
-import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
-import ServiceBlock from './../Service/ServiceBlock';
+import { MoviesList } from '../components';
+import FilterList from '../../Filters/Containers/FilterList';
+import { PageSwitcher } from 'ui/Page-switcher/Page-switcher';
+import ServiceBlock from '../../Service/ServiceBlock';
 
 class MoviesAll extends Component {
   state = {
@@ -145,7 +145,7 @@ class MoviesAll extends Component {
               sortListType={sortListMovie}
               MobileFilter={width >= 963}
             />
-            <MediaList
+            <MoviesList
               movieListTitle={`Всего фильмов (${AllMovies.data.total_results})`}
               movieList={AllMovies}
               typeList='movie'

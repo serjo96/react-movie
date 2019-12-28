@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { tvOnTheAir } from './../../Data/api/Tv.api';
 
 import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
-import { MediaList } from '../MediaList/components';
+import { MoviesList } from '../MoviesList/components';
 import ServiceBlock from './../Service/ServiceBlock';
 
 class TVonTheAir extends Component {
@@ -111,7 +111,7 @@ class TVonTheAir extends Component {
          fetch={this.sendRequest}
        >
          <div className='movies-content'>
-           <MediaList
+           <MoviesList
              movieListTitle={`Текущие сериалы (${OnTheAirTv.data.total_results})`}
              movieList={OnTheAirTv}
              typeList='tv'

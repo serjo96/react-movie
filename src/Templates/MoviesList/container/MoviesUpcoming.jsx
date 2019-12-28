@@ -1,24 +1,18 @@
 import queryString from 'query-string';
 import React, { Component } from 'react';
-import { movieListPlaying } from '../../Data/api/Movies.api';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 
-import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
-import { MediaList } from '../MediaList/components';
-import ServiceBlock from '../Service/ServiceBlock';
+import { movieUpcoming } from '../../../Data/api/Movies.api';
 
-class MoviePlaying extends Component {
+import { MoviesList } from '../components';
+import ServiceBlock from '../../Service/ServiceBlock';
+import { PageSwitcher } from 'ui/Page-switcher/Page-switcher';
+
+class MovieUpcoming extends Component {
   state = {
     intervalId: 0
   };
-
-  componentDidUpdate (prevProps) {
-    if (this.props.location.search !== prevProps.location.search) {
-      this.scrollToTop();
-      this.sendRequest(prevProps);
-    }
-  }
 
   componentDidMount () {
     if (window.pageYOffset === 0) {
@@ -26,6 +20,13 @@ class MoviePlaying extends Component {
     }
     this.scrollToTop();
     this.sendRequest();
+  }
+
+  componentDidUpdate (prevProps) {
+    if (this.props.location.search !== prevProps.location.search) {
+      this.scrollToTop();
+      this.sendRequest(prevProps);
+    }
   }
 
   get getUrlObjectState () {
@@ -36,7 +37,6 @@ class MoviePlaying extends Component {
 
   sendRequest = () => {
     const page = +this.getUrlObjectState.page;
-
     const UrlStateObj = {
       page: +this.getUrlObjectState.page
     };
@@ -74,6 +74,7 @@ class MoviePlaying extends Component {
 
   nextPage = () => {
     const urlObj = this.getUrlObjectState;
+
     urlObj.page = 2;
 
     if (this.getUrlObjectState.page >= 2) {
@@ -98,32 +99,29 @@ class MoviePlaying extends Component {
   };
 
   render () {
-    const { PlayMovies } = this.props;
+    const { UpcomingList } = this.props;
     return (
       <main className='main main--media-list'>
         <Helmet>
-          <title>В прокате</title>
+          <title>Ожидаемые фильмы</title>
         </Helmet>
-
         <ServiceBlock
-          isLoading={PlayMovies.isFetching}
-          isError={PlayMovies.status}
+          isLoading={UpcomingList.isFetching}
+          isError={UpcomingList.status}
           fetch={this.sendRequest}
         >
           <div className='movies-content'>
-            <MediaList
-              movieListTitle={`Сейчас в кино (${PlayMovies.data.total_results})`}
-              movieList={PlayMovies}
+            <MoviesList
+              movieListTitle={`Скоро в кино (${this.props.UpcomingList.data.total_results})`}
+              movieList={this.props.UpcomingList}
               typeList='movie'
             />
-
             <PageSwitcher
-              page={PlayMovies.data.page}
-              totalPages={PlayMovies.data.total_pages}
+              totalPages={UpcomingList.data.total_pages}
+              page={UpcomingList.data.page}
               handlePrevPage={this.prevPage}
               handleNextPage={this.nextPage}
             />
-
           </div>
         </ServiceBlock>
       </main>
@@ -133,12 +131,12 @@ class MoviePlaying extends Component {
 
 function mapStateToProps (state) {
   return {
-    PlayMovies: state.Movies.PlayingMovies
+    UpcomingList: state.Movies.upcomingMovies
   };
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  loadList: (page) => dispatch(movieListPlaying(page))
+  loadList: (page) => dispatch(movieUpcoming(page))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MoviePlaying);
+export default connect(mapStateToProps, mapDispatchToProps)(MovieUpcoming);

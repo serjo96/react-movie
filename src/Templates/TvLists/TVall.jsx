@@ -7,7 +7,7 @@ import { changeMediaPage } from './../../Data/actions/tv-actions';
 import { tvPopular } from './../../Data/api/Tv.api';
 import { sortListTV } from '././../../Data/localData';
 
-import { MediaList } from '../MediaList/components';
+import { MoviesList } from '../MoviesList/components';
 import FilterList from './../Filters/Containers/FilterList';
 import ServiceBlock from '././../Service/ServiceBlock';
 import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
@@ -151,7 +151,7 @@ class TvPopular extends Component {
               history={this.props.history}
             />
 
-            <MediaList
+            <MoviesList
               movieListTitle={`Всего сериалов (${allTV.data.total_results})`}
               movieList={allTV}
               typeList='tv'

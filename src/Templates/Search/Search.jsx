@@ -6,7 +6,7 @@ import { DebounceInput } from 'react-debounce-input';
 import { MainSearch } from './../../Data/api/Search.api';
 import { searchResetFetch } from './../../Data/actions/general-actions';
 
-import { MediaList } from '../MediaList/components';
+import { MoviesList } from '../MoviesList/components';
 import { friendlyUrl } from 'utils/index';
 import ServiceBlock from './../Service/ServiceBlock';
 
@@ -180,7 +180,7 @@ class Search extends Component {
               fetch={this.sendRequest}
             >
               <div className='search-results'>
-                <MediaList
+                <MoviesList
                   movieListTitle={SearchResult.data.querySearch ? `${titleSearch} (${SearchResult.data.total_results})` : ''}
                   movieList={SearchResult}
                   typeList='movie'

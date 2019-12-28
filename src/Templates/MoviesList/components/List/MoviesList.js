@@ -1,9 +1,10 @@
 import React from 'react';
-import MovieItem from './MediaItem';
+import MovieItem from '../Item/MovieItem';
 import { Link } from 'react-router-dom';
 import { friendlyData } from 'utils';
+import './moviesList.sass';
 
-const MediaList = ({ movieListMain, ListLink, count, typeList, movieList, movieListTitle }) => {
+const MoviesList = ({ movieListMain, ListLink, count, typeList, movieList, movieListTitle }) => {
   const RenderListTitle = () => {
     if (movieListMain) {
       return (
@@ -69,7 +70,7 @@ const MediaList = ({ movieListMain, ListLink, count, typeList, movieList, movieL
         <RenderDataRange />
       </div>
 
-      <div className='movies__list tooltip-parent'>
+      <div className='movies__list'>
         {movieList.data.results.map((item, index) => renderMovie(item, index))}
       </div>
 
@@ -77,4 +78,4 @@ const MediaList = ({ movieListMain, ListLink, count, typeList, movieList, movieL
   );
 };
 
-export default MediaList;
+export default MoviesList;
