@@ -7,7 +7,7 @@ import { clearCompanyData } from './../../Data/actions/company-actions';
 
 import NoImg from 'images/NoImg.png';
 import ServiceBlock from './../Service/ServiceBlock';
-import { MediaList } from '../MediaList/components';
+import { MoviesList } from '../MoviesList/components';
 
 class Person extends Component {
   state = {
@@ -128,7 +128,7 @@ class Person extends Component {
 
             </div>
 
-            <MediaList
+            <MoviesList
               movieListTitle={`Всего фильмов (${companyMovies.data.total_results})`}
               movieList={companyMovies}
               typeList='movie'

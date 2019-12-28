@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { MediaList } from '../MediaList/components';
+import { MoviesList } from '../MoviesList/components';
 import { keywordsReq } from './../../Data/api/General.api';
 import ServiceBlock from '../Service/ServiceBlock';
 
@@ -110,7 +110,7 @@ class KeywordsList extends Component {
           </Helmet>
           <div className='container'>
             <div className='search-results'>
-              <MediaList
+              <MoviesList
                 movieListTitle={`Ключевое слово: ${titleSearch} (${KeywordsListData.data.total_results})`}
                 movieList={KeywordsListData} typeList={typeRequest}
               />

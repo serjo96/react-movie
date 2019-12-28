@@ -1,0 +1,43 @@
+.movie-loading
+	opacity: 0
+
+.movie-item
+	padding: 10px
+	transition: all .5s
+	width: 19.99%
+	@media only screen and (max-width : 1556px)
+		width: 20%
+	&__title
+		transition: color .3s linear
+		text-align: center
+		margin-top: 10px
+		padding: 0 5px
+		font-weight: bold
+		font-size: 16px
+		color: #7f858c
+	&__poster
+		position: relative
+		transition: border .3s linear
+		border: 1px solid #272f46
+	&__data
+		width: 100%
+		&:hover
+			.movie-item__poster
+				border: 1px solid #f7f7f7
+			.movie-item__title
+				color: #fff
+		img
+			display: block
+			width: 100%
+			height: auto
+		a
+			display: block
+	&__crew
+		@extend  .movie-item__title
+
+
+.movie-item--hover
+	.movie-item__poster
+		border: 1px solid #f7f7f7
+	.movie-item__title
+		color: #fff

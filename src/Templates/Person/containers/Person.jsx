@@ -12,7 +12,7 @@ import NoImg from 'images/NoImg.png';
 
 import ServiceBlock from './../../Service/ServiceBlock';
 import MediaStills from './../../MediaPage/MediaStills';
-import { MediaItem } from './../../MediaList/components';
+import { MovieItem } from '../../MoviesList/components';
 import PersonMoviesList from './../components/PersonMoviesList';
 
 class Person extends Component {
@@ -78,7 +78,7 @@ class Person extends Component {
   };
 
   renderMediaItem = (item, index, typeList) => {
-    return (<MediaItem
+    return (<MovieItem
       title={item.title || item.name}
       original_title={item.original_title || item.original_name}
       overview={item.overview}
