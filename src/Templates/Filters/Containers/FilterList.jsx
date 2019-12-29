@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
 import PropTypes from 'prop-types';
-import { PageSwitcher } from '../../../ui-components/Page-switcher/Page-switcher';
 
 import { storageCountries } from './../../../Data/localData';
 
@@ -274,7 +273,6 @@ class FilterList extends Component {
   };
 
   render () {
-    const { sortSettings } = this.state;
     if (this.props.MobileFilter) {
       return (
         <Filters
@@ -285,7 +283,7 @@ class FilterList extends Component {
           sortListType={this.props.sortListType}
           genresListData={this.state.genresListData}
           sortByCountry={this.props.sortByCountry}
-          onClickGenres={this.onSelectGenres}
+          handlerClickGenres={this.onSelectGenres}
           onSortByDate={this.onSortByDate}
           onSortByCountry={this.onSortByCountry}
           onClickSort={this.onSortLists}
@@ -305,7 +303,7 @@ class FilterList extends Component {
         sortListType={this.props.sortListType}
         genresListData={this.state.genresListData}
         sortByCountry={this.props.sortByCountry}
-        onClickGenres={this.onSelectGenres}
+        handlerClickGenres={this.onSelectGenres}
         onSortByDate={this.onSortByDate}
         onSortByCountry={this.onSortByCountry}
         onClickSort={this.onSortLists}
@@ -319,15 +317,11 @@ class FilterList extends Component {
   }
 }
 
-PageSwitcher.propTypes = {
+FilterList.propTypes = {
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   genresData: PropTypes.object.isRequired,
-  genres: PropTypes.object.isRequired,
-  onClickGenres: PropTypes.func.isRequired,
-  onClickCountry: PropTypes.func.isRequired,
-  onClickSortList: PropTypes.func.isRequired,
-  onClickSortDate: PropTypes.func.isRequired,
+  genres: PropTypes.arrayOf(PropTypes.object).isRequired,
   sortByCountry: PropTypes.bool,
   safeFilter: PropTypes.bool,
   MobileFilter: PropTypes.bool

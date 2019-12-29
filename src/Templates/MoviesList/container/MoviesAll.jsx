@@ -9,7 +9,7 @@ import { sortListMovie } from '../../../Data/localData';
 
 import { MoviesList } from '../components';
 import FilterList from '../../Filters/Containers/FilterList';
-import { PageSwitcher } from 'ui/Page-switcher/Page-switcher';
+import PageSwitcher from 'ui/Page-switcher/Page-switcher';
 import ServiceBlock from '../../Service/ServiceBlock';
 
 class MoviesAll extends Component {
@@ -136,10 +136,6 @@ class MoviesAll extends Component {
               history={this.props.history}
               genresData={this.props.genres.isFetching ? this.props.genres.data.obj : {}}
               genres={this.props.genres.isFetching ? this.props.genres.data.arr.movieGenres : []}
-              onClickGenres={this.GenresFilter}
-              onClickCountry={this.onClickCountry}
-              onClickSortList={this.sortList}
-              onClickSortDate={this.onSortByDate}
               sortByCountry
               safeFilter
               sortListType={sortListMovie}
