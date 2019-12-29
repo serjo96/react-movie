@@ -113,6 +113,7 @@ class MoviePopup extends Component {
       Allgenres,
       engData,
       id,
+      genres,
       typeItem,
       children,
       className,
@@ -156,23 +157,14 @@ class MoviePopup extends Component {
                   <div className='tooltip__genre-data'>
                     {this.getMovieDate}
 
-                    {this.props.genres && Allgenres.isFetching &&
+                    {genres && Allgenres.isFetching &&
                       <div className='genres'>
-                        {this.props.genres.map((id, index) => this.renderGenres(id, index))}
+                        {genres.map((id, index) => this.renderGenres(id, index))}
                       </div>}
 
                   </div>
                   <div className='rating'>Рейтинг {voteAverage} из 10</div>
                 </div>
-                {/*{mediaOverview && mediaOverview !== 404*/}
-                {/*  ? <p className='movie-tooltip__description'>{this.mediaOverview}</p>*/}
-                {/*  : <div className='movie-tooltip__no-description'>*/}
-                {/*    <div>Ой! Кажется описание к этому произведению отсутствует</div>*/}
-                {/*    {mediaOverview !== 404 &&*/}
-                {/*      <div className='load-description-eng'>*/}
-                {/*        <button onClick={() => this.props.fetchEngData(id, typeItem)}>Загрузить описание на английском?</button>*/}
-                {/*      </div>}*/}
-                {/*  </div>}*/}
                 <MovieDescription
                   short
                   overview={this.getOverview}
