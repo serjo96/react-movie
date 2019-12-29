@@ -7,7 +7,7 @@ import { tvAiring } from './../../Data/api/Tv.api';
 
 import { MoviesList } from '../MoviesList/components';
 import ServiceBlock from './../Service/ServiceBlock';
-import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
+import PageSwitcher from 'ui/Page-switcher/Page-switcher';
 
 class TVAiring extends Component {
   state = {
@@ -118,10 +118,10 @@ class TVAiring extends Component {
               typeList='tv'
             />
             <PageSwitcher
-              total_pages={AiringTv.data.total_pages}
+              totalPages={AiringTv.data.total_pages}
               page={AiringTv.data.page}
-              prevPage={this.prevPage}
-              nextPage={this.nextPage}
+              handlePrevPage={this.prevPage}
+              handleNextPage={this.nextPage}
             />
           </div>
         </ServiceBlock>

@@ -10,7 +10,7 @@ import { sortListTV } from '././../../Data/localData';
 import { MoviesList } from '../MoviesList/components';
 import FilterList from './../Filters/Containers/FilterList';
 import ServiceBlock from '././../Service/ServiceBlock';
-import { PageSwitcher } from '../../ui-components/Page-switcher/Page-switcher';
+import PageSwitcher from 'ui/Page-switcher/Page-switcher';
 
 class TvPopular extends Component {
   state = {
@@ -141,9 +141,6 @@ class TvPopular extends Component {
               location={this.props.location}
               genresData={this.genresData}
               genres={this.genres}
-              onClickGenres={this.GenresFilter}
-              onClickCountry={this.onClickCountry}
-              onClickSortList={this.sortList}
               sortByCountry={false}
               safeFilter={false}
               sortListType={sortListTV}
@@ -158,10 +155,10 @@ class TvPopular extends Component {
             />
 
             <PageSwitcher
-              total_pages={allTV.data.total_pages}
+              totalPages={allTV.data.total_pages}
               page={allTV.data.page}
               prevPage={this.prevPage}
-              nextPage={this.nextPage}
+              handleNextPage={this.nextPage}
             />
 
           </div>
