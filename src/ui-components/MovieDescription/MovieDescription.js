@@ -1,19 +1,19 @@
 import React from 'react';
 
-const MovieDescription = ({ short, engData, overview, fetchEngData, id, typeItem }) => {
+const MovieDescription = ({ short, overview, fetchEngData }) => {
   const mediaOverview = () => {
     const textLength = 475;
 
+    if (!overview ) {
+      return null;
+    }
     if (!short || overview.length < textLength) {
       return overview;
-    }
-    if (!overview) {
-      return null;
     }
     return `${overview.substring(0, textLength)}...`;
   };
 
-  if (mediaOverview() && mediaOverview() !== 404) {
+  if (mediaOverview()) {
     return (<p className='movie-tooltip__description'>{mediaOverview()}</p>);
   } else {
     return (
