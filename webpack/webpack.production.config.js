@@ -1,8 +1,8 @@
-var webpack = require('webpack');
-var path = require('path');
-var loaders = require('./webpack.loaders');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
+const webpack = require('webpack');
+const path = require('path');
+const loaders = require('./webpack.loaders');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 loaders.push({
@@ -16,8 +16,8 @@ loaders.push({
 
 module.exports = {
   entry: [
-    './src/index.jsx',
-    './styles/main.sass'
+    './../src/index.jsx',
+    './../styles/main.sass'
   ],
   output: {
     publicPath: '/',
@@ -51,7 +51,7 @@ module.exports = {
       allChunks: true
     }),
     new HtmlWebpackPlugin({
-      template: './src/template.html',
+      template: './../src/template.html',
       files: {
         css: ['style.css'],
         js: ['bundle.js']

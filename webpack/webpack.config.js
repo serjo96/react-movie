@@ -4,28 +4,27 @@ const loaders = require('./webpack.loaders');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || '8888';
 module.exports = {
   entry: [
     'react-hot-loader/patch',
-    './src/index.jsx' // your app's entry point
+    path.join(__dirname, './../src/index.jsx') // your app's entry point
   ],
   devtool: process.env.WEBPACK_DEVTOOL || 'eval-source-map',
   output: {
     publicPath: '/',
-    path: path.join(__dirname, './public'),
+    path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
   },
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      fonts: path.join(__dirname, 'src/assets/fonts/'),
-      images: path.join(__dirname, 'src/assets/images/'),
-      utils: path.join(__dirname, 'src/utils/'),
-      ui: path.join(__dirname, 'src/ui-components/'),
-      config: path.join(__dirname, 'src/config/'),
+      fonts: path.join(__dirname, '../src/assets/fonts/'),
+      images: path.join(__dirname, '../src/assets/images/'),
+      utils: path.join(__dirname, '../src/utils/'),
+      ui: path.join(__dirname, '../src/ui-components/'),
+      config: path.join(__dirname, '../src/config/'),
       'react-dom': '@hot-loader/react-dom'
     }
   },
@@ -33,7 +32,7 @@ module.exports = {
     rules: loaders
   },
   devServer: {
-    contentBase: './public',
+    contentBase: './../public',
     // do not print bundle build stats
 
     // enable HMR
@@ -56,7 +55,7 @@ module.exports = {
     }),
     new DashboardPlugin(),
     new HtmlWebpackPlugin({
-      template: './src/template.html',
+      template: path.join(__dirname, './../src/template.html'),
       files: {
         css: ['style.css'],
         js: ['bundle.js']
