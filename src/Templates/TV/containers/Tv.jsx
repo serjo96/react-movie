@@ -8,7 +8,6 @@ import Lightbox from 'lightbox-react';
 import { onLoadTV } from './../../../Data/api/Tv.api';
 import { clearTvData, clearTvSeason } from './../../../Data/actions/tv-actions';
 
-import { LoadEngData } from './../../../ui-components/loadEngData/LoadEngData';
 import Popup from './../../Popup/Popup';
 import ServiceBlock from './../../Service/ServiceBlock';
 import TVBg from './../components/TVBg';
@@ -19,6 +18,7 @@ import MediaStills from './../../MediaPage/MediaStills';
 import MediaCast from './../../MediaPage/MediaCast';
 import MediaRecommendations from './../../MediaPage/MediaRecommendations';
 import TVSeason from './../components/TVSeason';
+import MovieDescription from '../../../ui-components/MovieDescription/MovieDescription';
 
 class TV extends Component {
   state = {
@@ -87,6 +87,10 @@ class TV extends Component {
   scrollToTop = () => {
     const intervalId = setInterval(this.scrollStep.bind(this), 16.66);
     this.setState({ intervalId: intervalId });
+  };
+
+  handlerOnFetchEngData = () => {
+    this.props.loadTvData(this.props.tv.data.id, 'en-US');
   };
 
   render () {
@@ -159,11 +163,11 @@ class TV extends Component {
                   : null}
 
                 <div className='description'>
-                  <LoadEngData
+                  <MovieDescription
                     id={tv.id}
-                    overview={overview}
-                    lang='en-US'
-                    loadTvData={this.props.loadMovieData}
+                    overview={tv.overview}
+                    fetchEngData={this.handlerOnFetchEngData}
+                    typeItem='movie'
                   />
 
                 </div>

@@ -7,8 +7,6 @@ import { Helmet } from 'react-helmet';
 import { clearMovieData } from './../../../Data/actions/movies-actions';
 import { onLoadMovie } from './../../../Data/api/Movies.api';
 
-import { LoadEngData } from './../../../ui-components/loadEngData/LoadEngData';
-
 import Popup from './../../Popup/Popup';
 import MovieBG from './../components/MovieBg';
 import MovieAside from './../components/MovieAside';
@@ -17,6 +15,7 @@ import MediaCast from './../../MediaPage/MediaCast';
 import MovieCollection from './../components/MovieCollection';
 import MediaRecommendations from './../../MediaPage/MediaRecommendations';
 import ServiceBlock from './../../Service/ServiceBlock';
+import MovieDescription from '../../../ui-components/MovieDescription/MovieDescription';
 
 class Movie extends Component {
   state = {
@@ -84,6 +83,10 @@ class Movie extends Component {
     setTimeout(() => this.setState({ imgStatus: false }), 500);
   };
 
+  handlerOnFetchEngData = () => {
+    this.props.loadMovieData(this.props.movie.data.id, 'en-US');
+  };
+
   render () {
     const YouTubeParams = {
       playerVars: { // https://developers.google.com/youtube/player_parameters
@@ -142,11 +145,11 @@ class Movie extends Component {
 
               <div className='overview'>
 
-                <LoadEngData
+                <MovieDescription
                   id={movie.id}
                   overview={movie.overview}
-                  lang='en-US'
-                  loadTvData={this.props.loadMovieData}
+                  fetchEngData={this.handlerOnFetchEngData}
+                  typeItem='movie'
                 />
 
                 {movie.videos.results.length > 0

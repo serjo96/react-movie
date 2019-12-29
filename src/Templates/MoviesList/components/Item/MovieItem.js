@@ -63,7 +63,7 @@ MovieItem.propTypes = {
   date: PropTypes.string.isRequired,
   job: PropTypes.string,
   id: PropTypes.number.isRequired,
-  poster: PropTypes.string.isRequired,
+  poster: PropTypes.string,
   voteAverage: PropTypes.number,
   overview: PropTypes.string.isRequired,
   genres: PropTypes.array.isRequired,
