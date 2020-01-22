@@ -7,11 +7,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 loaders.push({
   test: /\.sass$/,
-  loader: MiniCssExtractPlugin.extract({
-    fallback: 'style-loader',
-    use: 'css-loader?sourceMap&localIdentName=[local]___[hash:base64:5]!sass-loader?outputStyle=expanded'
-  }),
-  exclude: ['node_modules']
+  loaders: ['style-loader', {
+    loader: 'css-loader',
+    options: {
+      importLoaders: 1
+    }
+  }, 'resolve-url-loader', 'sass-loader?sourceMap'],
+  exclude: /(node_modules|bower_components|public\/)/
 });
 
 module.exports = {
