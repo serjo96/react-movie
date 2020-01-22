@@ -1,7 +1,7 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import classNames from 'classNames';
+import classNames from 'classnames';
 
 import { urlRusLat } from 'utils';
 import MovieInfo from '../../../Tooltip/MovieInfo';

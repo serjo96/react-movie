@@ -8,7 +8,7 @@ import { tvPopular } from './../../Data/api/Tv.api';
 import { sortListTV } from '././../../Data/localData';
 
 import { MoviesList } from '../MoviesList/components';
-import FilterList from './../Filters/Containers/FilterList';
+import FilterList from '../Filters/containers/FilterList';
 import ServiceBlock from '././../Service/ServiceBlock';
 import PageSwitcher from 'ui/Page-switcher/Page-switcher';
 

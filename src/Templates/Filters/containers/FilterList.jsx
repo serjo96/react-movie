@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import { storageCountries } from './../../../Data/localData';
 
 import './filters.sass';
-import FiltersMobile from './../components/FiltersMobile';
-import Filters from './../components/Filters';
+import FiltersMobile from '../components/FiltersMobile';
+import Filters from '../components/Filters';
 
 class FilterList extends Component {
   year = this.getUrlString.year ? this.getUrlString.year === '-1980' ? 'до ' + this.getUrlString.year.split('-').pop() : this.getUrlString.year : 'Все года';

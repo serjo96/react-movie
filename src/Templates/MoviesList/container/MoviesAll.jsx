@@ -8,7 +8,7 @@ import { movieListAll } from '../../../Data/api/Movies.api';
 import { sortListMovie } from '../../../Data/localData';
 
 import { MoviesList } from '../components';
-import FilterList from '../../Filters/Containers/FilterList';
+import FilterList from '../../Filters/containers/FilterList';
 import PageSwitcher from 'ui/Page-switcher/Page-switcher';
 import ServiceBlock from '../../Service/ServiceBlock';
 
