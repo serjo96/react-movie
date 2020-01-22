@@ -4,13 +4,12 @@ const loaders = require('./webpack.loaders');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: [
-    './../src/index.jsx',
-    './../styles/main.sass'
+    path.join(__dirname, './../src/index.jsx'),
+    path.join(__dirname, './../styles/main.sass')
   ],
   output: {
     publicPath: '/',
@@ -18,13 +17,20 @@ module.exports = {
     filename: 'js/[chunkhash].js'
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    alias: {
+      fonts: path.join(__dirname, '../src/assets/fonts/'),
+      images: path.join(__dirname, '../src/assets/images/'),
+      utils: path.join(__dirname, '../src/utils/'),
+      ui: path.join(__dirname, '../src/ui-components/'),
+      config: path.join(__dirname, '../src/config/'),
+      'react-dom': '@hot-loader/react-dom'
+    }
   },
   module: {
     rules: loaders
   },
   plugins: [
-    new WebpackCleanupPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
@@ -36,19 +42,20 @@ module.exports = {
       allChunks: true
     }),
     new HtmlWebpackPlugin({
-      template: './../src/template.html',
+      template: path.join(__dirname, './../src/template.html'),
       files: {
         css: ['style.css'],
         js: ['bundle.js']
       }
-    })
+    }),
+    new WebpackCleanupPlugin()
   ],
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         cache: true,
         parallel: true,
-        uglifyOptions: {
+        terserOptions: {
           compress: false,
           ecma: 6,
           mangle: true
