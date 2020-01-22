@@ -48,7 +48,7 @@ module.exports = {
         js: ['bundle.js']
       }
     }),
-    new WebpackCleanupPlugin()
+    // new WebpackCleanupPlugin()
   ],
   optimization: {
     minimizer: [
