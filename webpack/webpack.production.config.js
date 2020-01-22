@@ -14,7 +14,7 @@ module.exports = {
   ],
   output: {
     publicPath: '/',
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, './../build'),
     filename: 'js/[chunkhash].js'
   },
   resolve: {
@@ -49,7 +49,7 @@ module.exports = {
         js: ['bundle.js']
       }
     }),
-    // new WebpackCleanupPlugin()
+    new WebpackCleanupPlugin()
   ],
   optimization: {
     minimizer: [
