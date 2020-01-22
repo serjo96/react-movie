@@ -6,7 +6,12 @@
     "space-in-parens": "error",
     "space-before-blocks": "error",
     "react/prop-types": ["warn"],
-    "react/jsx-fragments": ["warn", "element"]
+    "react/jsx-fragments": ["warn", "element"],
+    "import/no-unresolved": [
+     "error",
+      {
+        "caseSensitive": true
+      }]
   },
   "plugins": ["react"],
   "parser": "babel-eslint"
