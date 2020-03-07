@@ -24,6 +24,7 @@ module.exports = {
       images: path.join(__dirname, '../src/assets/images/'),
       utils: path.join(__dirname, '../src/utils/'),
       ui: path.join(__dirname, '../src/ui-components/'),
+      store: path.join(__dirname, '../src/store/'),
       config: path.join(__dirname, '../src/config/'),
       'react-dom': '@hot-loader/react-dom'
     }
