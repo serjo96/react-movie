@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import React, { Component } from 'react';
-import { movieListPlaying } from '../../../Data/api/Movies.api';
+import { movieListPlaying } from '../../../store/api/Movies.api';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 

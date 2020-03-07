@@ -4,7 +4,7 @@ import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
-import configureStore from './Data/store/configureStore';
+import configureStore from './store/configureStore';
 
 const store = configureStore();
 render(<AppContainer><Provider store={store}><BrowserRouter><App /></BrowserRouter></Provider></AppContainer>, document.querySelector('#app'));

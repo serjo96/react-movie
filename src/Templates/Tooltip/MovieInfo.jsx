@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { urlRusLat } from 'utils/index';
-import { onLoadEngMedia } from './../../Data/api/General.api';
+import { onLoadEngMedia } from '../../store/api/General.api';
 import Portal from 'ui/portal/portal';
-import PropTypes from 'prop-types';
 import MovieDescription from 'ui/MovieDescription/MovieDescription';
+import PropTypes from 'prop-types';
 
 class MoviePopup extends Component {
   tooltip = null;
@@ -121,7 +121,7 @@ class MoviePopup extends Component {
     } = this.props;
     const { show } = this.state;
 
-    const Originaltitle = engData[this.props.typeItem][this.props.id]
+    const originalTitle = engData[this.props.typeItem][this.props.id]
       ? engData[this.props.typeItem][this.props.id].name
       : this.props.originalTitle;
     return (
@@ -150,7 +150,7 @@ class MoviePopup extends Component {
               <div className='tooltip__content'>
                 <div className='tooltip__title'>
                   <div className='ru-title'>{title}</div>
-                  <div className='original-title'>{Originaltitle !== title && Originaltitle}</div>
+                  <div className='original-title'>{originalTitle !== title && originalTitle}</div>
                 </div>
                 <div className='movie-tooltip__info'>
                   <div className='tooltip__genre-data'>

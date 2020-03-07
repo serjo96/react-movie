@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { DebounceInput } from 'react-debounce-input';
 import { Scrollbars } from 'react-custom-scrollbars';
 
-import { clearSearch } from './../../Data/actions/general-actions';
-import { onSearch } from './../../Data/api/Search.api';
+import { clearSearch } from '../../store/actions/general-actions';
+import { onSearch } from '../../store/api/Search.api';
 import { friendlyUrl, urlRusLat } from 'utils/index';
 import NoImg from 'images/NoImg.png';
 import Spinner from '../../ui-components/spinner/Spinner';

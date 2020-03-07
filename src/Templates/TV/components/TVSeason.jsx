@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { clearTvSeason } from './../../../Data/actions/tv-actions';
-import { onSeasonTV } from './../../../Data/api/Tv.api';
+import { clearTvSeason } from '../../../store/actions/tv-actions';
+import { onSeasonTV } from '../../../store/api/Tv.api';
 
 import { friendlyData, kFormatter, declOfNum } from 'utils/index';
 import NoImg from 'images/NoImg.png';

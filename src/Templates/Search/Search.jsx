@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { DebounceInput } from 'react-debounce-input';
 
-import { MainSearch } from './../../Data/api/Search.api';
-import { searchResetFetch } from './../../Data/actions/general-actions';
+import { MainSearch } from '../../store/api/Search.api';
+import { searchResetFetch } from '../../store/actions/general-actions';
 
 import { MoviesList } from '../MoviesList/components';
 import { friendlyUrl } from 'utils/index';

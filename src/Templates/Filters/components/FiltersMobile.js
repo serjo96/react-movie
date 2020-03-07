@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { sortByRangeDateList, sortBySingleDateList, storageCountries } from '../../../Data/localData';
+import { sortByRangeDateList, sortBySingleDateList, storageCountries } from '../../../store/localData';
 import Popup from '../../Popup/Popup';
 
 export default class FiltersMobile extends Component {

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
-import { onLoadCompanyData, LoadCompanyMovies } from './../../Data/api/Company.api';
-import { clearCompanyData } from './../../Data/actions/company-actions';
+import { onLoadCompanyData, LoadCompanyMovies } from '../../store/api/Company.api';
+import { clearCompanyData } from '../../store/actions/company-actions';
 
 import NoImg from 'images/NoImg.png';
 import ServiceBlock from './../Service/ServiceBlock';

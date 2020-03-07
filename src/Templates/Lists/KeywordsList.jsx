@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { MoviesList } from '../MoviesList/components';
-import { keywordsReq } from './../../Data/api/General.api';
+import { keywordsReq } from '../../store/api/General.api';
 import ServiceBlock from '../Service/ServiceBlock';
 
 class KeywordsList extends Component {

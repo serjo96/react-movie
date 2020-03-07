@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import PageSwitcher from 'ui/Page-switcher/Page-switcher';
 
-import { tvTop } from './../../Data/api/Tv.api';
+import { tvTop } from '../../store/api/Tv.api';
 
 import MediaList from '../MoviesList/MoviesList';
 import ServiceBlock from './../Service/ServiceBlock';

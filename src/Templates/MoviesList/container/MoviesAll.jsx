@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { changeMoviePage } from '../../../Data/actions/movies-actions';
-import { movieListAll } from '../../../Data/api/Movies.api';
-import { sortListMovie } from '../../../Data/localData';
+import { changeMoviePage } from '../../../store/actions/movies-actions';
+import { movieListAll } from '../../../store/api/Movies.api';
+import { sortListMovie } from '../../../store/localData';
 
 import { MoviesList } from '../components';
 import FilterList from '../../Filters/containers/FilterList';

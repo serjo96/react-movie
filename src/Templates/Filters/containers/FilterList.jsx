@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import queryString from 'query-string';
 import PropTypes from 'prop-types';
 
-import { storageCountries } from './../../../Data/localData';
+import { storageCountries } from '../../../store/localData';
 
 import './filters.sass';
 import FiltersMobile from '../components/FiltersMobile';

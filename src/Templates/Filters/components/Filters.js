@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { chunkArr } from 'utils/index';
-import { storageCountries, popularCountries, sortBySingleDateList, sortByRangeDateList } from './../../../Data/localData';
+import { storageCountries, popularCountries, sortBySingleDateList, sortByRangeDateList } from '../../../store/localData';
 
 export default class FiltersMobile extends Component {
   render () {

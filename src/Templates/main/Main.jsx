@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { onLoadMainPage } from './../../Data/api/General.api';
+import { onLoadMainPage } from '../../store/api/General.api';
 
 import { MoviesList } from '../MoviesList/components';
 import Spinner from '../../ui-components/spinner/Spinner';

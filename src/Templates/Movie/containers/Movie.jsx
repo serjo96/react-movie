@@ -4,8 +4,8 @@ import YouTube from 'react-youtube';
 import Lightbox from 'lightbox-react';
 import { Helmet } from 'react-helmet';
 
-import { clearMovieData } from './../../../Data/actions/movies-actions';
-import { onLoadMovie } from './../../../Data/api/Movies.api';
+import { clearMovieData } from '../../../store/actions/movies-actions';
+import { onLoadMovie } from '../../../store/api/Movies.api';
 
 import Popup from './../../Popup/Popup';
 import MovieBG from './../components/MovieBg';
