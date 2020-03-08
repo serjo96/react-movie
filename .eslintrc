@@ -3,6 +3,7 @@
   "rules": {
     "semi": ["error", "always"],
     "array-bracket-spacing":  "error",
+    "object-curly-spacing": "error",
     "space-in-parens": "error",
     "space-before-blocks": "error",
     "react/prop-types": ["warn"],
@@ -11,7 +12,8 @@
      "error",
       {
         "caseSensitive": true
-      }]
+      }
+    ]
   },
   "plugins": ["react"],
   "parser": "babel-eslint",
@@ -23,10 +25,11 @@
           ["images", "./src/assets/images/"],
           ["utils", "./src/utils/"],
           ["ui", "./src/ui-components/"],
-          ["config", "./src/config/"]
+          ["config", "./src/config/"],
+          ["store", "./src/store/"]
         ],
         "extensions": [".ts", ".js", ".jsx", ".json"]
-    },
+      }
     }
   }
 }
