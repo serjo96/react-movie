@@ -177,7 +177,7 @@ export default class FiltersMobile extends Component {
               )}
             </div>
           </div>
-          <div className={`sort-direction ${sortSettings.SortDirection ? 'sort-direction--asc' : ''}`}>
+          <div className={`sort-direction ${sortSettings.sortDirection ? 'sort-direction--asc' : ''}`}>
             <i onClick={this.props.onClickChangeDir}
               className='fa fa-long-arrow-up' aria-hidden='true' />
           </div>

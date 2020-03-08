@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import queryString from 'query-string';
 import PropTypes from 'prop-types';
 
-import { storageCountries } from '../../../store/localData';
+import { storageCountries } from 'store/localData';
 
 import './filters.sass';
 import FiltersMobile from '../components/FiltersMobile';
@@ -34,7 +34,7 @@ class FilterList extends Component {
       ico: this.getUrlString.country ? this.getUrlString.country : '',
       status: !!this.getUrlString.country
     },
-    SortDirection: this.getUrlString.sort_by ? this.getUrlString.sort_by.split('.').pop() !== 'desc' : false,
+    sortDirection: this.getUrlString.sort_by ? this.getUrlString.sort_by.split('.').pop() !== 'desc' : false,
     adult: this.getUrlString.adult,
 
     genresListData: {
@@ -61,14 +61,12 @@ class FilterList extends Component {
   }
 
   onSortLists = (el) => {
-    const fullType = el.type + (this.state.SortDirection ? '.asc' : '.desc');
+    const fullType = el.type + (this.state.sortDirection ? '.asc' : '.desc');
 
     this.setState({
-
       sortBy: {
         name: el.name, type: el.type, status: true
       }
-
     });
 
     const UrlObj = this.getUrlString;
@@ -81,12 +79,10 @@ class FilterList extends Component {
 
   onClickChangeDir = () => {
     this.setState({
-
-      SortDirection: !this.state.SortDirection
-
+      sortDirection: !this.state.sortDirection
     }, () => {
       const UrlObj = this.getUrlString;
-      UrlObj.sort_by = this.state.sortBy.type + (this.state.SortDirection ? '.asc' : '.desc');
+      UrlObj.sort_by = this.state.sortBy.type + (this.state.sortDirection ? '.asc' : '.desc');
 
       this.props.history.push({
         search: queryString.stringify(UrlObj)
@@ -130,13 +126,11 @@ class FilterList extends Component {
 
   onSortByCountry = (el) => {
     this.setState({
-
       sortByCountry: {
         name: el.name,
         ico: el.ico,
         status: el.ico !== 'All'
       }
-
     });
 
     const UrlObj = this.getUrlString;
@@ -247,7 +241,7 @@ class FilterList extends Component {
         ico: 'All',
         status: false
       },
-      SortDirection: false,
+      sortDirection: false,
       adult: false,
       genresListData: {
         name: 'Все жанры',

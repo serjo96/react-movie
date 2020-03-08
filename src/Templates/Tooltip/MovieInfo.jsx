@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { urlRusLat } from 'utils/index';
 import { onLoadEngMedia } from '../../store/api/General.api';
 import Portal from 'ui/portal/portal';
 import MovieDescription from 'ui/MovieDescription/MovieDescription';
-import PropTypes from 'prop-types';
 
 class MoviePopup extends Component {
   tooltip = null;

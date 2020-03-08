@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { urlRusLat } from 'utils';
 import classNames from 'classnames';
 
-import { urlRusLat } from 'utils';
 import MovieInfo from '../../../Tooltip/MovieInfo';
 import Image from 'ui/image/image';
 import './movieItem.sass';

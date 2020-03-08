@@ -1,7 +1,7 @@
 import React from 'react';
-import MovieItem from '../Item/MovieItem';
 import { Link } from 'react-router-dom';
 import { friendlyData } from 'utils';
+import MovieItem from '../Item/MovieItem';
 import './moviesList.sass';
 
 const MoviesList = ({ movieListMain, ListLink, count, typeList, movieList, movieListTitle }) => {
