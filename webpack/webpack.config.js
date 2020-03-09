@@ -6,6 +6,7 @@ const DashboardPlugin = require('webpack-dashboard/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || '8888';
+
 module.exports = {
   entry: [
     'react-hot-loader/patch',

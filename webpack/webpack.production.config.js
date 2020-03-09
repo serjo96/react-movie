@@ -5,9 +5,21 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const ImageminPlugin = require('imagemin-webpack');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
   mode: 'production',
+  stats: {
+    colors: false,
+    hash: true,
+    timings: true,
+    assets: true,
+    chunks: true,
+    chunkModules: true,
+    modules: true,
+    children: true
+  },
   entry: [
     path.join(__dirname, './../src/index.jsx'),
     path.join(__dirname, './../styles/main.sass')
@@ -45,9 +57,39 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, './../src/template.html'),
+      cache: true,
+      hash: true,
       files: {
         css: ['style.css'],
         js: ['bundle.js']
+      }
+    }),
+    new ImageminPlugin({
+      bail: false, // Ignore errors on corrupted images
+      cache: true,
+      imageminOptions: {
+        // Before using imagemin plugins make sure you have added them in `package.json` (`devDependencies`) and installed them
+
+        // Lossless optimization with custom option
+        // Feel free to experiment with options for better result for you
+        svgo: {
+          quality: '95-100',
+          optimizationLevel: 3,
+        },
+        plugins: [
+          [
+            'svgo',
+            {
+              plugins: [
+                {
+                  removeViewBox: false,
+                  quality: [0.6, 0.8],
+                  optimizationLevel: 3
+                }
+              ]
+            }
+          ]
+        ]
       }
     }),
     new WebpackCleanupPlugin()
@@ -58,11 +100,22 @@ module.exports = {
         cache: true,
         parallel: true,
         terserOptions: {
-          compress: false,
+          parse: {
+            bare_returns: true,
+          },
+          compress: {
+            booleans_as_integers: true,
+            drop_console: true,
+            warnings: true,
+            hoist_funs: true
+          },
           ecma: 6,
-          mangle: true
+          module: true
         },
         sourceMap: true
+      }),
+      new OptimizeCSSAssetsPlugin({
+        preset: ['default', { discardComments: { removeAll: true }, discardUnused: true }],
       })
     ]
   }
