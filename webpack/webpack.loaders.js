@@ -6,9 +6,9 @@ module.exports = [
       {
         loader: 'babel-loader'
       },
-      {
-        loader: 'null-loader'
-      }
+      // {
+      //   loader: 'null-loader'
+      // }
     ]
   },
   {
