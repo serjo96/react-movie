@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -92,6 +93,7 @@ module.exports = {
         ]
       }
     }),
+    new CompressionPlugin(),
     new WebpackCleanupPlugin()
   ],
   optimization: {
@@ -100,6 +102,15 @@ module.exports = {
         cache: true,
         parallel: true,
         terserOptions: {
+          parse: {
+            bare_returns: true,
+          },
+          compress: {
+            booleans_as_integers: true,
+            drop_console: true,
+            warnings: true,
+            hoist_funs: true
+          },
           ecma: 6,
           module: true
         },
