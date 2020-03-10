@@ -5,10 +5,7 @@ module.exports = [
     use: [
       {
         loader: 'babel-loader'
-      },
-      // {
-      //   loader: 'null-loader'
-      // }
+      }
     ]
   },
   {
