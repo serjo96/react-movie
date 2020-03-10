@@ -1,6 +1,6 @@
+import axios from 'axios';
 import { takeGenres, takeEngMedia, takeKeywordsMovies } from './../actions/general-actions';
 import { loadPlayingMovies, loadPopularMovies, loadTopMovies, loadUpcomingMovies } from './../actions/movies-actions';
-import * as axios from 'axios/index';
 
 export function onLoadMainPage () {
   return (dispatch) => {

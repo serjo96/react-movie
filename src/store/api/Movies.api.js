@@ -1,5 +1,5 @@
+import axios from 'axios';
 import { loadUpcomingMovies, loadPopularMovies, loadPlayingMovies, loadTopMovies, takeEngMovieData, takeMovieData } from './../actions/movies-actions';
-import * as axios from 'axios/index';
 
 export function movieUpcoming (page = 1) {
   return (dispatch) => {
@@ -19,7 +19,7 @@ export function movieUpcoming (page = 1) {
 }
 
 export function movieListAll (page = 1, genre, sortType = 'popularity.desc', date, region, adult = false) {
-  let year = `${date}`;
+  const year = `${date}`;
   let singleYear;
   let rageDates;
   let startRangeDate;
@@ -176,7 +176,7 @@ export function onLoadMovie (id, lang = 'ru-RU') {
             }
           }
         ).then(response => {
-          let data = Object.assign({ collection: response.data }, res.data);
+          const data = Object.assign({ collection: response.data }, res.data);
           dispatch(takeMovieData({ data: data, status: response.status === 200 && res.status }));
         });
       } else {

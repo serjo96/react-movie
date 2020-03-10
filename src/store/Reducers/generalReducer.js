@@ -18,8 +18,8 @@ const initialState = {
     }
   },
   Genres: {
-    isFetching: !!JSON.parse(localStorage.getItem('genres')),
-    data: JSON.parse(localStorage.getItem('genres')) || null
+    isFetching: !!JSON.parse(window.localStorage.getItem('genres')),
+    data: JSON.parse(window.localStorage.getItem('genres')) || null
   },
   KeywordsList: {
     isFetching: false,
@@ -97,23 +97,23 @@ export default function General (state = initialState, action) {
       allGenres.unshift({ id: 0, name: 'Все жанры' });
 
       const moviesGenres = action.genres.movie.map(i => {
-          return {
-            ...i,
-            name: capitalizeFirstLetter(i.name)
-          };
-        }
+        return {
+          ...i,
+          name: capitalizeFirstLetter(i.name)
+        };
+      }
       );
 
       moviesGenres.unshift({ id: 0, name: 'Все жанры' });
       const tvGenres = action.genres.tv.map(i => {
-          return {
-            ...i,
-            name: capitalizeFirstLetter(i.name)
-          };
-        }
+        return {
+          ...i,
+          name: capitalizeFirstLetter(i.name)
+        };
+      }
       );
 
-      localStorage.setItem('genres', JSON.stringify(
+      window.localStorage.setItem('genres', JSON.stringify(
         {
           obj: hashObj,
           arr: {

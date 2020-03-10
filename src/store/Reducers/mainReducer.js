@@ -6,9 +6,9 @@ import Peoples from './personReducer';
 import Company from './companyReducer';
 
 export default combineReducers({
-    General,
-    Movies,
-    TVs,
-    Peoples,
-    Company
+  General,
+  Movies,
+  TVs,
+  Peoples,
+  Company
 });
