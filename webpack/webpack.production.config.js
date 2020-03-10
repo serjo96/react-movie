@@ -75,7 +75,7 @@ module.exports = {
         // Feel free to experiment with options for better result for you
         svgo: {
           quality: '95-100',
-          optimizationLevel: 3,
+          optimizationLevel: 3
         },
         plugins: [
           [
@@ -103,7 +103,7 @@ module.exports = {
         parallel: true,
         terserOptions: {
           parse: {
-            bare_returns: true,
+            bare_returns: true
           },
           compress: {
             drop_console: true,
@@ -116,7 +116,7 @@ module.exports = {
         sourceMap: true
       }),
       new OptimizeCSSAssetsPlugin({
-        preset: ['default', { discardComments: { removeAll: true }, discardUnused: true }],
+        preset: ['default', { discardComments: { removeAll: true }, discardUnused: true }]
       })
     ]
   }
