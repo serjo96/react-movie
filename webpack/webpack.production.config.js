@@ -106,7 +106,6 @@ module.exports = {
             bare_returns: true,
           },
           compress: {
-            booleans_as_integers: true,
             drop_console: true,
             warnings: true,
             hoist_funs: true
