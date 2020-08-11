@@ -8,6 +8,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -94,7 +95,12 @@ module.exports = {
       }
     }),
     new CompressionPlugin(),
-    new WebpackCleanupPlugin()
+    new WebpackCleanupPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: 'public', to: 'build' }
+      ]
+    })
   ],
   optimization: {
     minimizer: [
