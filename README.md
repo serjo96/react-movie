@@ -1,6 +1,4 @@
-Link to project:
-
-https://movie-base.net/
+Link to project: https://movie-base.net/
 
 
 * Then install the dependencies:
