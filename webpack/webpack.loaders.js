@@ -22,13 +22,17 @@ module.exports = [
   },
   {
     test: /\.sass$/,
-    loaders: ['style-loader', {
-      loader: 'css-loader',
-      options: {
-        importLoaders: 1
-      }
-    }, 'resolve-url-loader', 'sass-loader?sourceMap'],
-    exclude: /(node_modules|bower_components|public\/)/
+	  use: [
+		  "style-loader",
+		  "css-loader",
+		  {
+			  loader: "sass-loader",
+			  options: {
+				  // Prefer `dart-sass`
+				  implementation: require("dart-sass"),
+			  },
+		  },
+	  ],
   },
   {
     test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
