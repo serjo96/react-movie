@@ -11,9 +11,9 @@ import { urlRusLat, declOfNum, friendlyData } from 'utils/index';
 import NoImg from 'images/NoImg.png';
 
 import ServiceBlock from './../../Service/ServiceBlock';
-import MediaStills from './../../MediaPage/MediaStills';
+import MediaStills from './../../MediaPage/MediaStills.jsx';
 import { MovieItem } from '../../MoviesList/components';
-import PersonMoviesList from './../components/PersonMoviesList';
+import PersonMoviesList from './../components/PersonMoviesList.jsx';
 
 class Person extends Component {
   state = {

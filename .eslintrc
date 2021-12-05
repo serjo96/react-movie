@@ -1,5 +1,5 @@
 {
-  "extends": ["standard", "standard-react"],
+  "extends": ["standard", "standard-react",  "plugin:@typescript-eslint/recommended"],
   "rules": {
     "semi": ["error", "always"],
     "array-bracket-spacing":  "error",
@@ -15,8 +15,8 @@
       }
     ]
   },
-  "plugins": ["react"],
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["react", "@typescript-eslint"],
   "settings": {
     "import/resolver": {
       "alias":{
@@ -24,7 +24,8 @@
           ["fonts", "./src/assets/fonts/"],
           ["images", "./src/assets/images/"],
           ["utils", "./src/utils/"],
-          ["ui", "./src/ui-components/"],
+          ["@ui", "./src/ui-components"],
+          ["@templates", "./src/Templates"],
           ["config", "./src/config/"],
           ["store", "./src/store/"]
         ],

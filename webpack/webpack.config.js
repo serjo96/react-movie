@@ -10,21 +10,22 @@ const PORT = process.env.PORT || '8888';
 module.exports = {
   entry: [
     'react-hot-loader/patch',
-    path.join(__dirname, './../src/index.jsx') // your app's entry point
+    path.join(__dirname, './../src/index.tsx') // your app's entry point
   ],
   devtool: process.env.WEBPACK_DEVTOOL || 'eval-source-map',
   output: {
     publicPath: '/',
-    path: path.join(__dirname, 'public'),
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', 'ts', '.tsx'],
     alias: {
       fonts: path.join(__dirname, '../src/assets/fonts/'),
       images: path.join(__dirname, '../src/assets/images/'),
       utils: path.join(__dirname, '../src/utils/'),
-      ui: path.join(__dirname, '../src/ui-components/'),
+      '@ui': path.resolve(__dirname, '../src/ui-components'),
+      '@templates': path.resolve(__dirname, '../src/Templates'),
       store: path.join(__dirname, '../src/store/'),
       config: path.join(__dirname, '../src/config/'),
       'react-dom': '@hot-loader/react-dom'

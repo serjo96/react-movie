@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Main from '../Templates/main/Main';
-import Movie from '../Templates/Movie/containers/Movie';
-import MovieUpcoming from '../Templates/MoviesList/container/MoviesUpcoming';
-import MoviePlaying from '../Templates/MoviesList/container/MoviesPlaying';
-import MoviesAll from '../Templates/MoviesList/container/MoviesAll';
-import TVAiring from '../Templates/TvLists/TVAiring';
-import TvPopular from '../Templates/TvLists/TVall';
-import TVonTheAir from '../Templates/TvLists/TVonTheAir';
-import TV from '../Templates/TV/containers/Tv';
-import People from '../Templates/Person/containers/Person';
-import Search from '../Templates/Search/Search';
-import Company from '../Templates/Company/Company';
+import Main from '../Templates/main/Main.jsx';
+import Movie from '../Templates/Movie/containers/Movie.jsx';
+import MovieUpcoming from '../Templates/MoviesList/container/MoviesUpcoming.jsx';
+import MoviePlaying from '../Templates/MoviesList/container/MoviesPlaying.jsx';
+import MoviesAll from '../Templates/MoviesList/container/MoviesAll.jsx';
+import TVAiring from '../Templates/TvLists/TVAiring.jsx';
+import TvPopular from '../Templates/TvLists/TVall.jsx';
+import TVonTheAir from '../Templates/TvLists/TVonTheAir.jsx';
+import TV from '../Templates/TV/containers/Tv.jsx';
+import People from '../Templates/Person/containers/Person.jsx';
+import Search from '../Templates/Search/Search.jsx';
+import Company from '../Templates/Company/Company.jsx';
 
 import KeywordsList from '../Templates/Lists/KeywordsList';
 

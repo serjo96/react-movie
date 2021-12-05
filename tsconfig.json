@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "es5",
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "ui/*": ["./src/ui-components"],
+      "@templates/*": ["./src/Templates"],
+      "store/*": ["./src/store/*"]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

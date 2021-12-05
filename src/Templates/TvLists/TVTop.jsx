@@ -2,7 +2,7 @@ import queryString from 'query-string';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import PageSwitcher from 'ui/Page-switcher/Page-switcher';
+import PageSwitcher from '@ui/Page-switcher/Page-switcher';
 
 import { tvTop } from '../../store/api/Tv.api';
 

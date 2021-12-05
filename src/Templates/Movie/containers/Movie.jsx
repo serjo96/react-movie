@@ -7,10 +7,10 @@ import { Helmet } from 'react-helmet';
 import { clearMovieData } from '../../../store/actions/movies-actions';
 import { onLoadMovie } from '../../../store/api/Movies.api';
 
-import Popup from './../../Popup/Popup';
+import Popup from './../../Popup/Popup.jsx';
 import MovieBG from './../components/MovieBg';
-import MovieAside from './../components/MovieAside';
-import MediaStills from './../../MediaPage/MediaStills';
+import MovieAside from './../components/MovieAside.jsx';
+import MediaStills from './../../MediaPage/MediaStills.jsx';
 import MediaCast from './../../MediaPage/MediaCast';
 import MovieCollection from './../components/MovieCollection';
 import MediaRecommendations from './../../MediaPage/MediaRecommendations';

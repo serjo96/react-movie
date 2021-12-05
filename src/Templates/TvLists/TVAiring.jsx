@@ -7,7 +7,7 @@ import { tvAiring } from '../../store/api/Tv.api';
 
 import { MoviesList } from '../MoviesList/components';
 import ServiceBlock from './../Service/ServiceBlock';
-import PageSwitcher from 'ui/Page-switcher/Page-switcher';
+import PageSwitcher from '@ui/Page-switcher/Page-switcher';
 
 class TVAiring extends Component {
   state = {
