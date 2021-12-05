@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import NoImg from '../../../assests/img/NoImg.png';
-import Spinner from '../../Spinner/Spinner';
-import { friendlyUrl, urlRusLat } from '../../../utils/utils';
+import { friendlyUrl, urlRusLat } from './../../../utils/utils';
+import NoImg from './../../../assests/img/NoImg.png';
+import Spinner from './../../Spinner/Spinner';
 
 class MovieAside extends Component {
     constructor( props ) {
