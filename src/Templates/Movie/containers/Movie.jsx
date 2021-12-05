@@ -1,13 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import YouTube  from 'react-youtube';
+import YouTube from 'react-youtube';
 import Lightbox from 'lightbox-react';
 import { Helmet } from 'react-helmet';
 
-import { clearMovieData } from './../../../Data/actions/movies-actions';
-import { onLoadMovie } from './../../../Data/api/Movies.api';
-
-import { LoadEngData } from './../../../ui-components/loadEngData/LoadEngData';
+import { clearMovieData } from '../../../store/actions/movies-actions';
+import { onLoadMovie } from '../../../store/api/Movies.api';
 
 import Popup from './../../Popup/Popup';
 import MovieBG from './../components/MovieBg';
@@ -17,231 +15,215 @@ import MediaCast from './../../MediaPage/MediaCast';
 import MovieCollection from './../components/MovieCollection';
 import MediaRecommendations from './../../MediaPage/MediaRecommendations';
 import ServiceBlock from './../../Service/ServiceBlock';
-
+import MovieDescription from '../../../ui-components/MovieDescription/MovieDescription';
 
 class Movie extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            modalTrailer: false,
-	        trailerKey: '',
-	        lightBox: false,
-	        imgIndex: 0,
-	        imgCount: 11,
-	        imgStatus: true,
-	        intervalId: 0
-        };
+  state = {
+    modalTrailer: false,
+    trailerKey: '',
+    imgCount: 11,
+    imgStatus: true,
+    intervalId: 0
+  };
+
+  componentDidMount () {
+    if (window.pageYOffset === 0) {
+      clearInterval(this.state.intervalId);
     }
+    this.sendRequest();
+  }
 
-    componentDidMount() {
-	    if (window.pageYOffset === 0) {
-		    clearInterval(this.state.intervalId);
-	    }
-        this.sendRequest();
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.match.params.id !== this.props.match.params.id) {
+      this.props.clearMovieData();
+      this.sendRequest(nextProps.match.params.id);
+      this.scrollToTop();
     }
+  }
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.match.params.id !== this.props.match.params.id) {
-			this.props.clearMovieData();
-			this.sendRequest(nextProps.match.params.id);
-			this.scrollToTop();
-		}
-	}
+  componentWillUnmount () {
+    this.props.clearMovieData();
+  }
 
-    componentWillUnmount() {
-    	this.props.clearMovieData();
+  scrollStep = () => {
+    if (window.pageYOffset === 0) {
+      clearInterval(this.state.intervalId);
     }
+    window.scroll(0, window.pageYOffset - 50);
+  };
 
+  scrollToTop = () => {
+    const intervalId = setInterval(this.scrollStep.bind(this), 16.66);
+    this.setState({ intervalId: intervalId });
+  };
 
-	 scrollStep = () => {
-	     if (window.pageYOffset === 0) {
-	         clearInterval(this.state.intervalId);
-	     }
-	     window.scroll(0, window.pageYOffset - 50);
-	 };
+  sendRequest = (id = this.props.match.params.id) => {
+    const movieId = id.split('-');
+    this.props.loadMovieData(movieId.pop());
+  };
 
-	 scrollToTop = () => {
-	     let intervalId = setInterval(this.scrollStep.bind(this), 16.66);
-	     this.setState({ intervalId: intervalId });
-	 };
+  showTrailerModal = (e) => {
+    this.setState({
+      modalTrailer: !this.state.modalTrailer,
+      trailerKey: e.target.closest('[id]').id
+    });
+  };
 
-	 sendRequest = (id = this.props.match.params.id) =>{
-	     let movieId = id.split('-');
-	     this.props.loadMovieData(movieId.pop());
-	 };
+  closePopup = () => {
+    document.querySelector('.popup__content').classList.add('popup--is-hide');
+    setTimeout(() => this.setState({ modalTrailer: false }), 500);
+  };
 
-	 showTrailerModal = (e) =>{
-	     this.setState({
-		     modalTrailer: !this.state.modalTrailer,
-		     trailerKey: e.target.closest('[id]').id
-	     });
-	 };
+  _onReady = (event) => {
+    event.target.pauseVideo();
+  };
 
-	 closePopup = () =>{
-	     document.querySelector('.popup__content').classList.add('popup--is-hide');
-	     setTimeout(()=> this.setState({modalTrailer: false}), 500);
-	 };
+  onLoadImg = (e) => {
+    e.target.classList.remove('img-loading');
+    setTimeout(() => this.setState({ imgStatus: false }), 500);
+  };
 
-	 _onReady = (event) => {
-	     event.target.pauseVideo();
-	 };
+  handlerOnFetchEngData = () => {
+    this.props.loadMovieData(this.props.movie.data.id, 'en-US');
+  };
 
-	 onClickImg = (e) =>{
-		 this.setState({
-			 imgIndex: e.target.dataset.index,
-			 lightBox: !this.state.lightBox
-		 });
-	 };
+  render () {
+    const YouTubeParams = {
+      playerVars: { // https://developers.google.com/youtube/player_parameters
+        autoplay: 0
+      },
+      height: '100%'
+    };
+    // TODO: add pre loader to request, and add loading text if don't have text in eng
+    const { imgIndex } = this.state;
 
-	 onLoadImg = (e) =>{
-	     e.target.classList.remove('img-loading');
-	     setTimeout(()=> this.setState({imgStatus: false}), 500);
-	 };
+    const movie = this.props.movie.data;
+    const { images } = this.props.movie;
+    const { posters } = this.props.movie;
 
- render() {
-  	const YouTubeParams = {
-  		playerVars: { // https://developers.google.com/youtube/player_parameters
-  			autoplay: 0
-	    }
-  	};
-//TODO: add pre loader to request, and add loading text if don't have text in eng
-	  const { imgIndex } = this.state;
+    return (
+      <ServiceBlock isLoading={this.props.movie.isFetching} isError={this.props.movie.status} fetch={this.sendRequest}>
+        <div className='movie'>
+          <Helmet>
+            <title>{movie.title}</title>
+          </Helmet>
 
-	  const movie = this.props.movie.data,
-		  images = this.props.movie.images;
+          <MovieBG
+            original_title={movie.original_title}
+            title={movie.title}
+            backdrop={movie.backdrop_path}
+            poster={movie.poster_path}
+            runtime={movie.runtime}
+            budget={movie.budget}
+            revenue={movie.revenue}
+            lists={movie.lists}
+            release_date={movie.release_date}
+            vote_count={movie.vote_count}
+            vote_average={movie.vote_average}
+            popularity={movie.popularity}
+            tagline={movie.tagline}
+          />
 
-		 return (
-			 <ServiceBlock isLoading={this.props.movie.isFetching} isError={this.props.movie.status} fetch={this.sendRequest}>
-				 <div className="movie" >
-				 <Helmet>
-					 <title>{movie.title}</title>
-				 </Helmet>
+          <div className='container'>
+            <div className='info-wrapper'>
 
-				 <MovieBG original_title={movie.original_title}
-				          title={movie.title}
-				          backdrop={movie.backdrop_path}
-				          poster={movie.poster_path}
-				          runtime={movie.runtime}
-				          budget={movie.budget}
-				          revenue={movie.revenue}
-				          lists={movie.lists}
-				          release_date={movie.release_date}
-				          vote_count={movie.vote_count}
-				          vote_average={movie.vote_average}
-				          popularity={movie.popularity}
-				          tagline={movie.tagline}
-				 />
+              <MovieAside
+                title={movie.title}
+                id={movie.id}
+                poster={movie.poster_path}
+                backdrop={movie.backdrop_path}
+                crew={this.props.crew}
+                genres={movie.genres}
+                keywords={movie.keywords.keywords}
+                imdb_id={movie.imdb_id}
+                homepage={movie.homepage}
+                production_countries={movie.production_countries}
+                production_companies={movie.production_companies}
+                imgStatus={this.state.imgStatus}
+                onLoadImg={this.onLoadImg}
+              />
 
-				 <div className="container">
-					 <div className="info-wrapper">
+              <div className='overview'>
 
-						 <MovieAside
-							 title={movie.title}
-							 id={movie.id}
-							 poster={movie.poster_path}
-							 backdrop={movie.backdrop_path}
-							 crew={this.props.crew}
-							 genres={movie.genres}
-							 keywords={movie.keywords.keywords}
-							 imdb_id={movie.imdb_id}
-							 homepage={movie.homepage}
-							 production_countries={movie.production_countries}
-							 production_companies={movie.production_companies}
-							 imgStatus={this.state.imgStatus}
-							 onLoadImg={this.onLoadImg}
-						 />
+                <MovieDescription
+                  id={movie.id}
+                  overview={movie.overview}
+                  fetchEngData={this.handlerOnFetchEngData}
+                  typeItem='movie'
+                />
 
+                {movie.videos.results.length > 0
+                  ? <div className='trailer'>
+                    <h2>{movie.videos.results.length === 1 ? 'Трейлер' : 'Трейлеры'}</h2>
 
+                    <div className='trailer__list'>
+                      {movie.videos.results.map((video, indx) =>
+                        video.site === 'YouTube' &&
+                          <div className='trailer__preview' id={video.key} key={indx}>
+                            <div className='preview-base' onClick={this.showTrailerModal}><i className='fa fa-play' aria-hidden='true' /></div>
+                            <img src={'http://i3.ytimg.com/vi/' + video.key + '/mqdefault.jpg'} alt='' />
+                          </div>)}
+                    </div>
+                  </div>
+                  : null}
 
-						 <div className="overview">
+                <MediaCast cast={movie.credits.cast} />
+                <MediaStills
+                  images={images}
+                  title='Кадры из фильма'
+                  imgCount={16}
+                />
+                <MediaStills
+                  images={posters}
+                  title='Постеры'
+                  posters
+                  imgCount={8}
+                />
 
-							 <LoadEngData
-								 id={movie.id}
-								 overview={movie.overview}
-								 lang="en-US"
-								 loadTvData={this.props.loadMovieData}
-							 />
+              </div>
+            </div>
+          </div>
 
-							 {movie.videos.results.length > 0
-								 ? <div className="trailer">
-									 <h2>{movie.videos.results.length === 1 ? 'Трейлер' : 'Трейлеры'}</h2>
+          {movie.belongs_to_collection && movie.collection.parts.length > 0
+            ? <MovieCollection collection={movie.collection} />
+            : null}
 
-									 <div className="trailer__list">
-										 {movie.videos.results.map((video, indx)=>
-											 video.site === 'YouTube' &&
-												 <div className="trailer__preview" id={video.key} key={indx}>
-													 <div className="preview-base" onClick={this.showTrailerModal}><i className="fa fa-play" aria-hidden="true"/></div>
-													 <img src={'http://i3.ytimg.com/vi/' + video.key + '/mqdefault.jpg'} alt=""/>
-												 </div>)}
-									 </div>
-								 </div>
-								 : null}
+          {movie.recommendations.total_results &&
+            <MediaRecommendations
+              recommendations={movie.recommendations}
+              listName='Вам может понравиться'
+              typeList='movie'
+            />}
 
-
-							 <MediaCast cast={movie.credits.cast}/>
-							 <MediaStills images={images} title="Кадры из фильма" imgCount={16} onClickImg={this.onClickImg}/>
-
-						 </div>
-					 </div>
-				 </div>
-
-				 {movie.belongs_to_collection && movie.collection.parts.length > 0 ?
-					 <MovieCollection collection={movie.collection}/>
-				 	: null
-				 }
-
-				 {movie.recommendations.total_results > 0
-					 ? <MediaRecommendations recommendations={movie.recommendations} listName="Вам может понравиться" typeList="movie"/>
-					 : null }
-
-
-				 {this.state.lightBox ?
-					 <Lightbox
-						 mainSrc={'https://image.tmdb.org/t/p/w1280' + images[imgIndex].file_path}
-						 nextSrc={'https://image.tmdb.org/t/p/w1280' + images[(imgIndex + 1) % images.length].file_path}
-						 prevSrc={'https://image.tmdb.org/t/p/w1280' + images[(imgIndex + images.length - 1) % images.length].file_path}
-
-						 onCloseRequest={() => this.setState({ lightBox: false })}
-						 onMovePrevRequest={() => this.setState({
-							 imgIndex: (imgIndex + images.length - 1) % images.length
-						 })}
-						 onMoveNextRequest={() => this.setState({
-							 imgIndex: (imgIndex + 1) % images.length
-						 })}
-					 />: null}
-
-
-				 {this.state.modalTrailer
-					 ? <div className="popup-base" onClick={this.closePopup}>
-						 <div className="popup popup--video">
-							 <div className="popup__close" onClick={this.closePopup}/>
-							 <Popup>
-								 <YouTube
-									 videoId={this.state.trailerKey}
-									 opts={YouTubeParams}
-									 onReady={this._onReady}
-								 />
-							 </Popup>
-						 </div>
-					 </div>
-					 : null}
-				 </div>
-			 </ServiceBlock>
-		 );
-    }
+          {this.state.modalTrailer &&
+            <div className='popup-base' onClick={this.closePopup}>
+              <div className='popup popup--video'>
+                <div className='popup__close' onClick={this.closePopup} />
+                <Popup>
+                  <YouTube
+                    videoId={this.state.trailerKey}
+                    opts={YouTubeParams}
+                    onReady={this._onReady}
+                  />
+                </Popup>
+              </div>
+            </div>}
+        </div>
+      </ServiceBlock>
+    );
+  }
 }
 
-function mapStateToProps(state) {
-    return {
-        movie: state.Movies.MovieData,
-	    crew: state.Movies.MovieData.crew
-    };
+function mapStateToProps (state) {
+  return {
+    movie: state.Movies.MovieData,
+    crew: state.Movies.MovieData.crew
+  };
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    loadMovieData: (id, lang) => dispatch(onLoadMovie(id, lang)),
-    clearMovieData: () => dispatch(clearMovieData())
+  loadMovieData: (id, lang) => dispatch(onLoadMovie(id, lang)),
+  clearMovieData: () => dispatch(clearMovieData())
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Movie);

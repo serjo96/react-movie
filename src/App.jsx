@@ -7,33 +7,33 @@ import Routes from './Routes/Routes';
 import './../styles/main.sass';
 import Header from './Templates/Head/Head';
 import Nav from './Templates/Nav/nav';
-import { onGeneres } from './Data/api/General.api';
-
+import { onGeneres } from './store/api/General.api';
 
 class App extends Component {
-    componentDidMount() {
-        JSON.parse(localStorage.getItem('genres'))
-            ? null
-            : this.props.Genres();
-    }
-    render() {
-        return (
-            <div>
-	            <Helmet>
-		            <title>Movie Base</title>
-	            </Helmet>
+  componentDidMount () {
+    JSON.parse(localStorage.getItem('genres'))
+      ? null
+      : this.props.Genres();
+  }
 
-                <Nav location={this.props.location}/>
-                <Header history={this.props.history}/>
+  render () {
+    return (
+      <div>
+        <Helmet>
+          <title>Movie Base</title>
+        </Helmet>
 
-	            <Routes/>
-            </div>
-        );
-    }
+        <Nav location={this.props.location} />
+        <Header history={this.props.history} />
+
+        <Routes />
+      </div>
+    );
+  }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    Genres: () => dispatch(onGeneres())
+  Genres: () => dispatch(onGeneres())
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(App));
