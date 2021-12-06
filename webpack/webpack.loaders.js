@@ -1,3 +1,4 @@
+const isDevelopment = process.env.NODE_ENV !== 'production';
 module.exports = [
   {
     test: /\.tsx?$/,
@@ -18,7 +19,8 @@ module.exports = [
       {
         loader: 'babel-loader',
 	      options: {
-		      presets: ['@babel/preset-env', '@babel/preset-react']
+		      presets: ['@babel/preset-env', '@babel/preset-react'],
+          plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
 	      }
       }
     ]

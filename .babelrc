@@ -1,6 +1,12 @@
 {
   "presets": ["@babel/react", "@babel/preset-env"],
-  "plugins": ["@babel/plugin-transform-runtime", ["@babel/plugin-proposal-decorators", {
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    ["@babel/plugin-proposal-decorators", {
     "legacy": true
-  }], "transform-class-properties", "react-hot-loader/babel", "transform-es2015-unicode-regex"]
+  }],
+    "transform-class-properties",
+    "react-hot-loader/babel",
+    "transform-es2015-unicode-regex"
+  ]
 }

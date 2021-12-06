@@ -1,3 +1,4 @@
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 const webpack = require('webpack');
 const path = require('path');
 const loaders = require('./webpack.loaders');
@@ -6,10 +7,10 @@ const DashboardPlugin = require('webpack-dashboard/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || '8888';
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   entry: [
-    'react-hot-loader/patch',
     path.join(__dirname, './../src/index.tsx') // your app's entry point
   ],
   devtool: process.env.WEBPACK_DEVTOOL || 'eval-source-map',
@@ -31,6 +32,7 @@ module.exports = {
       'react-dom': '@hot-loader/react-dom'
     }
   },
+  mode: isDevelopment ? 'development' : 'production',
   module: {
     rules: loaders
   },
@@ -51,7 +53,8 @@ module.exports = {
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    isDevelopment && new webpack.HotModuleReplacementPlugin(),
+    isDevelopment && new ReactRefreshWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: './style.css',
       allChunks: true
