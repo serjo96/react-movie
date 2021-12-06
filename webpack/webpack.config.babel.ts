@@ -1,10 +1,11 @@
+import webpack from 'webpack';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
-const webpack = require('webpack');
-const path = require('path');
-const loaders = require('./webpack.loaders');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const DashboardPlugin = require('webpack-dashboard/plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import DashboardPlugin from 'webpack-dashboard/plugin';
+import path from 'path';
+import loaders from './webpack.loaders';
+
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || '8888';
 const isDevelopment = process.env.NODE_ENV !== 'production';
@@ -28,8 +29,7 @@ module.exports = {
       '@ui': path.resolve(__dirname, '../src/ui-components'),
       '@templates': path.resolve(__dirname, '../src/Templates'),
       store: path.join(__dirname, '../src/store/'),
-      config: path.join(__dirname, '../src/config/'),
-      'react-dom': '@hot-loader/react-dom'
+      config: path.join(__dirname, '../src/config/')
     }
   },
   mode: isDevelopment ? 'development' : 'production',
@@ -56,8 +56,7 @@ module.exports = {
     isDevelopment && new webpack.HotModuleReplacementPlugin(),
     isDevelopment && new ReactRefreshWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: './style.css',
-      allChunks: true
+      filename: './style.css'
     }),
     new DashboardPlugin(),
     new HtmlWebpackPlugin({
@@ -67,5 +66,5 @@ module.exports = {
         js: ['bundle.js']
       }
     })
-  ]
+  ].filter(Boolean)
 };
