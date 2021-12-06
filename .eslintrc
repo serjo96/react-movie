@@ -8,6 +8,8 @@
     "space-before-blocks": "error",
     "react/prop-types": ["warn"],
     "react/jsx-fragments": ["warn", "element"],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
     "import/no-unresolved": [
      "error",
       {
