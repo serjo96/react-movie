@@ -13,14 +13,25 @@ module.exports = [
     exclude: /node_modules/
   },
   {
-    test: /\.jsx?$/,
+    test: /\.js?$/,
     exclude: /(node_modules|bower_components|public\/)/,
     use: [
       {
         loader: 'babel-loader',
 	      options: {
 		      presets: ['@babel/preset-env', '@babel/preset-react'],
-          plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
+	      }
+      }
+    ]
+  },
+  {
+    test: /\.[jt]sx?$/,
+    exclude: /(node_modules|bower_components|public\/)/,
+    use: [
+      {
+        loader: 'babel-loader',
+	      options: {
+          plugins: [isDevelopment && 'react-refresh/babel'].filter(Boolean),
 	      }
       }
     ]
