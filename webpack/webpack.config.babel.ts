@@ -58,7 +58,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: './style.css'
     }),
-    new DashboardPlugin(),
+    isDevelopment && new DashboardPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, './../src/template.html'),
       files: {
