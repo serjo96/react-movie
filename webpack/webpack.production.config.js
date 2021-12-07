@@ -37,10 +37,10 @@ module.exports = {
       fonts: path.join(__dirname, '../src/assets/fonts/'),
       images: path.join(__dirname, '../src/assets/images/'),
       utils: path.join(__dirname, '../src/utils/'),
-      ui: path.join(__dirname, '../src/ui-components/'),
+      '@ui': path.resolve(__dirname, '../src/ui-components'),
+      '@templates': path.resolve(__dirname, '../src/Templates'),
       config: path.join(__dirname, '../src/config/'),
-      store: path.join(__dirname, '../src/store/'),
-      'react-dom': '@hot-loader/react-dom'
+      store: path.join(__dirname, '../src/store/')
     }
   },
   module: {
@@ -49,7 +49,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"'
+        NODE_ENV: 'production'
       }
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
