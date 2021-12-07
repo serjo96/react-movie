@@ -5,17 +5,21 @@
     "allowSyntheticDefaultImports": true,
     "target": "esnext",
     "module": "commonjs",
+    "esModuleInterop": true,
     "jsx": "react",
     "allowJs": true,
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "ui/*": ["./src/ui-components"],
-      "@templates/*": ["./src/Templates"],
-      "store/*": ["./src/store/*"]
+      "@ui/*": ["./src/ui-components/*"],
+      "@templates/*": ["./src/Templates/*"],
+      "store/*": ["./src/store/*"],
+      "utils/*": ["./src/utils/*"],
+      "~/*": ["./src/*"]
     }
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "./dist/**/*"
   ]
 }

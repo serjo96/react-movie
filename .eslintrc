@@ -30,13 +30,14 @@
         "map": [
           ["fonts", "./src/assets/fonts/"],
           ["images", "./src/assets/images/"],
-          ["utils", "./src/utils/"],
+          ["utils", "./src/utils"],
           ["@ui", "./src/ui-components"],
           ["@templates", "./src/Templates"],
           ["config", "./src/config/"],
-          ["store", "./src/store/"]
+          ["store", "./src/store"],
+          ["~", "./src"]
         ],
-        "extensions": [".ts", ".js", ".jsx", ".json"]
+        "extensions": [".ts", ".js", ".tsx", ".jsx", ".json"]
       }
     }
   }
