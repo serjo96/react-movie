@@ -1,2 +1,4 @@
-require('babel-register');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const register = require('@babel/register').default;
+register({ extensions: ['.ts'] });
 module.exports = require('./webpack.config.babel.ts');
