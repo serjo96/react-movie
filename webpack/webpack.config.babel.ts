@@ -21,7 +21,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   resolve: {
-    extensions: ['.js', 'ts', '.tsx'],
+    extensions: ['.js', '.ts', '.jsx', '.tsx'],
     alias: {
       fonts: path.join(__dirname, '../src/assets/fonts/'),
       images: path.join(__dirname, '../src/assets/images/'),
