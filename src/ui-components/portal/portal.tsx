@@ -1,4 +1,4 @@
-import React, { ReactChild, ReactChildren } from 'react';
+import React, { ReactChild, ReactChildren, ReactPortal } from 'react';
 import ReactDOM from 'react-dom';
 
 interface Props {
@@ -6,7 +6,7 @@ interface Props {
   className?: string,
   el?: string
 }
-const Portal = ({ children, className = 'root-portal', el = 'div' }: Props) => {
+const Portal = ({ children, className = 'root-portal', el = 'div' }: Props):ReactPortal => {
   const [container] = React.useState(() => {
     // This will be executed only on the initial render
     // https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
