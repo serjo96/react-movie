@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { urlRusLat } from 'utils/index';
-import { onLoadEngMedia } from '../../store/api/General.api';
-import Portal from '@ui/portal/portal.jsx';
+import { onLoadEngMedia } from 'store/api/General.api';
+import Portal from '~/ui-components/portal/portal';
 import MovieDescription from '@ui/MovieDescription/MovieDescription';
+import { urlRusLat } from '~/utils/format';
 
 class MoviePopup extends Component {
   tooltip = null;
@@ -105,7 +105,7 @@ class MoviePopup extends Component {
   get getOverview () {
     const { engData, typeItem, id, overview } = this.props;
     return engData[typeItem][id] ? engData[typeItem][id].overview : overview;
-  };
+  }
 
   render () {
     const {

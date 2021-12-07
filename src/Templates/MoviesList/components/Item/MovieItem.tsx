@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { urlRusLat } from 'utils';
 import classNames from 'classnames';
 
-import MovieInfo from '@templates/Tooltip/MovieInfo.jsx';
+import MovieInfo from '@templates/Tooltip/MovieInfo';
 import Image from '@ui/image/image.jsx';
+
+import { urlRusLat } from '~/utils/format';
 import './movieItem.sass';
 
 const MovieItem = ({

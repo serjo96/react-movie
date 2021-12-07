@@ -7,7 +7,7 @@ import { MainSearch } from '../../store/api/Search.api';
 import { searchResetFetch } from '../../store/actions/general-actions';
 
 import { MoviesList } from '../MoviesList/components';
-import { friendlyUrl } from 'utils/index';
+import { friendlyUrl } from 'utils/format';
 import ServiceBlock from './../Service/ServiceBlock';
 
 class Search extends Component {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import NoImg from 'images/NoImg.png';
 import Spinner from '../../../ui-components/spinner/Spinner';
-import { friendlyUrl, urlRusLat } from 'utils/index';
+import { friendlyUrl, urlRusLat } from 'utils/format';
 
 class MovieAside extends Component {
   state = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import NoImg from 'images/NoImg.png';
-import { declOfNum, kFormatter, friendlyData, formatTime } from 'utils/index';
+import { declOfNum, kFormatter, friendlyData, formatTime } from 'utils/format';
 import { movieDues } from 'utils/movieDataFormat';
 
 const MovieBg = (movie) => {

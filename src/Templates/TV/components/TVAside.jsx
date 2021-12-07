@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import NoImg from 'images/NoImg.png';
 import Spinner from '../../../ui-components/spinner/Spinner';
-import { friendlyUrl, friendlyData, urlRusLat } from 'utils/index';
+import { friendlyUrl, friendlyData, urlRusLat } from 'utils/format';
 
 class TVAside extends Component {
     state = {

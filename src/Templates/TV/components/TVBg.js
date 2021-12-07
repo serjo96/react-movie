@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import NoImg from 'images/NoImg.png';
-import { declOfNum, kFormatter } from 'utils/index';
+import { declOfNum, kFormatter } from 'utils/format';
 
 const TVBg = (tv) => (
   <div className='movie__bg'>

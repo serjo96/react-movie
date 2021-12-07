@@ -7,7 +7,7 @@ import { Timeline } from 'react-twitter-widgets';
 
 import { clearPersonData } from '../../../store/actions/person-actions';
 import { onLoadPerson } from '../../../store/api/Perosn.api';
-import { urlRusLat, declOfNum, friendlyData } from 'utils/index';
+import { urlRusLat, declOfNum, friendlyData } from 'utils/format';
 import NoImg from 'images/NoImg.png';
 
 import ServiceBlock from './../../Service/ServiceBlock';

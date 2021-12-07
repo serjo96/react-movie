@@ -1,12 +1,31 @@
-export const friendlyUrl = (e) => e.replace(/\s+/g, '_').toLowerCase();
+// TODO: to refactoring
+export function declOfNum (number: number, titles: string[]) {
+  return titles[(number % 10 === 1 && number % 100 !== 11) ? 0 : number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20) ? 1 : 2];
+}
 
-export const friendlyData = (e) => e.replace(/-/g, '.').toLowerCase();
+export function formatTime (minutes: number): string {
+  const m = minutes % 60;
+  const hours = (minutes - m) / 60;
+  return hours.toString() + ' ' + declOfNum(hours, ['час', 'часа', 'часов']) + ' ' + (m < 10 ? '0' : '') + m.toString();
+}
 
-export const kFormatter = num => num > 999 ? (num / 1000).toFixed(1) + 'k' : num;
+export function capitalizeFirstLetter (string: string): string {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
-export const declOfNum = (n, titles) => titles[(n % 10 === 1 && n % 100 !== 11) ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2];
+export function friendlyUrl (url: string): string {
+  return url.replace(/\s+/g, '_').toLowerCase();
+}
 
-export function urlRusLat (str) {
+export function friendlyData (string: string): string {
+  return string.replace(/-/g, '.').toLowerCase();
+}
+
+export function kFormatter (count: number): number | string {
+  return count > 999 ? (count / 1000).toFixed(1) + 'k' : count;
+}
+
+export function urlRusLat (str: string): string {
   str = str.toLowerCase();
   const cyr2latChars = [
     ['а', 'a'], ['б', 'b'], ['в', 'v'], ['г', 'g'],
@@ -63,35 +82,4 @@ export function urlRusLat (str) {
     newStr = 'media';
   }
   return newStr.replace(/-/g, '_').replace(/[_]{2,}/gim, '_').replace(/\n/gim, '');
-}
-
-export function isMatching (full, chunk) {
-  full = full.toLowerCase();
-  chunk = chunk.toLowerCase();
-  return full.substr(0, chunk.length) === chunk;
-}
-
-export function formatTime (minutes) {
-  const m = minutes % 60;
-  const h = (minutes - m) / 60;
-  return h.toString() + ' ' + declOfNum(h.toString(), ['час', 'часа', 'часов']) + ' ' + (m < 10 ? '0' : '') + m.toString();
-}
-
-export function sortSeasons (a, b) {
-  if (a.season_number === 0) return 1;
-  if (b.season_number === 0) return -1;
-  if (new Date(a.season_number) === new Date(b.season_number)) return 0;
-  return new Date(a.season_number) < new Date(b.season_number) ? -1 : 1;
-}
-
-export const chunkArr = (arr, chunkSize) => {
-  let groups = []; let i;
-  for (i = 0; i < arr.length; i += chunkSize) {
-    groups.push(arr.slice(i, i + chunkSize));
-  }
-  return groups;
-};
-
-export function capitalizeFirstLetter (string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
 }

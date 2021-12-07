@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { friendlyData } from 'utils';
+import { friendlyData } from 'utils/format';
 import MovieItem from '../Item/MovieItem';
 import './moviesList.sass';
 

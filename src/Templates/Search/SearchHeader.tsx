@@ -6,9 +6,9 @@ import { Scrollbars } from 'react-custom-scrollbars';
 
 import { clearSearch } from '../../store/actions/general-actions';
 import { onSearch } from '../../store/api/Search.api';
-import { friendlyUrl, urlRusLat } from 'utils/index';
+import { friendlyUrl, urlRusLat } from 'utils/format';
 import NoImg from 'images/NoImg.png';
-import Spinner from '../../ui-components/spinner/Spinner';
+import Spinner from '~/ui-components/spinner/Spinner';
 
 class SearchHeader extends Component {
     state = {
