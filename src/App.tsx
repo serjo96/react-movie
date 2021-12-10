@@ -7,7 +7,7 @@ import Routes from './Routes/Routes';
 import './../styles/main.sass';
 import Header from './Templates/Head/Head';
 import Nav from './Templates/Nav/nav';
-import { onGeneres } from './store/api/General.api';
+import { onGeneres } from 'store/api/General.api';
 
 class App extends Component {
   componentDidMount () {

@@ -22,6 +22,7 @@ class MoviePopup extends Component {
     this.initTooltipPosition();
   }
 
+  // TODO: Fix position
   initTooltipPosition = () => {
     if (!this.state.show) {
       return;
