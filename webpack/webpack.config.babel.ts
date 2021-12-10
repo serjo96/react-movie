@@ -35,8 +35,7 @@ module.exports = {
   },
   mode: isDevelopment ? 'development' : 'production',
   module: {
-    rules: loaders,
-    unsafeCache: true
+    rules: loaders
   },
   devServer: {
     contentBase: './../public',
