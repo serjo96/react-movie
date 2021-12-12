@@ -107,7 +107,11 @@ class Person extends Component {
     return (
       <div className='main main--media-list'>
         <div className='movies-content company'>
-          <ServiceBlock isLoading={companyData.isFetching && companyMovies.isFetching} isError={companyData.status && companyMovies.status.pageOne && companyMovies.status.pageTwo} fetch={this.sendRequest}>
+          <ServiceBlock
+            isLoading={companyData.isFetching && companyMovies.isFetching}
+            isError={companyData.status && companyMovies.status.pageOne && companyMovies.status.pageTwo}
+            fetch={this.sendRequest}
+          >
             <Helmet>
               <title>{companyData.data.name}</title>
             </Helmet>
@@ -122,7 +126,7 @@ class Person extends Component {
                 <div className='company__city'>{companyData.data.headquarters ? `Местораположение компании - ${companyData.data.headquarters}` : ''}</div>
                 <div className='company__parent'>{companyData.data.parent_company ? `Родительская компания - ${companyData.data.parent_company}` : ''}</div>
                 <div className='company__links'>
-                  {companyData.data.homepage ? <a target='_blank' href={companyData.data.homepage} className='social-link'>Домашняя страница</a> : null}
+                  {companyData.data.homepage && <a target='_blank' href={companyData.data.homepage} className='social-link'>Домашняя страница</a>}
                 </div>
               </div>
 
@@ -133,11 +137,25 @@ class Person extends Component {
               movieList={companyMovies}
               typeList='movie'
             />
-            {companyMovies.data.total_pages > 1
-              ? <div className='pager-btns clearfix'>
-                {companyMovies.data.page - 1 > 1 ? <div className='pager-btn pager-btn--prev link-angle link-angle--left' onClick={this.prevPage}><i className='fa fa-angle-left' aria-hidden='true' /><span>Предыдущая страница</span></div> : null}
-                {companyMovies.data.page + 1 < companyMovies.data.total_pages ? <div className='pager-btn pager-btn--next link-angle' onClick={this.nextPage}><span>Следующая страница</span><i className='fa fa-angle-right' aria-hidden='true' /></div> : null}
-              </div> : null}
+            {companyMovies.data.total_pages > 1 &&
+              <div className='pager-btns clearfix'>
+                {companyMovies.data.page - 1 > 1 &&
+                  <div
+                    className='pager-btn pager-btn--prev link-angle link-angle--left'
+                    onClick={this.prevPage}
+                  >
+                    <i className='fa fa-angle-left' aria-hidden='true' />
+                    <span>Предыдущая страница</span>
+                  </div>}
+                {companyMovies.data.page + 1 < companyMovies.data.total_pages &&
+                  <div
+                    className='pager-btn pager-btn--next link-angle'
+                    onClick={this.nextPage}
+                  >
+                    <span>Следующая страница</span>
+                    <i className='fa fa-angle-right' aria-hidden='true' />
+                  </div>}
+              </div>}
           </ServiceBlock>
         </div>
       </div>
@@ -153,7 +171,7 @@ function mapStateToProps (state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  loadCompanyData: (id) => dispatch(onLoadCompanyData(id)),
+
   loadList: (id, page) => dispatch(LoadCompanyMovies(id, page)),
   clearPersonData: () => dispatch(clearCompanyData())
 });

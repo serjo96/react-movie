@@ -101,7 +101,11 @@ class Movie extends Component {
     const { posters } = this.props.movie;
 
     return (
-      <ServiceBlock isLoading={this.props.movie.isFetching} isError={this.props.movie.status} fetch={this.sendRequest}>
+      <ServiceBlock
+        isLoading={this.props.movie.isFetching}
+        isError={this.props.movie.status}
+        fetch={this.sendRequest}
+      >
         <div className='movie'>
           <Helmet>
             <title>{movie.title}</title>
@@ -183,9 +187,8 @@ class Movie extends Component {
             </div>
           </div>
 
-          {movie.belongs_to_collection && movie.collection.parts.length > 0
-            ? <MovieCollection collection={movie.collection} />
-            : null}
+          {movie.belongs_to_collection && movie.collection.parts.length > 0 &&
+            <MovieCollection collection={movie.collection} />}
 
           {movie.recommendations.total_results &&
             <MediaRecommendations
@@ -224,5 +227,6 @@ const mapDispatchToProps = (dispatch) => ({
   loadMovieData: (id, lang) => dispatch(onLoadMovie(id, lang)),
   clearMovieData: () => dispatch(clearMovieData())
 });
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Movie);

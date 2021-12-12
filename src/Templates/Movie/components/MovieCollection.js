@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { MovieItem } from '../../MoviesList/components';
 
 const MovieCollection = (movie) => (
@@ -41,9 +40,5 @@ const MovieCollection = (movie) => (
     </div>
   </div>
 );
-
-MovieCollection.propTypes = {
-  collection: PropTypes.object
-};
 
 export default (MovieCollection);

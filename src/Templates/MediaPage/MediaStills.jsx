@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Lightbox from 'lightbox-react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import Spinner from '../../ui-components/spinner/Spinner';
 
 export default class MediaStills extends Component {
@@ -12,8 +13,8 @@ export default class MediaStills extends Component {
     };
 
     loadMoreImg = (e) => {
-	    this.setState({ imgCount: this.state.imgCount += this.props.imgCount });
-	    e.target.closest('.stills__list').classList.add('stills__list--moreLoaded');
+      this.setState({ imgCount: this.state.imgCount += this.props.imgCount });
+      e.target.closest('.stills__list').classList.add('stills__list--moreLoaded');
     };
 
     onLoadImg = (e) => {
@@ -28,6 +29,13 @@ export default class MediaStills extends Component {
     });
   };
 
+  stillsListClass = () => {
+    return classNames('stills__list', {
+      'stills__list--moreLoaded': this.props.images.length <= this.state.imgCount + 1,
+      'stills__list--person': this.props.title === 'Фото'
+    });
+  };
+
   render () {
     const { images, posters, title } = this.props;
     const { imgIndex, imgCount, imgStatus, lightBox } = this.state;
@@ -39,11 +47,11 @@ export default class MediaStills extends Component {
       <React.Fragment>
         <div className='stills'>
           <h2>{title}</h2>
-          <div className={`stills__list ${images.length <= imgCount + 1 ? 'stills__list--moreLoaded' : ''} ${title === 'Фото' ? 'stills__list--person' : ''}`}>
-            {images.length > imgCount + 1
-              ? <div className='show-more show-more--stills'>
+          <div className={this.stillsListClass()}>
+            {images.length > imgCount + 1 &&
+              <div className='show-more show-more--stills'>
                 <div className='show-more__btn' onClick={this.loadMoreImg}>Больше</div>
-                </div> : null}
+              </div>}
             {images.map((backdrop, indx) =>
               indx <= imgCount &&
                 <div className={`stills__img ${posters && 'stills__img--posters'}`} key={indx}>
@@ -84,6 +92,5 @@ export default class MediaStills extends Component {
 MediaStills.propTypes = {
   imgCount: PropTypes.number,
   title: PropTypes.string,
-  posters: PropTypes.boolean,
-  onClickImg: PropTypes.func
+  posters: PropTypes.boolean
 };
