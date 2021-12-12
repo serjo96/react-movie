@@ -18,9 +18,9 @@ module.exports = [
     use: [
       {
         loader: 'babel-loader',
-	      options: {
-		      presets: ['@babel/preset-env', '@babel/preset-react'],
-	      }
+        options: {
+          presets: ['@babel/preset-env', '@babel/preset-react']
+        }
       }
     ]
   },
@@ -30,9 +30,9 @@ module.exports = [
     use: [
       {
         loader: 'babel-loader',
-	      options: {
-          plugins: [isDevelopment && 'react-refresh/babel'].filter(Boolean),
-	      }
+        options: {
+          plugins: [isDevelopment && 'react-refresh/babel'].filter(Boolean)
+        }
       }
     ]
   },
@@ -50,17 +50,17 @@ module.exports = [
   },
   {
     test: /\.sass$/,
-	  use: [
-		  'style-loader',
-		  'css-loader',
-		  {
-			  loader: 'sass-loader',
-			  options: {
-				  // Prefer `dart-sass`
-				  implementation: require('dart-sass')
-			  }
-		  }
-	  ]
+    use: [
+      'style-loader',
+      'css-loader',
+      {
+        loader: 'sass-loader',
+        options: {
+          // Prefer `dart-sass`
+          implementation: require('dart-sass')
+        }
+      }
+    ]
   },
   {
     test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
