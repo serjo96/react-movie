@@ -11,7 +11,7 @@ import TVonTheAir from '../Templates/TvLists/TVonTheAir.jsx';
 import TV from '../Templates/TV/containers/Tv.jsx';
 import People from '../Templates/Person/containers/Person.jsx';
 import Search from '../Templates/Search/Search.jsx';
-import Company from '../Templates/Company/Company.jsx';
+import Company from '../Templates/Company/Company';
 
 import KeywordsList from '../Templates/Lists/KeywordsList';
 
