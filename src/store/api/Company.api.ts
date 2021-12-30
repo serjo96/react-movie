@@ -1,16 +1,22 @@
+import { Dispatch } from 'redux';
 import axios from 'axios';
-import { loadCompanyData, loadCompanyMovies } from './../actions/company-actions';
+import { Company } from 'tmdb-typescript-api';
+import {
+  CompanyActionReturnData,
+  loadCompanyData,
+  loadCompanyMovies
+} from './../actions/company-actions';
+import oldClient from '~/Сore/api/OldClient';
+import { ClientResponse } from '~/Сore/api/apiClient';
 
-export function onLoadCompanyData (id) {
-  return (dispatch) => {
-    axios.get('https://api.themoviedb.org/3/company/' + id,
+export function onLoadCompanyData (id: string) {
+  return (dispatch: Dispatch<CompanyActionReturnData>) => {
+    oldClient.get(`company/${id}`,
       {
-        params: {
-          api_key: '5a1d310d575e516dd3c547048eb7abf1',
-          language: 'ru-RU'
-        }
-      }).then(response => {
-      dispatch(loadCompanyData({ data: response.data, status: response.status === 200 }));
+        api_key: '5a1d310d575e516dd3c547048eb7abf1',
+        language: 'ru-RU'
+      }).then((response: ClientResponse<Company>) => {
+      dispatch(loadCompanyData({ data: response.data, status: response.status === 200 || response.status === 201 }));
     });
   };
 }
