@@ -13,7 +13,6 @@ export function onLoadCompanyData (id: string) {
   return (dispatch: Dispatch<CompanyActionReturnData>) => {
     oldClient.get(`company/${id}`,
       {
-        api_key: '5a1d310d575e516dd3c547048eb7abf1',
         language: 'ru-RU'
       }).then((response: ClientResponse<Company>) => {
       dispatch(loadCompanyData({ data: response.data, status: response.status === 200 || response.status === 201 }));

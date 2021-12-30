@@ -14,10 +14,12 @@ export interface ClientResponse<T> {
 export class ResponseError extends Error {
     code: number;
     response: Response;
+    defaultQuery?: {[key: string]: string};
     constructor (resp: Response) {
       super(resp.statusText);
       this.code = resp.status;
       this.response = resp;
+      this.defaultQuery = {};
       Object.setPrototypeOf(this, ResponseError.prototype);
     }
 }
@@ -41,7 +43,8 @@ export default class ApiClient {
     }
 
     private _buildQueryParams (queryParams: {[key: string]: string}) {
-      let q = Object.entries(queryParams).map(([k, value]) => {
+      const queryParam = this.queryParams ? { ...this.queryParams, queryParams } : queryParams;
+      let q = Object.entries(queryParam).map(([k, value]) => {
         if (Array.isArray(value)) { return value.map(v => [k, encodeURIComponent(v)].join('=')).join('&'); }
         return [k, encodeURIComponent(value)].join('=');
       }).join('&');
