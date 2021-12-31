@@ -126,7 +126,7 @@ class Person extends Component {
                 <div className='company__city'>{companyData.data.headquarters ? `Местораположение компании - ${companyData.data.headquarters}` : ''}</div>
                 <div className='company__parent'>{companyData.data.parent_company ? `Родительская компания - ${companyData.data.parent_company}` : ''}</div>
                 <div className='company__links'>
-                  {companyData.data.homepage && <a target='_blank' href={companyData.data.homepage} className='social-link'>Домашняя страница</a>}
+                  {companyData.data.homepage ? <a target='_blank' href={companyData.data.homepage} className='social-link'>Домашняя страница</a> : null}
                 </div>
               </div>
 
@@ -171,7 +171,7 @@ function mapStateToProps (state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-
+  loadCompanyData: (id) => dispatch(onLoadCompanyData(id)),
   loadList: (id, page) => dispatch(LoadCompanyMovies(id, page)),
   clearPersonData: () => dispatch(clearCompanyData())
 });
