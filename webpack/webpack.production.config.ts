@@ -38,9 +38,6 @@ const config: webpack.Configuration = {
     rules: loaders
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    }),
     new MiniCssExtractPlugin({
       filename: 'css/style.css'
     }),
