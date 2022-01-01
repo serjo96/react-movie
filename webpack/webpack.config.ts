@@ -39,8 +39,8 @@ const config: webpack.Configuration = {
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
-    isDevelopment && new webpack.HotModuleReplacementPlugin(),
-    isDevelopment && new ReactRefreshWebpackPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new ReactRefreshWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: './style.css'
     }),
