@@ -1,5 +1,7 @@
+import * as webpack from 'webpack';
 const isDevelopment = process.env.NODE_ENV !== 'production';
-module.exports = [
+
+const loaders: webpack.ModuleOptions['rules'] = [
   {
     test: /\.tsx?$/,
     use: [
@@ -135,3 +137,5 @@ module.exports = [
     ]
   }
 ];
+
+export default loaders;
