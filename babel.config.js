@@ -1,5 +1,6 @@
 module.exports = (api) => {
   api.cache.using(() => process.env.NODE_ENV);
+
   return {
     presets: [
       '@babel/react',
@@ -13,7 +14,7 @@ module.exports = (api) => {
       }],
       'transform-class-properties',
       'transform-es2015-unicode-regex',
-      !api.env('production') && 'react-refresh/babel'
+      ...(!api.env('production') && { plugins: ['react-refresh/babel'] }),
     ]
   };
 };
