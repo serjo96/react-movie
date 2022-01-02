@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { onLoadEngMedia } from 'store/api/General.api';
+import { onLoadEngMedia } from '~/store/api/general.api';
 import Portal from '~/ui-components/portal/portal';
 import MovieDescription from '@ui/MovieDescription/MovieDescription';
 import { urlRusLat } from '~/utils/format';

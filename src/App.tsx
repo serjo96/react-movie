@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { connect } from 'react-redux';
+import { connect, MapDispatchToProps } from 'react-redux';
 import Routes from './Routes/Routes';
 
 import './../styles/main.sass';
 import Header from './Templates/Head/Head';
 import Nav from './Templates/Nav/nav';
-import { onGeneres } from 'store/api/General.api';
+import { getGenresList } from '~/store/api/general.api';
 
-class App extends Component {
+interface DispatchProps {
+    getGenresList: typeof getGenresList;
+}
+type Props = DispatchProps & RouteComponentProps
+
+class App extends Component<Props> {
   componentDidMount () {
-    JSON.parse(localStorage.getItem('genres'))
-      ? null
-      : this.props.Genres();
+    JSON.parse(localStorage.getItem('genres')) && this.props.getGenresList();
   }
 
   render () {
@@ -32,8 +35,8 @@ class App extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  Genres: () => dispatch(onGeneres())
-});
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, Props> = {
+  getGenresList
+};
 
 export default withRouter(connect(null, mapDispatchToProps)(App));

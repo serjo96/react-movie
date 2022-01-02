@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { takeGenres, takeEngMedia, takeKeywordsMovies } from './../actions/general-actions';
 import { loadPlayingMovies, loadPopularMovies, loadTopMovies, loadUpcomingMovies } from './../actions/movies-actions';
+import { ThunkAction } from 'redux-thunk';
+import { AnyAction } from 'redux';
 
 export function onLoadMainPage () {
   return (dispatch) => {
@@ -58,9 +60,9 @@ export function onLoadMainPage () {
   };
 }
 
-export function onGeneres () {
-  return (dispatch) => {
-    axios.all([
+export function getGenresList (): ThunkAction<void, unknown, unknown, AnyAction> {
+  return async dispatch => {
+    const { genresMovie, genresTV } = await axios.all([
       axios.get('https://api.themoviedb.org/3/genre/movie/list',
         {
           params: {
@@ -76,8 +78,12 @@ export function onGeneres () {
           }
         })
     ]).then(axios.spread((genresMovie, genresTV) => {
-      dispatch(takeGenres({ movie: genresMovie.data.genres, tv: genresTV.data.genres }));
+      return {
+        genresMovie,
+        genresTV
+      };
     }));
+    return dispatch(takeGenres({ movie: genresMovie.data.genres, tv: genresTV.data.genres }));
   };
 }
 
