@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, RouteComponentProps } from 'react-router-dom';
 import { Collapse } from 'react-collapse';
 
-export default class Nav extends Component {
+interface MyState {
+  movieCollapse: boolean;
+  tvCollapse: boolean;
+}
+
+export default class Nav extends Component<RouteComponentProps, MyState> {
   state = {
-    MovieCollapse: true,
-    TVCollapse: false
+    movieCollapse: true,
+    tvCollapse: false
   };
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate (prevProps: RouteComponentProps) {
     const width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
     if (width < 1130) {
       if (this.props.location.pathname !== prevProps.location.pathname) {
@@ -21,33 +26,33 @@ export default class Nav extends Component {
   componentDidMount () {
     if (this.props.location.pathname.search(/movie/) === 1) {
       this.setState({
-        MovieCollapse: true,
-        TVCollapse: false
+        movieCollapse: true,
+        tvCollapse: false
       });
     } else if (this.props.location.pathname.search(/tv/) === 1) {
       this.setState({
-        MovieCollapse: false,
-        TVCollapse: true
+        movieCollapse: false,
+        tvCollapse: true
       });
     }
   }
 
-  collapseNav = (e) => {
-    const target = e.target;
-    if (target.name === 'MovieCollapse') {
+  handleCollapseNav = (element) => {
+    const target = element.target;
+    if (target.name === 'movieCollapse') {
       this.setState({
-        MovieCollapse: target.checked,
-        TVCollapse: false
+        movieCollapse: target.checked,
+        tvCollapse: false
       });
     } else {
       this.setState({
-        TVCollapse: target.checked,
-        MovieCollapse: false
+        tvCollapse: target.checked,
+        movieCollapse: false
       });
     }
   };
 
-  onClickLink = (e) => {
+  handleClickLink = (e) => {
     e.target.closest('.nav').classList.remove('nav--mobile-show');
     document.querySelector('.mobile-nav-trigger').classList.remove('mobile-nav-trigger--isClicked');
   };
@@ -56,28 +61,45 @@ export default class Nav extends Component {
     return (
       <div className='nav'>
         <ul className='sidebar-menu sm-bordered sm-icons-block sm-icons-right'>
-          <li className={`hasSubmenu active ${this.state.MovieCollapse ? 'hasSubmenu--open' : ''}`}>
+          <li className={`hasSubmenu active ${this.state.movieCollapse ? 'hasSubmenu--open' : ''}`}>
             <div className='nav__element hasSubmenu-trigger js--submenuTrigger movie-collapse-trigger'>
               <span>Фильмы</span>
               <i className='fa fa-film' />
-              <input name='MovieCollapse' type='checkbox' onChange={this.collapseNav} checked={this.state.MovieCollapse} />
+              <input
+                name='movieCollapse'
+                type='checkbox'
+                onChange={this.handleCollapseNav}
+                checked={this.state.movieCollapse}
+              />
             </div>
-            <Collapse isOpened={this.state.MovieCollapse}>
+            <Collapse isOpened={this.state.movieCollapse}>
               <ul className='sub-menu'>
                 <li className='sub-menu__item'>
-                  <NavLink to='/movies/all' activeClassName='sub-menu__item--active' onClick={this.onClickLink}>
+                  <NavLink
+                    to='/movies/all'
+                    activeClassName='sub-menu__item--active'
+                    onClick={this.handleClickLink}
+                  >
                     <span>Все фильмы</span>
                     <i className='fa fa-fire' aria-hidden='true' />
                   </NavLink>
                 </li>
                 <li className='sub-menu__item'>
-                  <NavLink to='/movies/upcoming' activeClassName='sub-menu__item--active' onClick={this.onClickLink}>
+                  <NavLink
+                    to='/movies/upcoming'
+                    activeClassName='sub-menu__item--active'
+                    onClick={this.handleClickLink}
+                  >
                     <span>Ожидаемые фильмы</span>
                     <i className='fa fa-calendar' aria-hidden='true' />
                   </NavLink>
                 </li>
                 <li className='sub-menu__item'>
-                  <NavLink to='/movies/playing' activeClassName='sub-menu__item--active' onClick={this.onClickLink}>
+                  <NavLink
+                    to='/movies/playing'
+                    activeClassName='sub-menu__item--active'
+                    onClick={this.handleClickLink}
+                  >
                     <span>Фильмы в кино</span>
                     <i className='fa fa-ticket' aria-hidden='true' />
                   </NavLink>
@@ -85,28 +107,46 @@ export default class Nav extends Component {
               </ul>
             </Collapse>
           </li>
-          <li className={`hasSubmenu active ${this.state.TVCollapse ? 'hasSubmenu--open' : ''}`}>
+
+          <li className={`hasSubmenu active ${this.state.tvCollapse ? 'hasSubmenu--open' : ''}`}>
             <div className='nav__element hasSubmenu-trigger js--submenuTrigger tv-collapse-trigger'>
               <span>Сериалы</span>
               <i className='fa fa-television' />
-              <input name='TVCollapse' type='checkbox' onChange={this.collapseNav} checked={this.state.TVCollapse} />
+              <input
+                name='tvCollapse'
+                type='checkbox'
+                onChange={this.handleCollapseNav}
+                checked={this.state.tvCollapse}
+              />
             </div>
-            <Collapse isOpened={this.state.TVCollapse}>
+            <Collapse isOpened={this.state.tvCollapse}>
               <ul className='sub-menu'>
                 <li className='sub-menu__item'>
-                  <NavLink to='/tv/all' activeClassName='sub-menu__item--active' onClick={this.onClickLink}>
+                  <NavLink
+                    to='/tv/all'
+                    activeClassName='sub-menu__item--active'
+                    onClick={this.handleClickLink}
+                  >
                     <span>Все сериалы</span>
                     <i className='fa fa-fire' aria-hidden='true' />
                   </NavLink>
                 </li>
                 <li className='sub-menu__item'>
-                  <NavLink to='/tv/airing' activeClassName='sub-menu__item--active' onClick={this.onClickLink}>
+                  <NavLink
+                    to='/tv/airing'
+                    activeClassName='sub-menu__item--active'
+                    onClick={this.handleClickLink}
+                  >
                     <span>Сериалы на тв</span>
                     <i className='fa fa-calendar' aria-hidden='true' />
                   </NavLink>
                 </li>
                 <li className='sub-menu__item'>
-                  <NavLink to='/tv/onAir' activeClassName='sub-menu__item--active' onClick={this.onClickLink}>
+                  <NavLink
+                    to='/tv/onAir'
+                    activeClassName='sub-menu__item--active'
+                    onClick={this.handleClickLink}
+                  >
                     <span>Текущие сериалы</span>
                     <i className='fa fa-play-circle-o' aria-hidden='true' />
                   </NavLink>
