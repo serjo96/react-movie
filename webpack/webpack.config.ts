@@ -7,38 +7,30 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import loaders from './webpack.loaders';
 import resolve from './webpack.resolve';
 
-const HOST = process.env.HOST || 'localhost';
-const PORT = process.env.PORT || '8888';
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
-const config: webpack.Configuration = {
+const mainConfig = (config: webpack.Configuration): webpack.Configuration => ({
+  mode: isDevelopment ? 'development' : 'production',
   entry: [
     path.join(__dirname, './../src/index.tsx') // your app's entry point
   ],
   devtool: process.env.WEBPACK_DEVTOOL || 'eval-source-map',
-  output: {
-    publicPath: '/',
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js'
-  },
   resolve,
-  mode: isDevelopment ? 'development' : 'production',
   module: {
     rules: loaders
   },
-  devServer: {
-    // serve index.html in place of 404 responses to allow HTML5 history
-    historyApiFallback: true,
-    client: {
-      progress: true,
-      reconnect: true,
-      overlay: true
-    },
-    port: PORT,
-    host: HOST
+  stats: {
+    colors: true,
+    hash: true,
+    timings: true,
+    assets: true,
+    errorDetails: true,
+    chunks: true,
+    chunkModules: true,
+    modules: true,
+    children: true
   },
   plugins: [
-    new webpack.NoEmitOnErrorsPlugin(),
     isDevelopment && new webpack.HotModuleReplacementPlugin(),
     isDevelopment && new ReactRefreshWebpackPlugin(),
     new MiniCssExtractPlugin({
@@ -46,12 +38,14 @@ const config: webpack.Configuration = {
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, './../src/template.html'),
+      hash: !isDevelopment,
       files: {
         css: ['style.css'],
         js: ['bundle.js']
       }
     })
-  ].filter(Boolean)
-};
+  ].filter(Boolean),
+  ...config
+});
 
-export default config;
+export default mainConfig;

@@ -5,7 +5,7 @@
   "main": "''",
   "scripts": {
     "build": "webpack --node-env=production --config ./webpack/webpack.production.config.ts --progress",
-    "start": "webpack-dev-server --config ./webpack/webpack.config.ts --progress --profile  --stats-error-details",
+    "start": "webpack-dev-server --config ./webpack/webpack.dev.config.ts --progress --profile  --stats-error-details",
     "lint": "eslint --ext js --ext jsx --ext ts src || exit 0",
     "dev": "webpack-dashboard -- webpack-dev-server --config ./webpack/webpack.config.ts --host 0.0.0.0 --progress --profile --colors"
   },
