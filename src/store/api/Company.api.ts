@@ -6,8 +6,8 @@ import {
   loadCompanyData,
   loadCompanyMovies
 } from './../actions/company-actions';
-import oldClient from '~/Сore/api/OldClient';
-import { ClientResponse } from '~/Сore/api/apiClient';
+import oldClient from '~/core/api/OldClient';
+import { ClientResponse } from '~/core/api/apiClient';
 
 export function onLoadCompanyData (id: string) {
   return (dispatch: Dispatch<CompanyActionReturnData>) => {

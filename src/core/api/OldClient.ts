@@ -1,4 +1,4 @@
-import ApiClient from '~/Сore/api/apiClient';
+import ApiClient from '~/core/api/apiClient';
 
 const options = {
   baseUrl: 'https://api.themoviedb.org'
