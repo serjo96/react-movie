@@ -11,6 +11,8 @@ export interface ClientResponse<T> {
     data: T
 }
 
+type queryParams = { [key: string]: string | number | null | boolean | Array<string | number | null | boolean>}
+
 export class ResponseError extends Error {
     code: number;
     response: Response;
@@ -42,10 +44,12 @@ export default class ApiClient {
       }
     }
 
-    private _buildQueryParams (queryParams: {[key: string]: string}) {
-      const queryParam = this.queryParams ? { ...this.queryParams, queryParams } : queryParams;
-      let q = Object.entries(queryParam).map(([k, value]) => {
-        if (Array.isArray(value)) { return value.map(v => [k, encodeURIComponent(v)].join('=')).join('&'); }
+    private _buildQueryParams (queryParams: queryParams) {
+      const query = this.queryParams ? { ...this.queryParams, ...queryParams } : queryParams;
+      let q = Object.entries(query).map(([k, value]) => {
+        if (Array.isArray(value)) {
+          return value.map(v => [k, encodeURIComponent(v)].join('=')).join('&');
+        }
         return [k, encodeURIComponent(value)].join('=');
       }).join('&');
       if (this.url.indexOf('?') === -1 && q) { q = `?${q}`; }
@@ -61,7 +65,7 @@ export default class ApiClient {
       }
     }
 
-    private _fetch (method: string, path?: string, body?: BodyInit | null, query?: {[key: string]: string}) {
+    private _fetch (method: string, path?: string, body?: BodyInit | null, query?: queryParams) {
       const apiPath = new URL(path, this.url);
       return fetch(apiPath + this._buildQueryParams(query),
         { ...this.options, method: method, headers: this.headers, body: body })
@@ -89,7 +93,7 @@ export default class ApiClient {
       return this._fetch('HEAD', url);
     }
 
-    get (url?: string, query?: {[key: string]: string}) {
+    get (url?: string, query?: queryParams) {
       return this._fetch('GET', url, null, query);
     }
 
