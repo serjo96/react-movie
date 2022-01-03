@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { connect, MapDispatchToProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { DebounceInput } from 'react-debounce-input';
 import { Scrollbars } from 'react-custom-scrollbars';
 
-import { clearSearch } from '../../store/actions/general-actions';
-import { onSearch } from '../../store/api/Search.api';
-import { friendlyUrl, urlRusLat } from 'utils/format';
-import NoImg from 'images/NoImg.png';
+import { clearSearch } from '~/store/actions/general-actions';
+import { onSearch } from 'store/api/search.api';
+import { friendlyUrl, urlRusLat } from '~/utils/format';
+import NoImg from '~/assets/images/NoImg.png';
 import Spinner from '~/ui-components/spinner/Spinner';
 
-class SearchHeader extends Component {
+interface DispatchProps {
+    onSearch: typeof onSearch;
+    clearSearch: typeof clearSearch;
+}
+
+type MyProps = {
+    history: History
+} & DispatchProps;
+
+interface MyState {
+    visibilityResult: boolean;
+    val: string;
+    top: number;
+    imgStatus: boolean;
+}
+
+class SearchHeader extends Component<MyProps, MyState> {
     state = {
       visibilityResult: false,
       val: '',
@@ -49,7 +65,7 @@ class SearchHeader extends Component {
       });
 
       if (this.state.val.length) {
-        this.props.onInput(this.state.val, 'header-search');
+        this.props.onSearch(this.state.val, 'header-search');
       }
     };
 
@@ -161,27 +177,27 @@ class SearchHeader extends Component {
 
 	 return (
         <div className='header__search search'>
-          <div className='search-field-wrapper'>
+    <div className='search-field-wrapper'>
             <DebounceInput
-              className='search__field search__field--header'
-              name='Search'
-              type='search'
-              debounceTimeout={300}
-              placeholder='Поиск фильмов и сериалов...'
-              onKeyDown={this.onKeyDown}
-              onInput={e => this.setState({ val: e.target.value })}
-              onChange={this.onInput}
-              value={this.state.val}
-              onFocus={e => e.target.value.length && this.setState({ visibilityResult: true })}
-            />
+        className='search__field search__field--header'
+        name='Search'
+        type='search'
+        debounceTimeout={300}
+        placeholder='Поиск фильмов и сериалов...'
+        onKeyDown={this.onKeyDown}
+        onInput={e => this.setState({ val: e.target.value })}
+        onChange={this.onInput}
+        value={this.state.val}
+        onFocus={e => e.target.value.length && this.setState({ visibilityResult: true })}
+      />
             <div className='search-btn' onClick={this.onClickSearch}>
-              <i className='fa fa-search' aria-hidden='true' />
-            </div>
+        <i className='fa fa-search' aria-hidden='true' />
+      </div>
           </div>
 
-          <div className='search__result searchComboBox'>
+    <div className='search__result searchComboBox'>
             {this.state.visibilityResult &&
-              <div>
+        <div>
                 {SearchResult.isFetching
                   ? SearchResult.data.total_results > 0
                     ? <Scrollbars
@@ -192,22 +208,22 @@ class SearchHeader extends Component {
                       renderView={props => <div {...props} className='ComboBox-view' />}
                       onUpdate={this.handleUpdate}
                       className='comboBox-view-wrap'
-                    >
+                >
                       {SearchResult.data.results.map((item, index) => this.renderResults(item, index))}
                     </Scrollbars>
                     : <div className='result-element'>Поиск не дал результатов, попробуйте уточнить поиск</div>
                   : null}
               </div>}
           </div>
-        </div>
+  </div>
       );
     }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  onInput: (e, type) => dispatch(onSearch(e, type)),
-  clearInput: () => dispatch(clearSearch())
-});
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, MyProps> = {
+  onSearch: (e, type) => onSearch(e, type),
+  clearSearch
+};
 
 function mapStateToProps (state) {
   return {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { DebounceInput } from 'react-debounce-input';
 
-import { MainSearch } from '../../store/api/Search.api';
+import { MainSearch } from '../../store/api/search.api';
 import { searchResetFetch } from '../../store/actions/general-actions';
 
 import { MoviesList } from '../MoviesList/components';

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { searchMovie, searchPageResults } from './../actions/general-actions';
 
-export function onSearch (words) {
+export function onSearch (words: string) {
   return (dispatch) => {
     if (words.length > 0) {
       axios.get('https://api.themoviedb.org/3/search/multi',
