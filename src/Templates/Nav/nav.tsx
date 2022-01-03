@@ -1,6 +1,7 @@
-import React, { Component, SyntheticEvent } from 'react';
-import { NavLink, RouteComponentProps } from 'react-router-dom';
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import { Collapse } from 'react-collapse';
+import { Location } from 'history';
 import classNames from 'classnames';
 import { moviesLinks, serialsLinks } from 'utils/navLinks';
 import './nav.sass';
@@ -10,7 +11,11 @@ interface MyState {
   movieCollapse: boolean;
 }
 
-export default class Nav extends Component<RouteComponentProps, MyState> {
+type MyProps = {
+  location: Location
+}
+
+export default class Nav extends Component<MyProps, MyState> {
   private navRef = React.createRef<HTMLDivElement>();
 
   state = {
@@ -18,7 +23,15 @@ export default class Nav extends Component<RouteComponentProps, MyState> {
     isMoviePage: true
   };
 
-  componentDidUpdate (prevProps: RouteComponentProps) {
+  componentDidMount () {
+    const isMoviePages = /\/movies\//gi.test(location.pathname);
+    this.setState({
+      movieCollapse: isMoviePages,
+      isMoviePage: isMoviePages
+    });
+  }
+
+  componentDidUpdate (prevProps: MyProps) {
     const width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
     const isChangedPath = this.props.location.pathname !== prevProps.location.pathname;
 
@@ -28,14 +41,6 @@ export default class Nav extends Component<RouteComponentProps, MyState> {
         document.querySelector('.mobile-nav-trigger').classList.remove('mobile-nav-trigger--isClicked');
       }
     }
-  }
-
-  componentDidMount () {
-    const isMoviePages = /\/movies\//gi.test(location.pathname);
-    this.setState({
-      movieCollapse: isMoviePages,
-      isMoviePage: isMoviePages
-    });
   }
 
   handleCollapseNav = () => {
