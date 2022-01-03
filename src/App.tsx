@@ -15,24 +15,25 @@ interface DispatchProps {
 type Props = DispatchProps & RouteComponentProps
 
 class App extends Component<Props> {
-  componentDidMount () {
-    JSON.parse(localStorage.getItem('genres')) && this.props.getGenresList();
-  }
 
-  render () {
-    return (
-      <div>
-        <Helmet>
-          <title>Movie Base</title>
-        </Helmet>
+    componentDidMount () {
+      JSON.parse(localStorage.getItem('genres')) && this.props.getGenresList();
+    }
 
-        <Nav location={this.props.location} />
-        <Header history={this.props.history} />
+    render () {
+      return (
+        <div>
+          <Helmet>
+            <title>Movie Base</title>
+          </Helmet>
 
-        <Routes />
-      </div>
-    );
-  }
+          <Nav location={this.props.location} />
+          <Header history={this.props.history} />
+
+          <Routes />
+        </div>
+      );
+    }
 }
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, Props> = {
