@@ -121,9 +121,8 @@ class MoviePopup extends Component {
       voteAverage
     } = this.props;
     const { show } = this.state;
-
-    const originalTitle = engData[this.props.typeItem][this.props.id]
-      ? engData[this.props.typeItem][this.props.id].name
+    const originalTitle = engData[typeItem] && engData[typeItem][id]
+      ? engData[typeItem][id].name
       : this.props.originalTitle;
     return (
       <div
