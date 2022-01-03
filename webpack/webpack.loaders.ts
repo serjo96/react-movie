@@ -27,7 +27,7 @@ const loaders: webpack.ModuleOptions['rules'] = [
     ]
   },
   {
-    test: /\.[jt]sx?$/,
+    test: /\.[j]sx?$/,
     exclude: /(node_modules|bower_components|public\/)/,
     use: [
       {

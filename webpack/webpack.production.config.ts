@@ -15,6 +15,7 @@ const config: webpack.Configuration = mainConfig({
   ],
   output: {
     publicPath: '/',
+    clean: true,
     path: path.join(__dirname, './../build'),
     filename: 'js/[chunkhash].js'
   },

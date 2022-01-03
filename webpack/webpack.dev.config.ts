@@ -10,7 +10,8 @@ const config: webpack.Configuration = mainConfig({
   devtool: process.env.WEBPACK_DEVTOOL || 'eval-source-map',
   output: {
     publicPath: '/',
-    path: path.join(__dirname, 'dist'),
+    clean: true,
+    path: path.join(__dirname, './../dist'),
     filename: 'bundle.js'
   },
   devServer: {
@@ -28,6 +29,7 @@ const config: webpack.Configuration = mainConfig({
 
 export default {
   ...config,
+  mode: 'development',
   plugins: [
     ...config.plugins,
     new webpack.NoEmitOnErrorsPlugin()
