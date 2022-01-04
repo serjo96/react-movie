@@ -112,4 +112,15 @@ export default class ApiClient {
     delete (url?: string, body?: BodyInit | null) {
       return this._fetch('DELETE', url, body);
     }
+
+    all<T> (requests: Array<T | Promise<T>>): Promise<T[]> {
+      return Promise.all(requests);
+    }
+
+    spread<T, R> (callback: (...args: T[]) => R): (array: T[]) => R {
+      return function wrap (arr) {
+        // eslint-disable-next-line prefer-spread
+        return callback.apply(null, arr);
+      };
+    }
 }
