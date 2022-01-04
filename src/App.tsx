@@ -25,11 +25,11 @@ class App extends Component<Props> {
         <Helmet>
           <title>Movie Base</title>
         </Helmet>
-
-        <Nav location={this.props.location} />
-        <Header history={this.props.history} />
-
-        <Routes />
+        <React.StrictMode>
+          <Nav location={this.props.location} />
+          <Header history={this.props.history} />
+          <Routes />
+        </React.StrictMode>
       </div>
     );
   }
