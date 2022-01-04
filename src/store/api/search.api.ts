@@ -1,63 +1,51 @@
-import axios from 'axios';
-import { searchMovie, searchPageResults } from './../actions/general-actions';
+import { ThunkAction } from 'redux-thunk';
+import { AnyAction } from 'redux';
 
-export function onSearch (words: string) {
-  return (dispatch) => {
-    if (words.length > 0) {
-      axios.get('https://api.themoviedb.org/3/search/multi',
-        {
-          params: {
-            api_key: '5a1d310d575e516dd3c547048eb7abf1',
-            language: 'ru-RU',
-            page: 1,
-            region: 'RU',
-            query: words,
-            include_adult: true
-          }
-        }
-      ).then(response => {
-        dispatch(searchMovie(response.data));
-      });
-    }
+import { searchMovie, searchPageResults } from '~/store/actions/general-actions';
+import oldClient from '~/core/api/OldClient';
+
+export function onSearch (words: string): ThunkAction<void, unknown, unknown, AnyAction> {
+  return async dispatch => {
+    const { data } = await oldClient.get('search/multi',
+      {
+        language: 'ru-RU',
+        page: 1,
+        region: 'RU',
+        query: words,
+        include_adult: true
+      }
+    );
+    dispatch(searchMovie(data));
   };
 }
 
-export function MainSearch (words, page = 1) {
-  return (dispatch) => {
-    if (words.length > 0) {
-      axios.all([
-        axios.get('https://api.themoviedb.org/3/search/multi',
-          {
-            params: {
-              api_key: '5a1d310d575e516dd3c547048eb7abf1',
-              language: 'ru-RU',
-              page: page,
-              region: 'RU',
-              include_adult: true,
-              query: words.replace('_', ' ')
-            }
-          }),
-        axios.get('https://api.themoviedb.org/3/search/multi',
-          {
-            params: {
-              api_key: '5a1d310d575e516dd3c547048eb7abf1',
-              language: 'ru-RU',
-              page: page + 1,
-              region: 'RU',
-              include_adult: true,
-              query: words.replace('_', ' ')
-            }
-          })
-      ]).then(axios.spread((pageOne, pageTwo) => {
-        const addTypeRequest = Object.assign({
-          ...pageTwo.data,
-          results: pageOne.data.results.concat(pageTwo.data.results),
-          page: pageOne.data.page,
-          searchType: { type: 'main-search' },
-          querySearch: words.replace('_', ' ')
-        });
-        dispatch(searchPageResults({ data: addTypeRequest, status: { pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 } }));
-      }));
-    }
+export function MainSearch (words: string, page = 1): ThunkAction<void, unknown, unknown, AnyAction> {
+  return async dispatch => {
+    const [pageOne, pageTwo] = await oldClient.all([
+      oldClient.get('search/multi',
+        {
+          language: 'ru-RU',
+          page: page,
+          region: 'RU',
+          include_adult: true,
+          query: words.replace('_', ' ')
+        }),
+      oldClient.get('search/multi',
+        {
+          language: 'ru-RU',
+          page: page + 1,
+          region: 'RU',
+          include_adult: true,
+          query: words.replace('_', ' ')
+        })
+    ]);
+    const data = {
+      ...pageTwo.data,
+      results: pageOne.data.results.concat(pageTwo.data.results),
+      page: pageOne.data.page,
+      searchType: { type: 'main-search' },
+      querySearch: words.replace('_', ' ')
+    };
+    dispatch(searchPageResults({ data, status: { pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 } }));
   };
 }
