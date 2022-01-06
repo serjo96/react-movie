@@ -3,7 +3,7 @@ import { Company } from 'tmdb-typescript-api';
 
 export interface ActionCompanyData {
   data: Company,
-  status: boolean
+  status: boolean | {pageOne: boolean; pageTwo: boolean;}
 }
 
 export interface CompanyActionReturnData {
