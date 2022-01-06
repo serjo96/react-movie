@@ -46,6 +46,7 @@ export function MainSearch (words: string, page = 1): ThunkAction<void, unknown,
       searchType: { type: 'main-search' },
       querySearch: words.replace('_', ' ')
     };
-    dispatch(searchPageResults({ data, status: { pageOne: pageOne.status === 200, pageTwo: pageTwo.status === 200 } }));
+    const status = { pageOne: pageOne.status < 400, pageTwo: pageTwo.status < 400 };
+    dispatch(searchPageResults({ data, status }));
   };
 }
