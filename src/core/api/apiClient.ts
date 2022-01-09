@@ -47,11 +47,14 @@ export default class ApiClient {
     private _buildQueryParams (queryParams: queryParams) {
       const query = this.queryParams ? { ...this.queryParams, ...queryParams } : queryParams;
       let q = Object.entries(query).map(([k, value]) => {
+        if (value === undefined || value === null) {
+          return null;
+        }
         if (Array.isArray(value)) {
           return value.map(v => [k, encodeURIComponent(v)].join('=')).join('&');
         }
         return [k, encodeURIComponent(value)].join('=');
-      }).join('&');
+      }).filter(Boolean).join('&');
       if (this.url.indexOf('?') === -1 && q) { q = `?${q}`; }
       return q;
     }
@@ -59,7 +62,7 @@ export default class ApiClient {
     private async _checkResponseStatus (response: Response) {
       if (response.status >= 200 && response.status < 400) {
         const data = await response.json();
-        return { status: response.status, data };
+        return { isSuccessRequest: response.status >= 200 && response.status < 400, status: response.status, data };
       } else {
         throw new ResponseError(response);
       }
