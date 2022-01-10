@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 
-import { tvOnTheAir } from '../../store/api/Tv.api';
+import { tvOnTheAir } from '~/store/api/tv.api';
 
 import PageSwitcher from '@ui/Page-switcher/Page-switcher';
 import { MoviesList } from '../MoviesList/components';

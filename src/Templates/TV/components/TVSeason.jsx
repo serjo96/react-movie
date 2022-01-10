@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { clearTvSeason } from '../../../store/actions/tv-actions';
-import { onSeasonTV } from '../../../store/api/Tv.api';
+import { clearTvSeason } from '~/store/actions/tv-actions';
+import { onSeasonTV } from '~/store/api/tv.api';
 
-import { friendlyData, kFormatter, declOfNum } from 'utils/format';
+import { friendlyData, kFormatter, declOfNum } from '~/utils/format';
 import NoImg from 'images/NoImg.png';
 
 class TVSeason extends Component {

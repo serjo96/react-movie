@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { DebounceInput } from 'react-debounce-input';
 
 import { MainSearch } from '../../store/api/search.api';
-import { searchResetFetch } from '../../store/actions/general-actions';
+import { searchResetFetch } from 'store/actions/general-actions';
 
 import { MoviesList } from '../MoviesList/components';
 import { friendlyUrl } from 'utils/format';
@@ -214,7 +214,7 @@ class Search extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   onSearch: (id, page) => dispatch(MainSearch(id, page)),
-  onLoadPage: () => dispatch(searchResetFetch(false))
+  onLoadPage: () => dispatch(searchResetFetch())
 });
 
 function mapStateToProps (state) {

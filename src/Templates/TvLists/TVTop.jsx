@@ -2,11 +2,11 @@ import queryString from 'query-string';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+
+import { tvTop } from '~/store/api/tv.api';
+
 import PageSwitcher from '@ui/Page-switcher/Page-switcher';
-
-import { tvTop } from '../../store/api/Tv.api';
-
-import MediaList from '../MoviesList/MoviesList';
+import MediaList from './../MoviesList/MoviesList';
 import ServiceBlock from './../Service/ServiceBlock';
 
 class TvTop extends Component {

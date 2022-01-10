@@ -4,7 +4,7 @@ import YouTube from 'react-youtube';
 import { Helmet } from 'react-helmet';
 
 import { clearMovieData } from 'store/actions/movies-actions';
-import { onLoadMovie } from 'store/api/Movies.api';
+import { onLoadMovie } from 'store/api/movies.api';
 
 import Popup from './../../Popup/Popup.jsx';
 import MovieBG from './../components/MovieBg';

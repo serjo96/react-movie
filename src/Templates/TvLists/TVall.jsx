@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { changeMediaPage } from '../../store/actions/tv-actions';
-import { tvPopular } from '../../store/api/Tv.api';
-import { sortListTV } from '../../store/localData';
+import { changeMediaPage } from '~/store/actions/tv-actions';
+import { tvPopular } from '~/store/api/tv.api';
+import { sortListTV } from '~/store/localData';
 
 import { MoviesList } from '../MoviesList/components';
 import FilterList from '../Filters/containers/FilterList.jsx';

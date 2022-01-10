@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 
-import { tvAiring } from '../../store/api/Tv.api';
+import { tvAiring } from '~/store/api/tv.api';
 
 import { MoviesList } from '../MoviesList/components';
 import ServiceBlock from './../Service/ServiceBlock';

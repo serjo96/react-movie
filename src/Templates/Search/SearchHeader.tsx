@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { DebounceInput } from 'react-debounce-input';
 import { Scrollbars } from 'react-custom-scrollbars';
 
-import { clearSearch } from '~/store/actions/general-actions';
+import { clearSearch } from 'store/actions/general-actions';
 import { onSearch } from 'store/api/search.api';
 import { friendlyUrl, urlRusLat } from '~/utils/format';
 import NoImg from '~/assets/images/NoImg.png';

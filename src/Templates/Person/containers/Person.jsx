@@ -5,8 +5,8 @@ import { Helmet } from 'react-helmet';
 import Lightbox from 'lightbox-react';
 import { Timeline } from 'react-twitter-widgets';
 
-import { clearPersonData } from '../../../store/actions/person-actions';
-import { onLoadPerson } from '../../../store/api/Perosn.api';
+import { clearPersonData } from 'store/actions/person-actions';
+import { onLoadPerson } from 'store/api/perosn.api';
 import { urlRusLat, declOfNum, friendlyData } from 'utils/format';
 import NoImg from 'images/NoImg.png';
 

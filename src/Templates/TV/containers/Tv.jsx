@@ -5,8 +5,8 @@ import { Helmet } from 'react-helmet';
 import YouTube from 'react-youtube';
 import Lightbox from 'lightbox-react';
 
-import { onLoadTV } from '../../../store/api/Tv.api';
-import { clearTvData, clearTvSeason } from '../../../store/actions/tv-actions';
+import { onLoadTV } from '~/store/api/tv.api';
+import { clearTvData, clearTvSeason } from '~/store/actions/tv-actions';
 
 import Popup from './../../Popup/Popup.jsx';
 import ServiceBlock from './../../Service/ServiceBlock';

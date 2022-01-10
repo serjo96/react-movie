@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { changeMoviePage } from '../../../store/actions/movies-actions';
-import { movieListAll } from '../../../store/api/Movies.api';
+import { changeMoviePage } from 'store/actions/movies-actions';
+import { movieListAll } from 'store/api/movies.api';
 import { sortListMovie } from '../../../store/localData';
 
 import { MoviesList } from '../components';
