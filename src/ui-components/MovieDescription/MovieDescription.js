@@ -4,7 +4,7 @@ const MovieDescription = ({ short, overview, fetchEngData }) => {
   const mediaOverview = () => {
     const textLength = 475;
 
-    if (!overview ) {
+    if (!overview) {
       return null;
     }
     if (!short || overview.length < textLength) {
