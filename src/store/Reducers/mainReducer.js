@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import General from './generalReducer';
+import General from './generalReducer.ts';
 import Movies from './movieReducers';
 import TVs from './tvReducers';
 import Peoples from './personReducer';

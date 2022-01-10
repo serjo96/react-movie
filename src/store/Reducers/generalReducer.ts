@@ -2,6 +2,11 @@ import { SEARCH_IN_PAGE, SEARCH_IN_HEADER, CLEAR_SEARCH, GENRES, SEARCH_KEYWORDS
 import { capitalizeFirstLetter } from 'utils/format';
 import update from 'react-addons-update';
 
+export enum Languages {
+  RU = 'ru-RU',
+  EN = 'en-EN'
+}
+
 const initialState = {
   SearchHeaderField: '',
   SearchHeaderResult: {
