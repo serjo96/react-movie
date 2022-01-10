@@ -1,7 +1,17 @@
-import { takeGenres, takeEngMedia, takeKeywordsMovies } from './../actions/general-actions';
-import { loadPlayingMovies, loadPopularMovies, loadTopMovies, loadUpcomingMovies } from './../actions/movies-actions';
 import { ThunkAction } from 'redux-thunk';
 import { AnyAction } from 'redux';
+
+import {
+  takeGenres,
+  takeEngMedia,
+  takeKeywordsMovies
+} from '../actions/general-actions';
+import {
+  loadPlayingMovies,
+  loadPopularMovies,
+  loadTopMovies,
+  loadUpcomingMovies
+} from '~/store/actions/movies-actions';
 import oldClient from '~/core/api/OldClient';
 
 export function onLoadMainPage (): ThunkAction<void, unknown, unknown, AnyAction> {
@@ -13,7 +23,7 @@ export function onLoadMainPage (): ThunkAction<void, unknown, unknown, AnyAction
         region: 'RU'
       }
     ).then(response => {
-      dispatch(loadUpcomingMovies({ data: response.data, status: response.status < 400 }));
+      dispatch(loadUpcomingMovies({ data: response.data, status: response.isSuccessRequest }));
     });
 
     oldClient.get('movie/top_rated',
@@ -23,7 +33,7 @@ export function onLoadMainPage (): ThunkAction<void, unknown, unknown, AnyAction
         region: 'RU'
       }
     ).then(response => {
-      dispatch(loadTopMovies({ data: response.data, status: response.status < 400 }));
+      dispatch(loadTopMovies({ data: response.data, status: response.isSuccessRequest }));
     });
 
     oldClient.get('movie/popular',
@@ -33,7 +43,7 @@ export function onLoadMainPage (): ThunkAction<void, unknown, unknown, AnyAction
         region: 'RU'
       }
     ).then(response => {
-      dispatch(loadPopularMovies({ data: response.data, status: response.status < 400 }));
+      dispatch(loadPopularMovies({ data: response.data, status: response.isSuccessRequest }));
     });
 
     oldClient.get('movie/now_playing',
@@ -43,7 +53,7 @@ export function onLoadMainPage (): ThunkAction<void, unknown, unknown, AnyAction
         region: 'RU'
       }
     ).then(response => {
-      dispatch(loadPlayingMovies({ data: response.data, status: response.status < 400 }));
+      dispatch(loadPlayingMovies({ data: response.data, status: response.isSuccessRequest }));
     });
   };
 }
@@ -68,14 +78,14 @@ export function keywordsReq (id: string, type: string, page = 1): ThunkAction<vo
   return async (dispatch) => {
     let concatPages;
     const [pageOne, pageTwo] = await oldClient.all([
-      oldClient.get(`https://api.themoviedb.org/3/discover/${type}`,
+      oldClient.get(`discover/${type}`,
         {
           language: 'ru-RU',
           with_keywords: id,
           page: page,
           include_adult: true
         }),
-      oldClient.get(`https://api.themoviedb.org/3/discover/${type}`,
+      oldClient.get(`discover/${type}`,
         {
           language: 'ru-RU',
           with_keywords: id,
@@ -95,7 +105,7 @@ export function keywordsReq (id: string, type: string, page = 1): ThunkAction<vo
       concatPages = pageOne.data;
     }
 
-    dispatch(takeKeywordsMovies({ data: concatPages, status: { pageOne: pageOne.status < 400, pageTwo: pageTwo.status < 400 } }));
+    dispatch(takeKeywordsMovies({ data: concatPages, status: { pageOne: pageOne.isSuccessRequest, pageTwo: pageTwo.isSuccessRequest } }));
   };
 }
 

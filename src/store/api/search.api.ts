@@ -1,7 +1,7 @@
 import { ThunkAction } from 'redux-thunk';
 import { AnyAction } from 'redux';
 
-import { searchMovie, searchPageResults } from '~/store/actions/general-actions';
+import { searchMovie, searchPageResults } from 'store/actions/general-actions';
 import oldClient from '~/core/api/OldClient';
 
 export function onSearch (words: string): ThunkAction<void, unknown, unknown, AnyAction> {
@@ -46,7 +46,7 @@ export function MainSearch (words: string, page = 1): ThunkAction<void, unknown,
       searchType: { type: 'main-search' },
       querySearch: words.replace('_', ' ')
     };
-    const status = { pageOne: pageOne.status < 400, pageTwo: pageTwo.status < 400 };
+    const status = { pageOne: pageOne.isSuccessRequest, pageTwo: pageTwo.isSuccessRequest };
     dispatch(searchPageResults({ data, status }));
   };
 }
