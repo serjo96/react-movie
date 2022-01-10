@@ -12,7 +12,7 @@ const initialState = {
       headquarters: '',
       description: ''
     },
-    status: 200
+    status: true
   },
   companyMovies: {
     isFetching: false,
@@ -22,10 +22,7 @@ const initialState = {
       total_pages: '',
       results: []
     },
-    status: {
-      pageOne: 200,
-      pageTwo: 200
-    }
+    status: true
   }
 
 };
@@ -49,7 +46,6 @@ export default function Company (state = initialState, action) {
             isFetching: true,
             data: action.companyData.data,
             status: action.companyData.status
-
           }
         }
       });
