@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
-import { onLoadCompanyData, LoadCompanyMovies } from '../../store/api/Company.api';
+import { onLoadCompanyData, LoadCompanyMovies } from 'store/api/company.api';
 import { clearCompanyData } from '../../store/actions/company-actions';
 
 import NoImg from 'images/NoImg.png';
@@ -109,7 +109,7 @@ class Person extends Component {
         <div className='movies-content company'>
           <ServiceBlock
             isLoading={companyData.isFetching && companyMovies.isFetching}
-            isError={companyData.status && companyMovies.status.pageOne && companyMovies.status.pageTwo}
+            isError={companyData.status && companyMovies.status}
             fetch={this.sendRequest}
           >
             <Helmet>
