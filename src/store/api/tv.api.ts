@@ -152,7 +152,7 @@ export function tvTop (page = 1, lang = Languages.RU): ThunkAction<void, unknown
   };
 }
 
-export function onSeasonTV (id: string, season: number, lang = Languages.RU): ThunkAction<void, unknown, unknown, AnyAction>  {
+export function onSeasonTV (id: string, season: number, lang = Languages.RU): ThunkAction<void, unknown, unknown, AnyAction> {
   return (dispatch) => {
     oldClient.get(`tv/${id}/season/${season}`,
       {

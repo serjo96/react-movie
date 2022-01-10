@@ -177,7 +177,7 @@ function mapStateToProps (state) {
 
 const mapDispatchToProps = (dispatch) => ({
   loadList: (page, genre, sortType, date) => dispatch(tvPopular(page, genre, sortType, date)),
-  changeListFetchStatus: (type) => dispatch(changeMediaPage(type))
+  changeListFetchStatus: () => dispatch(changeMediaPage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TvPopular);
