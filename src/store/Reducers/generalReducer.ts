@@ -8,6 +8,9 @@ export enum Languages {
 }
 
 const initialState = {
+  settings: {
+    language: Languages.RU
+  },
   SearchHeaderField: '',
   SearchHeaderResult: {
     isFetching: false,
