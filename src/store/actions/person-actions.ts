@@ -1,6 +1,8 @@
+import { PersonDetails } from 'tmdb-typescript-api';
+import ActionPayloadData from '~/core/types/ActionPayloadData';
 import { PERSON_DATA, CLEAR_PERSON_DATA } from '../constants';
 
-export function loadPeople (person) {
+export function loadPeople (person: ActionPayloadData<PersonDetails>) {
   return {
     type: PERSON_DATA,
     person
