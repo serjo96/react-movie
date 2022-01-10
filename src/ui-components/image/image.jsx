@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import NoImg from 'images/NoImg.png';
-import { imgUrl } from 'config';
-import Spinner from '@ui/spinner/Spinner';
+
+import NoImg from '~/assets/images/NoImg.png';
+import { imgUrl } from '~/config';
+import Spinner from '~/ui-components/spinner/Spinner';
 
 export default class Image extends Component {
   get imageSrc () {

@@ -28,14 +28,7 @@
     "import/resolver": {
       "alias":{
         "map": [
-          ["fonts", "./src/assets/fonts/"],
-          ["images", "./src/assets/images/"],
-          ["utils", "./src/utils"],
-          ["@ui", "./src/ui-components"],
-          ["@templates", "./src/Templates"],
-          ["config", "./src/config/"],
-          ["store", "./src/store"],
-          ["~", "./src"]
+          ["~/*", "./src"]
         ],
         "extensions": [".ts", ".js", ".tsx", ".jsx", ".json"]
       }

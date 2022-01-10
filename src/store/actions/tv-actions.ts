@@ -2,7 +2,7 @@ import { SearchResult, TvShow, TvShowDetails } from 'tmdb-typescript-api';
 import {
   TV_DATA, CLEAR_TV_DATA, AIRING_TV, ALL_TV, ON_THE_AIR_TV, TOP_TV, TV_SEASON,
   CLEAR_TV_SEASON, TV_ENG_DATA, CHANGE_TV_PAGE
-} from './../constants';
+} from '~/store/constants';
 import ActionPayloadData from '~/core/types/ActionPayloadData';
 
 type AllTvPayload = SearchResult<TvShow[]> & {sortByDate: string}

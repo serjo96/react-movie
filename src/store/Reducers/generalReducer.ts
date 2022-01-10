@@ -1,6 +1,15 @@
-import { SEARCH_IN_PAGE, SEARCH_IN_HEADER, CLEAR_SEARCH, GENRES, SEARCH_KEYWORDS_MOVIES, SEARCH_RESET_FETCH, MEDIA_ENG_DATA } from './../constants';
-import { capitalizeFirstLetter } from 'utils/format';
 import update from 'react-addons-update';
+
+import {
+  SEARCH_IN_PAGE,
+  SEARCH_IN_HEADER,
+  CLEAR_SEARCH,
+  GENRES,
+  SEARCH_KEYWORDS_MOVIES,
+  SEARCH_RESET_FETCH,
+  MEDIA_ENG_DATA
+} from './../constants';
+import { capitalizeFirstLetter } from '~/utils/format';
 
 export enum Languages {
   RU = 'ru-RU',

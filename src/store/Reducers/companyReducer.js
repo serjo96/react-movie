@@ -1,4 +1,4 @@
-import { COMPANY_DATA, CLEAR_COMPANY_DATA, COMPANY_MOVIES } from '../constants/index';
+import { COMPANY_DATA, CLEAR_COMPANY_DATA, COMPANY_MOVIES } from '~/store/constants';
 import update from 'react-addons-update';
 
 const initialState = {

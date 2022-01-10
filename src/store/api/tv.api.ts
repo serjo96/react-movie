@@ -13,7 +13,7 @@ import {
   takeTvData
 } from '~/store/actions/tv-actions';
 import { Languages } from '~/store/Reducers/generalReducer';
-import ConcatPages from 'utils/concatPages';
+import ConcatPages from '~/utils/concatPages';
 
 export function onLoadTV (id: string, lang = Languages.RU): ThunkAction<void, unknown, unknown, AnyAction> {
   return async dispatch => {

@@ -1,7 +1,7 @@
 import { ThunkAction } from 'redux-thunk';
 import { AnyAction } from 'redux';
 
-import { searchMovie, searchPageResults } from 'store/actions/general-actions';
+import { searchMovie, searchPageResults } from '~/store/actions/general-actions';
 import oldClient from '~/core/api/OldClient';
 
 export function onSearch (words: string): ThunkAction<void, unknown, unknown, AnyAction> {

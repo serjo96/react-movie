@@ -5,8 +5,8 @@ import { connect, MapDispatchToProps } from 'react-redux';
 import Routes from './Routes/Routes';
 
 import './../styles/main.sass';
-import Header from './Templates/Head/Head';
-import Nav from './Templates/Nav/nav';
+import Header from './templates/Head/Head';
+import Nav from './templates/Nav/nav';
 import { getGenresList } from '~/store/api/general.api';
 
 interface DispatchProps {
