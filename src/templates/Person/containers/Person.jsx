@@ -10,7 +10,7 @@ import { onLoadPerson } from '~/store/api/perosn.api';
 import { urlRusLat, declOfNum, friendlyData } from '~/utils/format';
 import NoImg from '~/assets/images/NoImg.png';
 
-import ServiceBlock from './../../Service/ServiceBlock';
+import ServiceBlock from '../../Service/ServiceBlock';
 import MediaStills from './../../MediaPage/MediaStills.jsx';
 import { MovieItem } from '../../MoviesList/components';
 import PersonMoviesList from './../components/PersonMoviesList.jsx';

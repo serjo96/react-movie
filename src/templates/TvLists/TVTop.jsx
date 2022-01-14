@@ -7,7 +7,7 @@ import { tvTop } from '~/store/api/tv.api';
 
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import MediaList from '~/templates/MoviesList/components/list/MoviesList.js';
-import ServiceBlock from './../Service/ServiceBlock';
+import ServiceBlock from '../Service/ServiceBlock';
 
 class TvTop extends Component {
   state = {

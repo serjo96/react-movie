@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { movieUpcoming } from '~/store/api/movies.api';
 
 import MoviesList from '~/templates/MoviesList/components/list/MoviesList';
-import ServiceBlock from '~/templates/Service/ServiceBlock.js';
+import ServiceBlock from '~/templates/Service/ServiceBlock.tsx';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 
 class MovieUpcoming extends Component {
