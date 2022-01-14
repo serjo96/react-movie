@@ -1,6 +1,12 @@
 import React from 'react';
 
-const MovieDescription = ({ short, overview, fetchEngData }) => {
+interface MyProps {
+  short: boolean;
+  overview: string;
+  fetchEngData: () => void;
+}
+
+const MovieDescription = ({ short, overview, fetchEngData }: MyProps) => {
   const mediaOverview = () => {
     const textLength = 475;
 
