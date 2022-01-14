@@ -1,7 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import './page-switcher.sass';
 
-const PageSwitcher = ({ page, totalPages, handlePrevPage, handleNextPage }) => {
+interface MyProps {
+  page: number;
+  totalPages: number;
+  handlePrevPage: () => void;
+  handleNextPage: () => void;
+}
+
+const PageSwitcher = ({ page, totalPages, handlePrevPage, handleNextPage }: MyProps) => {
   if (totalPages === 1) {
     return null;
   }
@@ -27,13 +34,6 @@ const PageSwitcher = ({ page, totalPages, handlePrevPage, handleNextPage }) => {
         </div>}
     </div>
   );
-};
-
-PageSwitcher.propTypes = {
-  page: PropTypes.number,
-  totalPages: PropTypes.number,
-  handlePrevPage: PropTypes.func,
-  handleNextPage: PropTypes.func
 };
 
 export default PageSwitcher;
