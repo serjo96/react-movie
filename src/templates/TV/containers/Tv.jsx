@@ -9,7 +9,7 @@ import { onLoadTV } from '~/store/api/tv.api';
 import { clearTvData, clearTvSeason } from '~/store/actions/tv-actions';
 
 import Popup from './../../Popup/Popup.jsx';
-import ServiceBlock from './../../Service/ServiceBlock';
+import ServiceBlock from '../../Service/ServiceBlock';
 import TVBg from './../components/TVBg';
 import TVAside from './../components/TVAside.jsx';
 import TVvideos from './../components/TVvideos';
@@ -222,7 +222,7 @@ class TV extends Component {
 function mapStateToProps (state) {
   return {
     tv: state.TVs.TvData,
-    EngData: state.General.EngDescription
+    EngData: state.General.engDescription
   };
 }
 

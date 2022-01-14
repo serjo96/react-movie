@@ -171,7 +171,7 @@ class TvPopular extends Component {
 function mapStateToProps (state) {
   return {
     allTV: state.TVs.allTV,
-    genres: state.General.Genres
+    genres: state.General.genres
   };
 }
 

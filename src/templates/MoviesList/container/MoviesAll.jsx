@@ -164,7 +164,7 @@ class MoviesAll extends Component {
 function mapStateToProps (state) {
   return {
     AllMovies: state.Movies.AllMovies,
-    genres: state.General.Genres
+    genres: state.General.genres
   };
 }
 

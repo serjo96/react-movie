@@ -8,7 +8,7 @@ import { searchResetFetch } from '~/store/actions/general-actions';
 
 import { MoviesList } from '../MoviesList/components';
 import { friendlyUrl } from '~/utils/format';
-import ServiceBlock from './../Service/ServiceBlock';
+import ServiceBlock from '../Service/ServiceBlock';
 
 class Search extends Component {
     state = {
@@ -176,7 +176,7 @@ class Search extends Component {
             </div>
             <ServiceBlock
               isLoading={SearchResult.isFetching}
-              isError={SearchResult.status.pageOne && SearchResult.status.pageTwo}
+              isError={SearchResult.status}
               fetch={this.sendRequest}
             >
               <div className='search-results'>
@@ -219,7 +219,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 function mapStateToProps (state) {
   return {
-    SearchResult: state.General.SearchPageResult
+    SearchResult: state.Search.searchPageResult
   };
 }
 

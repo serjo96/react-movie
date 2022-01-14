@@ -181,8 +181,8 @@ class MoviePopup extends Component {
 
 function mapStateToProps (state) {
   return {
-    Allgenres: state.General.Genres,
-    engData: state.General.EngDescription
+    Allgenres: state.General.genres,
+    engData: state.General.engDescription
   };
 }
 

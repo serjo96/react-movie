@@ -227,8 +227,8 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, MyProps> = {
 
 function mapStateToProps (state) {
   return {
-    SearchVal: state.General.SearchHeaderField,
-    SearchResult: state.General.SearchHeaderResult
+    SearchVal: state.Search.searchHeaderField,
+    SearchResult: state.Search.searchHeaderResult
   };
 }
 
