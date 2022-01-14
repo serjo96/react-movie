@@ -74,41 +74,6 @@ export function getGenresList (): ThunkAction<void, unknown, unknown, AnyAction>
   };
 }
 
-export function keywordsReq (id: string, type: string, page = 1): ThunkAction<void, unknown, unknown, AnyAction> {
-  return async (dispatch) => {
-    let concatPages;
-    const [pageOne, pageTwo] = await oldClient.all([
-      oldClient.get(`discover/${type}`,
-        {
-          language: 'ru-RU',
-          with_keywords: id,
-          page: page,
-          include_adult: true
-        }),
-      oldClient.get(`discover/${type}`,
-        {
-          language: 'ru-RU',
-          with_keywords: id,
-          page: page + 1,
-          include_adult: true
-        })
-    ]);
-
-    if (pageOne.data.total_pages > 1) {
-      concatPages = Object.assign({
-        ...pageTwo.data,
-        results: pageOne.data.results.concat(pageTwo.data.results),
-        page: pageOne.data.page,
-        searchType: { type: 'genres' }
-      });
-    } else {
-      concatPages = pageOne.data;
-    }
-
-    dispatch(takeKeywordsMovies({ data: concatPages, status: { pageOne: pageOne.isSuccessRequest, pageTwo: pageTwo.isSuccessRequest } }));
-  };
-}
-
 export function onLoadEngMedia (id: string, type: string): ThunkAction<void, unknown, unknown, AnyAction> {
   return async (dispatch) => {
     const { data } = await oldClient.get(`${type}/${id}`,

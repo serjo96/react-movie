@@ -1,4 +1,4 @@
-import { Movie, SearchResult, TvShow, Person, Genre, MovieDetails, TvShowDetails } from 'tmdb-typescript-api';
+import { Movie, SearchResult, TvShow, Person, MovieDetails, TvShowDetails } from 'tmdb-typescript-api';
 import ActionPayloadData from '~/core/types/ActionPayloadData';
 import {
   CLEAR_SEARCH,
@@ -9,11 +9,7 @@ import {
   SEARCH_RESET_FETCH,
   MEDIA_ENG_DATA
 } from '../constants/';
-
-interface GenresActionData {
-  movie: Array<Genre>,
-  tv: Array<Genre>
-}
+import { GenresData } from '~/store/Reducers/generalReducer';
 
 export function searchMovie (querySearch: SearchResult<Movie>) {
   return {
@@ -35,7 +31,7 @@ export function clearSearch () {
   };
 }
 
-export function takeGenres (genres: GenresActionData) {
+export function takeGenres (genres: GenresData) {
   return {
     type: GENRES,
     genres
