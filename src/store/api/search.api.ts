@@ -21,7 +21,7 @@ export function onSearch (words: string): ThunkAction<void, unknown, unknown, An
 
 export function MainSearch (words: string, page = 1): ThunkAction<void, unknown, unknown, AnyAction> {
   return async dispatch => {
-    const [pageOne, pageTwo] = await oldClient.all([
+    const [firstPage, secondPage] = await oldClient.all([
       oldClient.get('search/multi',
         {
           language: 'ru-RU',
@@ -40,13 +40,13 @@ export function MainSearch (words: string, page = 1): ThunkAction<void, unknown,
         })
     ]);
     const data = {
-      ...pageTwo.data,
-      results: pageOne.data.results.concat(pageTwo.data.results),
-      page: pageOne.data.page,
+      ...secondPage.data,
+      results: firstPage.data.results.concat(secondPage.data.results),
+      page: firstPage.data.page,
       searchType: { type: 'main-search' },
       querySearch: words.replace('_', ' ')
     };
-    const status = { pageOne: pageOne.isSuccessRequest, pageTwo: pageTwo.isSuccessRequest };
+    const status = firstPage.isSuccessRequest && secondPage.isSuccessRequest;
     dispatch(searchPageResults({ data, status }));
   };
 }
