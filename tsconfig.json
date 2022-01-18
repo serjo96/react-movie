@@ -10,6 +10,8 @@
     "allowJs": true,
     "moduleResolution": "node",
     "baseUrl": ".",
+    "declaration": true,
+    "declarationDir": "./types",
     "paths": {
       "~/*": ["./src/*"]
     }
