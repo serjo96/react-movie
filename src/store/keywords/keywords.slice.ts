@@ -1,18 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Movie, TvShow } from 'tmdb-typescript-api';
-import ActionPayloadData from '~/core/types/ActionPayloadData';
+import { TvShow } from 'tmdb-typescript-api';
+import ActionPayloadData from '~/core/types/actionPayloadData';
 import { keywordsReq } from '~/store/keywords/keywords.api';
-
-type KeywordsData = {
-  page: number;
-  totalResults: number;
-  totalPages: number;
-  results: Array<Movie | TvShow>;
-}
+import { MoviesListItem } from '~/core/types/movies';
+import { ListData } from '~/core/types/listData';
 
 type KeywordsState = {
   isFetching: boolean;
-  data: KeywordsData,
+  data: ListData<MoviesListItem | TvShow>,
   isSuccessful: boolean;
 }
 
@@ -32,13 +27,12 @@ export const keywordsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // Add reducers for additional action types here, and handle loading state as needed
     builder
       .addCase(keywordsReq.pending, (state) => {
         state.isFetching = true;
+        state.isSuccessful = true;
       })
-      .addCase(keywordsReq.fulfilled, (state, action: PayloadAction<ActionPayloadData<KeywordsData>>) => {
-      // Add user to the state array
+      .addCase(keywordsReq.fulfilled, (state, action: PayloadAction<ActionPayloadData<ListData<MoviesListItem | TvShow>>>) => {
         state.isFetching = false;
         state.data = action.payload.data;
       });
