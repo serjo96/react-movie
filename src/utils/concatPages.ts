@@ -1,21 +1,21 @@
-import { SearchResult } from 'tmdb-typescript-api';
+import { ListData } from '~/core/types/listData';
 
-interface ResponsePages<T>{
+export interface ResponsePages<T>{
   firstPage: {
-    data: SearchResult<Array<T>>
+    data: ListData<T>
   }
   secondPage?: {
-    data: SearchResult<Array<T>>
+    data: ListData<T>
   }
 }
 
-export default function ConcatPages<T> (data: ResponsePages<T>) {
+export default function ConcatPages<T> (data: ResponsePages<T>): ListData<T> {
   const { firstPage, secondPage } = data;
-  if (firstPage.data.total_pages > 1) {
+  if (secondPage && secondPage.data.results) {
     return {
       ...secondPage.data,
-      results: secondPage.data.results.concat(secondPage.data.results),
-      page: secondPage.data.page
+      results: firstPage.data.results.concat(secondPage.data.results),
+      page: firstPage.data.page
     };
   } else {
     return firstPage.data;
