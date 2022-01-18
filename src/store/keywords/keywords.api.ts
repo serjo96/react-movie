@@ -1,13 +1,27 @@
-import oldClient from '~/core/api/OldClient';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const keywordsReq = createAsyncThunk(
+import oldClient from '~/core/api/OldClient';
+import { KeywordsListData } from '~/store/keywords/keywords.slice';
+import ConcatPages from '~/utils/concatPages';
+import { MoviesListItem } from '~/core/types/movies';
+import { TvListItem } from '~/core/types/tv';
+
+type KeywordsListPayload = {id: string, type: string, page: number};
+type KeywordsListResponse = {
+  isSuccess: boolean;
+  data: KeywordsListData
+}
+
+export const keywordsReq = createAsyncThunk<KeywordsListResponse, KeywordsListPayload>(
   'keywords/getKeywordMovies',
   async (
-    { id, type, page = 1 }: {id: string, type: string, page: number}
+    {
+      id,
+      type,
+      page
+    }: KeywordsListPayload
   ) => {
-    let concatPages;
-    const [firstPage, secondPage] = await oldClient.all([
+    const [firstPage, secondPage] = await oldClient.all<KeywordsListData>([
       oldClient.get(`discover/${type}`,
         {
           language: 'ru-RU',
@@ -24,17 +38,10 @@ export const keywordsReq = createAsyncThunk(
         })
     ]);
 
-    if (firstPage.data.total_pages > 1) {
-      concatPages = Object.assign({
-        ...secondPage.data,
-        results: firstPage.data.results.concat(secondPage.data.results),
-        page: firstPage.data.page,
-        searchType: { type: 'genres' }
-      });
-    } else {
-      concatPages = firstPage.data;
-    }
-
-    return { data: concatPages, status: firstPage.isSuccessRequest && secondPage.isSuccessRequest };
+    const concatPages = ConcatPages<MoviesListItem | TvListItem>({ firstPage, secondPage });
+    return {
+      data: concatPages,
+      isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+    };
   }
 );

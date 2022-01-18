@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TvShow } from 'tmdb-typescript-api';
 import ActionPayloadData from '~/core/types/actionPayloadData';
 import { keywordsReq } from '~/store/keywords/keywords.api';
 import { MoviesListItem } from '~/core/types/movies';
 import { ListData } from '~/core/types/listData';
+import { TvListItem } from '~/core/types/tv';
+
+export type KeywordsListData = ListData<MoviesListItem | TvListItem>;
 
 type KeywordsState = {
   isFetching: boolean;
-  data: ListData<MoviesListItem | TvShow>,
+  data: KeywordsListData,
   isSuccessful: boolean;
 }
 
@@ -32,7 +34,7 @@ export const keywordsSlice = createSlice({
         state.isFetching = true;
         state.isSuccessful = true;
       })
-      .addCase(keywordsReq.fulfilled, (state, action: PayloadAction<ActionPayloadData<ListData<MoviesListItem | TvShow>>>) => {
+      .addCase(keywordsReq.fulfilled, (state, action: PayloadAction<ActionPayloadData<KeywordsListData>>) => {
         state.isFetching = false;
         state.data = action.payload.data;
       });
