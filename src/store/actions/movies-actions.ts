@@ -3,7 +3,7 @@ import {
   UPCOMING_MOVIES, ALL_MOVIES, PLAYING_MOVIES, TOP_MOVIES, MOVIE_DATA, CLEAR_MOVIE_DATA,
   MOVIE_ENG_DATA, CHANGE_MOVIES_PAGE
 } from '~/store/constants';
-import ActionPayloadData from '~/core/types/ActionPayloadData';
+import ActionPayloadData from '~/core/types/actionPayloadData';
 
 type AllMoviesPayload = SearchResult<Movie[]> & {sortByDate: string}
 

@@ -1,5 +1,5 @@
 import { Movie, SearchResult, TvShow, Person, MovieDetails, TvShowDetails } from 'tmdb-typescript-api';
-import ActionPayloadData from '~/core/types/ActionPayloadData';
+import ActionPayloadData from '~/core/types/actionPayloadData';
 import {
   CLEAR_SEARCH,
   GENRES,
