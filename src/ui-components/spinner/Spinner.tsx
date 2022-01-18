@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './spinner.sass';
 
 class Spinner extends Component {
   render () {
