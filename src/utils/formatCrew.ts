@@ -12,30 +12,28 @@ export function formatCrew (crewData: Crew[]): CrewState {
   };
 
   crewData.forEach(crew => {
-    switch (crew.job || crew.department) {
-      case CrewJob.DIRECTOR:
-        response.director.push(crew);
-        break;
+    if (crew.job === CrewJob.DIRECTOR) {
+      response.director.push(crew);
+    }
 
-      case CrewJob.PRODUCER:
-        response.producer.push(crew);
-        break;
+    if (crew.job === CrewJob.PRODUCER) {
+      response.producer.push(crew);
+    }
 
-      case CrewJob.MUSIC || CrewJob.ORIGINAL_MUSIC_COMPOSER:
-        response.music.push(crew);
-        break;
+    if (CrewJob.MUSIC === crew.job || CrewJob.ORIGINAL_MUSIC_COMPOSER === crew.job) {
+      response.music.push(crew);
+    }
 
-      case CrewJob.DIRECTOR_OF_PHOTOGRAPHY:
-        response.directorOfPhotography.push(crew);
-        break;
+    if (crew.job === CrewJob.DIRECTOR_OF_PHOTOGRAPHY) {
+      response.directorOfPhotography.push(crew);
+    }
 
-      case CrewDepartment.ART:
-        response.art.push(crew);
-        break;
+    if (crew.department === CrewDepartment.ART) {
+      response.art.push(crew);
+    }
 
-      case CrewDepartment.WRITING:
-        response.screenplay.push(crew);
-        break;
+    if (crew.department === CrewDepartment.WRITING) {
+      response.screenplay.push(crew);
     }
   });
   return response;
