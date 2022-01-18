@@ -5,7 +5,7 @@ import { clearTvSeason } from '~/store/actions/tv-actions';
 import { onSeasonTV } from '~/store/api/tv.api';
 
 import { friendlyData, kFormatter, declOfNum } from '~/utils/format';
-import NoImg from '~/assets/images/NoImg.png';
+import NoImg from '~/assets/images/noImg.png';
 
 class TVSeason extends Component {
     state = {

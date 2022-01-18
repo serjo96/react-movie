@@ -1,5 +1,5 @@
 import React from 'react';
-import NoImg from 'images/NoImg.png';
+import NoImg from 'images/noImg.png';
 import { declOfNum, kFormatter, friendlyData, formatTime } from '~/utils/format';
 import { movieDues } from '~/utils/movieDataFormat';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import NoImg from '~/assets/images/NoImg.png';
+import NoImg from '~/assets/images/noImg.png';
 import { declOfNum, kFormatter } from '~/utils/format';
 
 const TVBg = (tv) => (

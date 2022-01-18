@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
 import MovieInfo from '~/templates/Tooltip/MovieInfo';
-import Image from '~/ui-components/image/image.jsx';
+import Image from '~/ui-components/image/image';
 
 import { urlRusLat } from '~/utils/format';
 import './movieItem.sass';

@@ -5,9 +5,9 @@ import { Helmet } from 'react-helmet';
 import { onLoadCompanyData, LoadCompanyMovies } from '~/store/api/company.api';
 import { clearCompanyData } from '~/store/actions/company-actions';
 
-import NoImg from '~/assets/images/NoImg.png';
+import NoImg from '~/assets/images/noImg.png';
 import ServiceBlock from '../Service/ServiceBlock';
-import { MoviesList } from '../MoviesList/components';
+import { MoviesList } from '../moviesList/components';
 
 class Person extends Component {
   state = {

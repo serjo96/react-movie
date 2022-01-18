@@ -7,7 +7,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { clearSearch } from '~/store/actions/general-actions';
 import { onSearch } from '~/store/api/search.api';
 import { friendlyUrl, urlRusLat } from '~/utils/format';
-import NoImg from '~/assets/images/NoImg.png';
+import NoImg from '~/assets/images/noImg.png';
 import Spinner from '~/ui-components/spinner/Spinner';
 
 interface DispatchProps {

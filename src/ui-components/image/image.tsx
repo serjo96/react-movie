@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import NoImg from '~/assets/images/NoImg.png';
+import NoImg from '~/assets/images/noImg.png';
 import { imgUrl } from '~/core/config';
 import Spinner from '~/ui-components/spinner/Spinner';
 
