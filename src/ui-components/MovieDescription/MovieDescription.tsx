@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface MyProps {
-  short: boolean;
+  short?: boolean;
   overview: string;
   fetchEngData: () => void;
 }
