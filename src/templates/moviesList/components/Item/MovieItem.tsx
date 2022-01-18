@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-import MovieInfo from '~/templates/Tooltip/MovieInfo';
+import TooltipInfo from '~/templates/Tooltip/tooltip-info';
 import Image from '~/ui-components/image/image';
 
 import { urlRusLat } from '~/utils/format';
@@ -28,7 +28,7 @@ const MovieItem = ({
   const linkUrl = () => `/${typeList}/${urlRusLat(title)}-${id}`;
 
   return (
-    <MovieInfo
+    <TooltipInfo
       title={title}
       originalTitle={original_title}
       handlerHover={handlerHover}
@@ -54,7 +54,7 @@ const MovieItem = ({
         </Link>
       </div>
 
-    </MovieInfo>
+    </TooltipInfo>
   );
 };
 
