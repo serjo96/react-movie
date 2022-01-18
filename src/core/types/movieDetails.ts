@@ -1,10 +1,10 @@
 import { Images } from '~/core/types/images';
 import { Genre } from '~/core/types/genres';
-import {Language, OriginalLanguage} from '~/core/types/language';
+import { Language, OriginalLanguage } from '~/core/types/language';
 import { Company } from '~/core/types/company';
 import { Country } from '~/core/types/country';
 import { Collection } from '~/core/types/collection';
-import {Keyword, Keywords} from '~/core/types/keywords';
+import { Keywords } from '~/core/types/keywords';
 import { ListData } from '~/core/types/listData';
 import { Videos } from '~/core/types/videos';
 import { MovieListItem, MoviesListItem } from '~/core/types/movies';
@@ -37,7 +37,7 @@ export declare class MovieDetails {
   videos: Videos;
   recommendations: ListData<MoviesListItem>;
   backdropPath: string;
-  originalLanguage: OriginalLanguage;
+  originalLanguage: OriginalLanguage | string;
   popularity: number;
   voteCount: number;
   video: boolean;

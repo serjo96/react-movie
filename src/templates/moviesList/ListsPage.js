@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import NoImg from 'images/NoImg.png';
+import NoImg from 'images/noImg.png';
 import { friendlyUrl, urlRusLat } from '~/utils/index';
 
 const ListsPage = () => (
