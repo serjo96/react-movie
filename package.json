@@ -46,7 +46,7 @@
     "react-router-dom": "5.1.2",
     "react-transition-group": "4.3.0",
     "react-twitter-widgets": "^1.7.1",
-    "react-youtube": "^7.9.0",
+    "react-youtube": "^7.14.0",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
