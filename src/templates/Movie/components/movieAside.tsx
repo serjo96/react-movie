@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
-import NoImg from '~/assets/images/noImg.png';
 import Spinner from '~/ui-components/spinner/Spinner';
 import { friendlyUrl, urlRusLat } from '~/utils/format';
 import { CrewState } from '~/store/movies/movies.slice';
 import { MovieDetails } from '~/core/types/movieDetails';
-import classNames from 'classnames';
+import NoImg from '~/assets/images/noImg.png';
+import './movie-aside.sass';
 
 interface MyProps {
   id: MovieDetails['id'];
