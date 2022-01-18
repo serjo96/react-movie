@@ -8,7 +8,7 @@ import Portal from '~/ui-components/portal/portal';
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
 import { urlRusLat } from '~/utils/format';
 
-class MoviePopup extends Component {
+class TooltipInfo extends Component {
   tooltip = null;
   parentRef = null;
   EngDataStatus = true;
@@ -190,7 +190,7 @@ const mapDispatchToProps = (dispatch) => ({
   fetchEngData: (id, lang) => dispatch(onLoadEngMedia(id, lang))
 });
 
-MoviePopup.propTypes = {
+TooltipInfo.propTypes = {
   title: PropTypes.string.isRequired,
   typeItem: PropTypes.string.isRequired,
   overview: PropTypes.string.isRequired,
@@ -204,4 +204,4 @@ MoviePopup.propTypes = {
   children: PropTypes.element
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MoviePopup);
+export default connect(mapStateToProps, mapDispatchToProps)(TooltipInfo);
