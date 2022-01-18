@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import NoImg from '~/assets/images/noImg.png';
 import { declOfNum, kFormatter } from '~/utils/format';
+import { TvSummary } from '~/templates/TV/components/tv-summary';
 
 const TVBg = (tv) => (
   <div className='movie__bg'>
@@ -21,7 +22,7 @@ const TVBg = (tv) => (
                 alt='poster'
               />
             </div>
-            <h1 className={`movie__title ${tv.titles.seasonTitle !== null ? 'movie__title--tv-season' : ''}`}>
+            <h1 className={`movie__title`}>
               <div className='ru-title'>{tv.title}</div>
               <div className='original-title'>{tv.titles.original_title === tv.titles.title ? null : tv.titles.original_title}</div>
               {tv.titles.seasonTitle !== null
@@ -36,6 +37,7 @@ const TVBg = (tv) => (
       </div>
       <div className='movie-ratings-wrap'>
         <div className='container'>
+          {/*<TvSummary />*/}
           <div className='summary-ratings'>
             <div className='ratings'>
               <div className='summary-mobile-line'>
