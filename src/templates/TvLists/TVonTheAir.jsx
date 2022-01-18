@@ -7,7 +7,7 @@ import { tvOnTheAir } from '~/store/api/tv.api';
 
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import ServiceBlock from '~/templates/Service/ServiceBlock';
-import { MoviesList } from '~/templates/MoviesList/components';
+import { MoviesList } from '~/templates/moviesList/components';
 
 class TVonTheAir extends Component {
  state = {

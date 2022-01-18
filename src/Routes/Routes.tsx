@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Main from '../templates/main/Main.jsx';
-import Movie from '../templates/Movie/containers/Movie.jsx';
-import MovieUpcoming from '../templates/MoviesList/container/MoviesUpcoming.jsx';
-import MoviePlaying from '../templates/MoviesList/container/MoviesPlaying.jsx';
-import MoviesAll from '../templates/MoviesList/container/MoviesAll.jsx';
+import Main from '~/templates/main/main';
+import Movie from '~/templates/Movie/containers/movie';
+import MovieUpcoming from '../templates/moviesList/container/MoviesUpcoming.jsx';
+import MoviePlaying from '../templates/moviesList/container/MoviesPlaying.jsx';
+import MoviesAll from '../templates/moviesList/container/MoviesAll.jsx';
 import TVAiring from '../templates/TvLists/TVAiring.jsx';
 import TvPopular from '../templates/TvLists/TVall.jsx';
 import TVonTheAir from '../templates/TvLists/TVonTheAir.jsx';
 import TV from '../templates/TV/containers/Tv.jsx';
 import People from '../templates/Person/containers/Person.jsx';
 import Search from '../templates/Search/Search.jsx';
-import Company from '../templates/Company/Company';
+import Company from '~/templates/Company/Company';
 
-import KeywordsList from '../templates/Lists/KeywordsList';
+import KeywordsList from '../templates/Lists/keywordsList';
 
 class Routes extends Component {
   render () {

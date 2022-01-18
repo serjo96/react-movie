@@ -14,9 +14,9 @@ import TVBg from './../components/TVBg';
 import TVAside from './../components/TVAside.jsx';
 import TVvideos from './../components/TVvideos';
 import TVseasons from './../components/TVseasons.jsx';
-import MediaStills from './../../MediaPage/MediaStills.jsx';
-import MediaCast from './../../MediaPage/MediaCast';
-import MediaRecommendations from './../../MediaPage/MediaRecommendations';
+import MediaStills from '../../MediaPage/mediaStills.tsx';
+import MediaCast from '../../MediaPage/mediaCast';
+import MediaRecommendations from '../../MediaPage/mediaRecommendations';
 import TVSeason from './../components/TVSeason.jsx';
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
 

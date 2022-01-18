@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { MovieItem } from '../../MoviesList/components';
+import { MovieItem } from '../../moviesList/components';
 
 export default class PersonMoviesList extends Component {
   state = {

@@ -6,7 +6,7 @@ import { DebounceInput } from 'react-debounce-input';
 import { MainSearch } from '~/store/api/search.api';
 import { searchResetFetch } from '~/store/actions/general-actions';
 
-import { MoviesList } from '../MoviesList/components';
+import { MoviesList } from '../moviesList/components';
 import { friendlyUrl } from '~/utils/format';
 import ServiceBlock from '../Service/ServiceBlock';
 

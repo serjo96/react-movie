@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { movieUpcoming } from '~/store/api/movies.api';
 
-import MoviesList from '~/templates/MoviesList/components/list/MoviesList';
+import MoviesList from '~/templates/moviesList/components/list/moviesList';
 import ServiceBlock from '~/templates/Service/ServiceBlock.tsx';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 
