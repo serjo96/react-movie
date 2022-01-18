@@ -11,7 +11,9 @@ import {
   getMoviesList,
   getPlayingMovies,
   getTopMovies,
-  getUpcomingMovies, MovieRespData, ReturnedMovieList
+  getUpcomingMovies,
+  MovieRespData,
+  ReturnedMovieList
 } from '~/store/movies/movies.api';
 import { formatCrew } from '~/utils/formatCrew';
 import { Credits } from '~/core/types/credits';
