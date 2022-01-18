@@ -1,17 +1,20 @@
+import { parseJSONCamelCase } from '~/utils/camelCase';
+
 function isAbsolutePath (url: string) {
   return !url.match('/')[0];
 }
 
 interface ApiRequestOptions extends RequestInit {
-    baseUrl?: string
+  baseUrl?: string
 }
 
 export interface ClientResponse<T> {
-    status: number
-    data: T
+  status: number;
+  data: T;
+  isSuccessRequest: boolean
 }
 
-type queryParams = { [key: string]: string | number | null | boolean | Array<string | number | null | boolean>}
+type queryParams = { [key: string]: string | number | null | boolean | Array<string | number | null | boolean> | void}
 
 export class ResponseError extends Error {
     code: number;
@@ -53,13 +56,13 @@ export default class ApiClient {
         if (Array.isArray(value)) {
           return value.map(v => [k, encodeURIComponent(v)].join('=')).join('&');
         }
-        return [k, encodeURIComponent(value)].join('=');
+        return [k, encodeURIComponent(value as string | boolean | number)].join('=');
       }).filter(Boolean).join('&');
       if (this.url.indexOf('?') === -1 && q) { q = `?${q}`; }
       return q;
     }
 
-    private async _checkResponseStatus (response: Response) {
+    private async _checkResponseStatus<R> (response: Response): Promise<ClientResponse<R>> {
       if (response.status >= 200 && response.status < 400) {
         const data = await response.json();
         return { isSuccessRequest: response.status >= 200 && response.status < 400, status: response.status, data };
@@ -68,7 +71,7 @@ export default class ApiClient {
       }
     }
 
-    private _fetch (method: string, path?: string, body?: BodyInit | null, query?: queryParams) {
+    private _fetch<R> (method: string, path?: string, body?: BodyInit | null, query?: queryParams): Promise<ClientResponse<R>> {
       const apiPath = new URL(path, this.url);
       return fetch(apiPath + this._buildQueryParams(query),
         { ...this.options, method: method, headers: this.headers, body: body })
@@ -96,7 +99,7 @@ export default class ApiClient {
       return this._fetch('HEAD', url);
     }
 
-    get (url?: string, query?: queryParams) {
+    get<T = any> (url?: string, query?: queryParams): Promise<ClientResponse<T>> {
       return this._fetch('GET', url, null, query);
     }
 
@@ -116,8 +119,8 @@ export default class ApiClient {
       return this._fetch('DELETE', url, body);
     }
 
-    all<T> (requests: Array<T | Promise<T>>): Promise<T[]> {
-      return Promise.all(requests);
+    all<T = any> (requests: Array<ClientResponse<T> | Promise<ClientResponse<T>>>): Promise<ClientResponse<T>[]> {
+      return Promise.all<ClientResponse<T>>(requests);
     }
 
     spread<T, R> (callback: (...args: T[]) => R): (array: T[]) => R {
