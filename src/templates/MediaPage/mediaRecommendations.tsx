@@ -2,7 +2,7 @@ import React from 'react';
 import Swiper from 'react-id-swiper';
 import classNames from 'classnames';
 
-import { MovieItem } from '../MoviesList/components';
+import { MovieItem } from '../moviesList/components';
 
 const MediaRecommendations = (movie) => {
   let SwiperParam;
@@ -77,7 +77,7 @@ const MediaRecommendations = (movie) => {
           {...SwiperParam}
           shouldSwiperUpdate
           containerClass={swiperClass()}
-          navigation={movie.recommendations.total_results > 10 ? {
+          navigation={movie.recommendations.totalResults > 10 ? {
             nextEl: '.slider-button-next',
             prevEl: '.slider-button-prev',
             disabledClass: 'slider-button--isDisabled'
@@ -90,13 +90,13 @@ const MediaRecommendations = (movie) => {
             (<div key={index}>
               <MovieItem
                 title={el.title || el.name}
-                original_title={el.original_title || el.original_name}
+                original_title={el.originalTitle || el.originalName}
                 overview={el.overview}
-                voteAverage={el.vote_average}
-                date={el.release_date || el.first_air_date}
-                poster={el.poster_path}
+                voteAverage={el.voteAverage}
+                date={el.releaseDate || el.firstAirDate}
+                poster={el.posterPath}
                 id={el.id}
-                genres={el.genre_ids}
+                genres={el.genreIds}
                 typeList={movie.typeList}
               />
             </div>)
