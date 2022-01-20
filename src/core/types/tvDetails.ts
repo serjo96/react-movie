@@ -5,6 +5,7 @@ import { Keywords } from '~/core/types/keywords';
 import { Images } from '~/core/types/images';
 import { Translations } from '~/core/types/translations';
 import { ListData } from '~/core/types/listData';
+import { Videos } from '~/core/types/videos';
 
 export interface TvDetails {
   adult: boolean;
@@ -48,7 +49,7 @@ export interface TvDetails {
   screenedTheatrically: ContentRatings;
   similar: ListData<RecommendationsResult>;
   translations: Translations;
-  videos: ContentRatings;
+  videos: Videos;
 }
 
 export interface ContentRatings {
