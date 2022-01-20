@@ -54,12 +54,20 @@ const loaders: webpack.ModuleOptions['rules'] = [
     test: /\.sass$/,
     use: [
       'style-loader',
-      'css-loader',
+      {
+        loader: 'css-loader',
+        options: {
+          sourceMap: true
+        }
+      },
       {
         loader: 'sass-loader',
         options: {
           // Prefer `dart-sass`
-          implementation: require('dart-sass')
+          implementation: require('dart-sass'),
+          sassOptions: {
+            sourceMap: isDevelopment
+          }
         }
       }
     ]
