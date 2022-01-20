@@ -1,20 +1,24 @@
 import React from 'react';
 import './popup.sass';
+import classNames from 'classnames';
 
 interface MyProps {
   children: React.ReactNode;
   closePopup: () => void;
   title?: string;
+  className?: string;
 }
 
 export default function Popup ({
   children,
   title,
-  closePopup
+  closePopup,
+  className
 }: MyProps) {
+  const popupClass = classNames('popup', { className });
   return (
     <div className='popup-base' onClick={closePopup}>
-      <div className='popup'>
+      <div className={popupClass}>
         <div className='popup__close' onClick={closePopup} />
         {title && <h3 className='popup__title'>{title}</h3>}
         <div className='popup__content popup--is-hide'>
