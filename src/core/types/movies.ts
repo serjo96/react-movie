@@ -1,4 +1,4 @@
-import {OriginalLanguage} from "~/core/types/language";
+import { OriginalLanguage } from '~/core/types/language';
 
 export declare class MoviesListItem {
   adult: boolean;
