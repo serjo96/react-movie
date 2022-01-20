@@ -4,6 +4,9 @@ import { Collection } from '~/core/types/collection';
 import './movie-collection.sass';
 
 const MovieCollection = ({ collection }: {collection: Collection}) => {
+  if (!collection || !collection.parts.length) {
+    return null;
+  }
   const randomBackgroundImg = 'url(https://image.tmdb.org/t/p/original' + (Math.random() < 0.5
     ? (collection.backdropPath || collection.posterPath)
     : (collection.posterPath || collection.backdropPath)) + ')';
