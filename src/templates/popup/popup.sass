@@ -45,13 +45,21 @@
 	width: 25px
 	height: 25px
 	margin-left: 20px
-	background: url('~images/cross.svg') no-repeat
-	background-size: cover
 	&:hover
 		opacity: .7
+	&:after, &:before
+		content: ''
+		width: 2px
+		height: 100%
+		display: block
+		position: absolute
+		top: 0
+		background: #fff
+	&:after
+		transform: rotate(45deg)
+	&:before
+		transform: rotate(-45deg)
 
-.popup--is-hide
-	transform: translateY(-200%)
 
 
 @media only screen and (max-width : 1320px)
