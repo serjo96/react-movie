@@ -51,7 +51,7 @@ export function VideosSection ({ videos }: MyProps) {
       {isShowTrailer &&
         <Portal>
           <div className='popup popup--video'>
-            <Popup className="popup--video" closePopup={closeTrailer}>
+            <Popup className='popup--video' closePopup={closeTrailer}>
               <YouTube
                 videoId={videoKey}
                 opts={YouTubeParams}
