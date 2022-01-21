@@ -10,6 +10,7 @@ import {
   getTopMovies,
   getUpcomingMovies
 } from '~/store/movies/movies.api';
+import { MediaType } from '~/core/types/media-type';
 
 function Main () {
   const appDispatch = useAppDispatch();
@@ -37,7 +38,7 @@ function Main () {
             count={11}
             movieListMain
             ListLink='playing'
-            typeList='movie'
+            typeList={MediaType.MOVIE}
           />
           <MoviesList
             movieListTitle='Скоро в кино'
@@ -45,7 +46,7 @@ function Main () {
             count={11}
             movieListMain
             ListLink='upcoming'
-            typeList='movie'
+            typeList={MediaType.MOVIE}
           />
           <MoviesList
             movieListTitle='Топ фильмы'
@@ -53,7 +54,7 @@ function Main () {
             count={11}
             movieListMain={false}
             ListLink='top'
-            typeList='movie'
+            typeList={MediaType.MOVIE}
           />
           <MoviesList
             movieListTitle='Все фильмы'
@@ -61,7 +62,7 @@ function Main () {
             count={11}
             movieListMain
             ListLink='all'
-            typeList='movie'
+            typeList={MediaType.MOVIE}
           />
         </div>
       </main>
