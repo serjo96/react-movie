@@ -8,15 +8,15 @@ import Lightbox from 'lightbox-react';
 import { onLoadTV } from '~/store/api/tv.api';
 import { clearTvData, clearTvSeason } from '~/store/actions/tv-actions';
 
-import Popup from './../../Popup/Popup.jsx';
+import Popup from '../../popup/popup.tsx';
 import ServiceBlock from '../../Service/ServiceBlock';
 import TVBg from './../components/TVBg';
 import TVAside from './../components/TVAside.jsx';
 import TVvideos from './../components/TVvideos';
 import TVseasons from './../components/TVseasons.jsx';
-import MediaStills from '../../MediaPage/mediaStills.tsx';
-import MediaCast from '../../MediaPage/mediaCast';
-import MediaRecommendations from '../../MediaPage/mediaRecommendations';
+import MediaStills from '../../MediaPage/media-stills.tsx';
+import MediaCast from '../../MediaPage/media-cast';
+import MediaRecommendations from '../../MediaPage/media-recommendations';
 import TVSeason from './../components/TVSeason.jsx';
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
 
