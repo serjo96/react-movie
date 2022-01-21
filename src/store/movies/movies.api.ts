@@ -7,6 +7,7 @@ import { Languages } from '~/store/Reducers/generalReducer';
 import { MovieDetails } from '~/core/types/movieDetails';
 import { MoviesListItem, MoviesList } from '~/core/types/movies';
 import { Collection } from '~/core/types/collection';
+import { sortCollectionItems } from '~/utils/sortings';
 
 // TODO: Add rejected handler for api status;
 export interface ReturnedMovieList {
@@ -185,8 +186,9 @@ export const getMovieData = createAsyncThunk<MovieRespData, {id: string, lang?: 
           language: lang
         }
       );
-      console.log(collection);
-      response = { data: { ...resp.data, collection: collection.data }, isSuccess: resp.isSuccessRequest && collection.isSuccessRequest };
+
+      const sortedCollection = { ...collection.data, parts: sortCollectionItems(collection.data.parts) };
+      response = { data: { ...resp.data, collection: sortedCollection }, isSuccess: resp.isSuccessRequest && collection.isSuccessRequest };
     }
 
     return response;
