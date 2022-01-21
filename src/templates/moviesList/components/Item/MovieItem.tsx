@@ -8,6 +8,11 @@ import Image from '~/ui-components/image/image';
 
 import { urlRusLat } from '~/utils/format';
 import './movieItem.sass';
+import {MediaType} from "~/core/types/media-type";
+
+interface MyProps {
+  typeList: MediaType;
+}
 
 const MovieItem = ({
   id,
@@ -20,7 +25,7 @@ const MovieItem = ({
   voteAverage,
   date,
   genres
-}) => {
+}: MyProps) => {
   const [tooltip, handlerHover] = useState(false);
   const parentClass = classNames('movie-item', {
     'movie-item--hover': tooltip

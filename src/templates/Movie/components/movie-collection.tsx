@@ -2,6 +2,7 @@ import React from 'react';
 import { MovieItem } from '~/templates/moviesList/components';
 import { Collection } from '~/core/types/collection';
 import './movie-collection.sass';
+import {MediaType} from "~/core/types/media-type";
 
 const MovieCollection = ({ collection }: {collection: Collection}) => {
   if (!collection || !collection.parts.length) {
@@ -35,7 +36,7 @@ const MovieCollection = ({ collection }: {collection: Collection}) => {
                 id={el.id}
                 key={index}
                 genres={el.genreIds}
-                typeList='movie'
+                typeList={MediaType.MOVIE}
               />)
             )}
           </div>
