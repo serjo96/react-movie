@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import NoImg from '~/assets/images/noImg.png';
-import './movie-info.sass';
+import './media-top.sass';
 
 import useBreakpoints, { BreakpointsNames } from '~/utils/useMediaQuery';
 import classNames from 'classnames';
@@ -15,7 +15,7 @@ interface MyProps {
   children: React.ReactNode
 }
 
-const MovieInfo = ({
+const MediaTop = ({
   title,
   originalTitle,
   backdrop,
@@ -52,7 +52,7 @@ const MovieInfo = ({
   });
 
   return (
-    <section className='movie-top'>
+    <section className='media-top'>
       <div
         className={bgPosterClasses}
         style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${(backdrop || poster)})` }}
@@ -70,14 +70,14 @@ const MovieInfo = ({
                   alt='poster'
                 />
               </div>
-              <div className='movie__title'>
-                <h1 className='ru-title'>{title}</h1>
-                <h2 className='original-title'>{(originalTitle !== title) && originalTitle}</h2>
+              <div className='media-titles'>
+                <h1 className='media-titles__title'>{title}</h1>
+                <h2 className='media-titles__original-title'>{(originalTitle !== title) && originalTitle}</h2>
                 {/* TODO: Uncommit after adding to tv page; */}
                 {/* {tv.titles.seasonTitle && <div className='season-title'>{tv.titles.seasonTitle}</div>} */}
-                <span className='movie__year'>{releaseDate.substring(0, 4)}</span>
+                <span className='media-titles__year'>{releaseDate.substring(0, 4)}</span>
+                <div className='media-titles__tagline'>{tagline}</div>
               </div>
-              <div className='tagline'>{tagline}</div>
             </div>
           </div>
         </div>
@@ -91,4 +91,4 @@ const MovieInfo = ({
   );
 };
 
-export default MovieInfo;
+export default MediaTop;
