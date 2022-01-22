@@ -19,11 +19,11 @@ const ServiceBlock = ({
   const allDataIsReady = !isLoading && !isError;
 
   return (
-    <div>
+    <React.Fragment>
       {showPreloader && <Spinner />}
       {isError && <TryAgain fetch={fetch} />}
       {allDataIsReady && children}
-    </div>
+    </React.Fragment>
   );
 };
 

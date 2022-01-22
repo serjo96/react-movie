@@ -21,7 +21,7 @@ class App extends Component<Props> {
 
   render () {
     return (
-      <div>
+      <React.Fragment>
         <Helmet>
           <title>Movie Base</title>
         </Helmet>
@@ -30,7 +30,7 @@ class App extends Component<Props> {
           <Header history={this.props.history} />
           <Routes />
         </React.StrictMode>
-      </div>
+      </React.Fragment>
     );
   }
 }
