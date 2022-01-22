@@ -4,6 +4,8 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto')
 @import '~fonts/proximanova-semibold/stylesheet.css'
 @import '~fonts/ProximaNova-Regular/stylesheet.css'
+@import "variables"
+
 @import "~lightbox-react/style.css"
 @import "../src/templates/Head/header"
 @import "../src/templates/Search/searchHeader"
@@ -128,7 +130,7 @@ p
 	position: absolute
 	z-index: 50
 	top: 50%
-	margin-top: -22px
+	transform: translateY(-100%)
 	font: normal normal normal 14px/1 FontAwesome
 	opacity: .6
 	background: rgba(0, 0, 0, 0.7)
