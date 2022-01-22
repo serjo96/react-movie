@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { sortByRangeDateList, sortBySingleDateList, storageCountries } from '~/store/localData';
-import Popup from '~/templates/Popup/Popup.jsx';
+import Popup from '~/templates/popup/popup.tsx';
 
 export default class FiltersMobile extends Component {
   render () {
