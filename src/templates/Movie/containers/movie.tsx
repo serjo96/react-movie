@@ -4,10 +4,10 @@ import { useParams } from 'react-router-dom';
 
 import { Languages } from '~/store/Reducers/generalReducer';
 import { getMovieData, getMovieEngOverview } from '~/store/movies/movies.api';
-import MovieAside from './../components/movie-aside';
 import MediaStills from '~/templates/media-page/media-stills';
 import MediaCast from '~/templates//media-page/media-cast';
 import MediaTop from '~/templates/media-page/media-top';
+import MovieAside from '~/templates/Movie/components/movie-aside';
 import { MovieSummary } from '~/templates/Movie/components/movie-summary';
 import ServiceBlock from '~/templates/Service/ServiceBlock';
 import MediaRecommendations from '~/templates/media-page/media-recommendations';
