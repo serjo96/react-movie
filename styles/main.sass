@@ -2,8 +2,8 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700')
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
 @import url('https://fonts.googleapis.com/css?family=Roboto')
-@import '~fonts/proximanova-semibold/stylesheet.css'
-@import '~fonts/ProximaNova-Regular/stylesheet.css'
+@import 'fonts/proximanova-semibold/stylesheet.sass'
+@import 'fonts/ProximaNova-Regular/stylesheet.sass'
 @import "variables"
 
 @import "~lightbox-react/style.css"
@@ -112,9 +112,6 @@ p
 	right: 0
 	width: 100%
 	height: 100%
-
-.swiper-scrollbar
-	cursor: pointer
 
 .slider-button-next
 	right: 15px
@@ -230,6 +227,14 @@ p
 	&:hover
 		background: transparent
 		color: #d8b16b
+
+
+.swiper-scrollbar
+	cursor: pointer
+	background: rgb(251 251 251 / 20%)
+
+.swiper-scrollbar-drag
+	background: rgb(255 255 255 / 60%)
 
 
 @import "./Media/Media.sass"
