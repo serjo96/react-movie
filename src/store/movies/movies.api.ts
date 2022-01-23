@@ -29,6 +29,11 @@ export interface MovieRespData {
   data: MovieDetails & {collection?: Collection};
 }
 
+export interface MovieEngRespData {
+  isSuccess: boolean;
+  data: MovieDetails['overview']
+}
+
 export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs | void>(
   'movies/getMoviesList',
   async (payload : MovieListArgs = {
@@ -192,5 +197,23 @@ export const getMovieData = createAsyncThunk<MovieRespData, {id: string, lang?: 
     }
 
     return response;
+  }
+);
+
+export const getMovieEngOverview = createAsyncThunk<MovieEngRespData, {id: string, lang?: Languages}>(
+  'movie/getMovieData',
+  async ({ id, lang = Languages.EN }) => {
+    const resp = await oldClient.get<MovieDetails>(`movie/${id}`,
+      {
+        language: lang,
+        include_image_language: 'ru,null',
+        append_to_response: 'credits,images,videos,recommendations,reviews,lists,keywords,release_dates'
+      }
+    );
+
+    return {
+      data: resp.data.overview,
+      isSuccess: resp.isSuccessRequest
+    };
   }
 );

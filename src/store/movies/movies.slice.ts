@@ -7,11 +7,11 @@ import { MoviesList } from '~/core/types/movies';
 import ActionPayloadData from '~/core/types/actionPayloadData';
 
 import {
-  getMovieData,
+  getMovieData, getMovieEngOverview,
   getMoviesList,
   getPlayingMovies,
   getTopMovies,
-  getUpcomingMovies,
+  getUpcomingMovies, MovieEngRespData,
   MovieRespData,
   ReturnedMovieList
 } from '~/store/movies/movies.api';
@@ -191,6 +191,14 @@ export const moviesSlice = createSlice({
         const data = action.payload.data;
         state.isFetching = false;
         state.data = { ...state.data, ...data, credits: { ...data.credits, crew: formatCrew(data.credits.crew) } };
+      })
+      .addCase(getMovieEngOverview.pending, (state) => {
+        state.isFetching = true;
+        state.isSuccessful = true;
+      })
+      .addCase(getMovieEngOverview.fulfilled, (state, action: PayloadAction<MovieEngRespData>) => {
+        state.isFetching = false;
+        state.data = { ...state.data, overview: action.payload.data };
       });
   }
 });
