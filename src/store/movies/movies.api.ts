@@ -41,7 +41,6 @@ export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs |
     sortType: 'popularity.desc',
     page: 1
   }) => {
-    let singleYear: string | undefined;
     let rageDates;
     let startRangeDate: string | undefined;
     let endRangeDate: string | undefined;
@@ -69,7 +68,7 @@ export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs |
           region: payload.region,
           sort_by: payload.sortType,
           with_genres: payload.genre,
-          primary_release_year: singleYear,
+          primary_release_year: payload.date,
           'primary_release_date.gte': startRangeDate,
           'primary_release_date.lte': endRangeDate,
           page: payload.page + 1,
