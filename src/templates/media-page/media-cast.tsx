@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {
-  Scrollbar
+  Scrollbar,
+  Mousewheel
 } from 'swiper';
 
 import { friendlyUrl } from '~/utils/format';
@@ -10,7 +11,7 @@ import { Cast } from '~/core/types/cast';
 import NoImg from '~/assets/images/noImg.png';
 import './media-cast.sass';
 
-SwiperCore.use([Scrollbar]);
+SwiperCore.use([Scrollbar, Mousewheel]);
 
 const MediaCast = ({ cast }: {cast: Cast[]}) => {
   if (!cast.length) {
@@ -40,11 +41,9 @@ const MediaCast = ({ cast }: {cast: Cast[]}) => {
             }
           }}
           scrollbar={{
-            el: '.swiper-scrollbar',
             hide: false,
             draggable: true
           }}
-          centeredSlides={false}
           mousewheel={cast.length > 7 && { sensitivity: 150 }}
         >
           {cast.map((actor, indx) => (
