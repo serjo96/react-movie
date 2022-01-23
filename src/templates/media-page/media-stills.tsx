@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Lightbox from 'lightbox-react';
 import classNames from 'classnames';
+import './media-stills.sass';
 
 import { Image } from '~/core/types/images';
 
@@ -37,6 +38,10 @@ export default function MediaStills ({
     'stills__list--person': title === 'Фото'
   });
 
+  const stillsImgClasses = classNames('stills__img', {
+    'stills__img--posters': posters
+  });
+
   if (!images.length) {
     return null;
   }
@@ -51,7 +56,7 @@ export default function MediaStills ({
             </div>}
           {images.map((backdrop, indx) => indx <= imgListCount &&
             <div
-              className={`stills__img ${posters && 'stills__img--posters'}`}
+              className={stillsImgClasses}
               key={indx}
             >
               <img

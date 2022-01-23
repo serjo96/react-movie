@@ -1,3 +1,6 @@
+@import "styles/mixins"
+
+
 .stills
 	margin: 20px 0
 
@@ -9,13 +12,17 @@
 	position: relative
 	height: 440px
 	overflow: hidden
+	@include media("xsSize", "max")
+		height: 280px
 
 .stills__list--person
 	height: 600px
 	.stills__img
 		width: 20%
 		padding-bottom: 29%
-
+		@include media("xsSize", "max")
+			width: 25%
+			padding-bottom: 31%
 
 .stills__list--moreLoaded
 	height: auto
@@ -27,6 +34,10 @@
 	padding-bottom: 14%
 	position: relative
 	overflow: hidden
+	@include media("lgSize", "max")
+		padding-bottom: 18%
+	@include media("xsSize", "max")
+		padding-bottom: 20%
 	&--posters
 		padding-bottom: 35%
 	&:hover
