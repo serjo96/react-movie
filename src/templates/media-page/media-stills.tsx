@@ -72,12 +72,8 @@ export default function MediaStills ({
           prevSrc={'https://image.tmdb.org/t/p/w1280' + images[(imgIndex + images.length - 1) % images.length].filePath}
 
           onCloseRequest={() => setVisibilityLightBox(false)}
-          onMovePrevRequest={() => this.setState({
-            imgIndex: (imgIndex + images.length - 1) % images.length
-          })}
-          onMoveNextRequest={() => this.setState({
-            imgIndex: (imgIndex + 1) % images.length
-          })}
+          onMovePrevRequest={() => setImageIndex((imgIndex + images.length - 1) % images.length)}
+          onMoveNextRequest={() => setImageIndex((imgIndex + 1) % images.length)}
         />}
     </React.Fragment>
 
