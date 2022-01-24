@@ -18,9 +18,10 @@ function Main () {
   const upcoming = useAppSelector(state => state.movies.lists.upcoming);
   const top = useAppSelector(state => state.movies.lists.top);
   const all = useAppSelector(state => state.movies.lists.all);
+  const allFetched = [!playing.isFetching, !upcoming.isFetching, !all.isFetching, !top.isFetching].every(el=> el);
 
   useEffect(() => {
-    if (!playing.isFetching && !upcoming.isFetching && !all.isFetching && !top.isFetching) {
+    if (allFetched) {
       appDispatch(getPlayingMovies());
       appDispatch(getUpcomingMovies());
       appDispatch(getTopMovies());
@@ -28,7 +29,7 @@ function Main () {
     }
   }, []);
 
-  if (playing.isFetching && upcoming.isFetching && all.isFetching && top.isFetching) {
+  if (allFetched) {
     return (
       <main className='main main--media-list iphonex'>
         <div className='movies-content movies-content--main-page'>
