@@ -107,7 +107,7 @@ class TVonTheAir extends Component {
        </Helmet>
        <ServiceBlock
          isLoading={OnTheAirTv.isFetching}
-         isError={OnTheAirTv.status}
+         isSuccessful={OnTheAirTv.status}
          fetch={this.sendRequest}
        >
          <div className='movies-content'>

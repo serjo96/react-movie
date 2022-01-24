@@ -49,7 +49,7 @@ function Movie () {
   return (
     <ServiceBlock
       isLoading={isFetching}
-      isError={!isSuccessful}
+      isSuccessful={isSuccessful}
       fetch={sendRequest}
     >
       <div className='movie'>

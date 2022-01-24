@@ -5,23 +5,23 @@ import TryAgain from '../TryAgain/TryAgain';
 interface MyProps {
   children: React.ReactNode;
   isLoading: boolean;
-  isError: boolean;
+  isSuccessful: boolean;
   fetch: () => void;
 }
 
 const ServiceBlock = ({
   children,
   isLoading,
-  isError,
+  isSuccessful,
   fetch
 }: MyProps) => {
-  const showPreloader = isLoading && !isError;
-  const allDataIsReady = !isLoading && !isError;
+  const showPreloader = isLoading && isSuccessful;
+  const allDataIsReady = !isLoading && isSuccessful;
 
   return (
     <React.Fragment>
       {showPreloader && <Spinner />}
-      {isError && <TryAgain fetch={fetch} />}
+      {!isSuccessful && <TryAgain fetch={fetch} />}
       {allDataIsReady && children}
     </React.Fragment>
   );

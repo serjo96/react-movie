@@ -108,7 +108,7 @@ class TVAiring extends Component {
         </Helmet>
         <ServiceBlock
           isLoading={AiringTv.isFetching}
-          isError={AiringTv.status}
+          isSuccessful={AiringTv.status}
           fetch={this.sendRequest}
         >
           <div className='movies-content'>

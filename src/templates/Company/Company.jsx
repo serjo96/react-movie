@@ -109,7 +109,7 @@ class Person extends Component {
         <div className='movies-content company'>
           <ServiceBlock
             isLoading={companyData.isFetching && companyMovies.isFetching}
-            isError={companyData.status && companyMovies.status}
+            isSuccessful={companyData.status && companyMovies.status}
             fetch={this.sendRequest}
           >
             <Helmet>

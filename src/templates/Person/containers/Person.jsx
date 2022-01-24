@@ -103,7 +103,7 @@ class Person extends Component {
     return (
       <div className='container'>
         <div className='person main'>
-          <ServiceBlock isLoading={this.props.people.isFetching} isError={this.props.people.status} fetch={this.sendRequest}>
+          <ServiceBlock isLoading={this.props.people.isFetching} isSuccessful={this.props.people.status} fetch={this.sendRequest}>
             <Helmet>
               <title>{person.name}</title>
             </Helmet>

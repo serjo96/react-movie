@@ -132,7 +132,7 @@ class TvPopular extends Component {
 
         <ServiceBlock
           isLoading={allTV.isFetching}
-          isError={allTV.status}
+          isSuccessful={allTV.status}
           fetch={this.sendRequest}
         >
 

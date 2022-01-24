@@ -107,7 +107,7 @@ class TvTop extends Component {
        </Helmet>
        <ServiceBlock
          isLoading={TopTv.isFetching}
-         isError={TopTv.status}
+         isSuccessful={TopTv.status}
          fetch={this.sendRequest}
        >
          <div className='movies-content'>

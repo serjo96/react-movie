@@ -176,7 +176,7 @@ class Search extends Component {
             </div>
             <ServiceBlock
               isLoading={SearchResult.isFetching}
-              isError={SearchResult.status}
+              isSuccessful={SearchResult.status}
               fetch={this.sendRequest}
             >
               <div className='search-results'>

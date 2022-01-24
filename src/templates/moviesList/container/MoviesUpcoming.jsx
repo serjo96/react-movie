@@ -107,7 +107,7 @@ class MovieUpcoming extends Component {
         </Helmet>
         <ServiceBlock
           isLoading={UpcomingList.isFetching}
-          isError={UpcomingList.status}
+          isSuccessful={UpcomingList.status}
           fetch={this.sendRequest}
         >
           <div className='movies-content'>
