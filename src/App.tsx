@@ -1,42 +1,39 @@
-import React, { Component } from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import React, { Component, useEffect } from 'react';
+import {RouteComponentProps, useHistory, useLocation, withRouter} from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { connect, MapDispatchToProps } from 'react-redux';
 import Routes from './Routes/Routes';
 
-import './../styles/main.sass';
 import Header from './templates/Head/Head';
 import Nav from './templates/Nav/nav';
-import { getGenresList } from '~/store/api/general.api';
+import { useAppDispatch } from '~/hooks/storeHooks';
+import { getGenres } from '~/store/genres/generes.api';
+import './../styles/main.sass';
 
-interface DispatchProps {
-    getGenresList: typeof getGenresList;
+function App () {
+  const appDispatch = useAppDispatch();
+  const history = useHistory();
+  const location = useLocation();
+
+  const genresInLocalStorage = Boolean(JSON.parse(localStorage.getItem('genres')));
+  useEffect(() => {
+    if (!genresInLocalStorage) {
+      appDispatch(getGenres());
+    }
+  });
+
+  return (
+    <React.Fragment>
+      <Helmet>
+        <title>Movie Base</title>
+      </Helmet>
+      <React.StrictMode>
+        <Nav location={location} />
+        <Header history={history} />
+        <Routes />
+      </React.StrictMode>
+    </React.Fragment>
+  );
 }
-type Props = DispatchProps & RouteComponentProps
 
-class App extends Component<Props> {
-  componentDidMount () {
-    JSON.parse(localStorage.getItem('genres')) && this.props.getGenresList();
-  }
-
-  render () {
-    return (
-      <React.Fragment>
-        <Helmet>
-          <title>Movie Base</title>
-        </Helmet>
-        <React.StrictMode>
-          <Nav location={this.props.location} />
-          <Header history={this.props.history} />
-          <Routes />
-        </React.StrictMode>
-      </React.Fragment>
-    );
-  }
-}
-
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, Props> = {
-  getGenresList
-};
-
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(App);
