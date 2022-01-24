@@ -4,7 +4,7 @@ import Main from '~/templates/main/main';
 import Movie from '~/templates/Movie/containers/movie';
 import MovieUpcoming from '../templates/moviesList/container/MoviesUpcoming.jsx';
 import MoviePlaying from '../templates/moviesList/container/MoviesPlaying.jsx';
-import MoviesAll from '../templates/moviesList/container/MoviesAll.jsx';
+import MoviesAll from '../templates/moviesList/container/movies-all';
 import TVAiring from '../templates/TvLists/TVAiring.jsx';
 import TvPopular from '../templates/TvLists/TVall.jsx';
 import TVonTheAir from '../templates/TvLists/TVonTheAir.jsx';
