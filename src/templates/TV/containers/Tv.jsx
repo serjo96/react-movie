@@ -111,7 +111,7 @@ class TV extends Component {
     const title = this.props.EngData.tv[tv.id] ? this.props.EngData.tv[tv.id].name !== this.props.tv.tvTitles.title ? this.props.EngData.tv[tv.id].name : this.props.tv.tvTitles.title : this.props.tv.tvTitles.title;
     return (
       <div className='movie'>
-        <ServiceBlock isLoading={this.props.tv.isFetching} isError={this.props.tv.status} fetch={this.sendRequest}>
+        <ServiceBlock isLoading={this.props.tv.isFetching} isSuccessful={this.props.tv.status} fetch={this.sendRequest}>
           <Helmet>
             <title>{title}</title>
           </Helmet>

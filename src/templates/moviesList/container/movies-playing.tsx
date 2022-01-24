@@ -67,7 +67,7 @@ function MoviePlaying () {
     if (+getUrlObjectState <= 2) {
       delete urlObj.page;
     }
-    console.log(urlObj);
+
     history.push({
       search: queryString.stringify(urlObj)
     });
