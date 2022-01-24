@@ -35,34 +35,34 @@ function Main () {
         <div className='movies-content movies-content--main-page'>
           <MoviesList
             movieListTitle='Сейчас в кино'
-            mediaList={playing}
+            mediaList={playing.data}
             count={11}
             movieListMain
-            ListLink='playing'
+            listLink='playing'
             typeList={MediaType.MOVIE}
           />
           <MoviesList
             movieListTitle='Скоро в кино'
-            mediaList={upcoming}
+            mediaList={upcoming.data}
             count={11}
             movieListMain
-            ListLink='upcoming'
+            listLink='upcoming'
             typeList={MediaType.MOVIE}
           />
           <MoviesList
             movieListTitle='Топ фильмы'
-            mediaList={top}
+            mediaList={top.data}
             count={11}
             movieListMain={false}
-            ListLink='top'
+            listLink='top'
             typeList={MediaType.MOVIE}
           />
           <MoviesList
             movieListTitle='Все фильмы'
-            mediaList={all}
+            mediaList={all.data}
             count={11}
             movieListMain
-            ListLink='all'
+            listLink='all'
             typeList={MediaType.MOVIE}
           />
         </div>
