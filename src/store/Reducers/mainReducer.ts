@@ -6,9 +6,13 @@ import Peoples from './personReducer';
 import Company from './companyReducer';
 import Search from './searchReducer';
 import { keywordsSlice } from '~/store/keywords/keywords.slice';
+import { moviesSlice } from '~/store/movies/movies.slice';
+import { genresSlice } from '~/store/genres/genres.slice';
 
 export default combineReducers({
-  [keywordsSlice.name]: keywordsSlice.reducer,
+  keywords: keywordsSlice.reducer,
+  movies: moviesSlice.reducer,
+  genres: genresSlice.reducer,
   General,
   Movies,
   TVs,
