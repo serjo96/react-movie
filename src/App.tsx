@@ -20,7 +20,7 @@ function App () {
     if (!genresInLocalStorage) {
       appDispatch(getGenres());
     }
-  });
+  }, []);
 
   return (
     <React.Fragment>
