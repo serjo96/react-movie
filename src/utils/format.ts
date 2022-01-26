@@ -87,7 +87,9 @@ export function urlRusLat (str: string): string {
 }
 
 export function formattingGenres ({ movie, tv }: {movie: Genre[]; tv: Genre[]}) {
-  const hashObj: {[key: number | string]: string} = {};
+  const hashObj: {[key: number | string]: string} = {
+    0: 'Все жанры'
+  };
   const concatArr = movie.concat(tv);
   concatArr.forEach((item) => {
     hashObj[item.id] = capitalizeFirstLetter(item.name);
