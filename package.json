@@ -31,7 +31,7 @@
     "null-loader": "^3.0.0",
     "path-to-regexp": "6.1.0",
     "prop-types": "^15.6.2",
-    "query-string": "6.9.0",
+    "query-string": "^7.1.0",
     "react": "17.0.2",
     "react-addons-update": "^15.6.2",
     "react-collapse": "^5.1.1",
