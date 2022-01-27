@@ -31,11 +31,14 @@ function Movie () {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
   useEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
+  }, []);
 
+  useEffect(() => {
     if (id !== prevProps) {
       sendRequest();
       scrollToTop();
