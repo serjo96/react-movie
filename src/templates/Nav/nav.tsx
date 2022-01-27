@@ -25,11 +25,13 @@ export default class Nav extends Component<MyProps, MyState> {
   };
 
   componentDidMount () {
-    const isMoviePages = /\/movies\//gi.test(location.pathname);
-    this.setState({
-      movieCollapse: isMoviePages,
-      isMoviePage: isMoviePages
-    });
+    if (location.pathname !== '/') {
+      const isMoviePages = /\/movies\//gi.test(location.pathname);
+      this.setState({
+        movieCollapse: isMoviePages,
+        isMoviePage: isMoviePages
+      });
+    }
   }
 
   componentDidUpdate (prevProps: MyProps) {
