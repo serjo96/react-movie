@@ -40,6 +40,19 @@ const MediaTop = ({
     return `${path}${(poster || backdrop)}`;
   };
 
+  const bgImage = () => {
+    if (!backdrop || !poster) {
+      return NoImg;
+    }
+    let path = 'https://image.tmdb.org/t/p/original';
+
+    if (mobileBreakpoints.includes(active)) {
+      path = 'https://image.tmdb.org/t/p/w1280';
+    }
+
+    return `url(${path}${(backdrop || poster)})`;
+  };
+
   const onMobilePosterLoad = () => {
     setLoadedPoster(false);
   };
@@ -55,7 +68,7 @@ const MediaTop = ({
     <section className='media-top'>
       <div
         className={bgPosterClasses}
-        style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${(backdrop || poster)})` }}
+        style={{ backgroundImage: bgImage() }}
       />
       <div className='movie-info'>
         <div className='shadow-base'>
