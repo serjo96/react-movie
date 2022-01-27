@@ -28,7 +28,7 @@ const MovieCollection = ({ collection }: {collection: Collection}) => {
             {collection.parts.map((el, index) => (
               <MovieItem
                 title={el.title}
-                original_title={el.originalTitle}
+                originalTitle={el.originalTitle}
                 overview={el.overview}
                 voteAverage={el.voteAverage}
                 date={el.releaseDate}
