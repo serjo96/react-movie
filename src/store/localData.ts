@@ -1,5 +1,9 @@
 export const storageCountries = [
   {
+    name: 'Все страны',
+    ico: 'all'
+  },
+  {
     name: 'Австралия',
     ico: 'AU'
   }, {
@@ -356,38 +360,36 @@ export const popularCountries = [
   }
 ];
 
-export const sortBySingleDateList = [
+export const sortingDateList = [
   {
     name: 'Все года',
-    date: 'All',
+    date: 'all',
     type: 'single'
   }, {
     name: '2017 год',
-    date: 2017,
+    date: '2017',
     type: 'single'
   }, {
     name: '2016 год',
-    date: 2016,
+    date: '2016',
     type: 'single'
   }, {
     name: '2015 год',
-    date: 2015,
+    date: '2015',
     type: 'single'
   }, {
     name: '2014 год',
-    date: 2014,
+    date: '2014',
     type: 'single'
   }, {
     name: '2013 год',
-    date: 2013,
+    date: '2013',
     type: 'single'
   }, {
     name: '2010-2015',
     date: '2010-01-01=2015-01-01',
     type: 'range'
-  }];
-
-export const sortByRangeDateList = [
+  },
   {
     name: '2000-2010',
     date: '2000-01-01=2010-01-01',
@@ -402,12 +404,12 @@ export const sortByRangeDateList = [
     type: 'range'
   }, {
     name: 'до 1980',
-    date: '=1980-01-01',
+    date: '-1980',
     type: 'range'
   }
 ];
 
-export const sortListMovie = [
+export const sortMovieByType = [
   {
     name: 'По популярности',
     type: 'popularity'
