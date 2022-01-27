@@ -9,15 +9,16 @@ import {
 } from '~/store/localData';
 import classNames from 'classnames';
 import { Genre } from '~/core/types/genres';
-import { useAppSelector } from '~/hooks/storeHooks';
+import { GenresState } from '~/store/genres/genres.slice';
+import { filterByCountryName, filterByDateName, sortByFilterName } from '~/utils/formatFiltersNames';
 
 interface MyProps {
   genres: Array<Genre>;
+  genresObject: GenresState['data']['genresHash'];
   selectedGenre?: number;
   sortByList: typeof sortMovieByType | typeof sortListTV;
   safeFilter: boolean;
   sortByCountry: boolean;
-  modalFilter: boolean;
   onClickGenres: (item: Genre) => void;
   onSortByDate: (item: typeof sortingDateList[0]) => void;
   onChangeRangeDate: (rangeValue: string) => void;
@@ -50,9 +51,9 @@ export default function Filters ({
   onClickAdult,
   onSortByDate,
   onSortByCountry,
-  onResetFilters
+  onResetFilters,
+  genresObject
 }: MyProps) {
-  const { data: { genresHash } } = useAppSelector((state) => state.genres);
   const [sortBy, direction] = (filterValues.sortBy || '').split('.');
   const filterCatalogClasses = (isActive: boolean) => classNames('filter-catalog__item filter-genre', {
     'filter-catalog__item--active': isActive
@@ -86,37 +87,13 @@ export default function Filters ({
     });
   };
 
-  const filterByDateName = () => {
-    if (!filterValues.year) {
-      return sortingDateList.find(el => el.date === 'all').name;
-    }
-
-    const singleDate = sortingDateList.find(el => el.date === filterValues.year);
-    return singleDate ? singleDate.name : filterValues.year;
-  };
-
-  const filterByCountryName = () => {
-    if (!filterValues.country) {
-      return storageCountries.find(el => el.ico === 'all').name;
-    }
-    const current = storageCountries.find(el => el.ico === filterValues.country);
-    return current ? current.name : filterValues.country;
-  };
-  const sortByFilterName = () => {
-    if (!filterValues.sortBy) {
-      return sortByList.find(el => el.type === 'popularity').name;
-    }
-    const current = sortByList.find(el => el.type === sortBy);
-    return current ? current.name : filterValues.year;
-  };
-
   return (
     <div className='filter-list-container'>
       <div className='filter-list'>
         {genres.length &&
           <div className={genreFilterClasses}>
             <div className='filter-name'>
-              <span>{genresHash[selectedGenre]}</span>
+              <span>{genresObject[selectedGenre]}</span>
               <i className='fa fa-angle-down' aria-hidden='true' />
             </div>
             <div className='filter-item__catalog filter-item__catalog--genres'>
@@ -144,7 +121,7 @@ export default function Filters ({
 
         <div className={filterItemClasses(!!(filterValues.year))}>
           <div className='filter-name'>
-            <span>{filterByDateName()}</span>
+            <span>{filterByDateName(filterValues.year)}</span>
             <i className='fa fa-angle-down' aria-hidden='true' />
           </div>
           <div
@@ -174,7 +151,7 @@ export default function Filters ({
               ))}
             </div>
             <div className='filter-catalog__list'>
-              <div className='filter-catalog__sub-title'>Своя дата</div>
+              <div className='filter-catalog__sub-title'>Свой год</div>
               <input
                 type='text'
                 pattern='[0-9]*'
@@ -192,7 +169,7 @@ export default function Filters ({
             className={filterItemClasses(!!filterValues.country)}
           >
             <div className='filter-name'>
-              <span>{filterByCountryName()}</span>
+              <span>{filterByCountryName(filterValues.country)}</span>
               <i className='fa fa-angle-down' aria-hidden='true' />
             </div>
             <div className='filter-item__catalog filter-item__catalog--genres'>
@@ -240,7 +217,7 @@ export default function Filters ({
             : ''}`}
         >
           <div className='filter-name'>
-            <span>{sortByFilterName()}</span>
+            <span>{sortByFilterName(sortByList, filterValues.sortBy)}</span>
             <i className='fa fa-angle-down' aria-hidden='true' />
           </div>
 

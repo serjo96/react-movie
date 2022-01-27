@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import { sortingDateList, sortListTV, sortMovieByType } from '~/store/localData';
 
 import './filters.sass';
-import FiltersMobile from '../components/FiltersMobile';
+import FiltersMobile from '../components/filters-mobile';
 import Filters from '../components/filters';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useAppSelector } from '~/hooks/storeHooks';
@@ -32,6 +32,8 @@ function FilterList ({
 }: MyPros) {
   const { search } = useLocation();
   const history = useHistory();
+  const { active } = useBreakpoints();
+  const mobileBreakpoints = [BreakpointsNames.MD, BreakpointsNames.SM, BreakpointsNames.XS];
   const getUrlString = {
     genre: queryString.parse(search, { parseNumbers: true }).genre as number,
     adult: queryString.parse(search, { parseBooleans: true }).adult as boolean,
@@ -46,14 +48,11 @@ function FilterList ({
     year: '',
     country: ''
   });
-  const [sortBy, direction] = (filters.sortBy || '').split('.');
   const [filterByDateInput, setFilterByDateInput] = useState('');
   const [isVisibleModalFilter, setVisibleModalFilter] = useState(false);
+  const { data: { genresHash, arrGenres } } = useAppSelector((state) => state.genres);
 
-  const { data: { arrGenres } } = useAppSelector((state) => state.genres);
-
-  const mobileBreakpoints = [BreakpointsNames.MD, BreakpointsNames.SM, BreakpointsNames.XS];
-  const { active } = useBreakpoints();
+  const [sortBy, direction] = (filters.sortBy || '').split('.');
 
   useEffect(() => {
     const filters: MyFilterState = {
@@ -170,10 +169,8 @@ function FilterList ({
     setVisibleModalFilter(!isVisibleModalFilter);
   };
 
-  const closePopup = (e) => {
-    if (e.target.className === 'popup-base' || e.target.className === 'popup__close') {
-      setTimeout(() => setVisibleModalFilter(false), 500);
-    }
+  const closePopup = () => {
+    setVisibleModalFilter(false);
   };
 
   const filterValues = {
@@ -186,11 +183,11 @@ function FilterList ({
   if (!mobileBreakpoints.includes(active)) {
     return (
       <Filters
-        genres={arrGenres.movie}
+        genres={arrGenres[typeList]}
+        genresObject={genresHash}
         selectedGenre={filters.genre}
         filterValues={filterValues}
         safeFilter={safeFilter}
-        modalFilter={isVisibleModalFilter}
         sortByCountry={sortByCountry}
         sortByList={sortByList}
         onClickGenres={onSelectGenres}
@@ -210,16 +207,19 @@ function FilterList ({
       safeFilter={safeFilter}
       modalFilter={isVisibleModalFilter}
       genres={arrGenres[typeList]}
+      genresObject={genresHash}
       sortByCountry={sortByCountry}
       sortByList={sortByList}
-      handlerClickGenres={onSelectGenres}
+      onClickGenres={onSelectGenres}
       onSortByDate={onSortByDate}
       onSortByCountry={onSortByCountry}
       onClickSort={onSortLists}
       onResetFilters={resetFilters}
       onOpenFilterModal={onOpenFilterModal}
+      onChangeRangeDate={onChangeRangeDate}
+      onBlurInputRange={onBlurRangeData}
       onClickAdult={onClickAdult}
-      closePopup={closePopup}
+      onClosePopUp={closePopup}
     />
   );
 }
