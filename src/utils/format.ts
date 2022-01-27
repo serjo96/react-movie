@@ -129,3 +129,5 @@ export function formattingGenres ({ movie, tv }: {movie: Genre[]; tv: Genre[]}) 
     }
   };
 }
+
+export const firstOrderObjectValue = <T>(key: string | number, object: T): T => ({ [key]: undefined, ...object })
