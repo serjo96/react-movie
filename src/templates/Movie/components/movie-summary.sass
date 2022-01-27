@@ -1,4 +1,6 @@
 @import "styles/variables"
+@import "styles/mixins"
+
 
 .summary-ratings
 	margin-left: $summaryMargin
@@ -43,8 +45,12 @@
 
 .summary-item
 	padding: 0 7.5px
-	@media (max-width : 1320px)
+	@include media("xlSize", "max")
 		padding: 5px 7.5px
+	@include media("xsSize", "max")
+		width: 50%
 	&__title
 		margin-bottom: 5px
-		font: 700 17px 'proxima_novasemibold', sans-serif
+		//font: 700 17px 'proxima_novasemibold', sans-serif
+	@include media("xsSize", "max")
+		font-size: 14px

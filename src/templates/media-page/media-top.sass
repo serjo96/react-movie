@@ -1,4 +1,4 @@
-@import "../../../styles/variables"
+@import "styles/variables"
 @import "styles/mixins"
 
 .media-top
@@ -9,7 +9,7 @@
 	display: flex
 	align-items: flex-end
 	justify-content: center
-	@include media("smSize", "min")
+	@include media("xsSize", "min")
 		height: 550px
 
 
@@ -54,7 +54,7 @@
 	text-shadow: 0 0 20px black
 	display: flex
 	align-items: flex-start
-	@include media("smSize", "max")
+	@include media("xsSize", "max")
 		flex-wrap: wrap
 	@include media("lgSize", "max")
 		margin-left: 0
@@ -67,13 +67,15 @@
 	width: 70px
 	img
 		vertical-align: middle
-	@include media("smSize", "max")
+	@include media("xsSize", "max")
 		width: 130px
 		margin-bottom: 10px
 	@include media("lgSize", "max")
 		display: block
 
 .media-titles
+	@include media("xsSize", "max")
+		margin-top: 10px
 	@include media("lgSize", "min")
 		margin-right: 10px
 	&__title
@@ -102,3 +104,5 @@
 		padding: 10px 20px
 		&:last-child
 			border-bottom: 0
+	@include media("xsSize", "max")
+		justify-content: space-between

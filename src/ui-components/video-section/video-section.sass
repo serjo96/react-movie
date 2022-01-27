@@ -1,3 +1,5 @@
+@import "styles/mixins"
+
 .trailer
 	margin: 20px 0
 
@@ -10,6 +12,10 @@
 	position: relative
 	cursor: pointer
 	overflow: hidden
+	@include media("lgSize", "max")
+		width: 50%
+	@include media("xsSize", "max")
+		width: 100%
 	&:hover
 		.preview-base
 			background: rgba(0, 0, 0, 0)

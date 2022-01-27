@@ -33,15 +33,18 @@ body
 	color: #fff
 	font-size: 14px
 
-h1,h2,h3,h4
-	font-family: 'proxima_novasemibold', Sans-Serif
+//h1,h2,h3,h4
+//	font-family: 'proxima_novasemibold', Sans-Serif
 
 p
 	font-family: 'Roboto', sans-serif
 
 .main--media-list
-	width: 1245px
+	width: 100%
 	margin: 0 auto
+	@include media("xlSize", "min")
+		width: 1245px
+		padding-left: $navHideSize
 
 .main
 	margin-top: 75px
@@ -50,6 +53,8 @@ p
 .container
 	width: 1160px
 	margin: 0 auto
+	@include media("xlSize", "max")
+		width: 960px
 
 
 .btn
@@ -200,7 +205,7 @@ p
 .movies-content--main-page
 	.movies__list
 		.movie-item
-			width: 15.2%
+			width: 16.2%
 
 
 .try-again-wrap
