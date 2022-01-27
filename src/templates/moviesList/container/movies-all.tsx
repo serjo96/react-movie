@@ -90,7 +90,7 @@ function MoviesAll () {
     }
 
     history.push({
-      search: queryString.stringify(urlObj)
+      search: queryString.stringify(urlObj, { sort: false })
     });
   };
 
