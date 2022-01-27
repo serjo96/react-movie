@@ -36,7 +36,7 @@ interface MyProps {
   }
 }
 
-export default function FiltersMobile ({
+export default function Filters ({
   filterValues,
   genres,
   selectedGenre = 0,
