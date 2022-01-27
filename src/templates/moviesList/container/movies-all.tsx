@@ -10,6 +10,7 @@ import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import FilterList from '~/templates/Filters/containers/filter-list';
 import ServiceBlock from '~/templates/Service/ServiceBlock';
 import MoviesList from '~/templates/moviesList/components/list/moviesList';
+import { firstOrderObjectValue } from '~/utils/format';
 
 function MoviesAll () {
   const appDispatch = useAppDispatch();
@@ -77,11 +78,12 @@ function MoviesAll () {
   }, [search]);
 
   const prevPage = () => {
-    const urlObj = { ...getUrlObjectState, page: getUrlObjectState.page };
+    let urlObj = { ...getUrlObjectState, page: getUrlObjectState.page };
 
     if (getUrlObjectState.page > 2) {
       urlObj.page = getUrlObjectState.page - 1;
     }
+    urlObj = firstOrderObjectValue('page', urlObj);
 
     if (getUrlObjectState.page <= 2) {
       delete urlObj.page;
@@ -92,16 +94,16 @@ function MoviesAll () {
     });
   };
 
-  // TODO: Fix order page query to first position;
   const nextPage = () => {
-    const urlObj = { ...getUrlObjectState, page: 2 };
+    let urlObj = { ...getUrlObjectState, page: 2 };
 
     if (getUrlObjectState.page >= 2) {
       urlObj.page = getUrlObjectState.page + 1;
     }
 
+    urlObj = firstOrderObjectValue('page', urlObj);
     history.push({
-      search: queryString.stringify(urlObj)
+      search: queryString.stringify(urlObj, { sort: false })
     });
   };
 
