@@ -17,7 +17,7 @@ export interface ReturnedMovieList {
 
 interface MovieListArgs {
   page?: number;
-  genre?: string;
+  genre?: number;
   sortType?: string;
   date?: string;
   region?: string;
@@ -36,48 +36,52 @@ export interface MovieEngRespData {
 
 export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs | void>(
   'movies/getMoviesList',
-  async (payload : MovieListArgs = {
+  async ({
+    genre,
+    date,
+    region,
+    adult = false,
+    sortType = 'popularity.desc',
+    page = 1
+  }: MovieListArgs = {
     adult: false,
     sortType: 'popularity.desc',
     page: 1
   }) => {
-    let rageDates;
     let startRangeDate: string | undefined;
     let endRangeDate: string | undefined;
-    if (payload.date && payload.date.split('-').length > 1) {
-      rageDates = payload.date.split('-');
-      startRangeDate = rageDates[0] ? rageDates[0] : '';
-      endRangeDate = rageDates[1];
+    if (date && date.split('-').length > 1) {
+      [startRangeDate, endRangeDate] = date.split('-');
     }
     const [firstPage, secondPage] = await oldClient.all<MoviesList>([
       oldClient.get('discover/movie',
         {
           language: 'ru-RU',
-          region: payload.region,
-          sort_by: payload.sortType,
-          with_genres: payload.genre,
-          primary_release_year: payload.date,
+          region: region,
+          sort_by: sortType,
+          with_genres: genre,
+          primary_release_year: date,
           'primary_release_date.gte': startRangeDate,
           'primary_release_date.lte': endRangeDate,
-          page: payload.page,
-          include_adult: payload.adult
+          page: page,
+          include_adult: adult
         }),
       oldClient.get('discover/movie',
         {
           language: 'ru-RU',
-          region: payload.region,
-          sort_by: payload.sortType,
-          with_genres: payload.genre,
-          primary_release_year: payload.date,
+          region: region,
+          sort_by: sortType,
+          with_genres: genre,
+          primary_release_year: date,
           'primary_release_date.gte': startRangeDate,
           'primary_release_date.lte': endRangeDate,
-          page: payload.page + 1,
-          include_adult: payload.adult
+          page: page + 1,
+          include_adult: adult
         })
     ]);
     const concatPages = ConcatPages<MoviesListItem>({ firstPage, secondPage });
     return {
-      data: { ...concatPages, sortByDate: payload.date },
+      data: { ...concatPages, sortByDate: date },
       isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
     };
   }
