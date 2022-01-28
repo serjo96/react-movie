@@ -5,15 +5,14 @@ import Movie from '~/templates/Movie/containers/movie';
 import MovieUpcoming from '~/templates/moviesList/container/movies-upcoming';
 import MoviePlaying from '~/templates/moviesList/container/movies-playing';
 import MoviesAll from '~/templates/moviesList/container/movies-all';
-import TvShowsAll from "~/templates/TvLists/tv-shows-all";
+import TvShowsAll from '~/templates/TvLists/tv-shows-all';
 import TVAiring from '~/templates/TvLists/TVAiring.jsx';
 import TVonTheAir from '~/templates/TvLists/TVonTheAir.jsx';
 import TV from '~/templates/TV/containers/Tv.jsx';
 import People from '~/templates/Person/containers/Person.jsx';
 import Search from '~/templates/Search/Search.jsx';
 import Company from '~/templates/Company/Company';
-
-import KeywordsList from '../templates/Lists/keywordsList';
+import KeywordsPage from '~/templates/keywords/keywords-page';
 
 class Routes extends Component {
   render () {
@@ -31,8 +30,8 @@ class Routes extends Component {
         <Route path='/tv/:id' component={TV} />
         <Route path='/search' component={Search} />
         <Route path='/movies/all' component={MoviesAll} />
-        <Route path='/lists/keywords_movie/:id' component={KeywordsList} />
-        <Route path='/lists/keywords_tv/:id' component={KeywordsList} />
+        <Route path='/keywords-movies/:id' component={KeywordsPage} />
+        <Route path='/keywords-tv-shows/:id' component={KeywordsPage} />
       </Switch>
     );
   }
