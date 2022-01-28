@@ -100,7 +100,7 @@ class TVAside extends Component {
          <div className='keywords__title'>Теги</div>
          <div className='keywords__list'>
            {this.props.keywords.map((el, indx) => (<Link
-             to={`/lists/keywords_tv/${friendlyUrl(el.name)}-${el.id}`} className='keyword tag'
+             to={`/keywords_tv/${friendlyUrl(el.name)}-${el.id}`} className='keyword tag'
              id={el.id} key={indx}
            >{el.name}
            </Link>))}
