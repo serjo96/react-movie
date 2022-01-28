@@ -93,3 +93,53 @@ export const getAiringTvShows = createAsyncThunk<ReturnedTvShowsList, number | v
     };
   }
 );
+
+export const getTopTvShows = createAsyncThunk<ReturnedTvShowsList, number | void>(
+  'tvShows/getTopTvShows',
+  async (page = 1) => {
+    const [firstPage, secondPage] = await oldClient.all<ListData<TvListItem>>([
+      oldClient.get('tv/top_rated',
+        {
+          language: 'ru-RU',
+          page: page,
+          region: 'RU'
+        }),
+      oldClient.get('tv/top_rated',
+        {
+          language: 'ru-RU',
+          page: (page as number) + 1,
+          region: 'RU'
+        })
+    ]);
+    const concatPages = ConcatPages<TvListItem>({ firstPage, secondPage });
+    return {
+      data: concatPages,
+      isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+    };
+  }
+);
+
+export const getOnTheAirTvShows = createAsyncThunk<ReturnedTvShowsList, number | void>(
+  'tvShows/on_the_air',
+  async (page = 1) => {
+    const [firstPage, secondPage] = await oldClient.all<ListData<TvListItem>>([
+      oldClient.get('tv/airing_today',
+        {
+          language: 'ru-RU',
+          page: page,
+          region: 'RU'
+        }),
+      oldClient.get('tv/airing_today',
+        {
+          language: 'ru-RU',
+          page: (page as number) + 1,
+          region: 'RU'
+        })
+    ]);
+    const concatPages = ConcatPages<TvListItem>({ firstPage, secondPage });
+    return {
+      data: concatPages,
+      isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+    };
+  }
+);

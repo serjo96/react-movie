@@ -2,12 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { initListData } from '~/utils/initData';
 import ActionPayloadData from '~/core/types/actionPayloadData';
-import { TvListItem } from '~/core/types/tv';
+import { TvListItem, TvSeason } from '~/core/types/tv';
 import { ListData } from '~/core/types/listData';
 import { TvDetails } from '~/core/types/tvDetails';
 import { Credits } from '~/core/types/credits';
 import { CrewState } from '~/store/movies/movies.slice';
-import { getAiringTvShows, getTvShowsList, ReturnedTvShowsList } from '~/store/tv/tv.api';
+import {
+  getAiringTvShows,
+  getOnTheAirTvShows,
+  getTopTvShows,
+  getTvShowsList,
+  ReturnedTvShowsList
+} from '~/store/tv/tv.api';
 
 type StateListData = ActionPayloadData<ListData<TvListItem>>;
 type TvDetailState = Omit<TvDetails, 'credits'> & {
@@ -23,6 +29,7 @@ type TvState = {
     top: StateListData,
     airing: StateListData,
   };
+  tvShowSeasons: TvSeason
   data: TvDetailState,
 };
 
@@ -164,6 +171,32 @@ export const tvSlice = createSlice({
         state.lists.airing.isFetching = false;
       })
       .addCase(getAiringTvShows.rejected, (state, action) => {
+        console.log(action);
+        throw new Error(action.error.message);
+        // state.lists.all.data = action.payload.data;
+      })
+
+      .addCase(getTopTvShows.pending, (state) => {
+        state.lists.top.isFetching = true;
+      })
+      .addCase(getTopTvShows.fulfilled, (state, action: PayloadAction<ReturnedTvShowsList>) => {
+        state.lists.top.data = action.payload.data;
+        state.lists.top.isFetching = false;
+      })
+      .addCase(getTopTvShows.rejected, (state, action) => {
+        console.log(action);
+        throw new Error(action.error.message);
+        // state.lists.all.data = action.payload.data;
+      })
+
+      .addCase(getOnTheAirTvShows.pending, (state) => {
+        state.lists.onTheAir.isFetching = true;
+      })
+      .addCase(getOnTheAirTvShows.fulfilled, (state, action: PayloadAction<ReturnedTvShowsList>) => {
+        state.lists.onTheAir.data = action.payload.data;
+        state.lists.onTheAir.isFetching = false;
+      })
+      .addCase(getOnTheAirTvShows.rejected, (state, action) => {
         console.log(action);
         throw new Error(action.error.message);
         // state.lists.all.data = action.payload.data;
