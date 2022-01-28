@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { MovieDetails } from '~/core/types/movieDetails';
 import { Crew } from '~/core/types/crew';
 import { Collection } from '~/core/types/collection';
-import { MoviesList } from '~/core/types/movies';
+import { MoviesList, MoviesListItem } from '~/core/types/movies';
 import ActionPayloadData from '~/core/types/actionPayloadData';
 
 import {
@@ -17,6 +17,7 @@ import {
 } from '~/store/movies/movies.api';
 import { formatCrew } from '~/utils/formatCrew';
 import { Credits } from '~/core/types/credits';
+import { initListData } from '~/utils/initData';
 
 export type CrewState = {
   director: Crew[],
@@ -45,21 +46,10 @@ type MoviesState = {
   data: MovieDetailState,
 }
 
-const initListData = (): ActionPayloadData<MoviesList> => ({
-  isFetching: false,
-  isSuccess: true,
-  data: {
-    page: 1,
-    results: [],
-    totalResults: 0,
-    totalPages: 0
-  }
-});
-
 const initPlayingListData = (): ActionPayloadData<MoviesList> => ({
-  ...initListData(),
+  ...initListData<MoviesListItem>(),
   data: {
-    ...initListData().data,
+    ...initListData<MoviesListItem>().data,
     dates: {
       maximum: '',
       minimum: ''
@@ -71,9 +61,9 @@ const initialState: MoviesState = {
   isFetching: false,
   isSuccessful: true,
   lists: {
-    all: initListData(),
-    upcoming: initListData(),
-    top: initListData(),
+    all: initListData<MoviesListItem>(),
+    upcoming: initListData<MoviesListItem>(),
+    top: initListData<MoviesListItem>(),
     playing: initPlayingListData(),
     popular: initPlayingListData()
   },
