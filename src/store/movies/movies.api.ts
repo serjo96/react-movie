@@ -107,16 +107,24 @@ export const getUpcomingMovies = createAsyncThunk<ReturnedMovieList, number | vo
 export const getPopularMovies = createAsyncThunk<ReturnedMovieList, number | void>(
   'movies/getPopularMovies',
   async (page = 1) => {
-    const response = await oldClient.get<MoviesList>('movie/popular',
-      {
-        language: 'ru-RU',
-        page: page,
-        region: 'RU'
-      }
-    );
+    const [firstPage, secondPage] = await oldClient.all<MoviesList>([
+      oldClient.get('movie/popular',
+        {
+          language: 'ru-RU',
+          page: page,
+          region: 'RU'
+        }),
+      oldClient.get('movie/popular',
+        {
+          language: 'ru-RU',
+          page: (page as number) + 1,
+          region: 'RU'
+        })
+    ]);
+    const concatPages = ConcatPages<MoviesListItem>({ firstPage, secondPage });
     return {
-      data: response.data,
-      isSuccess: response.isSuccessRequest
+      data: concatPages,
+      isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
     };
   }
 );
