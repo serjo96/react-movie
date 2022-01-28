@@ -18,7 +18,7 @@ export declare class Parts {
   overview: string;
   popularity: number;
   posterPath: string;
-  releaseDate: Date;
+  releaseDate: string;
   video: boolean;
   voteAverage: number;
   voteCount: number;

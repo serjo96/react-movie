@@ -10,7 +10,7 @@ export declare class MoviesListItem {
   overview: string;
   popularity: number;
   posterPath: null | string;
-  releaseDate: Date;
+  releaseDate: string;
   title: string;
   video: boolean;
   voteAverage: number;

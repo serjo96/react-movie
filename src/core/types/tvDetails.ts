@@ -12,13 +12,13 @@ export interface TvDetails {
   backdropPath: string;
   createdBy: CreatedBy[];
   episodeRunTime: number[];
-  firstAirDate: Date;
+  firstAirDate: string;
   genres: Genre[];
   homepage: string;
   id: number;
   inProduction: boolean;
   languages: OriginalLanguage[];
-  lastAirDate: Date;
+  lastAirDate: string;
   lastEpisodeToAir: TEpisodeToAir;
   name: string;
   nextEpisodeToAir: TEpisodeToAir;
@@ -26,7 +26,7 @@ export interface TvDetails {
   numberOfEpisodes: number;
   numberOfSeasons: number;
   originCountry: string[];
-  originalLanguage: OriginalLanguage;
+  originalLanguage: string;
   originalName: string;
   overview: string;
   popularity: number;
@@ -73,14 +73,14 @@ export interface ExternalIds {
 }
 
 export interface TEpisodeToAir {
-  airDate: Date;
+  airDate: string;
   episodeNumber: number;
   id: number;
   name: string;
   overview: string;
   productionCode: string;
   seasonNumber: number;
-  stillPath: null;
+  stillPath: string;
   voteAverage: number;
   voteCount: number;
 }
@@ -110,7 +110,7 @@ export interface RecommendationsResult {
   overview: string;
   popularity: number;
   posterPath: null | string;
-  firstAirDate: Date;
+  firstAirDate: string;
   voteAverage: number;
   voteCount: number;
 }
@@ -120,7 +120,7 @@ export enum MediaType {
 }
 
 export interface Season {
-  airDate: Date;
+  airDate: string;
   episodeCount: number;
   id: number;
   name: string;
