@@ -7,7 +7,7 @@ import { ListData } from '~/core/types/listData';
 import { TvDetails } from '~/core/types/tvDetails';
 import { Credits } from '~/core/types/credits';
 import { CrewState } from '~/store/movies/movies.slice';
-import { getTvShowsList, ReturnedTvShowsList } from '~/store/tv/tv.api';
+import { getAiringTvShows, getTvShowsList, ReturnedTvShowsList } from '~/store/tv/tv.api';
 
 type StateListData = ActionPayloadData<ListData<TvListItem>>;
 type TvDetailState = Omit<TvDetails, 'credits'> & {
@@ -151,6 +151,19 @@ export const tvSlice = createSlice({
         state.lists.all.isFetching = false;
       })
       .addCase(getTvShowsList.rejected, (state, action) => {
+        console.log(action);
+        throw new Error(action.error.message);
+        // state.lists.all.data = action.payload.data;
+      })
+
+      .addCase(getAiringTvShows.pending, (state) => {
+        state.lists.airing.isFetching = true;
+      })
+      .addCase(getAiringTvShows.fulfilled, (state, action: PayloadAction<ReturnedTvShowsList>) => {
+        state.lists.airing.data = action.payload.data;
+        state.lists.airing.isFetching = false;
+      })
+      .addCase(getAiringTvShows.rejected, (state, action) => {
         console.log(action);
         throw new Error(action.error.message);
         // state.lists.all.data = action.payload.data;

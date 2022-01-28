@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TvListItem, TvListResponseData } from '~/core/types/tv';
 import oldClient from '~/core/api/OldClient';
 import ConcatPages from '~/utils/concatPages';
+import { ListData } from '~/core/types/listData';
 
 export interface ReturnedTvShowsList {
   data: TvListResponseData;
@@ -35,7 +36,7 @@ export const getTvShowsList = createAsyncThunk<ReturnedTvShowsList, TvListArgs |
       [startRangeDate, endRangeDate] = date.split('-');
     }
 
-    const [firstPage, secondPage] = await oldClient.all([
+    const [firstPage, secondPage] = await oldClient.all<ListData<TvListItem>>([
       oldClient.get('discover/tv',
         {
           language: 'ru-RU',
@@ -63,6 +64,31 @@ export const getTvShowsList = createAsyncThunk<ReturnedTvShowsList, TvListArgs |
     const concatPages = ConcatPages<TvListItem>({ firstPage, secondPage });
     return {
       data: { ...concatPages, sortByDate: date },
+      isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+    };
+  }
+);
+
+export const getAiringTvShows = createAsyncThunk<ReturnedTvShowsList, number | void>(
+  'tvShows/getAiringTvShows',
+  async (page = 1) => {
+    const [firstPage, secondPage] = await oldClient.all<ListData<TvListItem>>([
+      oldClient.get('tv/airing_today',
+        {
+          language: 'ru-RU',
+          page: page,
+          region: 'RU'
+        }),
+      oldClient.get('tv/airing_today',
+        {
+          language: 'ru-RU',
+          page: (page as number) + 1,
+          region: 'RU'
+        })
+    ]);
+    const concatPages = ConcatPages<TvListItem>({ firstPage, secondPage });
+    return {
+      data: concatPages,
       isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
     };
   }
