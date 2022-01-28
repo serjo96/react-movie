@@ -120,7 +120,7 @@ export const getTopTvShows = createAsyncThunk<ReturnedTvShowsList, number | void
 );
 
 export const getOnTheAirTvShows = createAsyncThunk<ReturnedTvShowsList, number | void>(
-  'tvShows/on_the_air',
+  'tvShows/getOnTheAirTvShows',
   async (page = 1) => {
     const [firstPage, secondPage] = await oldClient.all<ListData<TvListItem>>([
       oldClient.get('tv/airing_today',
