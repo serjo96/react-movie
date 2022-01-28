@@ -115,7 +115,6 @@ function TvShowsAll () {
 
       <div className='movies-content'>
         <FilterList
-          sortByCountry
           typeList={MediaType.TV}
         />
         <ServiceBlock
