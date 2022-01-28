@@ -8,7 +8,7 @@ export interface GenresData {
   tv: Array<Genre>;
 }
 
-type GenresState = {
+export type GenresState = {
   isFetching: boolean;
   isSuccessful: boolean;
   data: {
