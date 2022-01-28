@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import MediaItem from '~/ui-components/media-item/media-item';
 
-import { MovieItem } from '../../moviesList/components';
 
 export default class PersonMoviesList extends Component {
   state = {
@@ -13,7 +13,7 @@ export default class PersonMoviesList extends Component {
  };
 
  renderMediaItem = (item, index) => {
-   return (<MovieItem
+   return (<MediaItem
      title={item.title || item.name}
      original_title={item.original_title || item.original_name}
      overview={item.overview}

@@ -5,11 +5,11 @@ import SwiperCore, {
 } from 'swiper';
 import classNames from 'classnames';
 
-import { MovieItem } from '../moviesList/components';
 import { MovieDetails } from '~/core/types/movieDetails';
 import { TvDetails } from '~/core/types/tvDetails';
 import { MediaType } from '~/core/types/media-type';
 import './media-recommendations.sass';
+import MediaItem from '~/ui-components/media-item/media-item';
 
 interface MyProps {
   recommendations: MovieDetails['recommendations'] | TvDetails['recommendations'];
@@ -73,7 +73,7 @@ const MediaRecommendations = ({
 
           {recommendations.results.map((el, index) => (
             <SwiperSlide key={index}>
-              <MovieItem
+              <MediaItem
                 title={el.title || el.name}
                 original_title={el.originalTitle || el.originalName}
                 overview={el.overview}

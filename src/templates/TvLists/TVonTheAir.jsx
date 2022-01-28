@@ -7,7 +7,7 @@ import { tvOnTheAir } from '~/store/api/tv.api';
 
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import ServiceBlock from '~/templates/service/service-block';
-import { MoviesList } from '~/templates/moviesList/components';
+import MediaList from '~/ui-components/media-list/media-list';
 
 class TVonTheAir extends Component {
  state = {
@@ -111,7 +111,7 @@ class TVonTheAir extends Component {
          fetch={this.sendRequest}
        >
          <div className='movies-content'>
-           <MoviesList
+           <MediaList
              movieListTitle={`Текущие сериалы (${OnTheAirTv.data.total_results})`}
              movieList={OnTheAirTv}
              typeList='tv'

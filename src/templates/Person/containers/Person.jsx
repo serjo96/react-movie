@@ -12,8 +12,8 @@ import NoImg from '~/assets/images/noImg.png';
 
 import ServiceBlock from '../../service/service-block';
 import MediaStills from '../../media-page/media-stills.tsx';
-import { MovieItem } from '../../moviesList/components';
 import PersonMoviesList from './../components/PersonMoviesList.jsx';
+import MediaItem from '~/ui-components/media-item/media-item';
 
 class Person extends Component {
   state = {
@@ -78,7 +78,7 @@ class Person extends Component {
   };
 
   renderMediaItem = (item, index, typeList) => {
-    return (<MovieItem
+    return (<MediaItem
       title={item.title || item.name}
       original_title={item.original_title || item.original_name}
       overview={item.overview}

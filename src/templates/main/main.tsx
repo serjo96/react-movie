@@ -2,15 +2,15 @@ import React, { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 
-import { MoviesList } from '../moviesList/components';
 import Spinner from '~/ui-components/spinner/Spinner';
+import MediaList from '~/ui-components/media-list/media-list';
+import { MediaType } from '~/core/types/media-type';
 import {
   getMoviesList,
   getPlayingMovies,
   getTopMovies,
   getUpcomingMovies
 } from '~/store/movies/movies.api';
-import { MediaType } from '~/core/types/media-type';
 
 function Main () {
   const appDispatch = useAppDispatch();
@@ -18,7 +18,7 @@ function Main () {
   const upcoming = useAppSelector(state => state.movies.lists.upcoming);
   const top = useAppSelector(state => state.movies.lists.top);
   const all = useAppSelector(state => state.movies.lists.all);
-  const allFetched = [!playing.isFetching, !upcoming.isFetching, !all.isFetching, !top.isFetching].every(el=> el);
+  const allFetched = [!playing.isFetching, !upcoming.isFetching, !all.isFetching, !top.isFetching].every(el => el);
 
   useEffect(() => {
     if (allFetched) {
@@ -33,7 +33,7 @@ function Main () {
     return (
       <main className='main main--media-list iphonex'>
         <div className='movies-content movies-content--main-page'>
-          <MoviesList
+          <MediaList
             movieListTitle='Сейчас в кино'
             mediaList={playing.data}
             count={11}
@@ -41,7 +41,7 @@ function Main () {
             listLink='playing'
             typeList={MediaType.MOVIE}
           />
-          <MoviesList
+          <MediaList
             movieListTitle='Скоро в кино'
             mediaList={upcoming.data}
             count={11}
@@ -49,7 +49,7 @@ function Main () {
             listLink='upcoming'
             typeList={MediaType.MOVIE}
           />
-          <MoviesList
+          <MediaList
             movieListTitle='Топ фильмы'
             mediaList={top.data}
             count={11}
@@ -57,7 +57,7 @@ function Main () {
             listLink='top'
             typeList={MediaType.MOVIE}
           />
-          <MoviesList
+          <MediaList
             movieListTitle='Все фильмы'
             mediaList={all.data}
             count={11}

@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 
 import { tvAiring } from '~/store/api/tv.api';
 
-import { MoviesList } from '../moviesList/components';
 import ServiceBlock from '../service/service-block';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
+import MediaList from '~/ui-components/media-list/media-list';
 
 class TVAiring extends Component {
   state = {
@@ -112,7 +112,7 @@ class TVAiring extends Component {
           fetch={this.sendRequest}
         >
           <div className='movies-content'>
-            <MoviesList
+            <MediaList
               movieListTitle={`Сейчас на тв (${AiringTv.data.total_results})`}
               movieList={AiringTv}
               typeList='tv'

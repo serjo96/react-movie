@@ -3,12 +3,13 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 
-import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
-import { MoviesList } from '../components';
-import ServiceBlock from '../../service/service-block';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { getPlayingMovies } from '~/store/movies/movies.api';
 import { MediaType } from '~/core/types/media-type';
+
+import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
+import MediaList from '~/ui-components/media-list/media-list';
+import ServiceBlock from '../../service/service-block';
 
 function MoviePlaying () {
   const appDispatch = useAppDispatch();
@@ -99,7 +100,7 @@ function MoviePlaying () {
         fetch={sendRequest}
       >
         <div className='movies-content'>
-          <MoviesList
+          <MediaList
             movieListTitle={`Сейчас в кино (${data.totalResults})`}
             mediaList={data}
             typeList={MediaType.MOVIE}

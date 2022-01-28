@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import { tvTop } from '~/store/api/tv.api';
 
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
-import MediaList from '~/templates/moviesList/components/list/moviesList.tsx';
+import MediaList from '~/ui-components/media-list/media-list.tsx';
 import ServiceBlock from '../service/service-block';
 
 class TvTop extends Component {

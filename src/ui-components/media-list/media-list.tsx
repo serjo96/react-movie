@@ -4,25 +4,24 @@ import { Link } from 'react-router-dom';
 import { ListData } from '~/core/types/listData';
 import { MoviesListItem } from '~/core/types/movies';
 import { TvListItem } from '~/core/types/tv';
-import ActionPayloadData from '~/core/types/actionPayloadData';
 
 import { friendlyData } from '~/utils/format';
-import MovieItem from '~/templates/moviesList/components/Item/MovieItem';
-import './moviesList.sass';
+import MediaItem from '~/ui-components/media-item/media-item';
 import { MediaType } from '~/core/types/media-type';
+import './media-list.sass';
 
 interface MyProps {
-  mediaList: ActionPayloadData<ListData<MoviesListItem | TvListItem>>
+  mediaList: ListData<MoviesListItem | TvListItem>
   typeList: MediaType;
-  count: number;
+  count?: number;
   movieListTitle: string;
-  movieListMain: boolean;
-  ListLink: string;
+  movieListMain?: boolean;
+  listLink?: string;
 }
 
-const MoviesList = ({
+const MediaList = ({
   movieListMain,
-  ListLink,
+  listLink,
   count,
   typeList,
   mediaList,
@@ -33,7 +32,7 @@ const MoviesList = ({
       return (
         <Link
           className='title-link link-angle'
-          to={`/movies/${ListLink}`}
+          to={`/movies/${listLink}`}
         >
           <span>{movieListTitle}</span>
           <i className='fa fa-angle-right' aria-hidden='true' />
@@ -47,18 +46,18 @@ const MoviesList = ({
     );
   };
 
-  const renderMovie = (item: MoviesListItem | TvListItem, index: number) => {
+  const renderMovie = <T extends MoviesListItem | TvListItem>(item: T, index: number) => {
     // show only 11 movies on main page
     if (count && index > count) {
       return null;
     }
 
     return (
-      <MovieItem
+      <MediaItem
         id={item.id}
         key={index}
         title={item.title || item.name}
-        original_title={item.originalTitle || item.originalName}
+        originalTitle={item.originalTitle || item.originalName}
         overview={item.overview}
         voteAverage={item.voteAverage}
         poster={item.profilePath || item.posterPath}
@@ -70,12 +69,12 @@ const MoviesList = ({
   };
 
   const RenderDataRange = () => {
-    if (!mediaList.data.dates) {
+    if (!mediaList.dates) {
       return null;
     }
     return (
       <div className='movies__data-range'>
-        {friendlyData(mediaList.data.dates.minimum)} - {friendlyData(mediaList.data.dates.maximum)}
+        {friendlyData(mediaList.dates.minimum)} - {friendlyData(mediaList.dates.maximum)}
       </div>
     );
   };
@@ -90,11 +89,11 @@ const MoviesList = ({
       </div>
 
       <div className='movies__list'>
-        {mediaList.data.results.map((item, index) => renderMovie(item, index))}
+        {mediaList.results.map((item, index) => renderMovie(item, index))}
       </div>
 
     </div>
   );
 };
 
-export default MoviesList;
+export default MediaList;

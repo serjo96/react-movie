@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { MediaType } from '~/core/types/media-type';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import FilterList from '~/templates/filters/containers/filter-list';
-import MoviesList from '~/templates/moviesList/components/list/moviesList';
+import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '~/templates/service/service-block';
 
 function KeywordsPage () {
@@ -82,7 +82,7 @@ function KeywordsPage () {
           isSuccessful={isSuccessful}
           fetch={sendRequest}
         >
-          <MoviesList
+          <MediaList
             movieListTitle={`${pageTitle} по ключевому слову: ${titleSearch} (${data.totalResults})`}
             mediaList={data}
             typeList={typePage}

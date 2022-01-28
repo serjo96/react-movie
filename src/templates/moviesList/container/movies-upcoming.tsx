@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
-import MoviesList from '~/templates/moviesList/components/list/moviesList';
+import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '~/templates/service/service-block';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
@@ -98,7 +98,7 @@ function MovieUpcoming () {
         fetch={this.sendRequest}
       >
         <div className='movies-content'>
-          <MoviesList
+          <MediaList
             movieListTitle={`Скоро в кино (${data.totalResults})`}
             mediaList={data}
             typeList={MediaType.MOVIE}

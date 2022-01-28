@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -7,17 +6,26 @@ import TooltipInfo from '~/templates/Tooltip/tooltip-info';
 import Image from '~/ui-components/image/image';
 
 import { urlRusLat } from '~/utils/format';
-import './movieItem.sass';
-import {MediaType} from "~/core/types/media-type";
+import { MediaType } from '~/core/types/media-type';
+import './media-item.sass';
 
 interface MyProps {
   typeList: MediaType;
+  id: number;
+  title: string;
+  originalTitle: string;
+  poster: string;
+  overview: string;
+  job?: string;
+  voteAverage: number;
+  date: string;
+  genres: number[];
 }
 
-const MovieItem = ({
+const MediaItem = ({
   id,
   title = '',
-  original_title = '',
+  originalTitle = '',
   typeList,
   poster,
   job = '',
@@ -35,7 +43,7 @@ const MovieItem = ({
   return (
     <TooltipInfo
       title={title}
-      originalTitle={original_title}
+      originalTitle={originalTitle}
       handlerHover={handlerHover}
       date={date}
       overview={overview}
@@ -63,17 +71,4 @@ const MovieItem = ({
   );
 };
 
-MovieItem.propTypes = {
-  title: PropTypes.string.isRequired,
-  original_title: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  job: PropTypes.string,
-  id: PropTypes.number.isRequired,
-  poster: PropTypes.string,
-  voteAverage: PropTypes.number,
-  overview: PropTypes.string.isRequired,
-  genres: PropTypes.array.isRequired,
-  typeList: PropTypes.string.isRequired
-};
-
-export default MovieItem;
+export default MediaItem;

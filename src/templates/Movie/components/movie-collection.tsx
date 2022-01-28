@@ -1,8 +1,9 @@
 import React from 'react';
-import { MovieItem } from '~/templates/moviesList/components';
 import { Collection } from '~/core/types/collection';
-import './movie-collection.sass';
 import { MediaType } from '~/core/types/media-type';
+import MediaItem from '~/ui-components/media-item/media-item';
+
+import './movie-collection.sass';
 
 const MovieCollection = ({ collection }: {collection: Collection}) => {
   if (!collection || !collection.parts.length) {
@@ -26,7 +27,7 @@ const MovieCollection = ({ collection }: {collection: Collection}) => {
           <p className='collection__overview'>{collection.overview}</p>
           <div className='collection__list tooltip-parent'>
             {collection.parts.map((el, index) => (
-              <MovieItem
+              <MediaItem
                 title={el.title}
                 originalTitle={el.originalTitle}
                 overview={el.overview}

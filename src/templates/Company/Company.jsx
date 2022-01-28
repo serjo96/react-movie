@@ -6,8 +6,8 @@ import { onLoadCompanyData, LoadCompanyMovies } from '~/store/api/company.api';
 import { clearCompanyData } from '~/store/actions/company-actions';
 
 import NoImg from '~/assets/images/noImg.png';
-import ServiceBlock from '../Service/ServiceBlock';
-import { MoviesList } from '../moviesList/components';
+import ServiceBlock from '../service/service-block';
+import MediaList from '~/ui-components/media-list/media-list';
 
 class Person extends Component {
   state = {
@@ -132,7 +132,7 @@ class Person extends Component {
 
             </div>
 
-            <MoviesList
+            <MediaList
               movieListTitle={`Всего фильмов (${companyMovies.data.total_results})`}
               movieList={companyMovies}
               typeList='movie'

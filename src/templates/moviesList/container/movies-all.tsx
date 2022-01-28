@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import FilterList from '~/templates/filters/containers/filter-list';
 import ServiceBlock from '~/templates/service/service-block';
-import MoviesList from '~/templates/moviesList/components/list/moviesList';
+import MediaList from '~/ui-components/media-list/media-list';
 
 function MoviesAll () {
   const appDispatch = useAppDispatch();
@@ -90,7 +90,7 @@ function MoviesAll () {
           isSuccessful={isSuccess}
           fetch={sendRequest}
         >
-          <MoviesList
+          <MediaList
             movieListTitle={`Всего фильмов (${data.totalResults})`}
             mediaList={data}
             typeList={MediaType.MOVIE}

@@ -3,11 +3,10 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 
-
-import { MoviesList } from '~/templates/moviesList/components';
 import FilterList from '~/templates/filters/containers/filter-list';
 import ServiceBlock from '~/templates/service/service-block';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
+import MediaList from '~/ui-components/media-list/media-list';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { getTvShowsList } from '~/store/tv/tv.api';
 import { firstOrderObjectValue } from '~/utils/format';
@@ -123,7 +122,7 @@ function TvShowsAll () {
           fetch={sendRequest}
         >
 
-          <MoviesList
+          <MediaList
             movieListTitle={`Всего сериалов (${data.totalResults})`}
             mediaList={data}
             typeList={MediaType.TV}
