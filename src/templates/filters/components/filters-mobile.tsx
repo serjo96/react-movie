@@ -1,11 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
+
 import { sortingDateList, sortListTV, sortMovieByType, storageCountries } from '~/store/localData';
 import Popup from '~/templates/popup/popup';
 import { Genre } from '~/core/types/genres';
 import { GenresState } from '~/store/genres/genres.slice';
 import { filterByCountryName, filterByDateName, sortByFilterName } from '~/utils/formatFiltersNames';
 import './filter-mobile.sass';
+import Portal from '~/ui-components/portal/portal';
 
 interface MyProps {
   genres: Array<Genre>;
@@ -77,174 +79,176 @@ export default function FiltersMobile ({
       </div>
 
       {modalFilter &&
-        <Popup
-          closePopup={onClosePopUp}
-        >
+        <Portal>
+          <Popup
+            closePopup={onClosePopUp}
+          >
 
-          <div className='mobile-filter'>
-            <h2 className='popup__title'>Фильтровать список</h2>
-            {genres.length &&
+            <div className='mobile-filter'>
+              <h2 className='popup__title'>Фильтровать список</h2>
+              {genres.length &&
+                <div className='mobile-filter__select'>
+                  <div className='mobile-filter-item__title'>Жанр</div>
+                  <label
+                    htmlFor='genreFilter'
+                    className='mobile-filter__label'
+                  >
+                    <div className='mobile-filter__name'>
+                      <span>{genresObject[selectedGenre]}</span>
+                      <i className='fa fa-angle-down' aria-hidden='true' />
+                    </div>
+                    <select
+                      name='genreFilter'
+                      id='genreFilter'
+                      onChange={(e) => onClickGenres({
+                        name: e.target.value,
+                        id: Number(e.target.options[e.target.selectedIndex].id)
+                      } as Genre)}
+                    >
+                      {genres.map((el, indx) => (
+                        <option
+                          id={`${el.id}`}
+                          key={indx}
+                        >
+                          {el.name}
+                        </option>)
+                      )}
+                    </select>
+                  </label>
+                </div>}
+
               <div className='mobile-filter__select'>
-                <div className='mobile-filter-item__title'>Жанр</div>
-                <label
-                  htmlFor='genreFilter'
-                  className='mobile-filter__label'
-                >
+                <div className='mobile-filter-item__title'>Год</div>
+                <label className='mobile-filter__label' htmlFor='yearFilter'>
                   <div className='mobile-filter__name'>
-                    <span>{genresObject[selectedGenre]}</span>
+                    <span>{filterByDateName(filterValues.year)}</span>
                     <i className='fa fa-angle-down' aria-hidden='true' />
                   </div>
                   <select
-                    name='genreFilter'
-                    id='genreFilter'
-                    onChange={(e) => onClickGenres({
+                    name='filterByYear'
+                    onChange={e => onSortByDate({
                       name: e.target.value,
-                      id: Number(e.target.options[e.target.selectedIndex].id)
-                    } as Genre)}
+                      date: e.target.options[e.target.selectedIndex].dataset.date,
+                      type: e.target.options[e.target.selectedIndex].dataset.type
+                    })}
                   >
-                    {genres.map((el, indx) => (
+                    {sortingDateList.map((el, indx) => (
                       <option
-                        id={`${el.id}`}
                         key={indx}
+                        value={el.date}
+                        data-type={el.type}
+                        data-date={el.date}
                       >
                         {el.name}
                       </option>)
                     )}
                   </select>
                 </label>
-              </div>}
-
-            <div className='mobile-filter__select'>
-              <div className='mobile-filter-item__title'>Год</div>
-              <label className='mobile-filter__label' htmlFor='yearFilter'>
-                <div className='mobile-filter__name'>
-                  <span>{filterByDateName(filterValues.year)}</span>
-                  <i className='fa fa-angle-down' aria-hidden='true' />
-                </div>
-                <select
-                  name='filterByYear'
-                  onChange={e => onSortByDate({
-                    name: e.target.value,
-                    date: e.target.options[e.target.selectedIndex].dataset.date,
-                    type: e.target.options[e.target.selectedIndex].dataset.type
-                  })}
-                >
-                  {sortingDateList.map((el, indx) => (
-                    <option
-                      key={indx}
-                      value={el.date}
-                      data-type={el.type}
-                      data-date={el.date}
-                    >
-                      {el.name}
-                    </option>)
-                  )}
-                </select>
-              </label>
-            </div>
-
-            <div className='mobile-filter__select mobile-filter__select--date-input'>
-              <div className='mobile-filter-item__title'>
-                <span>Свой год</span>
               </div>
-              <label className='mobile-filter__label'>
-                <input
-                  name='filterByYearInput'
-                  type='search'
-                  pattern='[0-9]*'
-                  placeholder='Введите свой год'
-                  className='mobile-filter__input'
-                  onChange={({ target }) => onChangeRangeDate(target.value)}
-                  onBlur={({ target }) => onBlurInputRange(target.value)}
-                  value={filterValues.filterByDateInput}
-                />
-              </label>
-            </div>
 
-            {sortByCountry &&
+              <div className='mobile-filter__select mobile-filter__select--date-input'>
+                <div className='mobile-filter-item__title'>
+                  <span>Свой год</span>
+                </div>
+                <label className='mobile-filter__label'>
+                  <input
+                    name='filterByYearInput'
+                    type='search'
+                    pattern='[0-9]*'
+                    placeholder='Введите свой год'
+                    className='mobile-filter__input'
+                    onChange={({ target }) => onChangeRangeDate(target.value)}
+                    onBlur={({ target }) => onBlurInputRange(target.value)}
+                    value={filterValues.filterByDateInput}
+                  />
+                </label>
+              </div>
+
+              {sortByCountry &&
+                <div className='mobile-filter__select'>
+                  <div className='mobile-filter-item__title'>Стране</div>
+                  <label className='mobile-filter__label' htmlFor=''>
+                    <div className='mobile-filter__name'>
+                      <span>{filterByCountryName(filterValues.country)}</span>
+                      <i className='fa fa-angle-down' aria-hidden='true' />
+                    </div>
+                    <select
+                      name='counterFilter'
+                      id=''
+                      onChange={e => {
+                        onSortByCountry(e.target.options[e.target.selectedIndex].dataset.ico);
+                      }}
+                    >
+                      <option value=''>Все страны</option>
+                      {storageCountries.map((el, indx) => (
+                        <option
+                          key={indx}
+                          value={el.name}
+                          data-ico={el.ico}
+                        >
+                          {el.name}
+                        </option>)
+                      )}
+                    </select>
+                  </label>
+                </div>}
+
               <div className='mobile-filter__select'>
-                <div className='mobile-filter-item__title'>Стране</div>
-                <label className='mobile-filter__label' htmlFor=''>
+                <div className='mobile-filter-item__title'>Сортировать</div>
+                <label className='mobile-filter__label'>
                   <div className='mobile-filter__name'>
-                    <span>{filterByCountryName(filterValues.country)}</span>
+                    <span>{sortByFilterName(sortByList, filterValues.sortBy)}</span>
                     <i className='fa fa-angle-down' aria-hidden='true' />
                   </div>
                   <select
-                    name='counterFilter'
-                    id=''
+                    name='sortBy'
                     onChange={e => {
-                      onSortByCountry(e.target.options[e.target.selectedIndex].dataset.ico);
+                      onClickSort(e.target.options[e.target.selectedIndex].dataset.type);
                     }}
                   >
-                    <option value=''>Все страны</option>
-                    {storageCountries.map((el, indx) => (
+                    {sortByList.map((el, indx) => (
                       <option
                         key={indx}
                         value={el.name}
-                        data-ico={el.ico}
+                        data-type={el.type}
                       >
                         {el.name}
                       </option>)
                     )}
                   </select>
                 </label>
-              </div>}
+              </div>
 
-            <div className='mobile-filter__select'>
-              <div className='mobile-filter-item__title'>Сортировать</div>
-              <label className='mobile-filter__label'>
-                <div className='mobile-filter__name'>
-                  <span>{sortByFilterName(sortByList, filterValues.sortBy)}</span>
-                  <i className='fa fa-angle-down' aria-hidden='true' />
-                </div>
-                <select
-                  name='sortBy'
-                  onChange={e => {
-                    onClickSort(e.target.options[e.target.selectedIndex].dataset.type);
-                  }}
-                >
-                  {sortByList.map((el, indx) => (
-                    <option
-                      key={indx}
-                      value={el.name}
-                      data-type={el.type}
-                    >
-                      {el.name}
-                    </option>)
-                  )}
-                </select>
-              </label>
-            </div>
-
-            <div
-              onClick={() => onClickSort()}
-              className={sortDirectionClass}
-            >
-              <span>{sortDirectionTitle}</span>
-              <i className='fa fa-long-arrow-up' aria-hidden='true' />
-            </div>
-
-            {safeFilter &&
               <div
-                className='mobile-filter__safe-filter'
-                onClick={onClickAdult}
+                onClick={() => onClickSort()}
+                className={sortDirectionClass}
               >
-                <span>Безопасный фильтр</span>
-                <i
-                  className={`fa ${filterValues.adult ? 'fa-square-o' : 'fa-check-square'}`}
-                  aria-hidden='true'
-                />
-              </div>}
+                <span>{sortDirectionTitle}</span>
+                <i className='fa fa-long-arrow-up' aria-hidden='true' />
+              </div>
 
-            <div
-              onClick={onResetFilters}
-              className='restore-filters-btn'
-            >
+              {safeFilter &&
+                <div
+                  className='mobile-filter__safe-filter'
+                  onClick={onClickAdult}
+                >
+                  <span>Безопасный фильтр</span>
+                  <i
+                    className={`fa ${filterValues.adult ? 'fa-square-o' : 'fa-check-square'}`}
+                    aria-hidden='true'
+                  />
+                </div>}
+
+              <div
+                onClick={onResetFilters}
+                className='restore-filters-btn'
+              >
                 Сбросить все фильтры
-            </div>
+              </div>
 
-          </div>
-        </Popup>}
+            </div>
+          </Popup>
+        </Portal>}
     </React.Fragment>
   );
 }
