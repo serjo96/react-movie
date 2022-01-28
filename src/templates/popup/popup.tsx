@@ -9,6 +9,7 @@ interface MyProps {
   className?: string;
 }
 
+// TODO: add portal with new layout for popup;
 export default function Popup ({
   children,
   title,
@@ -17,7 +18,8 @@ export default function Popup ({
 }: MyProps) {
   const popupClass = classNames('popup', { className });
   return (
-    <div className='popup-base' onClick={closePopup}>
+    <div className='popup-wrapper'>
+      <div className='popup-base' onClick={closePopup} />
       <div className={popupClass}>
         <div className='popup__close' onClick={closePopup} />
         {title && <h3 className='popup__title'>{title}</h3>}
