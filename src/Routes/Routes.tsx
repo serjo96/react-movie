@@ -6,13 +6,13 @@ import MovieUpcoming from '~/templates/moviesList/container/movies-upcoming';
 import MoviePlaying from '~/templates/moviesList/container/movies-playing';
 import MoviesAll from '~/templates/moviesList/container/movies-all';
 import TvShowsAll from '~/templates/TvLists/tv-shows-all';
-import TVAiring from '~/templates/TvLists/TVAiring.jsx';
 import TVonTheAir from '~/templates/TvLists/TVonTheAir.jsx';
 import TV from '~/templates/TV/containers/Tv.jsx';
 import People from '~/templates/Person/containers/Person.jsx';
 import Search from '~/templates/Search/Search.jsx';
 import Company from '~/templates/Company/Company';
 import KeywordsPage from '~/templates/keywords/keywords-page';
+import TvAiring from '~/templates/TvLists/tv-airing';
 
 class Routes extends Component {
   render () {
@@ -22,7 +22,7 @@ class Routes extends Component {
         <Route exact path='/movies/upcoming' component={MovieUpcoming} />
         <Route exact path='/movies/playing' component={MoviePlaying} />
         <Route exact path='/movie/:id' component={Movie} />
-        <Route exact path='/tv/airing' component={TVAiring} />
+        <Route exact path='/tv/airing' component={TvAiring} />
         <Route path='/tv/all' component={TvShowsAll} />
         <Route exact path='/tv/onAir' component={TVonTheAir} />
         <Route exact path='/person/:id' component={People} />
