@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import ActionPayloadData from '~/core/types/actionPayloadData';
-import { keywordsReq } from '~/store/keywords/keywords.api';
+import { getKeywordsMedia } from '~/store/keywords/keywords.api';
 import { MoviesListItem } from '~/core/types/movies';
 import { ListData } from '~/core/types/listData';
 import { TvListItem } from '~/core/types/tv';
@@ -30,11 +30,11 @@ export const keywordsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(keywordsReq.pending, (state) => {
+      .addCase(getKeywordsMedia.pending, (state) => {
         state.isFetching = true;
         state.isSuccessful = true;
       })
-      .addCase(keywordsReq.fulfilled, (state, action: PayloadAction<ActionPayloadData<KeywordsListData>>) => {
+      .addCase(getKeywordsMedia.fulfilled, (state, action: PayloadAction<ActionPayloadData<KeywordsListData>>) => {
         state.isFetching = false;
         state.data = action.payload.data;
       });
