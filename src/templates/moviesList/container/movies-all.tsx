@@ -16,46 +16,30 @@ function MoviesAll () {
   const { search } = useLocation();
   const [prevProps] = useState(search);
   const { isFetching, isSuccess, data } = useAppSelector((state) => state.movies.lists.all);
-  const getUrlObjectState = {
-    genre: queryString.parse(search, { parseNumbers: true }).genre as number,
-    adult: queryString.parse(search, { parseBooleans: true }).adult as boolean,
-    page: queryString.parse(search, { parseNumbers: true }).page as number,
-    country: queryString.parse(search).country as string,
-    sort_by: queryString.parse(search).sort_by as string,
-    year: queryString.parse(search).year as string
-  };
 
   const sendRequest = () => {
-    const page = getUrlObjectState.page;
+    let page = queryString.parse(search, { parseNumbers: true }).page as number;
 
-    const UrlStateObj = {
-      page: getUrlObjectState.page,
-      country: getUrlObjectState.country,
-      genres: getUrlObjectState.genre,
-      sort_by: getUrlObjectState.sort_by,
-      year: getUrlObjectState.year,
-      adult: getUrlObjectState.adult
-    };
 
     if (!page) {
-      delete UrlStateObj.page;
+      page = undefined;
     }
 
     if (page <= 2) {
-      UrlStateObj.page += 1;
+      page += 1;
     } else if (page === 3) {
-      UrlStateObj.page += 2;
+      page += 2;
     } else if (page >= 4) {
-      UrlStateObj.page = UrlStateObj.page + UrlStateObj.page - 1;
+      page = page + page - 1;
     }
 
     const payload = {
-      page: UrlStateObj.page,
-      genre: UrlStateObj.genres,
-      sortType: UrlStateObj.sort_by,
-      date: UrlStateObj.year,
-      region: UrlStateObj.country,
-      adult: UrlStateObj.adult
+      page,
+      genre: queryString.parse(search, { parseNumbers: true }).genre as number,
+      sortType: queryString.parse(search).sort_by as string,
+      date: queryString.parse(search).year as string,
+      region: queryString.parse(search).country as string,
+      adult: queryString.parse(search, { parseBooleans: true }).adult as boolean,
     };
     appDispatch(getMoviesList(payload));
   };

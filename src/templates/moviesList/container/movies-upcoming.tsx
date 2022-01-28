@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import MediaList from '~/ui-components/media-list/media-list';
@@ -12,32 +12,26 @@ import { MediaType } from '~/core/types/media-type';
 
 function MovieUpcoming () {
   const appDispatch = useAppDispatch();
-  const { search } = useLocation<{id: string}>();
-  const history = useHistory();
+  const { search } = useLocation();
   const [prevProps] = useState(search);
   const { isFetching, isSuccess, data } = useAppSelector(state => state.movies.lists.upcoming);
-  const getUrlObjectState = queryString.parse(search).page;
 
   const sendRequest = () => {
-    const page = +getUrlObjectState;
-
-    const UrlStateObj = {
-      page: +getUrlObjectState
-    };
+    let page = queryString.parse(search, { parseNumbers: true }).page as number;
 
     if (!page) {
-      delete UrlStateObj.page;
+      page = undefined;
     }
 
     if (page <= 2) {
-      UrlStateObj.page += 1;
+      page += 1;
     } else if (page === 3) {
-      UrlStateObj.page += 2;
+      page += 2;
     } else if (page >= 4) {
-      UrlStateObj.page = UrlStateObj.page + UrlStateObj.page - 1;
+      page = page + page - 1;
     }
 
-    appDispatch(getUpcomingMovies(UrlStateObj.page));
+    appDispatch(getUpcomingMovies(page));
   };
 
   const scrollToTop = () => {
@@ -54,38 +48,6 @@ function MovieUpcoming () {
       scrollToTop();
     }
   }, [search]);
-
-  const prevPage = () => {
-    const urlObj = {
-      page: +getUrlObjectState
-    };
-
-    if (+getUrlObjectState > 2) {
-      urlObj.page = +getUrlObjectState - 1;
-    }
-
-    if (+getUrlObjectState <= 2) {
-      delete urlObj.page;
-    }
-
-    history.push({
-      search: queryString.stringify(urlObj)
-    });
-  };
-
-  const nextPage = () => {
-    const urlObj = {
-      page: 2
-    };
-
-    if (+getUrlObjectState >= 2) {
-      urlObj.page = +getUrlObjectState + 1;
-    }
-
-    history.push({
-      search: queryString.stringify(urlObj)
-    });
-  };
 
   return (
     <main className='main main--media-list'>
@@ -106,8 +68,6 @@ function MovieUpcoming () {
           <PageSwitcher
             totalPages={data.totalPages}
             page={data.page}
-            handlePrevPage={prevPage}
-            handleNextPage={nextPage}
           />
         </div>
       </ServiceBlock>
