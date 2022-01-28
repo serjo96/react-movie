@@ -7,7 +7,7 @@ import { MediaType } from '~/core/types/media-type';
 import { getMoviesList } from '~/store/movies/movies.api';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
-import FilterList from '~/templates/Filters/containers/filter-list';
+import FilterList from '~/templates/filters/containers/filter-list';
 import ServiceBlock from '~/templates/Service/ServiceBlock';
 import MoviesList from '~/templates/moviesList/components/list/moviesList';
 import { firstOrderObjectValue } from '~/utils/format';
