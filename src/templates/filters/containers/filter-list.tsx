@@ -24,7 +24,7 @@ export interface MyFilterState {
   country?: string;
   sortBy?: string;
 }
-
+// TODO: add filter by status show
 function FilterList ({
   sortByCountry,
   safeFilter,
@@ -179,7 +179,6 @@ function FilterList ({
   };
 
   const sortByList = typeList === MediaType.MOVIE ? sortMovieByType : sortListTV;
-
   if (!mobileBreakpoints.includes(active)) {
     return (
       <Filters
@@ -206,6 +205,7 @@ function FilterList ({
       filterValues={filterValues}
       safeFilter={safeFilter}
       modalFilter={isVisibleModalFilter}
+      selectedGenre={filters.genre}
       genres={arrGenres[typeList]}
       genresObject={genresHash}
       sortByCountry={sortByCountry}
