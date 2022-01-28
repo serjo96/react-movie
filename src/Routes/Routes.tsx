@@ -5,8 +5,8 @@ import Movie from '~/templates/Movie/containers/movie';
 import MovieUpcoming from '~/templates/moviesList/container/movies-upcoming';
 import MoviePlaying from '~/templates/moviesList/container/movies-playing';
 import MoviesAll from '~/templates/moviesList/container/movies-all';
+import TvShowsAll from "~/templates/TvLists/tv-shows-all";
 import TVAiring from '~/templates/TvLists/TVAiring.jsx';
-import TvPopular from '~/templates/TvLists/TVall.jsx';
 import TVonTheAir from '~/templates/TvLists/TVonTheAir.jsx';
 import TV from '~/templates/TV/containers/Tv.jsx';
 import People from '~/templates/Person/containers/Person.jsx';
@@ -24,7 +24,7 @@ class Routes extends Component {
         <Route exact path='/movies/playing' component={MoviePlaying} />
         <Route exact path='/movie/:id' component={Movie} />
         <Route exact path='/tv/airing' component={TVAiring} />
-        <Route path='/tv/all' component={TvPopular} />
+        <Route path='/tv/all' component={TvShowsAll} />
         <Route exact path='/tv/onAir' component={TVonTheAir} />
         <Route exact path='/person/:id' component={People} />
         <Route exact path='/company/:id' component={Company} />
