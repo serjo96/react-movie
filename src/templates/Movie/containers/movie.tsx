@@ -9,7 +9,7 @@ import MediaCast from '~/templates//media-page/media-cast';
 import MediaTop from '~/templates/media-page/media-top';
 import MovieAside from '~/templates/Movie/components/movie-aside';
 import { MovieSummary } from '~/templates/Movie/components/movie-summary';
-import ServiceBlock from '~/templates/Service/ServiceBlock';
+import ServiceBlock from '~/templates/service/service-block';
 import MediaRecommendations from '~/templates/media-page/media-recommendations';
 import MovieCollection from '~/templates/Movie/components/movie-collection';
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';

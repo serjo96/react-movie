@@ -8,7 +8,7 @@ import { searchResetFetch } from '~/store/actions/general-actions';
 
 import { MoviesList } from '../moviesList/components';
 import { friendlyUrl } from '~/utils/format';
-import ServiceBlock from '../Service/ServiceBlock';
+import ServiceBlock from '../service/service-block';
 
 class Search extends Component {
     state = {

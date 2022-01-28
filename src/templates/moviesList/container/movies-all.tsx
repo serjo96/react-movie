@@ -8,7 +8,7 @@ import { getMoviesList } from '~/store/movies/movies.api';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import FilterList from '~/templates/filters/containers/filter-list';
-import ServiceBlock from '~/templates/Service/service-block';
+import ServiceBlock from '~/templates/service/service-block';
 import MoviesList from '~/templates/moviesList/components/list/moviesList';
 
 function MoviesAll () {

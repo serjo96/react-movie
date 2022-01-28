@@ -27,4 +27,4 @@ const ServiceBlock = ({
   );
 };
 
-export default (ServiceBlock);
+export default ServiceBlock;

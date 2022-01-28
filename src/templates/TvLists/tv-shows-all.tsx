@@ -6,7 +6,7 @@ import queryString from 'query-string';
 
 import { MoviesList } from '~/templates/moviesList/components';
 import FilterList from '~/templates/filters/containers/filter-list';
-import ServiceBlock from '~/templates/Service/ServiceBlock';
+import ServiceBlock from '~/templates/service/service-block';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { getTvShowsList } from '~/store/tv/tv.api';

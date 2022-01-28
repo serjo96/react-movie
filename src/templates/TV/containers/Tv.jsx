@@ -9,7 +9,7 @@ import { onLoadTV } from '~/store/api/tv.api';
 import { clearTvData, clearTvSeason } from '~/store/actions/tv-actions';
 
 import Popup from '../../popup/popup.tsx';
-import ServiceBlock from '../../Service/ServiceBlock';
+import ServiceBlock from '../../service/service-block';
 import TVBg from './../components/TVBg';
 import TVAside from './../components/TVAside.jsx';
 import TVvideos from './../components/TVvideos';

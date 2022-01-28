@@ -5,7 +5,7 @@ import queryString from 'query-string';
 
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import { MoviesList } from '../components';
-import ServiceBlock from '../../Service/ServiceBlock';
+import ServiceBlock from '../../service/service-block';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { getPlayingMovies } from '~/store/movies/movies.api';
 import { MediaType } from '~/core/types/media-type';
