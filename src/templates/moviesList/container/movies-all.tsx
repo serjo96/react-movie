@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 
@@ -8,14 +8,12 @@ import { getMoviesList } from '~/store/movies/movies.api';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import FilterList from '~/templates/filters/containers/filter-list';
-import ServiceBlock from '~/templates/Service/ServiceBlock';
+import ServiceBlock from '~/templates/Service/service-block';
 import MoviesList from '~/templates/moviesList/components/list/moviesList';
-import { firstOrderObjectValue } from '~/utils/format';
 
 function MoviesAll () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
-  const history = useHistory();
   const [prevProps] = useState(search);
   const { isFetching, isSuccess, data } = useAppSelector((state) => state.movies.lists.all);
   const getUrlObjectState = {
@@ -77,36 +75,6 @@ function MoviesAll () {
     }
   }, [search]);
 
-  const prevPage = () => {
-    let urlObj = { ...getUrlObjectState, page: getUrlObjectState.page };
-
-    if (getUrlObjectState.page > 2) {
-      urlObj.page = getUrlObjectState.page - 1;
-    }
-    urlObj = firstOrderObjectValue('page', urlObj);
-
-    if (getUrlObjectState.page <= 2) {
-      delete urlObj.page;
-    }
-
-    history.push({
-      search: queryString.stringify(urlObj, { sort: false })
-    });
-  };
-
-  const nextPage = () => {
-    let urlObj = { ...getUrlObjectState, page: 2 };
-
-    if (getUrlObjectState.page >= 2) {
-      urlObj.page = getUrlObjectState.page + 1;
-    }
-
-    urlObj = firstOrderObjectValue('page', urlObj);
-    history.push({
-      search: queryString.stringify(urlObj, { sort: false })
-    });
-  };
-
   return (
     <main className='main main--media-list'>
       <Helmet>
@@ -114,7 +82,6 @@ function MoviesAll () {
       </Helmet>
       <div className='movies-content'>
         <FilterList
-          sortByCountry
           safeFilter
           typeList={MediaType.MOVIE}
         />
@@ -132,8 +99,6 @@ function MoviesAll () {
           <PageSwitcher
             page={data.page}
             totalPages={data.totalPages}
-            handlePrevPage={prevPage}
-            handleNextPage={nextPage}
           />
 
         </ServiceBlock>
