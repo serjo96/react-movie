@@ -69,8 +69,8 @@ export default function Filters ({
     'filter-catalog__item--active': isActive
   });
 
-  const sortDirectionClass = classNames('sort-direction', {
-    'sort-direction--asc': direction && direction === 'asc'
+  const sortDirectionClass = classNames('filter-item filter-item--sort-direction', {
+    'filter-item--sort-direction-asc': direction && direction === 'asc'
   });
 
   const renderCountryList = (items: typeof popularCountries | typeof storageCountries) => {
@@ -234,14 +234,14 @@ export default function Filters ({
             ))}
           </div>
         </div>
-        <div onClick={onResetFilters} className='filter-item'>
-          <div className='filter-name'>Сбросить фильтры</div>
-        </div>
         <div className={sortDirectionClass}>
           <i
             onClick={() => onClickSort()}
             className='fa fa-long-arrow-up' aria-hidden='true'
           />
+        </div>
+        <div onClick={onResetFilters} className='filter-item'>
+          <div className='filter-name'>Сбросить фильтры</div>
         </div>
       </div>
     </div>
