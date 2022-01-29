@@ -50,9 +50,11 @@ export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs |
   }) => {
     let startRangeDate: string | undefined;
     let endRangeDate: string | undefined;
-    if (date && date.split('-').length > 1) {
-      [startRangeDate, endRangeDate] = date.split('-');
+    const rangeData = date.split('-');
+    if (date && rangeData.length > 1) {
+      [startRangeDate, endRangeDate] = rangeData;
     }
+
     const [firstPage, secondPage] = await oldClient.all<MoviesList>([
       oldClient.get('discover/movie',
         {
