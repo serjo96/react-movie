@@ -2,7 +2,7 @@ import { Cast } from '~/core/types/cast';
 import { Crew } from '~/core/types/crew';
 
 export declare class Credits {
-  cast: Cast [];
+  cast: Cast[];
   crew: Crew[];
 }
 

@@ -24,11 +24,11 @@ interface MyProps {
 
 const MediaItem = ({
   id,
-  title = '',
-  originalTitle = '',
+  title,
+  originalTitle,
   typeList,
   poster,
-  job = '',
+  job,
   overview,
   voteAverage,
   date,
