@@ -10,7 +10,7 @@ import TvShowsAll from '~/templates/TvLists/tv-shows-all';
 import TvOnTheAir from '~/templates/TvLists/tv-on-the-air';
 import TvAiring from '~/templates/TvLists/tv-airing';
 import TvShowsTop from '~/templates/TvLists/tv-shows-top';
-import TV from '~/templates/TV/containers/Tv.jsx';
+import TvDetails from '~/templates/TV/containers/tv-details';
 
 import People from '~/templates/Person/containers/Person.jsx';
 import Search from '~/templates/Search/Search.jsx';
@@ -31,7 +31,7 @@ class Routes extends Component {
         <Route exact path='/tv/top' component={TvShowsTop} />
         <Route exact path='/person/:id' component={People} />
         <Route exact path='/company/:id' component={Company} />
-        <Route path='/tv/:id' component={TV} />
+        <Route path='/tv/:id' component={TvDetails} />
         <Route path='/search' component={Search} />
         <Route path='/movies/all' component={MoviesAll} />
         <Route path='/keywords-movies/:id' component={KeywordsPage} />
