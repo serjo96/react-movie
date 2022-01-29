@@ -6,6 +6,7 @@ import { Images } from '~/core/types/images';
 import { Translations } from '~/core/types/translations';
 import { ListData } from '~/core/types/listData';
 import { Videos } from '~/core/types/videos';
+import { MediaType } from '~/core/types/media-type';
 
 export interface TvDetails {
   adult: boolean;
@@ -113,10 +114,6 @@ export interface RecommendationsResult {
   firstAirDate: string;
   voteAverage: number;
   voteCount: number;
-}
-
-export enum MediaType {
-  Tv = 'tv',
 }
 
 export interface Season {
