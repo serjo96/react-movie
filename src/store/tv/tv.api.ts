@@ -1,12 +1,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { TvListItem, TvListResponseData } from '~/core/types/tv';
+import { TvListItem, TvListResponseData, TvSeason } from '~/core/types/tv';
 import oldClient from '~/core/api/OldClient';
 import ConcatPages from '~/utils/concatPages';
 import { ListData } from '~/core/types/listData';
+import { TvDetails } from '~/core/types/tvDetails';
+import { Languages } from '~/store/Reducers/generalReducer';
 
 export interface ReturnedTvShowsList {
   data: TvListResponseData;
   isSuccess: boolean;
+}
+
+export interface TvRespData {
+  isSuccess: boolean;
+  data: TvDetails
+}
+export interface TvSeasonRespData {
+  isSuccess: boolean;
+  data: TvSeason
 }
 
 interface TvListArgs {
@@ -140,6 +151,39 @@ export const getOnTheAirTvShows = createAsyncThunk<ReturnedTvShowsList, number |
     return {
       data: concatPages,
       isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+    };
+  }
+);
+
+export const getTvShowData = createAsyncThunk<TvRespData, {id: string, lang?: Languages}>(
+  'tvShows/getTvShowDetail',
+  async ({ id, lang = Languages.RU }) => {
+    const { data, isSuccessRequest } = await oldClient.get<TvDetails>(`tv/${id}`,
+      {
+        language: lang,
+        include_image_language: 'ru,null',
+        append_to_response: 'content_ratings,credits,external_ids,images,keywords,recommendations,screened_theatrically,similar,translations,videos'
+      }
+    );
+    return {
+      data,
+      isSuccess: isSuccessRequest
+    };
+  }
+);
+
+export const getTvShowSeasons = createAsyncThunk<TvSeasonRespData, {id: string, season: string, lang?: Languages}>(
+  'tvShows/getTvShowSeasons',
+  async ({ id, season, lang = Languages.RU }) => {
+    const { data, isSuccessRequest } = await oldClient.get<TvSeason>(`tv/${id}/season/${season}`,
+      {
+        language: lang,
+        include_image_language: 'ru,null',
+        append_to_response: 'credits, external_ids,images,videos'
+      });
+    return {
+      data,
+      isSuccess: isSuccessRequest
     };
   }
 );
