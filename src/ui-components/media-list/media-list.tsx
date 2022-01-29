@@ -4,20 +4,23 @@ import { Link } from 'react-router-dom';
 import { ListData } from '~/core/types/listData';
 import { MoviesListItem } from '~/core/types/movies';
 import { TvListItem } from '~/core/types/tv';
+import { MediaType } from '~/core/types/media-type';
+import { Crew } from '~/core/types/crew';
 
 import { friendlyData } from '~/utils/format';
 import MediaItem from '~/ui-components/media-item/media-item';
-import { MediaType } from '~/core/types/media-type';
 import './media-list.sass';
 
 interface MyProps {
-  mediaList: ListData<MoviesListItem | TvListItem>
+  mediaList: ListData<MoviesListItem | TvListItem | Crew>
   typeList: MediaType;
   count?: number;
   movieListTitle: string;
   movieListMain?: boolean;
   listLink?: string;
 }
+
+type ItemType = MoviesListItem & TvListItem & Crew & {mediaType?: MediaType};
 
 const MediaList = ({
   movieListMain,
@@ -46,7 +49,7 @@ const MediaList = ({
     );
   };
 
-  const renderMovie = <T extends MoviesListItem | TvListItem>(item: T, index: number) => {
+  const renderMovie = (item: ItemType, index: number) => {
     // show only 11 movies on main page
     if (count && index > count) {
       return null;
@@ -89,7 +92,7 @@ const MediaList = ({
       </div>
 
       <div className='movies__list'>
-        {mediaList.results.map((item, index) => renderMovie(item, index))}
+        {mediaList.results.map((item, index) => renderMovie(item as ItemType, index))}
       </div>
 
     </div>
