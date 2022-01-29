@@ -57,8 +57,8 @@ export function MovieAside ({
           alt='poster'
         />
       </div>
-      <div className='crew-list infoTable-row'>
-        <div className='crew__item infoTable-border aside-row'>
+      <div className='crew-list info-table-row'>
+        <div className='crew__item info-table-border aside-row'>
           <div className='crew__job'>Режиссер</div>
           <div className='crew__names aside-row__right-col'>
             {crew.director.map((men, indx) => indx < 3 &&
@@ -72,7 +72,7 @@ export function MovieAside ({
               </div>)}
           </div>
         </div>
-        <div className='crew__item infoTable-border aside-row'>
+        <div className='crew__item info-table-border aside-row'>
           <div className='crew__job'>Сценарий</div>
           <div className='crew__names aside-row__right-col'>
             {crew.screenplay.map((men, indx) => indx < 3 &&
@@ -86,7 +86,7 @@ export function MovieAside ({
               </div>)}
           </div>
         </div>
-        <div className='crew__item infoTable-border aside-row'>
+        <div className='crew__item info-table-border aside-row'>
           <div className='crew__job'>Продюсер</div>
           <div className='crew__names aside-row__right-col'>
             {crew.producer.map((men, indx) => indx < 3 &&
@@ -99,7 +99,7 @@ export function MovieAside ({
               </div>)}
           </div>
         </div>
-        <div className='crew__item infoTable-border aside-row'>
+        <div className='crew__item info-table-border aside-row'>
           <div className='crew__job'>Оператор</div>
           <div className='crew__names aside-row__right-col'>
             {crew.directorOfPhotography.map((men, indx) => indx < 3 &&
@@ -112,7 +112,7 @@ export function MovieAside ({
               </div>)}
           </div>
         </div>
-        <div className='crew__item infoTable-border aside-row'>
+        <div className='crew__item info-table-border aside-row'>
           <div className='crew__job'>Композитор</div>
           <div className='crew__names aside-row__right-col'>
             {crew.music.map((men, indx) => indx <= 3 &&
@@ -125,7 +125,7 @@ export function MovieAside ({
               </div>)}
           </div>
         </div>
-        <div className='crew__item infoTable-border aside-row'>
+        <div className='crew__item info-table-border aside-row'>
           <div className='crew__job'>Художник</div>
           <div className='crew__names aside-row__right-col'>
             {crew.art.map((men, indx) => indx < 3 &&
@@ -152,7 +152,7 @@ export function MovieAside ({
           </div>
         </div>
       </div>
-      <div className='production infoTable-row infoTable-border'>
+      <div className='production info-table-row info-table-border'>
         <div className='production-company-title'>Производители</div>
         <div className='production__companies'>
           {productionCompanies.map((el, index) => (
@@ -162,7 +162,7 @@ export function MovieAside ({
           ))}
         </div>
       </div>
-      <div className='genres infoTable-row'>
+      <div className='genres info-table-row'>
         <div className='genres__title'>Жанр</div>
         <div className='genres__list'>
           {genres.map((el, indx) => (
@@ -176,7 +176,7 @@ export function MovieAside ({
           ))}
         </div>
       </div>
-      <div className='keywords infoTable-row'>
+      <div className='keywords info-table-row'>
         <div className='keywords__title'>Теги</div>
         <div className='keywords__list'>
           {keywords.map((el, indx) => (
@@ -190,12 +190,12 @@ export function MovieAside ({
         </div>
       </div>
 
-      <div className='movie-links infoTable-row'>
+      <div className='movie-links info-table-row'>
         <div className='movie-links__title'>Ссылки</div>
         <div className='movie-links__list'>
           {imdbId &&
             <a
-              href={`http://www.imdb.com/title/${imdbId}`}
+              href={`https://www.imdb.com/title/${imdbId}`}
               target='_blank'
               rel='noopener noreferrer'
               className='social-link'
