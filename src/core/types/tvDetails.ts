@@ -6,7 +6,7 @@ import { Images } from '~/core/types/images';
 import { Translations } from '~/core/types/translations';
 import { ListData } from '~/core/types/listData';
 import { Videos } from '~/core/types/videos';
-import { MediaType } from '~/core/types/media-type';
+import { TvListItem } from '~/core/types/tv';
 
 export interface TvDetails {
   adult: boolean;
@@ -20,9 +20,9 @@ export interface TvDetails {
   inProduction: boolean;
   languages: OriginalLanguage[];
   lastAirDate: string;
-  lastEpisodeToAir: TEpisodeToAir;
+  lastEpisodeToAir: TvEpisodeToAir;
   name: string;
-  nextEpisodeToAir: TEpisodeToAir;
+  nextEpisodeToAir: TvEpisodeToAir;
   networks: Network[];
   numberOfEpisodes: number;
   numberOfSeasons: number;
@@ -45,10 +45,12 @@ export interface TvDetails {
   credits: Credits;
   externalIds: ExternalIds;
   images: Images;
-  keywords: Keywords;
-  recommendations: ListData<RecommendationsResult>;
+  keywords: {
+    results: Keywords['keywords']
+  };
+  recommendations: ListData<TvListItem>;
   screenedTheatrically: ContentRatings;
-  similar: ListData<RecommendationsResult>;
+  similar: ListData<TvListItem>;
   translations: Translations;
   videos: Videos;
 }
@@ -73,7 +75,7 @@ export interface ExternalIds {
   twitterId: string;
 }
 
-export interface TEpisodeToAir {
+export interface TvEpisodeToAir {
   airDate: string;
   episodeNumber: number;
   id: number;
@@ -96,24 +98,6 @@ export interface Network {
 export interface ProductionCountry {
   iso31661: string;
   name: string;
-}
-
-export interface RecommendationsResult {
-  adult: boolean;
-  backdropPath: string;
-  genreIds: number[];
-  id: number;
-  mediaType?: MediaType;
-  name: string;
-  originCountry: string[];
-  originalLanguage: OriginalLanguage;
-  originalName: string;
-  overview: string;
-  popularity: number;
-  posterPath: null | string;
-  firstAirDate: string;
-  voteAverage: number;
-  voteCount: number;
 }
 
 export interface Season {
