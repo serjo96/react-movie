@@ -28,7 +28,12 @@ interface TvListArgs {
   region?: string;
 }
 
-// TODO: add filter by status show
+export interface TvShowEngDataResp {
+  isSuccess: boolean;
+  data: TvDetails['overview'];
+}
+
+// TODO: add filter by status show and by runtime
 export const getTvShowsList = createAsyncThunk<ReturnedTvShowsList, TvListArgs | void>(
   'tv/getTvShowsList',
   async ({
@@ -43,7 +48,7 @@ export const getTvShowsList = createAsyncThunk<ReturnedTvShowsList, TvListArgs |
   }) => {
     let startRangeDate: string | undefined;
     let endRangeDate: string | undefined;
-    const rangeData = date.split('-');
+    const rangeData = date && date.split('-');
     if (date && rangeData.length > 1) {
       [startRangeDate, endRangeDate] = rangeData;
     }
@@ -135,13 +140,13 @@ export const getOnTheAirTvShows = createAsyncThunk<ReturnedTvShowsList, number |
   'tvShows/getOnTheAirTvShows',
   async (page = 1) => {
     const [firstPage, secondPage] = await oldClient.all<ListData<TvListItem>>([
-      oldClient.get('tv/airing_today',
+      oldClient.get('tv/on_the_air',
         {
           language: 'ru-RU',
           page: page,
           region: 'RU'
         }),
-      oldClient.get('tv/airing_today',
+      oldClient.get('tv/on_the_air',
         {
           language: 'ru-RU',
           page: (page as number) + 1,
@@ -168,6 +173,22 @@ export const getTvShowData = createAsyncThunk<TvRespData, {id: string, lang?: La
     );
     return {
       data,
+      isSuccess: isSuccessRequest
+    };
+  }
+);
+
+export const getEngTvShowData = createAsyncThunk<TvShowEngDataResp, {id: string, lang?: Languages}>(
+  'tvShows/getEngTvShowDetail',
+  async ({ id, lang = Languages.EN }) => {
+    const { data, isSuccessRequest } = await oldClient.get<TvDetails>(`tv/${id}`,
+      {
+        language: lang,
+        include_image_language: 'ru,null'
+      }
+    );
+    return {
+      data: data.overview,
       isSuccess: isSuccessRequest
     };
   }
