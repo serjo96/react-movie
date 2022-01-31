@@ -12,6 +12,7 @@ interface MyProps {
   poster: string;
   releaseDate: string;
   tagline: string;
+  seasonTitle?: string;
   children: React.ReactNode
 }
 
@@ -22,6 +23,7 @@ const MediaTop = ({
   poster,
   releaseDate,
   tagline,
+  seasonTitle,
   children
 }: MyProps) => {
   const [isLoadedPoster, setLoadedPoster] = useState(true);
@@ -86,8 +88,7 @@ const MediaTop = ({
               <div className='media-titles'>
                 <h1 className='media-titles__title'>{title}</h1>
                 <h2 className='media-titles__original-title'>{(originalTitle !== title) && originalTitle}</h2>
-                {/* TODO: Uncommit after adding to tv page; */}
-                {/* {tv.titles.seasonTitle && <div className='season-title'>{tv.titles.seasonTitle}</div>} */}
+                {seasonTitle && <div className='season-title'>{seasonTitle}</div>}
                 <span className='media-titles__year'>{releaseDate.substring(0, 4)}</span>
                 <div className='media-titles__tagline'>{tagline}</div>
               </div>

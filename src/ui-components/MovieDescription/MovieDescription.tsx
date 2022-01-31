@@ -3,7 +3,7 @@ import React from 'react';
 interface MyProps {
   short?: boolean;
   overview: string;
-  fetchEngData: () => void;
+  fetchEngData?: () => void;
 }
 
 const MovieDescription = ({ short, overview, fetchEngData }: MyProps) => {
@@ -19,7 +19,7 @@ const MovieDescription = ({ short, overview, fetchEngData }: MyProps) => {
     return `${overview.substring(0, textLength)}...`;
   };
 
-  if (mediaOverview()) {
+  if (mediaOverview() || !fetchEngData) {
     return (<p className='movie-tooltip__description'>{mediaOverview()}</p>);
   } else {
     return (
