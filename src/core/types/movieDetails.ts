@@ -36,6 +36,7 @@ export declare class MovieDetails {
   lists: ListData<MovieListItem>;
   videos: Videos;
   recommendations: ListData<MoviesListItem>;
+  similar: ListData<MoviesListItem>;
   backdropPath: string;
   originalLanguage: OriginalLanguage | string;
   popularity: number;

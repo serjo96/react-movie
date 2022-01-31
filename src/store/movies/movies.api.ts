@@ -50,7 +50,7 @@ export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs |
   }) => {
     let startRangeDate: string | undefined;
     let endRangeDate: string | undefined;
-    const rangeData = date.split('-');
+    const rangeData = date && date.split('-');
     if (date && rangeData.length > 1) {
       [startRangeDate, endRangeDate] = rangeData;
     }
@@ -188,7 +188,7 @@ export const getMovieData = createAsyncThunk<MovieRespData, {id: string, lang?: 
       {
         language: lang,
         include_image_language: 'ru,null',
-        append_to_response: 'credits,images,videos,recommendations,reviews,lists,keywords,release_dates'
+        append_to_response: 'credits,images,videos,recommendations,similar,reviews,lists,keywords,release_dates'
       }
     );
 
@@ -220,7 +220,6 @@ export const getMovieEngOverview = createAsyncThunk<MovieEngRespData, {id: strin
       {
         language: lang,
         include_image_language: 'ru,null',
-        append_to_response: 'credits,images,videos,recommendations,reviews,lists,keywords,release_dates'
       }
     );
 

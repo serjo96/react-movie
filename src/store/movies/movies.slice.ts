@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { MovieDetails } from '~/core/types/movieDetails';
 import { Crew } from '~/core/types/crew';
 import { Collection } from '~/core/types/collection';
-import { MoviesList, MoviesListItem } from '~/core/types/movies';
+import {MovieListItem, MoviesList, MoviesListItem} from '~/core/types/movies';
 import ActionPayloadData from '~/core/types/actionPayloadData';
 
 import {
@@ -17,16 +17,7 @@ import {
 } from '~/store/movies/movies.api';
 import { formatCrew } from '~/utils/formatCrew';
 import { Credits } from '~/core/types/credits';
-import { initListData } from '~/utils/initData';
-
-export type CrewState = {
-  director: Crew[],
-  screenplay: Crew[],
-  producer: Crew[],
-  directorOfPhotography: Crew[],
-  music: Crew[],
-  art: Crew[]
-}
+import {CrewState, initCreditsState, initDataState, initImagesState, initListData} from '~/utils/initData';
 
 type MovieDetailState = Omit<MovieDetails, 'credits'> & {
   collection?: Collection;
@@ -70,11 +61,7 @@ const initialState: MoviesState = {
   data: {
     id: 0,
     imdbId: '',
-    images: {
-      backdrops: [],
-      posters: [],
-      logos: []
-    },
+    images: initImagesState(),
     genres: [],
     spokenLanguages: [],
     overview: '',
@@ -114,27 +101,13 @@ const initialState: MoviesState = {
       totalPages: 0,
       results: []
     },
-    credits: {
-      cast: [],
-      crew: {
-        director: [],
-        screenplay: [],
-        producer: [],
-        directorOfPhotography: [],
-        music: [],
-        art: []
-      }
-    },
+    credits: initCreditsState(),
     video: false,
     videos: {
       results: []
     },
-    recommendations: {
-      page: 1,
-      results: [],
-      totalPages: 0,
-      totalResults: 0
-    }
+    recommendations: initDataState<MoviesListItem>(),
+    similar: initDataState<MoviesListItem>()
   }
 };
 
