@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { onLoadEngMedia } from '~/store/api/general.api';
-import Portal from '~/ui-components/portal/portal';
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
 import { urlRusLat } from '~/utils/format';
+import { RootState } from '~/store/configureStore';
 
 class TooltipInfo extends Component {
   tooltip = null;
@@ -76,10 +75,6 @@ class TooltipInfo extends Component {
     return <div className='tooltip__date'>{this.props.date.substring(0, 4)}</div>;
   }
 
-  handlerOnFetchEngData = () => {
-    this.props.fetchEngData(this.props.id, this.props.typeItem);
-  };
-
   genreLink = (genreID) => {
     return `/${this.props.typeItem === 'movie'
       ? this.props.typeItem + 's'
@@ -138,50 +133,47 @@ class TooltipInfo extends Component {
         </Fragment>
 
         {show &&
-          <Portal>
-            <div
-              className='movie-tooltip movie-tooltip--left tooltip tooltip--movie show-tooltip'
-              onMouseEnter={this.handleEnterItem}
-              onMouseLeave={this.handleLeaveItem}
-              ref={tooltipRef => {
-                this.tooltip = tooltipRef;
-              }}
-            >
-              <div className='tooltip__content'>
-                <div className='tooltip__title'>
-                  <div className='ru-title'>{title}</div>
-                  <div className='original-title'>{originalTitle !== title && originalTitle}</div>
-                </div>
-                <div className='movie-tooltip__info'>
-                  <div className='tooltip__genre-data'>
-                    {this.getMovieDate}
-
-                    {genres && Allgenres.isFetching &&
-                      <div className='genres'>
-                        {genres.map((id, index) => this.renderGenres(id, index))}
-                      </div>}
-
-                  </div>
-                  <div className='rating'>Рейтинг {voteAverage} из 10</div>
-                </div>
-                <MovieDescription
-                  short
-                  overview={this.getOverview}
-                  fetchEngData={this.handlerOnFetchEngData}
-                  id={id}
-                  typeItem={typeItem}
-                />
+          <div
+            className='movie-tooltip movie-tooltip--left tooltip tooltip--movie show-tooltip'
+            onMouseEnter={this.handleEnterItem}
+            onMouseLeave={this.handleLeaveItem}
+            ref={tooltipRef => {
+              this.tooltip = tooltipRef;
+            }}
+          >
+            <div className='tooltip__content'>
+              <div className='tooltip__title'>
+                <div className='ru-title'>{title}</div>
+                <div className='original-title'>{originalTitle !== title && originalTitle}</div>
               </div>
+              <div className='movie-tooltip__info'>
+                <div className='tooltip__genre-data'>
+                  {this.getMovieDate}
+
+                  {genres && Allgenres.isFetching &&
+                    <div className='genres'>
+                      {genres.map((id, index) => this.renderGenres(id, index))}
+                    </div>}
+
+                </div>
+                {voteAverage && <div className='rating'>Рейтинг {voteAverage} из 10</div>}
+              </div>
+              <MovieDescription
+                short
+                overview={this.getOverview}
+                id={id}
+                typeItem={typeItem}
+              />
             </div>
-          </Portal>}
+          </div>}
       </div>
     );
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps (state: RootState) {
   return {
-    Allgenres: state.General.genres,
+    Allgenres: state.genres.data.arrGenres.all,
     engData: state.General.engDescription
   };
 }
@@ -189,19 +181,5 @@ function mapStateToProps (state) {
 const mapDispatchToProps = (dispatch) => ({
   fetchEngData: (id, lang) => dispatch(onLoadEngMedia(id, lang))
 });
-
-TooltipInfo.propTypes = {
-  title: PropTypes.string.isRequired,
-  typeItem: PropTypes.string.isRequired,
-  overview: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
-  voteAverage: PropTypes.number.isRequired,
-  genres: PropTypes.arrayOf(PropTypes.number).isRequired,
-  fetchEngData: PropTypes.func,
-  handlerHover: PropTypes.func,
-  className: PropTypes.string,
-  children: PropTypes.element
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(TooltipInfo);
