@@ -25,13 +25,14 @@ class Routes extends Component {
         <Route exact path='/movies/upcoming' component={MovieUpcoming} />
         <Route exact path='/movies/playing' component={MoviePlaying} />
         <Route exact path='/movie/:id' component={Movie} />
-        <Route exact path='/tv/airing' component={TvAiring} />
         <Route path='/tv/all' component={TvShowsAll} />
+        <Route exact path='/tv/airing' component={TvAiring} />
         <Route exact path='/tv/onAir' component={TvOnTheAir} />
         <Route exact path='/tv/top' component={TvShowsTop} />
+        <Route exact path='/tv/:id' component={TvDetails} />
+        <Route exact path='/tv/:id/season-:season' component={TvDetails} />
         <Route exact path='/person/:id' component={People} />
         <Route exact path='/company/:id' component={Company} />
-        <Route path='/tv/:id' component={TvDetails} />
         <Route path='/search' component={Search} />
         <Route path='/movies/all' component={MoviesAll} />
         <Route path='/keywords-movies/:id' component={KeywordsPage} />
