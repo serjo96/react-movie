@@ -69,7 +69,7 @@ export const getKeywordsMedia = createAsyncThunk<KeywordsListResponse, KeywordsL
     };
     let startRangeDate: string | undefined;
     let endRangeDate: string | undefined;
-    const rangeData = date.split('-');
+    const rangeData = date && date.split('-');
     if (date && rangeData.length > 1) {
       [startRangeDate, endRangeDate] = rangeData;
     }
