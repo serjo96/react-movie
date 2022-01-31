@@ -6,6 +6,7 @@ import { friendlyUrl, friendlyData, urlRusLat } from '~/utils/format';
 import Spinner from '~/ui-components/spinner/Spinner';
 import NoImg from '~/assets/images/noImg.png';
 import { TvDetails } from '~/core/types/tvDetails';
+import { TvState } from '~/store/tv/tv.slice.';
 import '~/templates/Movie/components/movie-aside.sass';
 import './tv-aside.sass';
 
@@ -13,10 +14,10 @@ interface MyProps {
   id: TvDetails['id'];
   poster: string;
   backdrop: string;
-  seasonPoster: string;
   createdBy: TvDetails['createdBy'];
+  crew: TvState['data']['credits']['crew'];
   genres: TvDetails['genres'];
-  keywords: TvDetails['keywords']['keywords'];
+  keywords: TvDetails['keywords']['results'];
   homepage: TvDetails['homepage'];
   originCountry: TvDetails['originCountry'];
   firstAirDate: TvDetails['firstAirDate'];
@@ -30,7 +31,6 @@ function TvAside ({
   id,
   poster,
   backdrop,
-  seasonPoster,
   createdBy,
   genres,
   keywords,
@@ -40,6 +40,7 @@ function TvAside ({
   lastAirDate,
   inProduction,
   productionCompanies,
+  crew,
   links
 }: MyProps) {
   const [imgStatus, setImgStatus] = useState(true);
@@ -53,7 +54,7 @@ function TvAside ({
   });
 
   const imageSrc = () => {
-    const imgPath = seasonPoster || poster || backdrop;
+    const imgPath = poster || backdrop;
     if (!imgPath) {
       return NoImg;
     }
@@ -76,7 +77,7 @@ function TvAside ({
       </div>
 
       <div className='crew-list info-table-row'>
-        <div className='crew__item aside-row'>
+        <div className='crew__item info-table-border aside-row'>
           <div className='crew__job'>Создатели</div>
           <div className='crew__names aside-row__right-col'>
             {createdBy.map((men, indx) => indx < 3 &&
@@ -90,6 +91,87 @@ function TvAside ({
             )}
           </div>
         </div>
+
+        <div className='crew__item info-table-border aside-row'>
+          <div className='crew__job'>Режиссер</div>
+          <div className='crew__names aside-row__right-col'>
+            {crew.director.map((men, indx) => indx < 3 &&
+              <div className='crew__name' key={indx}>
+                <Link
+                  to={'/person/' + friendlyUrl(men.name) + '-' + men.id}
+                  className='link'
+                >
+                  {men.name}
+                </Link>
+              </div>)}
+          </div>
+        </div>
+        <div className='crew__item info-table-border aside-row'>
+          <div className='crew__job'>Сценарий</div>
+          <div className='crew__names aside-row__right-col'>
+            {crew.screenplay.map((men, indx) => indx < 3 &&
+              <div className='crew__name' key={indx}>
+                <Link
+                  to={'/person/' + friendlyUrl(men.name) + '-' + men.id}
+                  className='link'
+                >
+                  {men.name}
+                </Link>
+              </div>)}
+          </div>
+        </div>
+        <div className='crew__item info-table-border aside-row'>
+          <div className='crew__job'>Продюсер</div>
+          <div className='crew__names aside-row__right-col'>
+            {crew.producer.map((men, indx) => indx < 3 &&
+              <div className='crew__name' key={indx}>
+                <Link
+                  to={'/person/' + friendlyUrl(men.name) + '-' + men.id}
+                  className='link'
+                >{men.name}
+                </Link>
+              </div>)}
+          </div>
+        </div>
+        <div className='crew__item info-table-border aside-row'>
+          <div className='crew__job'>Оператор</div>
+          <div className='crew__names aside-row__right-col'>
+            {crew.directorOfPhotography.map((men, indx) => indx < 3 &&
+              <div className='crew__name' key={indx}>
+                <Link
+                  to={'/person/' + friendlyUrl(men.name) + '-' + men.id}
+                  className='link'
+                >{men.name}
+                </Link>
+              </div>)}
+          </div>
+        </div>
+        <div className='crew__item info-table-border aside-row'>
+          <div className='crew__job'>Композитор</div>
+          <div className='crew__names aside-row__right-col'>
+            {crew.music.map((men, indx) => indx <= 3 &&
+              <div className='crew__name' key={indx}>
+                <Link
+                  to={'/person/' + friendlyUrl(men.name) + '-' + men.id}
+                  className='link'
+                >{men.name}
+                </Link>
+              </div>)}
+          </div>
+        </div>
+        <div className='crew__item info-table-border aside-row'>
+          <div className='crew__job'>Художник</div>
+          <div className='crew__names aside-row__right-col'>
+            {crew.art.map((men, indx) => indx < 3 &&
+              <div className='crew__name' key={indx}>
+                <Link
+                  to={'/person/' + friendlyUrl(men.name) + '-' + men.id}
+                  className='link'
+                >{men.name}
+                </Link>
+              </div>)}
+          </div>
+        </div>
       </div>
 
       <div className='tv-release-date info-table-row info-table-border'>
@@ -98,7 +180,7 @@ function TvAside ({
           <div>{firstAirDate ? friendlyData(firstAirDate) : '-'}</div>
           <div>-</div>
 
-          <div>{!inProduction ? !lastAirDate ? friendlyData(lastAirDate) : '...' : '-'}</div>
+          <div>{!inProduction ? lastAirDate ? friendlyData(lastAirDate) : '...' : '-'}</div>
 
         </div>
 
