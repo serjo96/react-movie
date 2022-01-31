@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
 import TooltipInfo from '~/templates/Tooltip/tooltip-info';
 import Image from '~/ui-components/image/image';
+import CustomLink from '~/ui-components/custom-link/custom-link';
 
 import { urlRusLat } from '~/utils/format';
 import { MediaType } from '~/core/types/media-type';
@@ -13,13 +13,15 @@ interface MyProps {
   typeList: MediaType;
   id: number;
   title: string;
-  originalTitle: string;
+  originalTitle?: string;
   poster: string;
   overview: string;
   job?: string;
-  voteAverage: number;
+  voteAverage?: number;
   date: string;
-  genres: number[];
+  genres?: number[];
+  linkPath?: string;
+  isNotLink?: boolean;
 }
 
 const MediaItem = ({
@@ -32,13 +34,21 @@ const MediaItem = ({
   overview,
   voteAverage,
   date,
+  linkPath,
+  isNotLink,
   genres
 }: MyProps) => {
   const [tooltip, handlerHover] = useState(false);
   const parentClass = classNames('movie-item', {
     'movie-item--hover': tooltip
   });
-  const linkUrl = () => `/${typeList}/${urlRusLat(title)}-${id}`;
+  const linkUrl = () => {
+    if (linkPath) {
+      return linkPath;
+    }
+
+    return `/${typeList}/${urlRusLat(title)}-${id}`;
+  };
 
   return (
     <TooltipInfo
@@ -55,7 +65,7 @@ const MediaItem = ({
     >
 
       <div className='movie-item__data'>
-        <Link to={linkUrl}>
+        <CustomLink isNotLink={isNotLink} to={linkUrl}>
           <div className='movie-item__poster'>
             <Image
               src={poster}
@@ -64,7 +74,7 @@ const MediaItem = ({
           </div>
           <div className='movie-item__title'>{title}</div>
           {job && <div className='movie-item__crew'>{job}</div>}
-        </Link>
+        </CustomLink>
       </div>
 
     </TooltipInfo>
