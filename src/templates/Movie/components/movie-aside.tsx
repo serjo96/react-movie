@@ -4,8 +4,8 @@ import classNames from 'classnames';
 
 import Spinner from '~/ui-components/spinner/Spinner';
 import { friendlyUrl, urlRusLat } from '~/utils/format';
-import { CrewState } from '~/store/movies/movies.slice';
 import { MovieDetails } from '~/core/types/movieDetails';
+import { CrewState } from '~/utils/initData';
 import NoImg from '~/assets/images/noImg.png';
 import './movie-aside.sass';
 
