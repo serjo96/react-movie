@@ -6,7 +6,7 @@ import { friendlyUrl, friendlyData, urlRusLat } from '~/utils/format';
 import Spinner from '~/ui-components/spinner/Spinner';
 import NoImg from '~/assets/images/noImg.png';
 import { TvDetails } from '~/core/types/tvDetails';
-import { TvState } from '~/store/tv/tv.slice.';
+import { TvState } from '~/store/tv/tv.slice';
 import '~/templates/Movie/components/movie-aside.sass';
 import './tv-aside.sass';
 
