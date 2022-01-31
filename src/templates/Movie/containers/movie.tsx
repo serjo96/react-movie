@@ -23,9 +23,9 @@ function Movie () {
   const [prevProps] = useState(id);
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies);
   const movie = data;
+  const movieId = id.split('-').pop();
 
   const sendRequest = () => {
-    const movieId = id.split('-').pop();
     appDispatch(getMovieData({ id: movieId }));
   };
   const scrollToTop = () => {
@@ -46,7 +46,7 @@ function Movie () {
   }, [id]);
 
   const handlerOnFetchEngData = () => {
-    appDispatch(getMovieEngOverview({ id: `${this.props.movie.id}`, lang: Languages.EN }));
+    appDispatch(getMovieEngOverview({ id: `${movieId}`, lang: Languages.EN }));
   };
 
   return (
@@ -111,6 +111,12 @@ function Movie () {
             </div>
           </div>
         </div>
+
+        <MediaRecommendations
+          recommendations={movie.similar}
+          listName='Похожие фильмы'
+          typeList={MediaType.MOVIE}
+        />
 
         <MovieCollection collection={movie.collection} />
         <MediaRecommendations
