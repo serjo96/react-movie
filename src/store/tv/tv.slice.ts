@@ -1,26 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { initListData } from '~/utils/initData';
+import { CrewState, initCreditsState, initDataState, initImagesState, initListData } from '~/utils/initData';
 import ActionPayloadData from '~/core/types/actionPayloadData';
 import { TvListItem, TvSeason } from '~/core/types/tv';
 import { ListData } from '~/core/types/listData';
 import { TvDetails } from '~/core/types/tvDetails';
 import { Credits } from '~/core/types/credits';
-import { CrewState } from '~/store/movies/movies.slice';
 import {
-  getAiringTvShows,
+  getAiringTvShows, getEngTvShowData,
   getOnTheAirTvShows,
-  getTopTvShows,
+  getTopTvShows, getTvShowData, getTvShowSeasons,
   getTvShowsList,
-  ReturnedTvShowsList
+  ReturnedTvShowsList, TvRespData, TvSeasonRespData, TvShowEngDataResp
 } from '~/store/tv/tv.api';
+import { formatCrew } from '~/utils/formatCrew';
 
 type StateListData = ActionPayloadData<ListData<TvListItem>>;
 type TvDetailState = Omit<TvDetails, 'credits'> & {
   credits: Omit<Credits, 'crew'> & {crew: CrewState}
 };
 
-type TvState = {
+type TvSeasonState = Omit<TvSeason, 'credits'> & {
+  credits: Omit<Credits, 'crew'> & {crew: CrewState}
+};
+
+export type TvState = {
   isFetching: boolean;
   isSuccessful: boolean;
   lists: {
@@ -29,8 +33,12 @@ type TvState = {
     top: StateListData,
     airing: StateListData,
   };
-  tvShowSeasons: TvSeason
   data: TvDetailState,
+  tvShowSeasons: {
+    isFetching: boolean;
+    isSuccessful: boolean;
+    data: TvSeasonState
+  }
 };
 
 const initEpisodeData = () => ({
@@ -44,6 +52,26 @@ const initEpisodeData = () => ({
   stillPath: '',
   voteAverage: 0,
   voteCount: 0
+});
+
+const initSeasonData = (): TvState['tvShowSeasons'] => ({
+  isFetching: false,
+  isSuccessful: true,
+  data: {
+    id: '',
+    airDate: '',
+    episodes: [],
+    name: '',
+    overview: '',
+    tvSeasonId: 0,
+    posterPath: '',
+    seasonNumber: 0,
+    credits: initCreditsState(),
+    images: initImagesState(),
+    videos: {
+      results: []
+    }
+  }
 });
 
 const initialState: TvState = {
@@ -73,11 +101,7 @@ const initialState: TvState = {
     lastEpisodeToAir: initEpisodeData(),
     lastAirDate: '',
     episodeRunTime: [],
-    images: {
-      backdrops: [],
-      posters: [],
-      logos: []
-    },
+    images: initImagesState(),
     genres: [],
     spokenLanguages: [],
     languages: [],
@@ -87,12 +111,6 @@ const initialState: TvState = {
     seasons: [],
     screenedTheatrically: {
       results: []
-    },
-    similar: {
-      page: 1,
-      results: [],
-      totalResults: 0,
-      totalPages: 0
     },
     status: '',
     posterPath: '',
@@ -119,35 +137,26 @@ const initialState: TvState = {
       twitterId: ''
     },
     keywords: {
-      keywords: []
+      results: []
     },
-    credits: {
-      cast: [],
-      crew: {
-        director: [],
-        screenplay: [],
-        producer: [],
-        directorOfPhotography: [],
-        music: [],
-        art: []
-      }
-    },
+    credits: initCreditsState(),
     videos: {
       results: []
     },
-    recommendations: {
-      page: 1,
-      results: [],
-      totalPages: 0,
-      totalResults: 0
-    }
-  }
+    similar: initDataState<TvListItem>(),
+    recommendations: initDataState<TvListItem>()
+  },
+  tvShowSeasons: initSeasonData()
 };
 
 export const tvSlice = createSlice({
   name: 'tvShows',
   initialState,
-  reducers: {},
+  reducers: {
+    clearSerialData (state) {
+      state.tvShowSeasons = initSeasonData();
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getTvShowsList.pending, (state) => {
@@ -197,6 +206,47 @@ export const tvSlice = createSlice({
         state.lists.onTheAir.isFetching = false;
       })
       .addCase(getOnTheAirTvShows.rejected, (state, action) => {
+        console.log(action);
+        throw new Error(action.error.message);
+        // state.lists.all.data = action.payload.data;
+      })
+
+      .addCase(getTvShowData.pending, (state) => {
+        state.isFetching = true;
+      })
+      .addCase(getTvShowData.fulfilled, (state, action: PayloadAction<TvRespData>) => {
+        const data = action.payload.data;
+        state.data = { ...state.data, ...data, credits: { ...data.credits, crew: formatCrew(data.credits.crew) } };
+        state.isFetching = false;
+      })
+      .addCase(getTvShowData.rejected, (state, action) => {
+        console.log(action);
+        throw new Error(action.error.message);
+        // state.lists.all.data = action.payload.data;
+      })
+
+      .addCase(getEngTvShowData.pending, (state) => {
+        state.isFetching = true;
+      })
+      .addCase(getEngTvShowData.fulfilled, (state, action: PayloadAction<TvShowEngDataResp>) => {
+        state.data = { ...state.data, overview: action.payload.data };
+        state.isFetching = false;
+      })
+      .addCase(getEngTvShowData.rejected, (state, action) => {
+        console.log(action);
+        throw new Error(action.error.message);
+        // state.lists.all.data = action.payload.data;
+      })
+
+      .addCase(getTvShowSeasons.pending, (state) => {
+        state.tvShowSeasons.isFetching = true;
+      })
+      .addCase(getTvShowSeasons.fulfilled, (state, action: PayloadAction<TvSeasonRespData>) => {
+        const data = action.payload.data;
+        state.tvShowSeasons.data = { ...state.data, ...data, credits: { ...data.credits, crew: formatCrew(data.credits.crew) } };
+        state.isFetching = false;
+      })
+      .addCase(getTvShowSeasons.rejected, (state, action) => {
         console.log(action);
         throw new Error(action.error.message);
         // state.lists.all.data = action.payload.data;
