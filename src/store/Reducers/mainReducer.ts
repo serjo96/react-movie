@@ -8,7 +8,7 @@ import Search from './searchReducer';
 import { keywordsSlice } from '~/store/keywords/keywords.slice';
 import { moviesSlice } from '~/store/movies/movies.slice';
 import { genresSlice } from '~/store/genres/genres.slice';
-import { tvSlice } from '~/store/tv/tv.slice.';
+import { tvSlice } from '~/store/tv/tv.slice';
 
 export default combineReducers({
   keywords: keywordsSlice.reducer,
