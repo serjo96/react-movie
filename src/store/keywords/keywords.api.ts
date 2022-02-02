@@ -20,7 +20,7 @@ type KeywordsListPayload = {
 };
 
 type KeywordsListResponse = {
-  isSuccess: boolean;
+  isSuccessful: boolean;
   data: KeywordsListData
 };
 
@@ -105,7 +105,7 @@ export const getKeywordsMedia = createAsyncThunk<KeywordsListResponse, KeywordsL
     const concatPages = ConcatPages<MoviesListItem | TvListItem>({ firstPage, secondPage });
     return {
       data: concatPages,
-      isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+      isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
     };
   }
 );

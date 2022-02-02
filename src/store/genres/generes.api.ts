@@ -6,7 +6,7 @@ import { Genre } from '~/core/types/genres';
 
 export interface ReturnedGenres {
   data: GenresData;
-  isSuccess: boolean;
+  isSuccessful: boolean;
 }
 
 export const getGenres = createAsyncThunk<ReturnedGenres>(
@@ -28,7 +28,7 @@ export const getGenres = createAsyncThunk<ReturnedGenres>(
         movie: genresMovie.data.genres,
         tv: genresTV.data.genres
       },
-      isSuccess: genresMovie.isSuccessRequest && genresTV.isSuccessRequest
+      isSuccessful: genresMovie.isSuccessRequest && genresTV.isSuccessRequest
     };
   }
 );

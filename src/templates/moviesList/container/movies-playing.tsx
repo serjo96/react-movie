@@ -15,7 +15,7 @@ function MoviePlaying () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
   const [prevProps] = useState(search);
-  const { isFetching, isSuccess, data } = useAppSelector(state => state.movies.lists.playing);
+  const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies.lists.playing);
 
   const sendRequest = () => {
     let page = queryString.parse(search, { parseNumbers: true }).page as number;
@@ -60,7 +60,7 @@ function MoviePlaying () {
 
       <ServiceBlock
         isLoading={isFetching}
-        isSuccessful={isSuccess}
+        isSuccessful={isSuccessful}
         fetch={sendRequest}
       >
         <div className='movies-content'>

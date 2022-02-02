@@ -15,7 +15,7 @@ function MoviesAll () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
   const [prevProps] = useState(search);
-  const { isFetching, isSuccess, data } = useAppSelector((state) => state.movies.lists.all);
+  const { isFetching, isSuccessful, data } = useAppSelector((state) => state.movies.lists.all);
 
   const sendRequest = () => {
     let page = queryString.parse(search, { parseNumbers: true }).page as number;
@@ -71,7 +71,7 @@ function MoviesAll () {
         />
         <ServiceBlock
           isLoading={isFetching}
-          isSuccessful={isSuccess}
+          isSuccessful={isSuccessful}
           fetch={sendRequest}
         >
           <MediaList

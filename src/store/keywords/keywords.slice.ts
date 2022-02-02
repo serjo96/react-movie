@@ -4,25 +4,10 @@ import { getKeywordsMedia } from '~/store/keywords/keywords.api';
 import { MoviesListItem } from '~/core/types/movies';
 import { ListData } from '~/core/types/listData';
 import { TvListItem } from '~/core/types/tv';
+import { initListData } from '~/utils/initData';
 
 export type KeywordsListData = ListData<MoviesListItem | TvListItem>;
-
-type KeywordsState = {
-  isFetching: boolean;
-  data: KeywordsListData,
-  isSuccessful: boolean;
-}
-
-const initialState: KeywordsState = {
-  isFetching: false,
-  isSuccessful: true,
-  data: {
-    page: 1,
-    totalResults: 0,
-    totalPages: 0,
-    results: []
-  }
-};
+const initialState = initListData<MoviesListItem | TvListItem>();
 
 export const keywordsSlice = createSlice({
   name: 'keywords',

@@ -14,7 +14,7 @@ function MovieUpcoming () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
   const [prevProps] = useState(search);
-  const { isFetching, isSuccess, data } = useAppSelector(state => state.movies.lists.upcoming);
+  const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies.lists.upcoming);
 
   const sendRequest = () => {
     let page = queryString.parse(search, { parseNumbers: true }).page as number;
@@ -56,7 +56,7 @@ function MovieUpcoming () {
       </Helmet>
       <ServiceBlock
         isLoading={isFetching}
-        isSuccessful={isSuccess}
+        isSuccessful={isSuccessful}
         fetch={this.sendRequest}
       >
         <div className='movies-content'>

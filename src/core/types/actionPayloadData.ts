@@ -1,5 +1,5 @@
 export default interface ActionPayloadData<T> {
   data: T;
-  isSuccess: boolean;
-  isFetching?: boolean;
+  isSuccessful: boolean;
+  isFetching: boolean;
 };

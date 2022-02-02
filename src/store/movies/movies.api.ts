@@ -12,7 +12,7 @@ import { sortCollectionItems } from '~/utils/sortings';
 // TODO: Add rejected handler for api status;
 export interface ReturnedMovieList {
   data: MoviesList;
-  isSuccess: boolean;
+  isSuccessful: boolean;
 }
 
 interface MovieListArgs {
@@ -25,12 +25,12 @@ interface MovieListArgs {
 }
 
 export interface MovieRespData {
-  isSuccess: boolean;
+  isSuccessful: boolean;
   data: MovieDetails & {collection?: Collection};
 }
 
 export interface MovieEngRespData {
-  isSuccess: boolean;
+  isSuccessful: boolean;
   data: MovieDetails['overview']
 }
 
@@ -84,7 +84,7 @@ export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs |
     const concatPages = ConcatPages<MoviesListItem>({ firstPage, secondPage });
     return {
       data: { ...concatPages, sortByDate: date },
-      isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+      isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
     };
   }
 );
@@ -101,7 +101,7 @@ export const getUpcomingMovies = createAsyncThunk<ReturnedMovieList, number | vo
     );
     return {
       data: response.data,
-      isSuccess: response.isSuccessRequest
+      isSuccessful: response.isSuccessRequest
     };
   }
 );
@@ -126,7 +126,7 @@ export const getPopularMovies = createAsyncThunk<ReturnedMovieList, number | voi
     const concatPages = ConcatPages<MoviesListItem>({ firstPage, secondPage });
     return {
       data: concatPages,
-      isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+      isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
     };
   }
 );
@@ -151,7 +151,7 @@ export const getPlayingMovies = createAsyncThunk<ReturnedMovieList, number | voi
     const concatPages = ConcatPages<MoviesListItem>({ firstPage, secondPage });
     return {
       data: concatPages,
-      isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+      isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
     };
   }
 );
@@ -176,7 +176,7 @@ export const getTopMovies = createAsyncThunk<ReturnedMovieList, number | void>(
     const concatPages = ConcatPages<MoviesListItem>({ firstPage, secondPage });
     return {
       data: concatPages,
-      isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+      isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
     };
   }
 );
@@ -194,7 +194,7 @@ export const getMovieData = createAsyncThunk<MovieRespData, {id: string, lang?: 
 
     let response: MovieRespData = {
       data: resp.data,
-      isSuccess: resp.isSuccessRequest
+      isSuccessful: resp.isSuccessRequest
     };
 
     let collection;
@@ -206,7 +206,10 @@ export const getMovieData = createAsyncThunk<MovieRespData, {id: string, lang?: 
       );
 
       const sortedCollection = { ...collection.data, parts: sortCollectionItems(collection.data.parts) };
-      response = { data: { ...resp.data, collection: sortedCollection }, isSuccess: resp.isSuccessRequest && collection.isSuccessRequest };
+      response = {
+        data: { ...resp.data, collection: sortedCollection },
+        isSuccessful: resp.isSuccessRequest && collection.isSuccessRequest
+      };
     }
 
     return response;
@@ -219,13 +222,13 @@ export const getMovieEngOverview = createAsyncThunk<MovieEngRespData, {id: strin
     const resp = await oldClient.get<MovieDetails>(`movie/${id}`,
       {
         language: lang,
-        include_image_language: 'ru,null',
+        include_image_language: 'ru,null'
       }
     );
 
     return {
       data: resp.data.overview,
-      isSuccess: resp.isSuccessRequest
+      isSuccessful: resp.isSuccessRequest
     };
   }
 );

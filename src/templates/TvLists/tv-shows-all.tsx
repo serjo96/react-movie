@@ -15,7 +15,7 @@ function TvShowsAll () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
   const [prevProps] = useState(search);
-  const { isFetching, isSuccess, data } = useAppSelector((state) => state.tvShows.lists.all);
+  const { isFetching, isSuccessful, data } = useAppSelector((state) => state.tvShows.lists.all);
 
   const sendRequest = () => {
     let page = queryString.parse(search, { parseNumbers: true }).page as number;
@@ -72,7 +72,7 @@ function TvShowsAll () {
         />
         <ServiceBlock
           isLoading={isFetching}
-          isSuccessful={isSuccess}
+          isSuccessful={isSuccessful}
           fetch={sendRequest}
         >
 

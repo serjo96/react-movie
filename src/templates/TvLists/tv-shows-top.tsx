@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 
-import {getOnTheAirTvShows, getTopTvShows} from '~/store/tv/tv.api';
+import { getOnTheAirTvShows, getTopTvShows } from '~/store/tv/tv.api';
 import { MediaType } from '~/core/types/media-type';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 
@@ -15,7 +15,7 @@ function TvShowsTop () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
   const [prevProps] = useState(search);
-  const { isFetching, isSuccess, data } = useAppSelector(state => state.tvShows.lists.top);
+  const { isFetching, isSuccessful, data } = useAppSelector(state => state.tvShows.lists.top);
 
   const sendRequest = () => {
     let page = queryString.parse(search, { parseNumbers: true }).page as number;
@@ -59,7 +59,7 @@ function TvShowsTop () {
       </Helmet>
       <ServiceBlock
         isLoading={isFetching}
-        isSuccessful={isSuccess}
+        isSuccessful={isSuccessful}
         fetch={sendRequest}
       >
         <div className='movies-content'>

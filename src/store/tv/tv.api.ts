@@ -8,15 +8,15 @@ import { Languages } from '~/store/Reducers/generalReducer';
 
 export interface ReturnedTvShowsList {
   data: TvListResponseData;
-  isSuccess: boolean;
+  isSuccessful: boolean;
 }
 
 export interface TvRespData {
-  isSuccess: boolean;
+  isSuccessful: boolean;
   data: TvDetails
 }
 export interface TvSeasonRespData {
-  isSuccess: boolean;
+  isSuccessful: boolean;
   data: TvSeason
 }
 
@@ -29,7 +29,7 @@ interface TvListArgs {
 }
 
 export interface TvShowEngDataResp {
-  isSuccess: boolean;
+  isSuccessful: boolean;
   data: TvDetails['overview'];
 }
 
@@ -81,7 +81,7 @@ export const getTvShowsList = createAsyncThunk<ReturnedTvShowsList, TvListArgs |
     const concatPages = ConcatPages<TvListItem>({ firstPage, secondPage });
     return {
       data: { ...concatPages, sortByDate: date },
-      isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+      isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
     };
   }
 );
@@ -106,7 +106,7 @@ export const getAiringTvShows = createAsyncThunk<ReturnedTvShowsList, number | v
     const concatPages = ConcatPages<TvListItem>({ firstPage, secondPage });
     return {
       data: concatPages,
-      isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+      isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
     };
   }
 );
@@ -131,7 +131,7 @@ export const getTopTvShows = createAsyncThunk<ReturnedTvShowsList, number | void
     const concatPages = ConcatPages<TvListItem>({ firstPage, secondPage });
     return {
       data: concatPages,
-      isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+      isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
     };
   }
 );
@@ -156,7 +156,7 @@ export const getOnTheAirTvShows = createAsyncThunk<ReturnedTvShowsList, number |
     const concatPages = ConcatPages<TvListItem>({ firstPage, secondPage });
     return {
       data: concatPages,
-      isSuccess: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+      isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
     };
   }
 );
@@ -173,7 +173,7 @@ export const getTvShowData = createAsyncThunk<TvRespData, {id: string, lang?: La
     );
     return {
       data,
-      isSuccess: isSuccessRequest
+      isSuccessful: isSuccessRequest
     };
   }
 );
@@ -189,7 +189,7 @@ export const getEngTvShowData = createAsyncThunk<TvShowEngDataResp, {id: string,
     );
     return {
       data: data.overview,
-      isSuccess: isSuccessRequest
+      isSuccessful: isSuccessRequest
     };
   }
 );
@@ -205,7 +205,7 @@ export const getTvShowSeasons = createAsyncThunk<TvSeasonRespData, {id: string, 
       });
     return {
       data,
-      isSuccess: isSuccessRequest
+      isSuccessful: isSuccessRequest
     };
   }
 );

@@ -22,7 +22,7 @@ export const initDataState = <T>(): ListData<T> => ({
 
 export const initListData = <T>(): ActionPayloadData<ListData<T>> => ({
   isFetching: false,
-  isSuccess: true,
+  isSuccessful: true,
   data: initDataState<T>()
 });
 
