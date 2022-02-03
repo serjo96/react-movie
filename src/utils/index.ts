@@ -18,3 +18,7 @@ export const chunkArr = <T>(arr: T[], chunkSize: number) => {
   }
   return groups;
 };
+
+export const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};

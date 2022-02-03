@@ -16,6 +16,7 @@ import MovieDescription from '~/ui-components/MovieDescription/MovieDescription'
 import { VideosSection } from '~/ui-components/video-section/videos-section';
 import { MediaType } from '~/core/types/media-type';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { scrollToTop } from '~/utils';
 
 function Movie () {
   const appDispatch = useAppDispatch();
@@ -27,9 +28,6 @@ function Movie () {
 
   const sendRequest = () => {
     appDispatch(getMovieData({ id: movieId }));
-  };
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
