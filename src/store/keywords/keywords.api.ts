@@ -19,7 +19,7 @@ type KeywordsListPayload = {
   adult?: boolean;
 };
 
-type KeywordsListResponse = {
+export type KeywordsListResponse = {
   isSuccessful: boolean;
   data: KeywordsListData
 };
