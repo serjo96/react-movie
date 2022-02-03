@@ -181,7 +181,7 @@ export function MovieAside ({
         <div className='keywords__list'>
           {keywords.map((el, indx) => (
             <Link
-              to={`/keywords_movie/${friendlyUrl(el.name)}-${el.id}`} className='keyword tag'
+              to={`/keywords-movies/${friendlyUrl(el.name)}-${el.id}`} className='keyword tag'
               id={el.id}
               key={indx}
             >{el.name}
