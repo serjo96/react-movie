@@ -157,7 +157,12 @@ export function MovieAside ({
         <div className='production__companies'>
           {productionCompanies.map((el, index) => (
             <div className='company' key={index}>
-              <Link className='link' to={`/company/${friendlyUrl(el.name)}-${el.id}`}>{el.name}</Link>
+              <Link
+                className='link'
+                to={`/company/${friendlyUrl(el.name)}-${el.id}`}
+              >
+                {el.name}
+              </Link>
             </div>
           ))}
         </div>
@@ -168,7 +173,8 @@ export function MovieAside ({
           {genres.map((el, indx) => (
             <div className='genre' key={indx}>
               <Link
-                to={`/movies/all?genre-${urlRusLat(el.name)}-${el.id}`} className='tag'
+                to={`/movies/all?genre-${urlRusLat(el.name)}-${el.id}`}
+                className='tag'
                 id={el.id.toString()}
               >{el.name}
               </Link>
@@ -181,7 +187,8 @@ export function MovieAside ({
         <div className='keywords__list'>
           {keywords.map((el, indx) => (
             <Link
-              to={`/keywords-movies/${friendlyUrl(el.name)}-${el.id}`} className='keyword tag'
+              to={`/keywords-movies/${friendlyUrl(el.name)}-${el.id}`}
+              className='keyword tag'
               id={el.id}
               key={indx}
             >{el.name}
