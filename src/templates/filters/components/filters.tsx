@@ -102,17 +102,15 @@ export default function Filters ({
                   className='filter-catalog-col'
                   key={indx}
                 >
-                  {el.map((item, index) => {
-                    return (
-                      <li
-                        className={filterCatalogClasses(item.id === +selectedGenre)}
-                        id={`${item.id}`}
-                        onClick={() => onClickGenres(item)}
-                        key={index}
-                      >
-                        {item.name}
-                      </li>);
-                  }
+                  {el.map((item, index) => (
+                    <li
+                      className={filterCatalogClasses(item.id === +selectedGenre)}
+                      id={`${item.id}`}
+                      onClick={() => onClickGenres(item)}
+                      key={index}
+                    >
+                      {item.name}
+                    </li>)
                   )}
                 </ul>
               ))}
@@ -211,11 +209,7 @@ export default function Filters ({
             </div>
           </div>}
 
-        <div className={`filter-item ${filterValues.sortBy !== 'popularity'
-            ? filterValues.sortBy ? 'filter-item--active'
-              : ''
-            : ''}`}
-        >
+        <div className={`filter-item ${(filterValues.sortBy !== 'popularity' && filterValues.sortBy) ? 'filter-item--active' : ''}`}>
           <div className='filter-name'>
             <span>{sortByFilterName(sortByList, filterValues.sortBy)}</span>
             <i className='fa fa-angle-down' aria-hidden='true' />
