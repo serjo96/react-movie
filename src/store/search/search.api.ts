@@ -34,8 +34,8 @@ export const getSearchData = createAsyncThunk<SearchResponse, string>(
     };
   });
 
-export const getMainSearchData = createAsyncThunk<SearchResponse, SearchPayload>(
-  'search/getMainSearchData',
+export const onSearchRequest = createAsyncThunk<SearchResponse, SearchPayload>(
+  'search/onSearchRequest',
   async ({
     words,
     page = 1,
@@ -45,6 +45,7 @@ export const getMainSearchData = createAsyncThunk<SearchResponse, SearchPayload>
     words: '',
     adult: false
   }) => {
+    console.log(words);
     const [firstPage, secondPage] = await oldClient.all<SearchResponse['data']>([
       oldClient.get('search/multi',
         {
