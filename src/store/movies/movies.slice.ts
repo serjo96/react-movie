@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { MovieDetails } from '~/core/types/movieDetails';
-import { Crew } from '~/core/types/crew';
 import { Collection } from '~/core/types/collection';
-import {MovieListItem, MoviesList, MoviesListItem} from '~/core/types/movies';
+import { MovieListItem, MoviesList, MoviesListItem } from '~/core/types/movies';
 import ActionPayloadData from '~/core/types/actionPayloadData';
 
 import {
@@ -17,7 +16,7 @@ import {
 } from '~/store/movies/movies.api';
 import { formatCrew } from '~/utils/formatCrew';
 import { Credits } from '~/core/types/credits';
-import {CrewState, initCreditsState, initDataState, initImagesState, initListData} from '~/utils/initData';
+import { CrewState, initCreditsState, initDataState, initImagesState, initListData } from '~/utils/initData';
 
 type MovieDetailState = Omit<MovieDetails, 'credits'> & {
   collection?: Collection;
@@ -95,12 +94,7 @@ const initialState: MoviesState = {
     keywords: {
       keywords: []
     },
-    lists: {
-      page: 1,
-      totalResults: 0,
-      totalPages: 0,
-      results: []
-    },
+    lists: initDataState<MovieListItem>(),
     credits: initCreditsState(),
     video: false,
     videos: {
