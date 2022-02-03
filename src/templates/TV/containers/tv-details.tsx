@@ -31,11 +31,15 @@ function TvDetails () {
   const tvId = id.split('-').pop();
 
   const sendRequest = () => {
-    if (season) {
-      appDispatch(getTvShowSeasons({ id: tvId, season }));
-    } else {
-      appDispatch(getTvShowData({ id: tvId }));
-    }
+    appDispatch(getTvShowData({ id: tvId }));
+  };
+
+  const sendSeasonRequest = () => {
+    appDispatch(getTvShowSeasons({ id: tvId, season }));
+  };
+
+  const handlerOnFetchEngData = () => {
+    appDispatch(getEngTvShowData({ id: `${tvId}`, lang: Languages.EN }));
   };
 
   const scrollToTop = () => {
@@ -48,7 +52,7 @@ function TvDetails () {
     }
 
     if (season && !tvShowSeasons.isFetching) {
-      sendRequest();
+      sendSeasonRequest();
       scrollToTop();
     }
   }, []);
@@ -63,7 +67,7 @@ function TvDetails () {
   useEffect(() => {
     if (season && season !== prevProps.season) {
       setProps({ ...prevProps, season: season });
-      sendRequest();
+      sendSeasonRequest();
       scrollToTop();
     }
 
@@ -71,10 +75,6 @@ function TvDetails () {
       appDispatch(tvActions.clearSerialData());
     };
   }, [season]);
-
-  const handlerOnFetchEngData = () => {
-    appDispatch(getEngTvShowData({ id: `${tvId}`, lang: Languages.EN }));
-  };
 
   let componentsData;
 
