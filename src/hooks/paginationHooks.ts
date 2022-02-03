@@ -6,6 +6,7 @@ export const usePagination = () => {
   const { search } = useLocation();
   const history = useHistory();
   const getUrlObjectState = {
+    ...queryString.parse(search, { parseNumbers: true, parseBooleans: true }),
     genre: queryString.parse(search, { parseNumbers: true }).genre as number,
     adult: queryString.parse(search, { parseBooleans: true }).adult as boolean,
     page: queryString.parse(search, { parseNumbers: true }).page as number,
