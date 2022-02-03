@@ -44,7 +44,7 @@ const MediaCast = ({ cast }: {cast: Cast[]}) => {
             hide: false,
             draggable: true
           }}
-          mousewheel={cast.length > 7 && { sensitivity: 150 }}
+          mousewheel={(cast.length > 7) && { sensitivity: 150 }}
         >
           {cast.map((actor, indx) => (
             <SwiperSlide key={indx}>
