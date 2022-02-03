@@ -239,7 +239,7 @@ function TvAside ({
         <div className='keywords__list'>
           {keywords.map((el, indx) => (
             <Link
-              to={`/keywords_tv/${friendlyUrl(el.name)}-${el.id}`} className='keyword tag'
+              to={`/keywords-tv/${friendlyUrl(el.name)}-${el.id}`} className='keyword tag'
               id={el.id} key={indx}
             >{el.name}
             </Link>))}
