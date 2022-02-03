@@ -64,8 +64,7 @@ const MediaCast = ({ cast }: {cast: Cast[]}) => {
                 </div>
               </Link>
             </SwiperSlide>
-          )
-          )}
+          ))}
         </Swiper>
 
       </div>
