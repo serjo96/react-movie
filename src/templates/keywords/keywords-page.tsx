@@ -68,7 +68,7 @@ function KeywordsPage () {
   const titleSearch = id.split('-')[0].replace(/_/g, ' ');
   const pageTitle = isMoviesPage ? 'Фильмы' : 'Сериалы';
   return (
-    <div className='main'>
+    <div className='main main--media-list'>
       <Helmet>
         <title>{pageTitle} по ключевому слову: {titleSearch}</title>
       </Helmet>
