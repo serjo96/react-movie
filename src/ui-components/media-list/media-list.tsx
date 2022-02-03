@@ -5,6 +5,7 @@ import { ListData } from '~/core/types/listData';
 import { MoviesListItem } from '~/core/types/movies';
 import { TvListItem } from '~/core/types/tv';
 import { MediaType } from '~/core/types/media-type';
+import { SearchResultItem } from '~/core/types/search';
 import { Crew } from '~/core/types/crew';
 
 import { friendlyData } from '~/utils/format';
@@ -12,7 +13,7 @@ import MediaItem from '~/ui-components/media-item/media-item';
 import './media-list.sass';
 
 interface MyProps {
-  mediaList: ListData<MoviesListItem | TvListItem | Crew>
+  mediaList: ListData<MoviesListItem | TvListItem | SearchResultItem | Crew>
   typeList: MediaType;
   count?: number;
   movieListTitle: string;
@@ -20,7 +21,7 @@ interface MyProps {
   listLink?: string;
 }
 
-type ItemType = MoviesListItem & TvListItem & Crew & {mediaType?: MediaType};
+type ItemType = MoviesListItem & TvListItem & SearchResultItem & Crew & {mediaType?: MediaType};
 
 const MediaList = ({
   movieListMain,
