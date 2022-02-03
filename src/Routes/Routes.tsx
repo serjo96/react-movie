@@ -13,9 +13,9 @@ import TvShowsTop from '~/templates/TvLists/tv-shows-top';
 import TvDetails from '~/templates/TV/containers/tv-details';
 
 import People from '~/templates/Person/containers/Person.jsx';
-import Search from '~/templates/Search/Search.jsx';
 import Company from '~/templates/Company/Company';
 import KeywordsPage from '~/templates/keywords/keywords-page';
+import SearchPage from '~/templates/Search/search-page';
 
 class Routes extends Component {
   render () {
@@ -33,7 +33,7 @@ class Routes extends Component {
         <Route exact path='/tv/:id/season-:season' component={TvDetails} />
         <Route exact path='/person/:id' component={People} />
         <Route exact path='/company/:id' component={Company} />
-        <Route path='/search' component={Search} />
+        <Route path='/search' component={SearchPage} />
         <Route path='/movies/all' component={MoviesAll} />
         <Route path='/keywords-movies/:id' component={KeywordsPage} />
         <Route path='/keywords-tv-shows/:id' component={KeywordsPage} />
