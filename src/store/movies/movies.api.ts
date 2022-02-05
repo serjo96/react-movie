@@ -221,7 +221,7 @@ export const getMovieEngOverview = createAsyncThunk<MovieEngRespData, {id: strin
   async ({ id, lang = Languages.EN }) => {
     const resp = await oldClient.get<MovieDetails>(`movie/${id}`,
       {
-        language: lang,
+        language: lang
       }
     );
 
