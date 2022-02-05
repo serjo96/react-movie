@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Search from '../Search/SearchHeader';
-
-interface MyState {
-  previousTop: 0
-}
-
-type MyProps = {
-  history: History
-}
+import SearchHeader from '~/templates/Search/search-header';
 
 export default class Header extends Component {
   state = {
@@ -58,7 +50,7 @@ export default class Header extends Component {
 
   render () {
     return (
-      <div className='header'>
+      <header className='header'>
         <div className='mobile-nav-trigger'>
           <span />
         </div>
@@ -70,8 +62,8 @@ export default class Header extends Component {
         <div className='search-mobile-trigger link'>
           <i className='fa fa-search' aria-hidden='true' />
         </div>
-        <Search history={this.props.history} />
-      </div>
+        <SearchHeader />
+      </header>
     );
   }
 }
