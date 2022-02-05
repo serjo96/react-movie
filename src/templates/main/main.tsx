@@ -69,7 +69,7 @@ function Main () {
       </main>
     );
   }
-  return (<Spinner />);
+  return (<Spinner isFullScreen />);
 }
 
 export default Main;
