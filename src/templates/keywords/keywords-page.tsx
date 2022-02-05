@@ -10,12 +10,14 @@ import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import FilterList from '~/templates/filters/containers/filter-list';
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '~/templates/service/service-block';
+import { usePrevious } from '~/hooks/usePrevious';
+import { scrollToTop } from '~/utils';
 
 function KeywordsPage () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
   const { id } = useParams<{id: string}>();
-  const [prevProps] = useState(search);
+  const prevProps = usePrevious(search);
   const { isFetching, isSuccessful, data } = useAppSelector((state) => state.keywords);
 
   const isMoviesPage = useRouteMatch('/keywords-movies/:id');
@@ -50,10 +52,6 @@ function KeywordsPage () {
     appDispatch(getKeywordsMedia(payload));
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   useEffect(() => {
     if (!isFetching) {
       sendRequest();
@@ -68,7 +66,7 @@ function KeywordsPage () {
   const titleSearch = id.split('-')[0].replace(/_/g, ' ');
   const pageTitle = isMoviesPage ? 'Фильмы' : 'Сериалы';
   return (
-    <div className='main main--media-list'>
+    <main className='main main--media-list'>
       <Helmet>
         <title>{pageTitle} по ключевому слову: {titleSearch}</title>
       </Helmet>
@@ -95,7 +93,7 @@ function KeywordsPage () {
         </ServiceBlock>
 
       </div>
-    </div>
+    </main>
   );
 }
 

@@ -11,18 +11,19 @@ import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import { MediaType } from '~/core/types/media-type';
 import queryString from 'query-string';
 import { friendlyUrl } from '~/utils/format';
+import { usePrevious } from '~/hooks/usePrevious';
+import Input from '~/ui-components/input/input';
 
 function SearchPage () {
   const appDispatch = useAppDispatch();
   const history = useHistory();
   const { search } = useLocation();
-  const [prevProps] = useState(search);
+  const prevProps = usePrevious(search);
   const queryParams = queryString.parse(search, { parseNumbers: true });
   const [value, setValue] = useState(queryParams.query as string || '');
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.search.pageSearch);
 
   const sendRequest = () => {
-    console.log(queryParams);
     appDispatch(onSearchRequest({
       words: value,
       page: queryParams.page as number
@@ -33,6 +34,7 @@ function SearchPage () {
     if (queryParams.query && !isFetching) {
       sendRequest();
       scrollToTop();
+      setValue(queryParams.query as string);
     }
   }, []);
 
@@ -40,15 +42,16 @@ function SearchPage () {
     if (search !== prevProps) {
       sendRequest();
       scrollToTop();
+      setValue(queryParams.query as string);
     }
   }, [search]);
 
-  const onInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
+  const onInput = (value: string) => {
+    setValue(value);
   };
 
-  const onKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' && value.length) {
+  const onKeyDown = (key: string) => {
+    if (key === 'Enter' && value.length) {
       const query = friendlyUrl(value);
       history.push({
         search: queryString.stringify({ query }, { sort: false })
@@ -68,14 +71,14 @@ function SearchPage () {
   const titleSearch = data.results.length ? `Результаты поиска «${(queryParams.query as string).replace('_', ' ')}» (${data.totalResults})` : 'Поиск на movie base';
 
   return (
-    <div className='search-page main main--media-list '>
+    <main className='search-page main main--media-list '>
 
       <Helmet>
         <title>{titleSearch}</title>
       </Helmet>
       <div className='movies-content iphonex'>
         <div className='search-field-wrapper'>
-          <input
+          <Input
             className='search__field'
             name='Search'
             type='search'
@@ -107,7 +110,7 @@ function SearchPage () {
           </div>
         </ServiceBlock>
       </div>
-    </div>
+    </main>
   );
 }
 

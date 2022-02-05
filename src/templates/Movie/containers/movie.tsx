@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 
@@ -17,11 +17,12 @@ import { VideosSection } from '~/ui-components/video-section/videos-section';
 import { MediaType } from '~/core/types/media-type';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { scrollToTop } from '~/utils';
+import { usePrevious } from '~/hooks/usePrevious';
 
 function Movie () {
   const appDispatch = useAppDispatch();
   const { id } = useParams<{id: string}>();
-  const [prevProps] = useState(id);
+  const prevProps = usePrevious(id);
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies);
   const movie = data;
   const movieId = id.split('-').pop();
@@ -53,7 +54,7 @@ function Movie () {
       isSuccessful={isSuccessful}
       fetch={sendRequest}
     >
-      <div className='movie'>
+      <main className='movie'>
         <Helmet>
           <title>{movie.title}</title>
         </Helmet>
@@ -122,7 +123,7 @@ function Movie () {
           listName='Вам может понравиться'
           typeList={MediaType.MOVIE}
         />
-      </div>
+      </main>
     </ServiceBlock>
   );
 }

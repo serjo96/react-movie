@@ -10,11 +10,13 @@ import { MediaType } from '~/core/types/media-type';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '../../service/service-block';
+import { usePrevious } from '~/hooks/usePrevious';
+import { scrollToTop } from '~/utils';
 
 function MoviePlaying () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
-  const [prevProps] = useState(search);
+  const prevProps = usePrevious(search);
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies.lists.playing);
 
   const sendRequest = () => {
@@ -33,10 +35,6 @@ function MoviePlaying () {
     }
 
     appDispatch(getPlayingMovies(page));
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {

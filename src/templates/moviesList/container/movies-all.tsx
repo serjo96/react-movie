@@ -10,16 +10,17 @@ import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import FilterList from '~/templates/filters/containers/filter-list';
 import ServiceBlock from '~/templates/service/service-block';
 import MediaList from '~/ui-components/media-list/media-list';
+import { usePrevious } from '~/hooks/usePrevious';
+import {scrollToTop} from "~/utils";
 
 function MoviesAll () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
-  const [prevProps] = useState(search);
+  const prevProps = usePrevious(search);
   const { isFetching, isSuccessful, data } = useAppSelector((state) => state.movies.lists.all);
 
   const sendRequest = () => {
     let page = queryString.parse(search, { parseNumbers: true }).page as number;
-
 
     if (!page) {
       page = undefined;
@@ -39,13 +40,9 @@ function MoviesAll () {
       sortType: queryString.parse(search).sort_by as string,
       date: queryString.parse(search).year as string,
       region: queryString.parse(search).country as string,
-      adult: queryString.parse(search, { parseBooleans: true }).adult as boolean,
+      adult: queryString.parse(search, { parseBooleans: true }).adult as boolean
     };
     appDispatch(getMoviesList(payload));
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {

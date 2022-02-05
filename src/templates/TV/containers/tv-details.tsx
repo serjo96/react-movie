@@ -19,6 +19,7 @@ import TvShowSeason from '~/templates/TV/components/tv-show-season';
 import MediaRecommendations from '~/templates/media-page/media-recommendations';
 import MediaCast from '~/templates/media-page/media-cast';
 import ServiceBlock from '~/templates/service/service-block';
+import { scrollToTop } from '~/utils';
 
 export type SeasonRouteMatchParams = {season?: string};
 
@@ -40,10 +41,6 @@ function TvDetails () {
 
   const handlerOnFetchEngData = () => {
     appDispatch(getEngTvShowData({ id: `${tvId}`, lang: Languages.EN }));
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -101,12 +98,12 @@ function TvDetails () {
   }
 
   return (
-    <div className='movie'>
-      <ServiceBlock
-        isLoading={isFetching}
-        isSuccessful={isSuccessful || tvShowSeasons.isSuccessful}
-        fetch={sendRequest}
-      >
+    <ServiceBlock
+      isLoading={isFetching}
+      isSuccessful={isSuccessful || tvShowSeasons.isSuccessful}
+      fetch={sendRequest}
+    >
+      <main className='movie'>
         <Helmet>
           <title>{data.name}</title>
         </Helmet>
@@ -201,8 +198,8 @@ function TvDetails () {
           typeList={MediaType.TV}
         />
 
-      </ServiceBlock>
-    </div>
+      </main>
+    </ServiceBlock>
   );
 }
 

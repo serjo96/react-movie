@@ -9,11 +9,13 @@ import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { getUpcomingMovies } from '~/store/movies/movies.api';
 import { MediaType } from '~/core/types/media-type';
+import { usePrevious } from '~/hooks/usePrevious';
+import { scrollToTop } from '~/utils';
 
 function MovieUpcoming () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
-  const [prevProps] = useState(search);
+  const prevProps = usePrevious(search);
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies.lists.upcoming);
 
   const sendRequest = () => {
@@ -32,10 +34,6 @@ function MovieUpcoming () {
     }
 
     appDispatch(getUpcomingMovies(page));
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
