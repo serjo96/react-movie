@@ -5,6 +5,7 @@ export interface SearchResultItem {
   adult?: boolean;
   backdropPath: null | string;
   genreIds: number[];
+  gender: number;
   id: number;
   mediaType: MediaType;
   originalLanguage: OriginalLanguage;
@@ -12,6 +13,7 @@ export interface SearchResultItem {
   overview: string;
   popularity: number;
   posterPath: string;
+  knownForDepartment: string;
   profilePath?: string;
   releaseDate?: string;
   title?: string;
