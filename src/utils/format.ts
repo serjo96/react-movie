@@ -1,7 +1,7 @@
 // TODO: to refactoring
 import { Genre } from '~/core/types/genres';
 
-export function declOfNum (number: number, titles: string[]) {
+export function declOfNum (number: number, titles: [string, string, string]) {
   return titles[(number % 10 === 1 && number % 100 !== 11) ? 0 : number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20) ? 1 : 2];
 }
 
