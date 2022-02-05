@@ -12,12 +12,13 @@ export interface SearchResultItem {
   overview: string;
   popularity: number;
   posterPath: string;
-  releaseDate?: Date;
+  profilePath?: string;
+  releaseDate?: string;
   title?: string;
   video?: boolean;
   voteAverage: number;
   voteCount: number;
-  firstAirDate?: Date;
+  firstAirDate?: string;
   name?: string;
   originCountry?: string[];
   originalName?: string;
