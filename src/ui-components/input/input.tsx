@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import useDebounce from '~/hooks/use-debounce';
+import { usePrevious } from '~/hooks/usePrevious';
 
 interface MyProps{
   value: string;
@@ -18,7 +19,9 @@ interface MyProps{
 const Input = ({
   value,
   onChange,
+  onInput,
   onFocus,
+  onKeyDown,
   className,
   type = 'text',
   debounceTimeout,
@@ -26,8 +29,15 @@ const Input = ({
   name
 }: MyProps) => {
   const inputClass = classNames('input-field', className);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(value || '');
+  const prevProps = usePrevious(value);
   const debouncedSearchTerm = useDebounce(inputValue, debounceTimeout);
+
+  useEffect(() => {
+    if (typeof value !== 'undefined' && prevProps !== value && inputValue !== value) {
+      setInputValue(value);
+    }
+  }, [value]);
 
   useEffect(() => {
     if (debounceTimeout && debouncedSearchTerm) {
@@ -43,15 +53,25 @@ const Input = ({
     }
   };
 
+  const onComponentInput = (event : React.ChangeEvent<HTMLInputElement>) => {
+    onInput && onInput(event.target.value);
+  };
+
   const onFocusInput = () => {
     onFocus && onFocus();
+  };
+
+  const onKeyDownInput = (event: React.KeyboardEvent) => {
+    onKeyDown && onKeyDown(event.key);
   };
 
   return (
     <input
       className={inputClass}
       onChange={onChangeInput}
+      onInput={onComponentInput}
       onFocus={onFocusInput}
+      onKeyDown={onKeyDownInput}
       placeholder={placeholder}
       type={type}
       name={name}
