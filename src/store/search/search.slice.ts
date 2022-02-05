@@ -2,51 +2,31 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { initListData } from '~/utils/initData';
 import { ListData } from '~/core/types/listData';
 import { SearchResultItem } from '~/core/types/search';
+import ActionPayloadData from '~/core/types/actionPayloadData';
 import { onSearchRequest, getSearchData, SearchResponse } from '~/store/search/search.api';
 
-export interface HeaderSearchState {
-  value: string;
-  headerSearchData: {
-    isFetching: boolean;
-    isSuccessful: boolean;
-    data: ListData<SearchResultItem>
-  };
-}
-export interface SearchOnPageState {
-    isFetching: boolean;
-    isSuccessful: boolean;
-    data: ListData<SearchResultItem>
-}
-
 export interface SearchState {
-  headerSearch: HeaderSearchState;
-  pageSearch: SearchOnPageState;
+  headerSearch: ActionPayloadData<ListData<SearchResultItem>>;
+  pageSearch: ActionPayloadData<ListData<SearchResultItem>>;
 }
 
 const initialState = (): SearchState => ({
-  headerSearch: {
-    value: '',
-    headerSearchData: initListData<SearchResultItem>()
-  },
+  headerSearch: initListData<SearchResultItem>(),
   pageSearch: initListData<SearchResultItem>()
 });
 
 export const searchSlice = createSlice({
   name: 'keywords',
   initialState: initialState(),
-  reducers: {
-    setHeaderSearchValue (state, action: PayloadAction<string>) {
-      state.headerSearch.value = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getSearchData.pending, (state) => {
-        state.headerSearch.headerSearchData.isFetching = true;
+        state.headerSearch.isFetching = true;
       })
       .addCase(getSearchData.fulfilled, (state, action: PayloadAction<SearchResponse>) => {
-        state.headerSearch.headerSearchData.data = action.payload.data;
-        state.headerSearch.headerSearchData.isFetching = false;
+        state.headerSearch.data = action.payload.data;
+        state.headerSearch.isFetching = false;
       })
       .addCase(getSearchData.rejected, (state, action) => {
         console.log(action);
@@ -68,5 +48,3 @@ export const searchSlice = createSlice({
       });
   }
 });
-
-export const { setHeaderSearchValue } = searchSlice.actions;
