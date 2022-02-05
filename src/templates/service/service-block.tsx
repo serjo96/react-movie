@@ -20,7 +20,7 @@ const ServiceBlock = ({
 
   return (
     <React.Fragment>
-      {showPreloader && <Spinner />}
+      {showPreloader && <Spinner isFullScreen />}
       {!isSuccessful && <TryAgain fetch={fetch} />}
       {allDataIsReady && children}
     </React.Fragment>
