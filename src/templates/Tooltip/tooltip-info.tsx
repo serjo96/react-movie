@@ -100,7 +100,7 @@ class TooltipInfo extends Component {
 
   get getOverview () {
     const { engData, typeItem, id, overview } = this.props;
-    return engData[typeItem][id] ? engData[typeItem][id].overview : overview;
+    return engData[typeItem] && engData[typeItem][id] ? engData[typeItem][id].overview : overview;
   }
 
   render () {
