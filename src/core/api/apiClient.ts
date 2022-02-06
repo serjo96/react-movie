@@ -64,8 +64,9 @@ export default class ApiClient {
 
     private async _checkResponseStatus<R> (response: Response): Promise<ClientResponse<R>> {
       if (response.status >= 200 && response.status < 400) {
-        const data = await response.json();
-        return { isSuccessRequest: response.status >= 200 && response.status < 400, status: response.status, data };
+        const data = await response.text();
+        const parsedResponse: R = parseJSONCamelCase(data);
+        return { isSuccessRequest: response.status >= 200 && response.status < 400, status: response.status, data: parsedResponse };
       } else {
         throw new ResponseError(response);
       }
@@ -75,7 +76,7 @@ export default class ApiClient {
       const apiPath = new URL(path, this.url);
       return fetch(apiPath + this._buildQueryParams(query),
         { ...this.options, method: method, headers: this.headers, body: body })
-        .then(this._checkResponseStatus);
+        .then(resp => this._checkResponseStatus<R>(resp));
     }
 
     setHeaders (headers: HeadersInit, override = true) {
