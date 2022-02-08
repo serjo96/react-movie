@@ -1,7 +1,6 @@
 import React, { Component, useEffect } from 'react';
-import {RouteComponentProps, useHistory, useLocation, withRouter} from 'react-router-dom';
+import { useHistory, useLocation, withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { connect, MapDispatchToProps } from 'react-redux';
 import Routes from './Routes/Routes';
 
 import Header from './templates/Head/Head';

@@ -151,7 +151,14 @@ export const moviesSlice = createSlice({
       .addCase(getMovieData.fulfilled, (state, action: PayloadAction<MovieRespData>) => {
         const data = action.payload.data;
         state.isFetching = false;
-        state.data = { ...state.data, ...data, credits: { ...data.credits, crew: formatCrew(data.credits.crew) } };
+        state.data = {
+          ...state.data,
+          ...data,
+          credits: {
+            ...data.credits,
+            crew: formatCrew(data.credits.crew)
+          }
+        };
       })
       .addCase(getMovieEngOverview.pending, (state) => {
         state.isFetching = true;

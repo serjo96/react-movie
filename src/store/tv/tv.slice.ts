@@ -1,6 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { CrewState, initCreditsState, initDataState, initImagesState, initListData } from '~/utils/initData';
+import {
+  CrewState,
+  initCreditsState,
+  initDataState,
+  initExternalIds,
+  initImagesState,
+  initListData
+} from '~/utils/initData';
 import ActionPayloadData from '~/core/types/actionPayloadData';
 import { TvListItem, TvSeason } from '~/core/types/tv';
 import { ListData } from '~/core/types/listData';
@@ -126,16 +133,7 @@ const initialState: TvState = {
       results: []
     },
     networks: [],
-    externalIds: {
-      imdbId: '',
-      freebaseId: '',
-      freebaseMid: '',
-      tvdbId: 0,
-      tvrageId: 0,
-      facebookId: '',
-      instagramId: '',
-      twitterId: ''
-    },
+    externalIds: initExternalIds(),
     keywords: {
       results: []
     },
