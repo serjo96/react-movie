@@ -9,6 +9,7 @@ import { moviesSlice } from '~/store/movies/movies.slice';
 import { genresSlice } from '~/store/genres/genres.slice';
 import { tvSlice } from '~/store/tv/tv.slice';
 import { searchSlice } from '~/store/search/search.slice';
+import { personSlice } from '~/store/person/person.slice';
 
 export default combineReducers({
   keywords: keywordsSlice.reducer,
@@ -16,6 +17,7 @@ export default combineReducers({
   genres: genresSlice.reducer,
   tvShows: tvSlice.reducer,
   search: searchSlice.reducer,
+  person: personSlice.reducer,
   General,
   Movies,
   TVs,
