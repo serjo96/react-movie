@@ -3,6 +3,7 @@ import { ListData } from '~/core/types/listData';
 import { Cast } from '~/core/types/cast';
 import { Crew } from '~/core/types/crew';
 import { Images } from '~/core/types/images';
+import { ExternalIds } from '~/core/types/tvDetails';
 
 export type CrewState = {
   director: Crew[],
@@ -42,4 +43,15 @@ export const initImagesState = (): Images => ({
   backdrops: [],
   posters: [],
   logos: []
+});
+
+export const initExternalIds = (): ExternalIds => ({
+  imdbId: '',
+  freebaseId: '',
+  freebaseMid: '',
+  tvdbId: 0,
+  tvrageId: 0,
+  facebookId: '',
+  instagramId: '',
+  twitterId: ''
 });
