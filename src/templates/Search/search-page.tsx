@@ -99,7 +99,7 @@ function SearchPage () {
           <div className='search-results'>
             <MediaList
               movieListTitle={`${titleSearch}`}
-              mediaList={data}
+              mediaList={data.results}
               typeList={MediaType.MIXED}
             />
 

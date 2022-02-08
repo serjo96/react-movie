@@ -62,7 +62,7 @@ function TVonTheAir () {
         <div className='movies-content'>
           <MediaList
             movieListTitle={`Текущие сериалы (${data.totalResults})`}
-            mediaList={data}
+            mediaList={data.results}
             typeList={MediaType.TV}
           />
 

@@ -64,7 +64,7 @@ function MoviePlaying () {
         <div className='movies-content'>
           <MediaList
             movieListTitle={`Сейчас в кино (${data.totalResults})`}
-            mediaList={data}
+            mediaList={data.results}
             typeList={MediaType.MOVIE}
           />
 

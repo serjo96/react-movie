@@ -76,7 +76,7 @@ function TvShowsAll () {
 
           <MediaList
             movieListTitle={`Всего сериалов (${data.totalResults})`}
-            mediaList={data}
+            mediaList={data.results}
             typeList={MediaType.TV}
           />
 

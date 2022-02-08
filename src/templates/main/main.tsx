@@ -35,7 +35,8 @@ function Main () {
         <div className='movies-content movies-content--main-page'>
           <MediaList
             movieListTitle='Сейчас в кино'
-            mediaList={playing.data}
+            mediaList={playing.data.results}
+            mediaListDates={playing.data.dates}
             count={11}
             movieListMain
             listLink='playing'
@@ -43,7 +44,7 @@ function Main () {
           />
           <MediaList
             movieListTitle='Скоро в кино'
-            mediaList={upcoming.data}
+            mediaList={upcoming.data.results}
             count={11}
             movieListMain
             listLink='upcoming'
@@ -51,7 +52,7 @@ function Main () {
           />
           <MediaList
             movieListTitle='Топ фильмы'
-            mediaList={top.data}
+            mediaList={top.data.results}
             count={11}
             movieListMain={false}
             listLink='top'
@@ -59,7 +60,7 @@ function Main () {
           />
           <MediaList
             movieListTitle='Все фильмы'
-            mediaList={all.data}
+            mediaList={all.data.results}
             count={11}
             movieListMain
             listLink='all'

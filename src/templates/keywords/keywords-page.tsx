@@ -82,7 +82,7 @@ function KeywordsPage () {
         >
           <MediaList
             movieListTitle={`${pageTitle} по ключевому слову: ${titleSearch} (${data.totalResults})`}
-            mediaList={data}
+            mediaList={data.results}
             typeList={typePage}
           />
 

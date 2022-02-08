@@ -62,7 +62,7 @@ function TvAiring () {
         <div className='movies-content'>
           <MediaList
             movieListTitle={`Сейчас на тв (${data.totalResults})`}
-            mediaList={data}
+            mediaList={data.results}
             typeList={MediaType.TV}
           />
           <PageSwitcher

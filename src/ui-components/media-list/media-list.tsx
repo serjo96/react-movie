@@ -11,9 +11,14 @@ import { Crew } from '~/core/types/crew';
 import { friendlyData } from '~/utils/format';
 import MediaItem from '~/ui-components/media-item/media-item';
 import './media-list.sass';
+import { MovieCreditsCast } from '~/core/types/perosn-details';
 
 interface MyProps {
-  mediaList: ListData<MoviesListItem | TvListItem | SearchResultItem | Crew>
+  mediaList: Array<MoviesListItem | TvListItem | SearchResultItem | MovieCreditsCast | Crew>
+  mediaListDates?: {
+    minimum: string;
+    maximum: string;
+  };
   typeList: MediaType;
   count?: number;
   movieListTitle: string;
@@ -25,6 +30,7 @@ type ItemType = MoviesListItem & TvListItem & SearchResultItem & Crew & {mediaTy
 
 const MediaList = ({
   movieListMain,
+  mediaListDates,
   listLink,
   count,
   typeList,
@@ -73,12 +79,12 @@ const MediaList = ({
   };
 
   const RenderDataRange = () => {
-    if (!mediaList.dates) {
+    if (!mediaListDates) {
       return null;
     }
     return (
       <div className='movies__data-range'>
-        {friendlyData(mediaList.dates.minimum)} - {friendlyData(mediaList.dates.maximum)}
+        {friendlyData(mediaListDates.minimum)} - {friendlyData(mediaListDates.maximum)}
       </div>
     );
   };
@@ -93,7 +99,7 @@ const MediaList = ({
       </div>
 
       <div className='movies__list'>
-        {mediaList.results.map((item, index) => renderMovie(item as ItemType, index))}
+        {mediaList.map((item, index) => renderMovie(item as ItemType, index))}
       </div>
 
     </div>

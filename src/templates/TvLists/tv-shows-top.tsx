@@ -63,7 +63,7 @@ function TvShowsTop () {
         <div className='movies-content'>
           <MediaList
             movieListTitle='Топ сериалы'
-            mediaList={data}
+            mediaList={data.results}
             typeList={MediaType.TV}
           />
           <PageSwitcher

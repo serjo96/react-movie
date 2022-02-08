@@ -73,7 +73,7 @@ function MoviesAll () {
         >
           <MediaList
             movieListTitle={`Всего фильмов (${data.totalResults})`}
-            mediaList={data}
+            mediaList={data.results}
             typeList={MediaType.MOVIE}
           />
 
