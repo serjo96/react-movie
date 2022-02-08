@@ -24,7 +24,7 @@ const MovieDescription = ({ short, overview, fetchEngData }: MyProps) => {
   } else {
     return (
       <div className='movie-tooltip__no-description'>
-        <div>Ой! Кажется описание к этому произведению отсутствует</div>
+        <div>Ой! Кажется описание отсутствует</div>
         <div className='load-description-eng'>
           <button onClick={fetchEngData}>Загрузить описание на английском?</button>
         </div>
