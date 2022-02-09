@@ -234,7 +234,7 @@ function Person () {
 
               </div>
               <div className='description'>
-                //TODO: add description component
+                {/* TODO: add description component */}
                 <p className='description__text'>{data.biography ? data.biography : 'Биография пока не добавленна'}</p>
               </div>
 
