@@ -17,6 +17,7 @@ import { VideosSection } from '~/ui-components/video-section/videos-section';
 import { MediaType } from '~/core/types/media-type';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { scrollToTop } from '~/utils';
+import './movie.sass';
 
 function Movie () {
   const appDispatch = useAppDispatch();

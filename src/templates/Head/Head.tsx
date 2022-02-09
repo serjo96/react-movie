@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import SearchHeader from '~/templates/Search/search-header';
+import './header.sass';
 
 export default class Header extends Component {
   state = {

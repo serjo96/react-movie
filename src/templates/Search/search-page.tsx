@@ -11,8 +11,9 @@ import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import { MediaType } from '~/core/types/media-type';
 import queryString from 'query-string';
 import { friendlyUrl } from '~/utils/format';
-import { usePrevious } from '~/hooks/usePrevious';
 import Input from '~/ui-components/input/input';
+import './search-page.sass'
+
 
 function SearchPage () {
   const appDispatch = useAppDispatch();

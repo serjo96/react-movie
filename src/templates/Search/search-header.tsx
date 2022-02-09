@@ -12,6 +12,7 @@ import { useOnClickOutside } from '~/hooks/useOnClickOutside';
 import { getSearchData } from '~/store/search/search.api';
 import { SearchResultItem } from '~/core/types/search';
 import { MediaType } from '~/core/types/media-type';
+import './search-header.sass';
 
 function SearchHeader () {
   const componentRef = useRef(null);
