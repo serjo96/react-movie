@@ -1,6 +1,6 @@
 import React from 'react';
 import Spinner from '~/ui-components/spinner/Spinner';
-import TryAgain from '../TryAgain/TryAgain';
+import TryAgain from '../try-again-button/try-again-button';
 
 interface MyProps {
   children: React.ReactNode;
