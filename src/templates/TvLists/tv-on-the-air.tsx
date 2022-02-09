@@ -9,13 +9,12 @@ import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { useLocation } from 'react-router-dom';
 import { getOnTheAirTvShows } from '~/store/tv/tv.api';
 import { MediaType } from '~/core/types/media-type';
-import { usePrevious } from '~/hooks/usePrevious';
 import { scrollToTop } from '~/utils';
 
 function TVonTheAir () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
-  const prevProps = usePrevious(search);
+  const [prevProps] = useState(search);
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.tvShows.lists.onTheAir);
 
   const sendRequest = () => {

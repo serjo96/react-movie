@@ -18,7 +18,7 @@ function SearchPage () {
   const appDispatch = useAppDispatch();
   const history = useHistory();
   const { search } = useLocation();
-  const prevProps = usePrevious(search);
+  const [prevProps] = useState(search);
   const queryParams = queryString.parse(search, { parseNumbers: true });
   const [value, setValue] = useState(queryParams.query as string || '');
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.search.pageSearch);

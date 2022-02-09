@@ -10,13 +10,12 @@ import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import FilterList from '~/templates/filters/containers/filter-list';
 import ServiceBlock from '~/templates/service/service-block';
 import MediaList from '~/ui-components/media-list/media-list';
-import { usePrevious } from '~/hooks/usePrevious';
-import {scrollToTop} from "~/utils";
+import { scrollToTop } from '~/utils';
 
 function MoviesAll () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
-  const prevProps = usePrevious(search);
+  const [prevProps] = useState(search);
   const { isFetching, isSuccessful, data } = useAppSelector((state) => state.movies.lists.all);
 
   const sendRequest = () => {

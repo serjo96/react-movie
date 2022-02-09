@@ -10,14 +10,13 @@ import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import FilterList from '~/templates/filters/containers/filter-list';
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '~/templates/service/service-block';
-import { usePrevious } from '~/hooks/usePrevious';
 import { scrollToTop } from '~/utils';
 
 function KeywordsPage () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
   const { id } = useParams<{id: string}>();
-  const prevProps = usePrevious(search);
+  const [prevProps] = useState(search);
   const { isFetching, isSuccessful, data } = useAppSelector((state) => state.keywords);
 
   const isMoviesPage = useRouteMatch('/keywords-movies/:id');
