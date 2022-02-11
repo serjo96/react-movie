@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars-2';
+import classNames from 'classnames';
 import queryString from 'query-string';
 
 import ServiceBlock from '~/templates/service/service-block';
@@ -14,7 +15,13 @@ import { SearchResultItem } from '~/core/types/search';
 import { MediaType } from '~/core/types/media-type';
 import './search-header.sass';
 
-function SearchHeader () {
+interface MyProps {
+  isShowMobileSearch: boolean;
+}
+
+function SearchHeader ({
+  isShowMobileSearch
+}: MyProps) {
   const componentRef = useRef(null);
   const appDispatch = useAppDispatch();
   const history = useHistory();
@@ -103,10 +110,13 @@ function SearchHeader () {
     );
   };
 
+  const headerSearchClass = classNames('search header__search', {
+    'header__search--mobile': isShowMobileSearch
+  });
 
   return (
     <div
-      className='header__search search'
+      className={headerSearchClass}
       ref={componentRef}
     >
       <div className='search-field-wrapper'>
