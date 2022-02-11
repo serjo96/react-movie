@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { useParams } from 'react-router-dom';
 import Image from '~/ui-components/image/image';
 import { scrollToTop } from '~/utils';
-import { Languages } from '~/store/Reducers/generalReducer';
+import { Languages } from '~/store/user/user.slice';
 import {
   getCompanyDetails,
   getCompanyMovies,

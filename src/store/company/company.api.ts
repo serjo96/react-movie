@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Languages } from '~/store/Reducers/generalReducer';
+import { Languages } from '~/store/user/user.slice';
 import oldClient from '~/core/api/OldClient';
 import { MovieListArgs } from '~/store/movies/movies.api';
 import { MoviesListItem } from '~/core/types/movies';

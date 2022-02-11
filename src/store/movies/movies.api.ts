@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import oldClient from '~/core/api/OldClient';
 
 import ConcatPages from '~/utils/concatPages';
-import { Languages } from '~/store/Reducers/generalReducer';
+import { Languages } from '~/store/user/user.slice';
 import { MovieDetails } from '~/core/types/movieDetails';
 import { MoviesListItem, MoviesList } from '~/core/types/movies';
 import { Collection } from '~/core/types/collection';
@@ -42,7 +42,7 @@ export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs |
     date,
     region,
     adult = false,
-           sortBy = 'popularity.desc',
+    sortBy = 'popularity.desc',
     page = 1,
     language = Languages.RU
   }: MovieListArgs = {
