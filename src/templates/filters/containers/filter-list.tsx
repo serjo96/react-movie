@@ -15,6 +15,12 @@ interface MyPros {
   sortByCountry?: boolean;
   safeFilter?: boolean;
   typeList: MediaType;
+  propFilterValues?: MyFilterState
+  handleSelectGenres?: (genre: number) => void;
+  handleClickAdult?: () => void;
+  handleResetFilters?: () => void;
+  handleSortBy?: (sortBy: string) => void;
+  handleFilterByDate?: (year: string) => void;
 }
 
 export interface MyFilterState {
@@ -28,7 +34,13 @@ export interface MyFilterState {
 function FilterList ({
   sortByCountry,
   safeFilter,
-  typeList
+  typeList,
+  propFilterValues,
+  handleSelectGenres,
+  handleClickAdult,
+  handleResetFilters,
+  handleSortBy,
+  handleFilterByDate
 }: MyPros) {
   const { search } = useLocation();
   const history = useHistory();
@@ -52,8 +64,6 @@ function FilterList ({
   const [isVisibleModalFilter, setVisibleModalFilter] = useState(false);
   const { data: { genresHash, arrGenres } } = useAppSelector((state) => state.genres);
 
-  const [sortBy, direction] = (filters.sortBy || '').split('.');
-
   useEffect(() => {
     const filters: MyFilterState = {
       ...getUrlString,
@@ -62,19 +72,24 @@ function FilterList ({
     setFilters(filters);
   }, [search]);
 
-  const onSortLists = (sortType = sortBy || 'popularity') => {
+  const onSortLists = (sortType = 'popularity.desc') => {
+    const [sortBy, direction] = (((propFilterValues && propFilterValues.sortBy) || filters.sortBy || sortType) || '').split('.');
     const directionSort = direction && direction === 'desc' ? '.asc' : '.desc';
-    const fullType = sortType + directionSort;
+    const fullType = sortBy + directionSort;
 
     const UrlObj = { ...getUrlString };
     UrlObj.sort_by = fullType;
 
-    history.push({
-      search: queryString.stringify(UrlObj)
-    });
+    if (!handleSortBy) {
+      history.push({
+        search: queryString.stringify(UrlObj)
+      });
+    } else {
+      handleSortBy(UrlObj.sort_by);
+    }
   };
 
-  const onSortByDate = (el: typeof sortingDateList[0]) => {
+  const onFilterByDate = (el: typeof sortingDateList[0]) => {
     let year;
     const UrlObj = { ...getUrlString };
     if (el.type === 'range') {
@@ -94,9 +109,13 @@ function FilterList ({
       delete UrlObj.year;
     }
 
-    history.push({
-      search: queryString.stringify(UrlObj)
-    });
+    if (!handleFilterByDate) {
+      history.push({
+        search: queryString.stringify(UrlObj)
+      });
+    } else {
+      handleFilterByDate(UrlObj.year);
+    }
   };
 
   const onSortByCountry = (countryIco: string) => {
@@ -113,30 +132,38 @@ function FilterList ({
   };
 
   const onSelectGenres = (genre: Genre) => {
-    const id = +genre.id;
-    const UrlObj = { ...getUrlString };
-    UrlObj.genre = id;
+    if (!handleSelectGenres) {
+      const id = genre.id;
+      const UrlObj = { ...getUrlString };
+      UrlObj.genre = id;
 
-    if (!id) {
-      delete UrlObj.genre;
+      if (!id) {
+        delete UrlObj.genre;
+      }
+
+      history.push({
+        search: queryString.stringify(UrlObj)
+      });
+    } else {
+      handleSelectGenres(genre.id);
     }
-
-    history.push({
-      search: queryString.stringify(UrlObj)
-    });
   };
 
   const onClickAdult = () => {
-    const UrlObj = { ...getUrlString };
-    UrlObj.adult = !filters.adult;
+    if (!handleClickAdult) {
+      const UrlObj = { ...getUrlString };
+      UrlObj.adult = !filters.adult;
 
-    if (getUrlString.adult) {
-      delete UrlObj.adult;
+      if (getUrlString.adult) {
+        delete UrlObj.adult;
+      }
+
+      history.push({
+        search: queryString.stringify(UrlObj)
+      });
+    } else {
+      handleClickAdult();
     }
-
-    history.push({
-      search: queryString.stringify(UrlObj)
-    });
   };
 
   const onChangeRangeDate = (rangeValue: string) => {
@@ -146,9 +173,13 @@ function FilterList ({
         const UrlObj = { ...getUrlString };
         UrlObj.year = rangeValue;
 
-        history.push({
-          search: queryString.stringify(UrlObj)
-        });
+        if (!handleFilterByDate) {
+          history.push({
+            search: queryString.stringify(UrlObj)
+          });
+        } else {
+          handleFilterByDate(rangeValue);
+        }
       }
     }
   };
@@ -160,9 +191,13 @@ function FilterList ({
   };
 
   const resetFilters = () => {
-    history.push({
-      search: queryString.stringify({})
-    });
+    if (!handleResetFilters) {
+      history.push({
+        search: queryString.stringify({})
+      });
+    } else {
+      handleResetFilters();
+    }
   };
 
   const onOpenFilterModal = () => {
@@ -182,15 +217,14 @@ function FilterList ({
   if (!mobileBreakpoints.includes(active)) {
     return (
       <Filters
-        genres={arrGenres[typeList]}
+        genres={arrGenres[typeList as MediaType.TV || MediaType.MOVIE]}
         genresObject={genresHash}
-        selectedGenre={filters.genre}
-        filterValues={filterValues}
+        filterValues={propFilterValues || filterValues}
         safeFilter={safeFilter}
         sortByCountry={sortByCountry}
         sortByList={sortByList}
         onClickGenres={onSelectGenres}
-        onSortByDate={onSortByDate}
+        onSortByDate={onFilterByDate}
         onSortByCountry={onSortByCountry}
         onClickSort={onSortLists}
         onClickAdult={onClickAdult}
@@ -202,16 +236,15 @@ function FilterList ({
   }
   return (
     <FiltersMobile
-      filterValues={filterValues}
+      filterValues={propFilterValues || filterValues}
       safeFilter={safeFilter}
       modalFilter={isVisibleModalFilter}
-      selectedGenre={filters.genre}
-      genres={arrGenres[typeList]}
+      genres={arrGenres[typeList as MediaType.TV || MediaType.MOVIE]}
       genresObject={genresHash}
       sortByCountry={sortByCountry}
       sortByList={sortByList}
       onClickGenres={onSelectGenres}
-      onSortByDate={onSortByDate}
+      onSortByDate={onFilterByDate}
       onSortByCountry={onSortByCountry}
       onClickSort={onSortLists}
       onResetFilters={resetFilters}

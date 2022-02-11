@@ -12,7 +12,6 @@ import Portal from '~/ui-components/portal/portal';
 interface MyProps {
   genres: Array<Genre>;
   genresObject: GenresState['data']['genresHash'];
-  selectedGenre?: number;
   sortByList: typeof sortMovieByType | typeof sortListTV;
   safeFilter: boolean;
   sortByCountry: boolean;
@@ -40,7 +39,6 @@ interface MyProps {
 export default function FiltersMobile ({
   filterValues,
   genres,
-  selectedGenre = 0,
   safeFilter,
   sortByList,
   sortByCountry,
@@ -94,12 +92,13 @@ export default function FiltersMobile ({
                     className='mobile-filter__label'
                   >
                     <div className='mobile-filter__name'>
-                      <span>{genresObject[selectedGenre]}</span>
+                      <span>{genresObject[filterValues.genre || 0]}</span>
                       <i className='fa fa-angle-down' aria-hidden='true' />
                     </div>
                     <select
                       name='genreFilter'
                       id='genreFilter'
+                      value={filterValues.genre || 0}
                       onChange={(e) => onClickGenres({
                         name: e.target.value,
                         id: Number(e.target.options[e.target.selectedIndex].id)
@@ -109,6 +108,7 @@ export default function FiltersMobile ({
                         <option
                           id={`${el.id}`}
                           key={indx}
+                          value={el.id}
                         >
                           {el.name}
                         </option>)

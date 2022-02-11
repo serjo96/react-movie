@@ -15,7 +15,6 @@ import { filterByCountryName, filterByDateName, sortByFilterName } from '~/utils
 interface MyProps {
   genres: Array<Genre>;
   genresObject: GenresState['data']['genresHash'];
-  selectedGenre?: number;
   sortByList: typeof sortMovieByType | typeof sortListTV;
   safeFilter: boolean;
   sortByCountry: boolean;
@@ -40,7 +39,6 @@ interface MyProps {
 export default function Filters ({
   filterValues,
   genres,
-  selectedGenre = 0,
   safeFilter,
   sortByList,
   sortByCountry,
@@ -93,7 +91,7 @@ export default function Filters ({
         {genres.length &&
           <div className={genreFilterClasses}>
             <div className='filter-name'>
-              <span>{genresObject[selectedGenre]}</span>
+              <span>{genresObject[filterValues.genre || 0]}</span>
               <i className='fa fa-angle-down' aria-hidden='true' />
             </div>
             <div className='filter-item__catalog filter-item__catalog--genres'>
@@ -104,7 +102,7 @@ export default function Filters ({
                 >
                   {el.map((item, index) => (
                     <li
-                      className={filterCatalogClasses(item.id === +selectedGenre)}
+                      className={filterCatalogClasses(item.id === +filterValues.genre)}
                       id={`${item.id}`}
                       onClick={() => onClickGenres(item)}
                       key={index}
