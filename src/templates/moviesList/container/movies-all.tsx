@@ -36,7 +36,7 @@ function MoviesAll () {
     const payload = {
       page,
       genre: queryString.parse(search, { parseNumbers: true }).genre as number,
-      sortType: queryString.parse(search).sort_by as string,
+      sortBy: queryString.parse(search).sort_by as string,
       date: queryString.parse(search).year as string,
       region: queryString.parse(search).country as string,
       adult: queryString.parse(search, { parseBooleans: true }).adult as boolean

@@ -15,13 +15,14 @@ export interface ReturnedMovieList {
   isSuccessful: boolean;
 }
 
-interface MovieListArgs {
+export interface MovieListArgs {
   page?: number;
   genre?: number;
-  sortType?: string;
+  sortBy?: string;
   date?: string;
   region?: string;
   adult?: boolean;
+  language?: Languages;
 }
 
 export interface MovieRespData {
@@ -41,12 +42,14 @@ export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs |
     date,
     region,
     adult = false,
-    sortType = 'popularity.desc',
-    page = 1
+           sortBy = 'popularity.desc',
+    page = 1,
+    language = Languages.RU
   }: MovieListArgs = {
     adult: false,
-    sortType: 'popularity.desc',
-    page: 1
+    sortBy: 'popularity.desc',
+    page: 1,
+    language: Languages.RU
   }) => {
     let startRangeDate: string | undefined;
     let endRangeDate: string | undefined;
@@ -58,9 +61,9 @@ export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs |
     const [firstPage, secondPage] = await oldClient.all<MoviesList>([
       oldClient.get('discover/movie',
         {
-          language: 'ru-RU',
+          language,
           region: region,
-          sort_by: sortType,
+          sort_by: sortBy,
           with_genres: genre,
           primary_release_year: date,
           'primary_release_date.gte': startRangeDate,
@@ -72,7 +75,7 @@ export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs |
         {
           language: 'ru-RU',
           region: region,
-          sort_by: sortType,
+          sort_by: sortBy,
           with_genres: genre,
           primary_release_year: date,
           'primary_release_date.gte': startRangeDate,

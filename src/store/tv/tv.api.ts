@@ -20,12 +20,13 @@ export interface TvSeasonRespData {
   data: TvSeason
 }
 
-interface TvListArgs {
+export interface TvListArgs {
   page?: number;
   genre?: number;
-  sortType?: string;
+  sortBy?: string;
   date?: string;
   region?: string;
+  language?: Languages;
 }
 
 export interface TvShowEngDataResp {
@@ -40,10 +41,10 @@ export const getTvShowsList = createAsyncThunk<ReturnedTvShowsList, TvListArgs |
     genre,
     date,
     region,
-    sortType = 'popularity.desc',
+    sortBy = 'popularity.desc',
     page = 1
   }: TvListArgs = {
-    sortType: 'popularity.desc',
+    sortBy: 'popularity.desc',
     page: 1
   }) => {
     let startRangeDate: string | undefined;
@@ -57,7 +58,7 @@ export const getTvShowsList = createAsyncThunk<ReturnedTvShowsList, TvListArgs |
       oldClient.get('discover/tv',
         {
           language: 'ru-RU',
-          sort_by: sortType,
+          sort_by: sortBy,
           with_genres: genre,
           first_air_date_year: date,
           watch_region: region,
@@ -68,7 +69,7 @@ export const getTvShowsList = createAsyncThunk<ReturnedTvShowsList, TvListArgs |
       oldClient.get('discover/tv',
         {
           language: 'ru-RU',
-          sort_by: sortType,
+          sort_by: sortBy,
           with_genres: genre,
           watch_region: region,
           first_air_date_year: date,

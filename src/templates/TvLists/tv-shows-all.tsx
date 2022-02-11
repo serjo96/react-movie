@@ -21,10 +21,6 @@ function TvShowsAll () {
   const sendRequest = () => {
     let page = queryString.parse(search, { parseNumbers: true }).page as number;
 
-    if (!page) {
-      page = undefined;
-    }
-
     if (page <= 2) {
       page += 1;
     } else if (page === 3) {
@@ -35,7 +31,7 @@ function TvShowsAll () {
 
     const payload = {
       genre: queryString.parse(search, { parseNumbers: true }).genre as number,
-      sortType: queryString.parse(search).sort_by as string,
+      sortBy: queryString.parse(search).sort_by as string,
       date: queryString.parse(search).year as string,
       region: queryString.parse(search).country as string,
       adult: queryString.parse(search, { parseBooleans: true }).adult as boolean,
