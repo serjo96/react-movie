@@ -2,11 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { MovieDetails } from '~/core/types/movieDetails';
 import { Collection } from '~/core/types/collection';
-import { MovieListItem, MoviesList, MoviesListItem } from '~/core/types/movies';
+import { MovieListItem, MoviesListItem } from '~/core/types/movies';
 import ActionPayloadData from '~/core/types/actionPayloadData';
 
 import {
-  getMovieData, getMovieEngOverview,
+  getMovieData,
+  getMovieEngOverview,
   getMoviesList,
   getPlayingMovies,
   getTopMovies,
@@ -14,29 +15,38 @@ import {
   MovieRespData,
   ReturnedMovieList
 } from '~/store/movies/movies.api';
+import {
+  CrewState,
+  initCreditsState,
+  initDataState,
+  initImagesState,
+  initListData
+} from '~/utils/initData';
 import { formatCrew } from '~/utils/formatCrew';
 import { Credits } from '~/core/types/credits';
-import { CrewState, initCreditsState, initDataState, initImagesState, initListData } from '~/utils/initData';
+import { ListData } from '~/core/types/listData';
 
 type MovieDetailState = Omit<MovieDetails, 'credits'> & {
   collection?: Collection;
   credits: Omit<Credits, 'crew'> & {crew: CrewState}
 };
 
+export type MoviesListsData = ActionPayloadData<ListData<MoviesListItem>>;
+
 type MoviesState = {
   isFetching: boolean;
   isSuccessful: boolean;
   lists: {
-    all: ActionPayloadData<MoviesList>,
-    upcoming: ActionPayloadData<MoviesList>,
-    top: ActionPayloadData<MoviesList>,
-    playing: ActionPayloadData<MoviesList>,
-    popular: ActionPayloadData<MoviesList>,
+    all: MoviesListsData,
+    upcoming: MoviesListsData,
+    top: MoviesListsData,
+    playing: MoviesListsData,
+    popular: MoviesListsData,
   };
   data: MovieDetailState,
 }
 
-const initPlayingListData = (): ActionPayloadData<MoviesList> => ({
+const initPlayingListData = (): MoviesListsData => ({
   ...initListData<MoviesListItem>(),
   data: {
     ...initListData<MoviesListItem>().data,
