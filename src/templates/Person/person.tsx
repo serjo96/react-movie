@@ -5,9 +5,9 @@ import { Helmet } from 'react-helmet';
 import Image from '~/ui-components/image/image';
 import { declOfNum, friendlyData, urlRusLat } from '~/utils/format';
 
-import ServiceBlock from '../../service/service-block';
-import MediaStills from '../../media-page/media-stills';
-import PersonMediaList from '../components/person-media-list';
+import ServiceBlock from '../service/service-block';
+import MediaStills from '../media-page/media-stills';
+import PersonMediaList from './components/person-media-list';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import PersonAside from '~/templates/Person/person-aside';
 import { getPersonDetails } from '~/store/person/person.api';
@@ -15,6 +15,7 @@ import { scrollToTop } from '~/utils';
 import { MediaType } from '~/core/types/media-type';
 import { sortBestMediaItem } from '~/utils/sortings';
 import { MovieCreditsCast, PersonCrew } from '~/core/types/perosn-details';
+import './Person.sass';
 
 function Person () {
   const appDispatch = useAppDispatch();
