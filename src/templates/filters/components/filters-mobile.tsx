@@ -68,13 +68,13 @@ export default function FiltersMobile ({
   return (
     <React.Fragment>
 
-      <div
+      <button
         className='mobile-filter-trigger link'
         onClick={onOpenFilterModal}
       >
         <span>Настроить фильтры</span>
         <i className='fa fa-filter' aria-hidden='true' />
-      </div>
+      </button>
 
       {modalFilter &&
         <Portal>
