@@ -101,7 +101,6 @@ export default function CompanyTvShows () {
       <div className='company-product-list'>
         <div className='company-product-list__content'>
           <FilterList
-            safeFilter
             propFilterValues={filters}
             typeList={MediaType.TV}
             handleSelectGenres={onSelectGenre}
