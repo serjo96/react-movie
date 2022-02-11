@@ -22,7 +22,7 @@ import {
 } from '~/store/tv/tv.api';
 import { formatCrew } from '~/utils/formatCrew';
 
-type StateListData = ActionPayloadData<ListData<TvListItem>>;
+export type TvShowsListsData = ActionPayloadData<ListData<TvListItem>>;
 type TvDetailState = Omit<TvDetails, 'credits'> & {
   credits: Omit<Credits, 'crew'> & {crew: CrewState}
 };
@@ -35,10 +35,10 @@ export type TvState = {
   isFetching: boolean;
   isSuccessful: boolean;
   lists: {
-    all: StateListData,
-    onTheAir: StateListData,
-    top: StateListData,
-    airing: StateListData,
+    all: TvShowsListsData,
+    onTheAir: TvShowsListsData,
+    top: TvShowsListsData,
+    airing: TvShowsListsData,
   };
   data: TvDetailState,
   tvShowSeasons: {
