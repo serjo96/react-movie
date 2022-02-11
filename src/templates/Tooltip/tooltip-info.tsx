@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { onLoadEngMedia } from '~/store/api/general.api';
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
 import { urlRusLat } from '~/utils/format';
 import { RootState } from '~/store/configureStore';
@@ -10,7 +9,6 @@ import { RootState } from '~/store/configureStore';
 class TooltipInfo extends Component {
   tooltip = null;
   parentRef = null;
-  EngDataStatus = true;
   state = { show: false };
 
   componentDidMount () {
@@ -99,26 +97,24 @@ class TooltipInfo extends Component {
   };
 
   get getOverview () {
-    const { engData, typeItem, id, overview } = this.props;
-    return engData[typeItem] && engData[typeItem][id] ? engData[typeItem][id].overview : overview;
+    const { typeItem, id, overview } = this.props;
+    return  overview;
   }
 
   render () {
     const {
       Allgenres,
-      engData,
       id,
       genres,
       typeItem,
       children,
       className,
       title,
-      voteAverage
+      voteAverage,
+      originalTitle
     } = this.props;
     const { show } = this.state;
-    const originalTitle = engData[typeItem] && engData[typeItem][id]
-      ? engData[typeItem][id].name
-      : this.props.originalTitle;
+
     return (
       <div
         onMouseEnter={this.handleEnterItem}
@@ -174,12 +170,9 @@ class TooltipInfo extends Component {
 function mapStateToProps (state: RootState) {
   return {
     Allgenres: state.genres.data.arrGenres.all,
-    engData: state.General.engDescription
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchEngData: (id, lang) => dispatch(onLoadEngMedia(id, lang))
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(TooltipInfo);
+
+export default connect(mapStateToProps)(TooltipInfo);
