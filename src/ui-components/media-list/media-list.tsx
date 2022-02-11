@@ -1,17 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { ListData } from '~/core/types/listData';
 import { MoviesListItem } from '~/core/types/movies';
-import { TvListItem } from '~/core/types/tv';
 import { MediaType } from '~/core/types/media-type';
+import { TvListItem } from '~/core/types/tv';
 import { SearchResultItem } from '~/core/types/search';
+import { MovieCreditsCast } from '~/core/types/perosn-details';
 import { Crew } from '~/core/types/crew';
 
 import { friendlyData } from '~/utils/format';
 import MediaItem from '~/ui-components/media-item/media-item';
 import './media-list.sass';
-import { MovieCreditsCast } from '~/core/types/perosn-details';
 
 interface MyProps {
   mediaList: Array<MoviesListItem | TvListItem | SearchResultItem | MovieCreditsCast | Crew>
@@ -21,7 +20,7 @@ interface MyProps {
   };
   typeList: MediaType;
   count?: number;
-  movieListTitle: string;
+  movieListTitle?: string;
   movieListMain?: boolean;
   listLink?: string;
 }
@@ -92,9 +91,10 @@ const MediaList = ({
   return (
     <div className='movies'>
       <div className='movies__header'>
-        <h2 className='movies__title-list'>
-          <RenderListTitle />
-        </h2>
+        {movieListTitle &&
+          <h2 className='movies__title-list'>
+            <RenderListTitle />
+          </h2>}
         <RenderDataRange />
       </div>
 
