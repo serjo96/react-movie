@@ -1,5 +1,4 @@
-import { combineReducers } from 'redux';
-import General from './generalReducer';
+import { combineReducers } from '@reduxjs/toolkit';
 
 import { keywordsSlice } from '~/store/keywords/keywords.slice';
 import { moviesSlice } from '~/store/movies/movies.slice';
@@ -8,8 +7,9 @@ import { tvSlice } from '~/store/tv/tv.slice';
 import { searchSlice } from '~/store/search/search.slice';
 import { personSlice } from '~/store/person/person.slice';
 import { companySlice } from '~/store/company/company.slice';
+import { userSlice } from '~/store/user/user.slice';
 
-export default combineReducers({
+export const rootReducer = combineReducers({
   keywords: keywordsSlice.reducer,
   movies: moviesSlice.reducer,
   genres: genresSlice.reducer,
@@ -17,5 +17,5 @@ export default combineReducers({
   search: searchSlice.reducer,
   person: personSlice.reducer,
   company: companySlice.reducer,
-  General
+  user: userSlice.reducer
 });
