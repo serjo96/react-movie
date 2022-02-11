@@ -12,8 +12,8 @@ import TvAiring from '~/templates/TvLists/tv-airing';
 import TvShowsTop from '~/templates/TvLists/tv-shows-top';
 import TvDetails from '~/templates/TV/containers/tv-details';
 
-import People from '~/templates/Person/containers/person';
-import Company from '~/templates/Company/Company';
+import People from '~/templates/Person/person';
+import Company from '~/templates/company/company-page';
 import KeywordsPage from '~/templates/keywords/keywords-page';
 import SearchPage from '~/templates/Search/search-page';
 
