@@ -19,7 +19,7 @@ const PageSwitcher = ({ page, totalPages, handlePrevPage, handleNextPage }: MyPr
 
   return (
     <div className='pager-btns clearfix'>
-      {page - 1 > 1 &&
+      {page > 1 &&
         <div
           className='pager-btn pager-btn--prev link-angle link-angle--left'
           onClick={prevPageHandler}
@@ -28,7 +28,7 @@ const PageSwitcher = ({ page, totalPages, handlePrevPage, handleNextPage }: MyPr
           <span>Предыдущая страница</span>
         </div>}
 
-      {page + 1 < totalPages &&
+      {page < totalPages &&
         <div
           className='pager-btn pager-btn--next link-angle'
           onClick={nextPageHandler}
