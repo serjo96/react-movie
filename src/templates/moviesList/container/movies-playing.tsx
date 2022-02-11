@@ -1,29 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { usePrevious } from '~/hooks/usePrevious';
 import { getPlayingMovies } from '~/store/movies/movies.api';
 import { MediaType } from '~/core/types/media-type';
+import { scrollToTop } from '~/utils';
 
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '../../service/service-block';
-import { scrollToTop } from '~/utils';
 
 function MoviePlaying () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
-  const [prevProps] = useState(search);
-  const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies.lists.playing);
 
+  const prevProps = usePrevious(search || '');
+  const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies.lists.playing);
   const sendRequest = () => {
     let page = queryString.parse(search, { parseNumbers: true }).page as number;
-
-    if (!page) {
-      page = undefined;
-    }
 
     if (page <= 2) {
       page += 1;
@@ -44,6 +41,7 @@ function MoviePlaying () {
 
   useEffect(() => {
     if (search !== prevProps) {
+      console.log(222);
       sendRequest();
       scrollToTop();
     }

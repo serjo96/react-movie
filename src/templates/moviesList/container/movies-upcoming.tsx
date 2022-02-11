@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
@@ -10,19 +10,16 @@ import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { getUpcomingMovies } from '~/store/movies/movies.api';
 import { MediaType } from '~/core/types/media-type';
 import { scrollToTop } from '~/utils';
+import { usePrevious } from '~/hooks/usePrevious';
 
 function MovieUpcoming () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
-  const [prevProps] = useState(search);
+  const prevProps = usePrevious(search);
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies.lists.upcoming);
 
   const sendRequest = () => {
     let page = queryString.parse(search, { parseNumbers: true }).page as number;
-
-    if (!page) {
-      page = undefined;
-    }
 
     if (page <= 2) {
       page += 1;
@@ -39,7 +36,9 @@ function MovieUpcoming () {
     if (!isFetching) {
       sendRequest();
     }
+  }, []);
 
+  useEffect(() => {
     if (search !== prevProps) {
       sendRequest();
       scrollToTop();
