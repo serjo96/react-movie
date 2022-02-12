@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, useLocation, useRouteMatch } from 'react-router-dom';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import { Collapse } from 'react-collapse';
 import classNames from 'classnames';
 
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
-import { usePrevious } from '~/hooks/usePrevious';
 import { moviesLinks, serialsLinks } from '~/utils/navLinks';
-import useBreakpoints, { BreakpointsNames } from '~/utils/useMediaQuery';
-import { setShowNav } from '~/store/general/general.slice';
 import './nav.sass';
 
-export default function Nav () {
-  const appDispatch = useAppDispatch();
-  const { isShowNav } = useAppSelector(state => state.general);
+interface MyProps {
+  isShowNav: boolean;
+  isHideHeader: boolean;
+}
 
-  const { pathname } = useLocation();
-  const prevPath = usePrevious(pathname);
+export default function Nav ({
+  isShowNav,
+  isHideHeader
+}: MyProps) {
   const [navCollapse, setNavCollapse] = useState(true);
   const isMoviesPage = useRouteMatch({
     path: '/movies/',
@@ -29,18 +28,9 @@ export default function Nav () {
     strict: false
   });
 
-  const mobileBreakpoints = [BreakpointsNames.MD, BreakpointsNames.SM, BreakpointsNames.XS, BreakpointsNames.LG, BreakpointsNames.XL];
-  const { active } = useBreakpoints();
-
   useEffect(() => {
     setNavCollapse(!!isMoviesPage || !!isMoviePage);
   }, []);
-
-  useEffect(() => {
-    if (pathname !== prevPath && (mobileBreakpoints.includes(active))) {
-      appDispatch(setShowNav(false));
-    }
-  }, [pathname]);
 
   const handleCollapseNav = () => {
     setNavCollapse(!navCollapse);
@@ -51,7 +41,8 @@ export default function Nav () {
   });
 
   const navClass = classNames('nav', {
-    'nav--show': isShowNav
+    'nav--show': isShowNav,
+    'nav--full': isHideHeader
   });
 
   return (
