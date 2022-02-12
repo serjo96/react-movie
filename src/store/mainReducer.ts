@@ -17,5 +17,5 @@ export const rootReducer = combineReducers({
   search: searchSlice.reducer,
   person: personSlice.reducer,
   company: companySlice.reducer,
-  user: userSlice.reducer,
+  user: userSlice.reducer
 });
