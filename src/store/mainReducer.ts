@@ -8,7 +8,6 @@ import { searchSlice } from '~/store/search/search.slice';
 import { personSlice } from '~/store/person/person.slice';
 import { companySlice } from '~/store/company/company.slice';
 import { userSlice } from '~/store/user/user.slice';
-import { generalSlice } from '~/store/general/general.slice';
 
 export const rootReducer = combineReducers({
   keywords: keywordsSlice.reducer,
@@ -19,5 +18,4 @@ export const rootReducer = combineReducers({
   person: personSlice.reducer,
   company: companySlice.reducer,
   user: userSlice.reducer,
-  general: generalSlice.reducer
 });
