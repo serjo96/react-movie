@@ -1,15 +1,17 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import classNames from 'classnames';
 import SwiperCore, {
   Navigation
 } from 'swiper';
-import classNames from 'classnames';
 
 import { MovieDetails } from '~/core/types/movieDetails';
 import { TvDetails } from '~/core/types/tvDetails';
 import { MediaType } from '~/core/types/media-type';
 import './media-recommendations.sass';
 import MediaItem from '~/ui-components/media-item/media-item';
+import { MoviesListItem } from '~/core/types/movies';
+import { TvListItem } from '~/core/types/tv';
 
 interface MyProps {
   recommendations: MovieDetails['recommendations'] | TvDetails['recommendations'];
@@ -71,7 +73,7 @@ const MediaRecommendations = ({
             </React.Fragment>
           )}
 
-          {recommendations.results.map((el, index) => (
+          {recommendations.results.map((el: MoviesListItem & TvListItem, index) => (
             <SwiperSlide key={index}>
               <MediaItem
                 title={el.title || el.name}
