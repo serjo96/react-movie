@@ -75,7 +75,7 @@ const MediaRecommendations = ({
             <SwiperSlide key={index}>
               <MediaItem
                 title={el.title || el.name}
-                original_title={el.originalTitle || el.originalName}
+                originalTitle={el.originalTitle || el.originalName}
                 overview={el.overview}
                 voteAverage={el.voteAverage}
                 date={el.releaseDate || el.firstAirDate}

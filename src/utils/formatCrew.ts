@@ -1,5 +1,5 @@
 import { Crew, CrewDepartment, CrewJob } from '~/core/types/crew';
-import { CrewState } from '~/store/movies/movies.slice';
+import { CrewState } from '~/utils/initData';
 
 export function formatCrew (crewData: Crew[]): CrewState {
   const response: CrewState = {
