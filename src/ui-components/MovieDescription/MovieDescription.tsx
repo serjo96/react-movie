@@ -1,4 +1,5 @@
 import React from 'react';
+import './media-description.sass';
 
 interface MyProps {
   short?: boolean;
@@ -8,7 +9,7 @@ interface MyProps {
 
 const MovieDescription = ({ short, overview, fetchEngData }: MyProps) => {
   const mediaOverview = () => {
-    const textLength = 475;
+    const textLength = 375;
 
     if (!overview) {
       return null;
@@ -20,12 +21,12 @@ const MovieDescription = ({ short, overview, fetchEngData }: MyProps) => {
   };
 
   if (mediaOverview() || !fetchEngData) {
-    return (<p className='movie-tooltip__description'>{mediaOverview()}</p>);
+    return (<p className='media-description'>{mediaOverview()}</p>);
   } else {
     return (
-      <div className='movie-tooltip__no-description'>
+      <div className='media-description__no-description'>
         <div>Ой! Кажется описание отсутствует</div>
-        <div className='load-description-eng'>
+        <div className='load-eng-description'>
           <button onClick={fetchEngData}>Загрузить описание на английском?</button>
         </div>
       </div>
