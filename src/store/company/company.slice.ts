@@ -13,7 +13,7 @@ import {
   getCompanyMovies, getCompanyTvShows,
   getEngCompanyDetails
 } from '~/store/company/company.api';
-import {ReturnedTvShowsList} from "~/store/tv/tv.api";
+import { ReturnedTvShowsList } from '~/store/tv/tv.api';
 
 type CompanyState = {
   isFetching: boolean;

@@ -19,7 +19,7 @@ export function friendlyUrl (url: string): string {
   return url.replace(/\s+/g, '_').toLowerCase();
 }
 
-export function friendlyName(name: string): string {
+export function friendlyName (name: string): string {
   return name.replace(/_/g, ' ');
 }
 
@@ -134,4 +134,4 @@ export function formattingGenres ({ movie, tv }: {movie: Genre[]; tv: Genre[]}) 
   };
 }
 
-export const firstOrderObjectValue = <T>(key: string | number, object: T): T => ({ [key]: undefined, ...object })
+export const firstOrderObjectValue = <T>(key: string | number, object: T): T => ({ [key]: undefined, ...object });

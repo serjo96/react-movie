@@ -14,7 +14,7 @@ module.exports = (api) => {
       }],
       'transform-class-properties',
       'transform-es2015-unicode-regex',
-      ...(!api.env('production') && { plugins: ['react-refresh/babel'] }),
+      ...(!api.env('production') && { plugins: ['react-refresh/babel'] })
     ]
   };
 };
