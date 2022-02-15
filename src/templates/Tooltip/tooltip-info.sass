@@ -1,10 +1,11 @@
-.show-tooltip
-	opacity: 0
 
+@import "styles/mixins"
 
-.movie-tooltip
+.tooltip-info
 	transition: opacity .5s
 	position: absolute
+	top: 0
+	left: 0
 	z-index: 50
 	width: 352px
 	padding: 20px
@@ -15,9 +16,7 @@
 	border: 1px solid #2e3854
 	border-radius: 6px
 	box-shadow: 0 0 20px 5px rgba(0,0,0,.3)
-
-
-.movie-tooltip
+	opacity: 0
 	&:after,
 	&:before
 		right: 100%
@@ -28,8 +27,13 @@
 		width: 0
 		position: absolute
 		pointer-events: none
+	@include media("smSize", "min")
+		width: 270px
+	&--is-visible
+		opacity: 1
 
-.movie-tooltip
+
+.tooltip-info
 	&:after
 		border-bottom: 24px solid transparent
 		border-top: 24px solid transparent
@@ -42,7 +46,7 @@
 		height: 1px
 
 
-.movie-tooltip--left
+.tooltip-info--left
 	&:after
 		left: -21px
 		border-right: 18px solid #272f46
@@ -52,7 +56,7 @@
 		margin-bottom: -1px
 
 
-.movie-tooltip--right
+.tooltip-info--right
 	&:after
 		right: -21px
 		border-left: 18px solid #272f46
@@ -61,27 +65,22 @@
 		right: -18px
 		margin-bottom: -1px
 
-.tooltip__title
+.tooltip-info__title
 	margin-bottom: 5px
 	.original-title
 		margin-top: 3px
 
-.movie-tooltip__info
+.tooltip-info__attributes
 	margin-top: 10px
 	font-size: 13px
 
-.movie-tooltip__description
-	font-size: 13px
-	margin-top: 5px
-	font-family: 'Roboto', sans-serif
-	font-weight: 400
-	line-height: 1.2
 
-.tooltip__date
+
+.tooltip-info__date
 	font-size: 14px
 	margin-right: 10px
 
-.tooltip__genre-data
+.tooltip-info__genre-data
 	display: flex
 	align-items: center
 	margin-bottom: 5px
@@ -90,10 +89,4 @@
 		display: flex
 		flex-wrap: wrap
 
-.movie-tooltip__no-description
-	margin-top: 7px
 
-
-@media only screen and (max-width : 963px)
-	.movie-tooltip
-		display: none

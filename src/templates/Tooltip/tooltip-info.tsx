@@ -1,178 +1,175 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
 import { urlRusLat } from '~/utils/format';
-import { RootState } from '~/store/configureStore';
+import { MediaType } from '~/core/types/media-type';
+import { useAppSelector } from '~/hooks/storeHooks';
+import classNames from 'classnames';
+import './tooltip-info.sass';
+import useBreakpoints, { BreakpointsNames } from '~/utils/useMediaQuery';
 
-class TooltipInfo extends Component {
-  tooltip = null;
-  parentRef = null;
-  state = { show: false };
+interface MyProps {
+  id: number;
+  title: string;
+  originalTitle: string;
+  overview?: string;
+  itemType: MediaType | string;
+  voteAverage?: number;
+  date?: string;
+  genres?: number[];
+  handlerHover?: (isHovered: boolean) => void;
+  className?: string;
+  children: React.ReactNode;
+}
 
-  componentDidMount () {
-    this.initTooltipPosition();
-  }
+function TooltipInfo ({
+  id,
+  title,
+  originalTitle,
+  overview,
+  itemType,
+  voteAverage,
+  date,
+  genres,
+  handlerHover,
+  className,
+  children
+}: MyProps) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [toolTipLeft, setToolTipLeft] = useState(true);
+  const { active } = useBreakpoints();
+  const tooltipRef = useRef(null);
+  const containerRef = useRef(null);
+  const { genresHash } = useAppSelector(state => state.genres.data);
+  const mobileBreakpoints = [BreakpointsNames.MD, BreakpointsNames.SM, BreakpointsNames.XS];
 
-  componentDidUpdate () {
-    this.initTooltipPosition();
-  }
-
-  // TODO: Fix position
-  initTooltipPosition = () => {
-    if (!this.state.show) {
+  const initTooltipPosition = () => {
+    if (!isVisible) {
       return;
     }
-    const target = this.parentRef;
+    const container = containerRef.current;
     const tooltipPadding = 30;
-    const parentCoords = target.getBoundingClientRect();
-    const tooltipElem = this.tooltip;
-    let left = target.offsetLeft + target.offsetWidth;
-    const top = target.offsetTop + 50;
+    const parentCoords = container.getBoundingClientRect();
+    const tooltipElem = tooltipRef.current;
+    let left = container.offsetLeft + container.offsetWidth;
+    const top = container.offsetTop + 50;
 
     if (left < 0) {
       left = 0;
     }
-    if (parentCoords.left > window.innerWidth - tooltipPadding - target.offsetWidth - tooltipElem.offsetWidth) {
-      left = target.offsetLeft - tooltipElem.offsetWidth;
-      tooltipElem.classList.add('movie-tooltip--right');
-      tooltipElem.classList.remove('movie-tooltip--left');
+    const containerSizeWithTooltip = window.innerWidth - tooltipPadding - container.offsetWidth - tooltipElem.offsetWidth;
+    console.log(parentCoords.left);
+    console.log(containerSizeWithTooltip);
+    if (parentCoords.left > containerSizeWithTooltip) {
+      left = container.offsetLeft - tooltipElem.offsetWidth;
+      setToolTipLeft(false);
     }
 
-    tooltipElem.classList.remove('show-tooltip');
     tooltipElem.style.left = left + 'px';
     tooltipElem.style.top = top + 'px';
   };
 
-  handleEnterItem = () => {
-    if (this.props.typeList === 'person') {
+  useEffect(initTooltipPosition, [isVisible]);
+
+  const handleEnterItem = () => {
+    if (itemType === MediaType.PERSON) {
       return;
     }
-    if (this.props.handlerHover) {
-      this.props.handlerHover(true);
+    if (handlerHover) {
+      handlerHover(true);
     }
-    this.setState({
-      show: true
-    });
+    setIsVisible(true);
   };
 
-  handleLeaveItem = () => {
-    if (this.props.handlerHover) {
-      this.props.handlerHover(false);
+  const handleLeaveItem = () => {
+    if (handlerHover) {
+      handlerHover(false);
     }
-    this.setState({
-      show: false
-    });
+    setIsVisible(false);
   };
 
-  get getMovieDate () {
-    if (!this.props.date) {
+  const getMovieDate = () => {
+    if (!date) {
       return null;
     }
-    return <div className='tooltip__date'>{this.props.date.substring(0, 4)}</div>;
-  }
-
-  genreLink = (genreID) => {
-    return `/${this.props.typeItem === 'movie'
-      ? this.props.typeItem + 's'
-      : this.props.typeItem}/all?genre-${urlRusLat(this.props.Allgenres.data.obj[genreID])}-${genreID}`;
+    return <div className='tooltip-info__date'>{date.substring(0, 4)}</div>;
   };
 
-  renderGenres = (id, index) => {
-    if (index >= 2) {
+  const genreLink = (genreID: number) => {
+    return `/${itemType === MediaType.MOVIE
+      ? MediaType.MOVIE + 's'
+      : itemType}/all?genre-${urlRusLat(genresHash[genreID])}-${genreID}`;
+  };
+
+  const renderGenres = (id: number, index: number) => {
+    if (index >= 2 && genresHash[id]) {
       return null;
     }
     return (
       <div key={id} className='genre'>
-        {this.props.Allgenres.data.obj[id] &&
-          <Link
-            className='tag'
-            to={this.genreLink(id)}
-          >
-            {this.props.Allgenres.data.obj[id]}
-          </Link>}
+        <Link
+          className='tag'
+          to={genreLink(id)}
+        >
+          {genresHash[id]}
+        </Link>
       </div>
     );
   };
 
-  get getOverview () {
-    const { typeItem, id, overview } = this.props;
-    return  overview;
+  const tooltipClass = classNames('tooltip-info tooltip tooltip--movie', {
+    'tooltip-info--is-visible': isVisible,
+    'tooltip-info--left': toolTipLeft,
+    'tooltip-info--right': !toolTipLeft
+  });
+
+  if (mobileBreakpoints.includes(active)) {
+    return <div className={className}>{children}</div>;
   }
+  return (
+    <div
+      className={className}
+      onMouseEnter={handleEnterItem}
+      onMouseLeave={handleLeaveItem}
+      ref={containerRef}
+    >
+      <Fragment>
+        {children}
+      </Fragment>
 
-  render () {
-    const {
-      Allgenres,
-      id,
-      genres,
-      typeItem,
-      children,
-      className,
-      title,
-      voteAverage,
-      originalTitle
-    } = this.props;
-    const { show } = this.state;
-
-    return (
-      <div
-        onMouseEnter={this.handleEnterItem}
-        onMouseLeave={this.handleLeaveItem}
-        ref={parentRef => {
-          this.parentRef = parentRef;
-        }}
-        className={className}
-      >
-        <Fragment>
-          {children}
-        </Fragment>
-
-        {show &&
-          <div
-            className='movie-tooltip movie-tooltip--left tooltip tooltip--movie show-tooltip'
-            onMouseEnter={this.handleEnterItem}
-            onMouseLeave={this.handleLeaveItem}
-            ref={tooltipRef => {
-              this.tooltip = tooltipRef;
-            }}
-          >
-            <div className='tooltip__content'>
-              <div className='tooltip__title'>
-                <div className='ru-title'>{title}</div>
-                <div className='original-title'>{originalTitle !== title && originalTitle}</div>
-              </div>
-              <div className='movie-tooltip__info'>
-                <div className='tooltip__genre-data'>
-                  {this.getMovieDate}
-
-                  {genres && Allgenres.isFetching &&
-                    <div className='genres'>
-                      {genres.map((id, index) => this.renderGenres(id, index))}
-                    </div>}
-
-                </div>
-                {voteAverage && <div className='rating'>Рейтинг {voteAverage} из 10</div>}
-              </div>
-              <MovieDescription
-                short
-                overview={this.getOverview}
-                id={id}
-                typeItem={typeItem}
-              />
+      {isVisible &&
+        <div
+          className={tooltipClass}
+          onMouseEnter={handleEnterItem}
+          onMouseLeave={handleLeaveItem}
+          ref={tooltipRef}
+        >
+          <div className='tooltip-info__content'>
+            <div className='tooltip-info__title'>
+              <div className='ru-title'>{title}</div>
+              <div className='original-title'>{originalTitle !== title && originalTitle}</div>
             </div>
-          </div>}
-      </div>
-    );
-  }
+            <div className='tooltip-info__attributes'>
+              <div className='tooltip-info__genre-data'>
+                {getMovieDate()}
+
+                {genres &&
+                  <div className='genres'>
+                    {genres.map((id, index) => renderGenres(id, index))}
+                  </div>}
+
+              </div>
+              {voteAverage && <div className='rating'>Рейтинг {voteAverage} из 10</div>}
+            </div>
+            <MovieDescription
+              short
+              overview={overview}
+            />
+          </div>
+        </div>}
+    </div>
+  );
 }
 
-function mapStateToProps (state: RootState) {
-  return {
-    Allgenres: state.genres.data.arrGenres.all,
-  };
-}
-
-
-
-export default connect(mapStateToProps)(TooltipInfo);
+export default TooltipInfo;
