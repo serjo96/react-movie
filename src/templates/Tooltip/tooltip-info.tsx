@@ -10,7 +10,6 @@ import './tooltip-info.sass';
 import useBreakpoints, { BreakpointsNames } from '~/utils/useMediaQuery';
 
 interface MyProps {
-  id: number;
   title: string;
   originalTitle: string;
   overview?: string;
@@ -24,7 +23,6 @@ interface MyProps {
 }
 
 function TooltipInfo ({
-  id,
   title,
   originalTitle,
   overview,

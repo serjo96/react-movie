@@ -60,7 +60,6 @@ const MediaItem = ({
       voteAverage={voteAverage}
       itemType={typeList}
       genres={genres}
-      id={id}
       className={parentClass}
     >
 
