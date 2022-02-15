@@ -19,6 +19,10 @@ export function friendlyUrl (url: string): string {
   return url.replace(/\s+/g, '_').toLowerCase();
 }
 
+export function friendlyName(name: string): string {
+  return name.replace(/_/g, ' ');
+}
+
 export function friendlyData (string: string): string {
   return string.replace(/-/g, '.').toLowerCase();
 }

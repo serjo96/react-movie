@@ -10,10 +10,9 @@ import { onSearchRequest } from '~/store/search/search.api';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import { MediaType } from '~/core/types/media-type';
 import queryString from 'query-string';
-import { friendlyUrl } from '~/utils/format';
+import { friendlyName, friendlyUrl } from '~/utils/format';
 import Input from '~/ui-components/input/input';
-import './search-page.sass'
-
+import './search-page.sass';
 
 function SearchPage () {
   const appDispatch = useAppDispatch();
@@ -21,7 +20,8 @@ function SearchPage () {
   const { search } = useLocation();
   const [prevProps] = useState(search);
   const queryParams = queryString.parse(search, { parseNumbers: true });
-  const [value, setValue] = useState(queryParams.query as string || '');
+  const initValue = queryParams.query as string ? friendlyName(queryParams.query as string) : '';
+  const [value, setValue] = useState(initValue);
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.search.pageSearch);
 
   const sendRequest = () => {
@@ -35,7 +35,6 @@ function SearchPage () {
     if (queryParams.query && !isFetching) {
       sendRequest();
       scrollToTop();
-      setValue(queryParams.query as string);
     }
   }, []);
 
