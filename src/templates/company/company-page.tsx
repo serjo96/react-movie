@@ -120,7 +120,7 @@ function CompanyPage () {
             defaultActiveKey='movies'
             labels={['Movies', 'Tv shows']}
           >
-            <Tab showTitle title='movies'>
+            <Tab title='movies'>
               <CompanyMovies />
             </Tab>
 
