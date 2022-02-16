@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, { Fragment, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
