@@ -58,9 +58,6 @@ function TooltipInfo ({
       left = 0;
     }
     const containerSizeWithTooltip = window.innerWidth - tooltipPadding - container.offsetWidth - tooltipElem.offsetWidth;
-    console.log(parentCoords.left);
-    console.log(containerSizeWithTooltip);
-    console.log(parentCoords.left > containerSizeWithTooltip);
     if (parentCoords.left > containerSizeWithTooltip) {
       left = container.offsetLeft - tooltipElem.offsetWidth;
       setToolTipLeft(false);
