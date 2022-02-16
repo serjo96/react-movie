@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, {Fragment, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import { Link } from 'react-router-dom';
 
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
@@ -57,8 +57,6 @@ function TooltipInfo ({
       left = 0;
     }
     const containerSizeWithTooltip = window.innerWidth - tooltipPadding - container.offsetWidth - tooltipElem.offsetWidth;
-    console.log(parentCoords.left);
-    console.log(containerSizeWithTooltip);
     if (parentCoords.left > containerSizeWithTooltip) {
       left = container.offsetLeft - tooltipElem.offsetWidth;
       setToolTipLeft(false);
@@ -68,7 +66,7 @@ function TooltipInfo ({
     tooltipElem.style.top = top + 'px';
   };
 
-  useEffect(initTooltipPosition, [isVisible]);
+  useLayoutEffect(initTooltipPosition, [isVisible]);
 
   const handleEnterItem = () => {
     if (itemType === MediaType.PERSON) {
