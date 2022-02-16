@@ -52,11 +52,15 @@ function TooltipInfo ({
     const tooltipElem = tooltipRef.current;
     let left = container.offsetLeft + container.offsetWidth;
     const top = container.offsetTop + 50;
+    setToolTipLeft(true);
 
     if (left < 0) {
       left = 0;
     }
     const containerSizeWithTooltip = window.innerWidth - tooltipPadding - container.offsetWidth - tooltipElem.offsetWidth;
+    console.log(parentCoords.left);
+    console.log(containerSizeWithTooltip);
+    console.log(parentCoords.left > containerSizeWithTooltip);
     if (parentCoords.left > containerSizeWithTooltip) {
       left = container.offsetLeft - tooltipElem.offsetWidth;
       setToolTipLeft(false);
