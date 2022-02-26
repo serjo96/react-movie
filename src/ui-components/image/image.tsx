@@ -10,6 +10,7 @@ interface MyProps {
   src?: string | null;
   alt?: string;
   showSpinner?: boolean;
+  className?: string;
 }
 
 export default function Image (props: MyProps) {
@@ -18,7 +19,7 @@ export default function Image (props: MyProps) {
   const onLoadImg = () => {
     setTimeout(() => setImgStatus(false), 500);
   };
-  const imgClass = classNames({ 'img-loading': imgStatus });
+  const imgClass = classNames(props.className, { 'img-loading': imgStatus });
 
   const { alt = '' } = props;
   return (

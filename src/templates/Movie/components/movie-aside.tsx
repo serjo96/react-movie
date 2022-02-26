@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
 
-import Spinner from '~/ui-components/spinner/Spinner';
 import { friendlyUrl, urlRusLat } from '~/utils/format';
 import { MovieDetails } from '~/core/types/movieDetails';
 import { CrewState } from '~/utils/initData';
-import NoImg from '~/assets/images/noImg.png';
+import Image from '~/ui-components/image/image';
 import './movie-aside.sass';
 
 interface MyProps {
@@ -34,26 +32,12 @@ export function MovieAside ({
   imdbId,
   id
 }: MyProps) {
-  const [imgStatus, setImgStatus] = useState(true);
-
-  const onLoadImg = () => {
-    setTimeout(() => setImgStatus(false), 500);
-  };
-
-  const moviePoster = classNames('movie__poster', {
-    'poster-loading': imgStatus
-  });
-
-  const imgClass = classNames({ 'img-loading': imgStatus });
-
   return (
     <aside className='aside'>
-      <div className={moviePoster}>
-        {imgStatus && <Spinner />}
-        <img
-          onLoad={onLoadImg}
-          className={imgClass}
-          src={(poster || backdrop) ? 'https://image.tmdb.org/t/p/w185/' + (poster || backdrop) : NoImg}
+      <div className='movie__poster'>
+        <Image
+          showSpinner
+          src={'https://image.tmdb.org/t/p/w185' + (poster || backdrop)}
           alt='poster'
         />
       </div>
