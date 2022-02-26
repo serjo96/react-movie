@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
 
 import { friendlyUrl, friendlyData, urlRusLat } from '~/utils/format';
-import Spinner from '~/ui-components/spinner/Spinner';
-import NoImg from '~/assets/images/noImg.png';
+import Image from '~/ui-components/image/image';
 import { TvDetails } from '~/core/types/tvDetails';
 import { TvState } from '~/store/tv/tv.slice';
 import '~/templates/Movie/components/movie-aside.sass';
@@ -43,35 +41,13 @@ function TvAside ({
   crew,
   links
 }: MyProps) {
-  const [imgStatus, setImgStatus] = useState(true);
-
-  const onLoadImg = () => {
-    setTimeout(() => setImgStatus(false), 500);
-  };
-
-  const moviePoster = classNames('movie__poster', {
-    'poster-loading': imgStatus
-  });
-
-  const imageSrc = () => {
-    const imgPath = poster || backdrop;
-    if (!imgPath) {
-      return NoImg;
-    }
-
-    return `https://image.tmdb.org/t/p/w185/${imgPath}`;
-  };
-
-  const imgClass = classNames({ 'img-loading': imgStatus });
   return (
 
     <aside className='aside '>
-      <div className={moviePoster}>
-        {imgStatus && <Spinner />}
-        <img
-          onLoad={onLoadImg}
-          className={imgClass}
-          src={imageSrc()}
+      <div className='movie__poster'>
+        <Image
+          showSpinner
+          src={'https://image.tmdb.org/t/p/w185' + (poster || backdrop)}
           alt='poster'
         />
       </div>
