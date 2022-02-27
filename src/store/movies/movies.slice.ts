@@ -162,7 +162,6 @@ export const moviesSlice = createSlice({
         const data = action.payload.data;
         state.isFetching = false;
         state.data = {
-          ...state.data,
           ...data,
           credits: {
             ...data.credits,
