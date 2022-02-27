@@ -3,10 +3,18 @@ import React from 'react';
 import { useAppSelector } from '~/hooks/storeHooks';
 
 export function TvShowSummary () {
-  const { voteAverage, voteCount, popularity, episodeRunTime, seasons, numberOfSeasons, inProduction } = useAppSelector(state => state.tvShows.data);
+  const {
+    voteAverage,
+    voteCount,
+    popularity,
+    episodeRunTime,
+    seasons,
+    numberOfSeasons,
+    inProduction
+  } = useAppSelector(state => state.tvShows.data);
 
   const seriesRuntime = () => {
-    const runtimeSorted = episodeRunTime.sort();
+    const runtimeSorted = [...episodeRunTime].sort();
     if (episodeRunTime.length > 1) {
       return `от ${runtimeSorted[0]} до ${runtimeSorted[episodeRunTime.length - 1]} мин`;
     }
