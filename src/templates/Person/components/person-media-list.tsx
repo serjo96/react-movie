@@ -15,13 +15,15 @@ interface MyProps {
 
 type ItemType = PersonCrew & MovieCreditsCast & Crew
 
+const defaultCount = 15;
+
 export default function PersonMediaList ({
   title,
   typeList,
   count,
   listData
 }: MyProps) {
-  const [listCount, setListCount] = useState(count ? count - 1 : 15);
+  const [listCount, setListCount] = useState(count ? count - 1 : defaultCount);
 
   const loadMoreMovies = () => {
     setListCount(listCount + 14);
@@ -44,7 +46,7 @@ export default function PersonMediaList ({
       />);
   };
   const filmographyListClass = classNames('filmography-list tooltip-parent', {
-    'filmography-list--isMore': listData.length > 15 && listData.length > listCount + 1,
+    'filmography-list--isMore': listData.length > defaultCount && listData.length > listCount + 1,
     'filmography-list--noMore': listData.length <= listCount
   });
 
