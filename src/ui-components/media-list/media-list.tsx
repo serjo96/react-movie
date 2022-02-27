@@ -37,7 +37,7 @@ const MediaList = ({
   movieListTitle
 }: MyProps) => {
   const RenderListTitle = () => {
-    if (movieListMain) {
+    if (movieListMain && listLink) {
       return (
         <Link
           className='title-link link-angle'
