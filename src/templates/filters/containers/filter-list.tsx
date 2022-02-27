@@ -134,11 +134,11 @@ function FilterList ({
 
   const onSelectGenres = (genre: Genre) => {
     if (!handleSelectGenres) {
-      const id = genre.id;
+      const genreId = genre.id;
       const UrlObj = { ...getUrlString };
-      UrlObj.genre = id;
+      UrlObj.genre = genreId;
 
-      if (!id) {
+      if (!genreId) {
         delete UrlObj.genre;
       }
 
