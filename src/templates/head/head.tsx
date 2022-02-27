@@ -9,6 +9,7 @@ import { usePrevious } from '~/hooks/usePrevious';
 import useBreakpoints, { BreakpointsNames } from '~/utils/useMediaQuery';
 import useWindowScroll from '~/hooks/useWindowScroll';
 import './header.sass';
+import LanguageSwitcher from '~/ui-components/language-switcher/language-switcher';
 
 export default function Header () {
   const { pathname } = useLocation();
@@ -65,13 +66,17 @@ export default function Header () {
               Movie Base
           </Link>
         </div>
-        <div
-          className='search-mobile-trigger link'
-          onClick={toggleMobileSearch}
-        >
-          <i className='fa fa-search' aria-hidden='true' />
+
+        <div className='header__right-side'>
+          <div
+            className='search-mobile-trigger link'
+            onClick={toggleMobileSearch}
+          >
+            <i className='fa fa-search' aria-hidden='true' />
+          </div>
+          <SearchHeader isShowMobileSearch={isShowMobileSearch} />
+          <LanguageSwitcher />
         </div>
-        <SearchHeader isShowMobileSearch={isShowMobileSearch} />
       </header>
 
       <Nav

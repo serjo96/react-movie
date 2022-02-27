@@ -1,0 +1,36 @@
+.language-switcher
+	position: relative
+	padding: 2px 0
+	width: 45px
+	&:hover
+		.languages-list
+			display: block
+	&__button
+		display: flex
+		align-content: center
+		justify-content: space-between
+		width: 100%
+		border: 0
+		cursor: pointer
+		background-color: transparent
+		i
+			&:last-child
+				position: relative
+				bottom: 2px
+
+
+.languages-list
+	display: none
+	background: #1b1d38
+	position: absolute
+	top: 20px
+	left: -15px
+	&__item
+		padding: 7px 5px
+		cursor: pointer
+		&--active
+			color: #d8b16b
+		&:hover
+			background: #534b77
+
+
