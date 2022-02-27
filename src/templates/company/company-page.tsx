@@ -1,28 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import ServiceBlock from '../service/service-block';
-import MediaList from '~/ui-components/media-list/media-list';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { useParams } from 'react-router-dom';
-import Image from '~/ui-components/image/image';
-import { scrollToTop } from '~/utils';
-import { Languages } from '~/store/user/user.slice';
+
 import {
-  getCompanyDetails,
-  getCompanyMovies,
-  getCompanyTvShows,
-  getEngCompanyDetails
+  getCompanyDetails
 } from '~/store/company/company.api';
-import { MediaType } from '~/core/types/media-type';
-import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
-import FilterList from '~/templates/filters/containers/filter-list';
-import './company.sass';
-import { usePrevious } from '~/hooks/usePrevious';
-import { Collapse } from 'react-collapse';
+
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { scrollToTop } from '~/utils';
+import ServiceBlock from '../service/service-block';
+
+import Image from '~/ui-components/image/image';
 import Tabs from '~/ui-components/tabs/tabs';
 import Tab from '~/ui-components/tabs/tab';
+
 import CompanyMovies from '~/templates/company/company-movies';
 import CompanyTvShows from '~/templates/company/company-tv-shows';
+import './company.sass';
 
 type MoviesFilters = {
   adult: boolean;
@@ -49,7 +43,7 @@ export const initFilters = (isMovies?: true): MoviesFilters | TvShowsFilters => 
 function CompanyPage () {
   const appDispatch = useAppDispatch();
   const { id } = useParams<{id: string}>();
-  const { isFetching, isSuccessful, data, lists } = useAppSelector(state => state.company);
+  const { isFetching, isSuccessful, data } = useAppSelector(state => state.company);
 
   const [prevProps] = useState(id);
 
@@ -57,7 +51,7 @@ function CompanyPage () {
   const companyId = id.split('-').pop();
 
   const sendRequest = () => {
-    appDispatch(getCompanyDetails({ id: companyId }));
+    appDispatch(getCompanyDetails({ id: +companyId }));
   };
 
   useEffect(() => {
@@ -73,9 +67,9 @@ function CompanyPage () {
     }
   }, [id]);
 
-  const handlerOnFetchEngData = () => {
-    appDispatch(getEngCompanyDetails({ id: `${companyId}`, lang: Languages.EN }));
-  };
+  // const handlerOnFetchEngData = () => {
+  //   appDispatch(getEngCompanyDetails({ id: `${companyId}`, lang: Languages.EN }));
+  // };
 
   return (
     <div className='main main--media-list'>

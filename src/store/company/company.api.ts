@@ -13,7 +13,7 @@ export interface CompanyRespData {
   data: CompanyDetails;
 }
 
-export const getCompanyDetails = createAsyncThunk<CompanyRespData, {id: string, lang?: Languages}>(
+export const getCompanyDetails = createAsyncThunk<CompanyRespData, {id: number, lang?: Languages}>(
   'company/getCompanyDetails',
   async ({ id, lang = Languages.RU }) => {
     const resp = await oldClient.get<CompanyDetails>(`company/${id}`,
@@ -29,7 +29,7 @@ export const getCompanyDetails = createAsyncThunk<CompanyRespData, {id: string, 
   }
 );
 
-export const getEngCompanyDetails = createAsyncThunk<CompanyRespData, {id: string, lang?: Languages}>(
+export const getEngCompanyDetails = createAsyncThunk<CompanyRespData, {id: number, lang?: Languages}>(
   'company/getEngCompanyDetails',
   async ({ id, lang = Languages.EN }) => {
     const resp = await oldClient.get<CompanyDetails>(`company/${id}`,
@@ -45,8 +45,8 @@ export const getEngCompanyDetails = createAsyncThunk<CompanyRespData, {id: strin
   }
 );
 
-type CompanyMoviesArguments = MovieListArgs & {id: string | number}
-type CompanyTvShowsArguments = TvListArgs & {id: string | number}
+type CompanyMoviesArguments = MovieListArgs & {id: number}
+type CompanyTvShowsArguments = TvListArgs & {id: number}
 type ReturnedCompanyMovieList = {
   data: ListData<MoviesListItem>;
   isSuccessful: boolean;
