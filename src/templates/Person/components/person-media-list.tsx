@@ -23,6 +23,7 @@ export default function PersonMediaList ({
   count,
   listData
 }: MyProps) {
+  if (!listData.length) return null;
   const [listCount, setListCount] = useState(count ? count - 1 : defaultCount);
 
   const loadMoreMovies = () => {
