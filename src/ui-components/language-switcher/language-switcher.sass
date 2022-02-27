@@ -1,6 +1,6 @@
 .language-switcher
 	position: relative
-	padding: 2px 0
+	padding: 4px 0
 	width: 45px
 	&:hover
 		.languages-list
@@ -22,13 +22,19 @@
 .languages-list
 	display: none
 	background: #1b1d38
+	box-shadow: 0 7px 13px -5px rgba(0,0,0,0.6)
 	position: absolute
-	top: 20px
+	top: 25px
 	left: -15px
 	&__item
 		padding: 7px 5px
 		cursor: pointer
-		&--active
+		background-color: transparent
+		border: 0
+		display: block
+		width: 100%
+		color: #fff
+		&:disabled
 			color: #d8b16b
 		&:hover
 			background: #534b77

@@ -10,10 +10,6 @@ export default function LanguageSwitcher () {
   const selectedLanguage = useAppSelector(state => state.config.language);
   const selectedLanguageTitle = selectedLanguage === Languages.RU ? 'RU' : 'EN';
 
-  const languageItemClass = (isActive: boolean) => classNames('languages-list__item', {
-    'languages-list__item--active': isActive
-  });
-
   return (
 
     <div className='language-switcher'>
@@ -23,18 +19,20 @@ export default function LanguageSwitcher () {
       </button>
 
       <div className='languages-list'>
-        <div
-          className={languageItemClass(selectedLanguage === Languages.EN)}
+        <button
+          disabled={selectedLanguage === Languages.EN}
+          className='languages-list__item'
           onClick={() => appDispatch(setLanguage(Languages.EN))}
         >
           English
-        </div>
-        <div
-          className={languageItemClass(selectedLanguage === Languages.RU)}
+        </button>
+        <button
+          disabled={selectedLanguage === Languages.RU}
+          className='languages-list__item'
           onClick={() => appDispatch(setLanguage(Languages.RU))}
         >
           Russian
-        </div>
+        </button>
       </div>
     </div>
 
