@@ -15,7 +15,12 @@ interface MyProps {
 
 export default function Image (props: MyProps) {
   const [imgStatus, setImgStatus] = useState(true);
-  const imageSrc = props.src ? `${imgUrl}${props.src}` : NoImg;
+  let imageSrc = NoImg;
+
+  if (props.src) {
+    imageSrc = props.src.match(/^http/) ? props.src : `${imgUrl}${props.src}`;
+  }
+
   const onLoadImg = () => {
     setTimeout(() => setImgStatus(false), 500);
   };
