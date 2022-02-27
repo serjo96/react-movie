@@ -184,7 +184,7 @@ export const getTopMovies = createAsyncThunk<ReturnedMovieList, number | void>(
   }
 );
 
-export const getMovieData = createAsyncThunk<MovieRespData, {id: string, lang?: Languages}>(
+export const getMovieData = createAsyncThunk<MovieRespData, {id: number, lang?: Languages}>(
   'movie/getMovieData',
   async ({ id, lang = Languages.RU }) => {
     const resp = await oldClient.get<MovieDetails>(`movie/${id}`,
@@ -219,7 +219,7 @@ export const getMovieData = createAsyncThunk<MovieRespData, {id: string, lang?: 
   }
 );
 
-export const getMovieEngOverview = createAsyncThunk<MovieEngRespData, {id: string, lang?: Languages}>(
+export const getMovieEngOverview = createAsyncThunk<MovieEngRespData, {id: number, lang?: Languages}>(
   'movie/getMovieEngData',
   async ({ id, lang = Languages.EN }) => {
     const resp = await oldClient.get<MovieDetails>(`movie/${id}`,

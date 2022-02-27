@@ -28,7 +28,7 @@ function Movie () {
   const movieId = id.split('-').pop();
 
   const sendRequest = () => {
-    appDispatch(getMovieData({ id: movieId }));
+    appDispatch(getMovieData({ id: +movieId }));
   };
 
   useEffect(() => {
@@ -45,7 +45,7 @@ function Movie () {
   }, [id]);
 
   const handlerOnFetchEngData = () => {
-    appDispatch(getMovieEngOverview({ id: `${movieId}`, lang: Languages.EN }));
+    appDispatch(getMovieEngOverview({ id: +movieId, lang: Languages.EN }));
   };
 
   return (
