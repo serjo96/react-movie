@@ -11,7 +11,7 @@ import { scrollToTop } from '~/utils';
 
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import MediaList from '~/ui-components/media-list/media-list';
-import ServiceBlock from '../../service/service-block';
+import ServiceBlock from '~/templates/service/service-block';
 
 function MoviePlaying () {
   const appDispatch = useAppDispatch();
@@ -41,7 +41,6 @@ function MoviePlaying () {
 
   useEffect(() => {
     if (search !== prevProps) {
-      console.log(222);
       sendRequest();
       scrollToTop();
     }
