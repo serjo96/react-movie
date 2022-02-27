@@ -71,6 +71,10 @@ export default function Filters ({
     'filter-item--sort-direction-asc': direction && direction === 'asc'
   });
 
+  const sortByClass = classNames('filter-item', {
+    'filter-item--active': filterValues.sortBy !== 'popularity' && filterValues.sortBy
+  });
+
   const renderCountryList = (items: typeof popularCountries | typeof storageCountries) => {
     return items.map((item, index) => {
       return (
@@ -85,6 +89,9 @@ export default function Filters ({
     });
   };
 
+  const genresChunks = chunkArr(genres, 5);
+  const countriesChunks = chunkArr(storageCountries, 10);
+
   return (
     <div className='filter-list-container'>
       <div className='filter-list'>
@@ -95,12 +102,12 @@ export default function Filters ({
               <i className='fa fa-angle-down' aria-hidden='true' />
             </div>
             <div className='filter-item__catalog filter-item__catalog--genres'>
-              {chunkArr(genres, 5).map((el, indx) => (
+              {genresChunks.map((genre, indx) => (
                 <ul
                   className='filter-catalog-col'
                   key={indx}
                 >
-                  {el.map((item, index) => (
+                  {genre.map((item, index) => (
                     <li
                       className={filterCatalogClasses(item.id === +filterValues.genre)}
                       id={`${item.id}`}
@@ -182,12 +189,12 @@ export default function Filters ({
                   {renderCountryList(popularCountries)}
                 </ul>
               </div>
-              {chunkArr(storageCountries, 10).map((el, indx) => (
+              {countriesChunks.map((country, indx) => (
                 <ul
                   className='filter-catalog-col'
                   key={indx}
                 >
-                  {renderCountryList(el)}
+                  {renderCountryList(country)}
                 </ul>
               ))}
             </div>
@@ -207,7 +214,7 @@ export default function Filters ({
             </div>
           </div>}
 
-        <div className={`filter-item ${(filterValues.sortBy !== 'popularity' && filterValues.sortBy) ? 'filter-item--active' : ''}`}>
+        <div className={sortByClass}>
           <div className='filter-name'>
             <span>{sortByFilterName(sortByList, filterValues.sortBy)}</span>
             <i className='fa fa-angle-down' aria-hidden='true' />
