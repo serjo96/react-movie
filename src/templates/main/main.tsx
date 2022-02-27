@@ -29,6 +29,7 @@ function Main () {
     }
   }, []);
 
+  // TODO: Add service block for handle rejected requests
   if (allFetched) {
     return (
       <main className='main main--media-list iphonex'>
