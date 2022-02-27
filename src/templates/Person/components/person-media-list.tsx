@@ -30,6 +30,7 @@ export default function PersonMediaList ({
   };
 
   const renderMediaItem = (item: ItemType, index: number) => {
+    const typeListData = typeList && typeList !== MediaType.MIXED ? typeList : item.mediaType;
     return (
       <MediaItem
         title={item.title || item.name}
@@ -40,7 +41,7 @@ export default function PersonMediaList ({
         date={item.releaseDate || item.firstAirDate}
         key={index}
         id={item.id}
-        typeList={typeList || item.mediaType}
+        typeList={typeListData}
         genres={item.genreIds}
         job={item.job}
       />);
