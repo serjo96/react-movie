@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { getEngTvShowData, getTvShowData, getTvShowSeasons } from '~/store/tv/tv.api';
 import { tvActions } from '~/store/tv/tv.slice';
-import { Languages } from '~/store/user/user.slice';
+import { Languages } from '~/store/config/config.slice';
 import { MediaType } from '~/core/types/media-type';
 
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
