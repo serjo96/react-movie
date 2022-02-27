@@ -12,13 +12,15 @@ interface MyProps {
   posters?: boolean;
 }
 
+const defaultCount = 15;
+
 export default function MediaStills ({
   imgCount,
   title,
   images,
   posters
 }: MyProps) {
-  const [imgListCount, setImgListCount] = useState(imgCount ? imgCount - 1 : 15);
+  const [imgListCount, setImgListCount] = useState(imgCount ? imgCount - 1 : defaultCount);
   const [imgIndex, setImageIndex] = useState(0);
   const [isShowLightBox, setVisibilityLightBox] = useState(false);
   const [isLoadedImages, setIsLoadedImages] = useState(false);
@@ -61,7 +63,6 @@ export default function MediaStills ({
             >
               <img
                 src={'https://image.tmdb.org/t/p/w1280' + backdrop.filePath}
-                data-index={indx}
                 alt=''
                 onClick={() => onClickImg(indx)}
               />
