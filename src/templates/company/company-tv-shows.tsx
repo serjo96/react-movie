@@ -1,15 +1,18 @@
-import FilterList from '~/templates/filters/containers/filter-list';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
 import { MediaType } from '~/core/types/media-type';
+import { getCompanyTvShows } from '~/store/company/company.api';
+
+import ServiceBlock from '~/templates/service/service-block';
+import FilterList from '~/templates/filters/containers/filter-list';
 import MediaList from '~/ui-components/media-list/media-list';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
-import React, { useEffect, useState } from 'react';
-import { getCompanyMovies, getCompanyTvShows } from '~/store/company/company.api';
+
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
-import { useParams } from 'react-router-dom';
 import { usePrevious } from '~/hooks/usePrevious';
-import { scrollToTop } from '~/utils';
 import { initFilters } from '~/templates/company/company-page';
-import ServiceBlock from '../service/service-block';
+import { scrollToTop } from '~/utils';
 
 type TvShowsFilters = {
   sortBy: string | null;
@@ -37,7 +40,7 @@ export default function CompanyTvShows () {
 
   const sendRequest = () => {
     const payload = { ...filters, date: filters.year };
-    appDispatch(getCompanyTvShows({ ...payload, page, id: companyId }));
+    appDispatch(getCompanyTvShows({ ...payload, page, id: +companyId }));
   };
 
   useEffect(() => {
