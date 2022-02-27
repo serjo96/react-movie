@@ -1,125 +1,109 @@
-import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import { Collapse } from 'react-collapse';
-import { Location } from 'history';
 import classNames from 'classnames';
 
 import { moviesLinks, serialsLinks } from '~/utils/navLinks';
 import './nav.sass';
 
-interface MyState {
-  isMoviePage: boolean;
-  movieCollapse: boolean;
+interface MyProps {
+  isShowNav: boolean;
+  isHideHeader: boolean;
 }
 
-type MyProps = {
-  location: Location
-}
+export default function Nav ({
+  isShowNav,
+  isHideHeader
+}: MyProps) {
+  const [navCollapse, setNavCollapse] = useState(true);
+  const isMoviesPage = useRouteMatch({
+    path: '/movies/',
+    exact: false,
+    strict: false
+  });
 
-export default class Nav extends Component<MyProps, MyState> {
-  private navRef = React.createRef<HTMLDivElement>();
+  const isMoviePage = useRouteMatch({
+    path: '/movie/',
+    exact: false,
+    strict: false
+  });
 
-  state = {
-    movieCollapse: true,
-    isMoviePage: true
+  useEffect(() => {
+    setNavCollapse(!!isMoviesPage || !!isMoviePage);
+  }, []);
+
+  const handleCollapseNav = () => {
+    setNavCollapse(!navCollapse);
   };
 
-  componentDidMount () {
-    const isMoviePages = /\/movies\//gi.test(location.pathname);
-    this.setState({
-      movieCollapse: isMoviePages,
-      isMoviePage: isMoviePages
-    });
-  }
+  const subMenuClass = (isCollapse: boolean) => classNames('sub-menu', {
+    'sub-menu--open': isCollapse
+  });
 
-  componentDidUpdate (prevProps: MyProps) {
-    const width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-    const isChangedPath = this.props.location.pathname !== prevProps.location.pathname;
+  const navClass = classNames('nav', {
+    'nav--show': isShowNav,
+    'nav--full': isHideHeader
+  });
 
-    if (width < 1130) {
-      if (isChangedPath) {
-        this.navRef.current.classList.remove('nav--mobile-show');
-        document.querySelector('.mobile-nav-trigger').classList.remove('mobile-nav-trigger--isClicked');
-      }
-    }
-  }
+  return (
+    <nav className={navClass}>
+      <ul className='sidebar-menu'>
+        <li className={subMenuClass(navCollapse)}>
+          <div
+            className='nav__element sub-menu-trigger'
+            onClick={handleCollapseNav}
+          >
+            <span>Фильмы</span>
+            <i className='fa fa-film' />
+          </div>
+          <Collapse
+            theme={{ collapse: 'nav-collapse' }}
+            isOpened={navCollapse}
+          >
+            <ul className='sub-menu'>
+              {moviesLinks().map((link, index) => (
+                <li className='sub-menu__item' key={index}>
+                  <NavLink
+                    to={link.href}
+                    activeClassName='sub-menu__item--active'
+                  >
+                    <span>{link.title}</span>
+                    <i className={`fa ${link.icon}`} aria-hidden='true' />
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </Collapse>
+        </li>
 
-  handleCollapseNav = () => {
-    this.setState((state) => ({
-      movieCollapse: !state.movieCollapse
-    }));
-  };
-
-  handleClickLink = () => {
-    this.navRef.current.classList.remove('nav--mobile-show');
-    document.querySelector('.mobile-nav-trigger').classList.remove('mobile-nav-trigger--isClicked');
-  };
-
-  render () {
-    const movieSubMenuClass = classNames('sub-menu', {
-      'sub-menu--open': this.state.movieCollapse
-    });
-
-    const tvSubMenuClass = classNames('sub-menu', {
-      'sub-menu--open': !this.state.movieCollapse
-    });
-
-    return (
-      <div className='nav' ref={this.navRef}>
-        <ul className='sidebar-menu'>
-          <li className={movieSubMenuClass}>
-            <div
-              className='nav__element sub-menu-trigger'
-              onClick={this.handleCollapseNav}
-            >
-              <span>Фильмы</span>
-              <i className='fa fa-film' />
-            </div>
-            <Collapse isOpened={this.state.movieCollapse}>
-              <ul className='sub-menu'>
-                {moviesLinks().map((link, index) => (
-                  <li className='sub-menu__item' key={index}>
-                    <NavLink
-                      to={link.href}
-                      activeClassName='sub-menu__item--active'
-                      onClick={this.handleClickLink}
-                    >
-                      <span>{link.title}</span>
-                      <i className={`fa ${link.icon}`} aria-hidden='true' />
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-            </Collapse>
-          </li>
-
-          <li className={tvSubMenuClass}>
-            <div
-              className='nav__element sub-menu-trigger'
-              onClick={this.handleCollapseNav}
-            >
-              <span>Сериалы</span>
-              <i className='fa fa-television' />
-            </div>
-            <Collapse isOpened={!this.state.movieCollapse}>
-              <ul className='sub-menu'>
-                {serialsLinks().map((link, index) => (
-                  <li className='sub-menu__item' key={index}>
-                    <NavLink
-                      to={link.href}
-                      activeClassName='sub-menu__item--active'
-                      onClick={this.handleClickLink}
-                    >
-                      <span>{link.title}</span>
-                      <i className={`fa ${link.icon}`} aria-hidden='true' />
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-            </Collapse>
-          </li>
-        </ul>
-      </div>
-    );
-  }
+        <li className={subMenuClass(!navCollapse)}>
+          <div
+            className='nav__element sub-menu-trigger'
+            onClick={handleCollapseNav}
+          >
+            <span>Сериалы</span>
+            <i className='fa fa-television' />
+          </div>
+          <Collapse
+            theme={{ collapse: 'nav-collapse' }}
+            isOpened={!navCollapse}
+          >
+            <ul className='sub-menu'>
+              {serialsLinks().map((link, index) => (
+                <li className='sub-menu__item' key={index}>
+                  <NavLink
+                    to={link.href}
+                    activeClassName='sub-menu__item--active'
+                  >
+                    <span>{link.title}</span>
+                    <i className={`fa ${link.icon}`} aria-hidden='true' />
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </Collapse>
+        </li>
+      </ul>
+    </nav>
+  );
 }

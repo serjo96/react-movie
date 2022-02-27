@@ -1,15 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
+import './spinner.sass';
+import classNames from 'classnames';
 
-class Spinner extends Component {
-  render () {
-    return (
+interface MyProps {
+  isFullScreen?: boolean;
+}
 
-      <div className='spinner-wrap'>
-        <div className='spinner' />
-      </div>
+function Spinner ({ isFullScreen }: MyProps) {
+  const spinnerClass = classNames('spinner', {
+    'spinner--full-page': isFullScreen
+  });
 
-    );
-  }
+  return (
+    <div className='spinner-wrap'>
+      <div className={spinnerClass} />
+    </div>
+  );
 }
 
 export default (Spinner);

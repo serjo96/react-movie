@@ -1,0 +1,92 @@
+
+@import "styles/mixins"
+
+.tooltip-info
+	transition: opacity .5s
+	position: absolute
+	top: 0
+	left: 0
+	z-index: 50
+	width: 352px
+	padding: 20px
+	font-weight: bold
+	background-image: radial-gradient(circle closest-corner at 50% 20%,#272f46,#10101a)
+	background-color: #0f111e
+	background-position: center
+	border: 1px solid #2e3854
+	border-radius: 6px
+	box-shadow: 0 0 20px 5px rgba(0,0,0,.3)
+	opacity: 0
+	&:after,
+	&:before
+		right: 100%
+		top: 50%
+		border: solid transparent
+		content: " "
+		height: 0
+		width: 0
+		position: absolute
+		pointer-events: none
+	@include media("smSize", "min")
+		width: 270px
+	&--is-visible
+		opacity: 1
+
+
+.tooltip-info
+	&:after
+		border-bottom: 24px solid transparent
+		border-top: 24px solid transparent
+		margin-top: -24px
+	&:before
+		border-bottom: 20px solid transparent
+		border-top: 20px solid transparent
+		margin-top: -20px
+		z-index: 1
+		height: 1px
+
+
+.tooltip-info--left
+	&:after
+		left: -21px
+		border-right: 18px solid #272f46
+	&:before
+		border-right: 15px solid #0f111e
+		left: -18px
+		margin-bottom: -1px
+
+
+.tooltip-info--right
+	&:after
+		right: -21px
+		border-left: 18px solid #272f46
+	&:before
+		border-left: 15px solid #0f111e
+		right: -18px
+		margin-bottom: -1px
+
+.tooltip-info__title
+	margin-bottom: 5px
+	.original-title
+		margin-top: 3px
+
+.tooltip-info__attributes
+	margin-top: 10px
+	font-size: 13px
+
+
+
+.tooltip-info__date
+	font-size: 14px
+	margin-right: 10px
+
+.tooltip-info__genre-data
+	display: flex
+	align-items: center
+	margin-bottom: 5px
+	.genres
+		font-weight: 400
+		display: flex
+		flex-wrap: wrap
+
+

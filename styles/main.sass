@@ -2,28 +2,13 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700')
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
 @import url('https://fonts.googleapis.com/css?family=Roboto')
-@import '~fonts/proximanova-semibold/stylesheet.css'
-@import '~fonts/ProximaNova-Regular/stylesheet.css'
-@import "~lightbox-react/style.css"
-@import "../src/templates/Head/header"
-@import "../src/templates/Search/searchHeader"
-@import "../src/templates/Search/search"
-@import "../src/templates/MoviesList/container/moveList"
-@import "../src/templates/Filters/containers/filters"
-@import "../src/templates/Movie/movie"
-@import "../src/templates/Movie/movie-aside"
-@import "../src/templates/Movie/MovieCollection"
-@import "../src/templates/Movie/MovieRecommendations"
-@import "../src/templates/TV/tv-seasons"
-@import "./stills/Stills.sass"
-@import "./credits/Сredits.sass"
-@import "../src/templates/Person/Person"
-@import "../src/templates/Company/Company"
+@import 'fonts/proximanova-semibold/stylesheet.sass'
+@import 'fonts/ProximaNova-Regular/stylesheet.sass'
+@import "variables"
+@import "mixins"
 
-//ui
-@import "popup/movieTooltip"
-@import "./Spinner/Spinner.sass"
-@import "../src/ui-components/Page-switcher/page-switcher"
+@import "~lightbox-react/style.css"
+@import "../src/templates/filters/containers/filters"
 
 html
 	min-height: 100vh
@@ -37,15 +22,18 @@ body
 	color: #fff
 	font-size: 14px
 
-h1,h2,h3,h4
-	font-family: 'proxima_novasemibold', Sans-Serif
+//h1,h2,h3,h4
+//	font-family: 'proxima_novasemibold', Sans-Serif
 
 p
 	font-family: 'Roboto', sans-serif
 
 .main--media-list
-	width: 1245px
+	width: 100%
 	margin: 0 auto
+	@include media("xlSize", "min")
+		max-width: 1245px
+		padding-left: $navHideSize
 
 .main
 	margin-top: 75px
@@ -54,6 +42,8 @@ p
 .container
 	width: 1160px
 	margin: 0 auto
+	@include media("xlSize", "max")
+		width: 960px
 
 
 .btn
@@ -116,9 +106,6 @@ p
 	width: 100%
 	height: 100%
 
-.swiper-scrollbar
-	cursor: pointer
-
 .slider-button-next
 	right: 15px
 	&:before
@@ -133,7 +120,7 @@ p
 	position: absolute
 	z-index: 50
 	top: 50%
-	margin-top: -22px
+	transform: translateY(-100%)
 	font: normal normal normal 14px/1 FontAwesome
 	opacity: .6
 	background: rgba(0, 0, 0, 0.7)
@@ -172,18 +159,7 @@ p
 .track-vertical
 	background: #000
 
-.load-description-eng
-	margin-top: 10px
-	button
-		color: #fff
-		padding: 0
-		cursor: pointer
-		border: 0
-		border-bottom: 1px dotted #fff
-		font-weight: 700
-		background: transparent
-		&:hover
-			border-bottom-color: transparent
+
 
 .my-appear
 	opacity: 0.01
@@ -207,32 +183,15 @@ p
 .movies-content--main-page
 	.movies__list
 		.movie-item
-			width: 15.2%
+			width: 16.2%
 
 
-.try-again-wrap
-	position: fixed
-	z-index: 25
-	top: 0
-	right: 0
-	left: 0
-	bottom: 0
-	width: 100%
-	height: 100%
-	display: flex
-	justify-content: center
-	align-items: center
-	background: #000
-
-.try-again-btn
-	padding: 10px
+.swiper-scrollbar
 	cursor: pointer
-	border: 1px solid #d8b16b
-	background: #d8b16b
-	transition: all 1s
-	&:hover
-		background: transparent
-		color: #d8b16b
+	background: rgb(251 251 251 / 20%)
+
+.swiper-scrollbar-drag
+	background: rgb(255 255 255 / 60%)
 
 
 @import "./Media/Media.sass"

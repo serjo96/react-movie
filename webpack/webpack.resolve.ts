@@ -5,7 +5,7 @@ const resolve: webpack.ResolveOptions = {
   extensions: ['.js', '.ts', '.jsx', '.tsx'],
   alias: {
     fonts: path.join(__dirname, '../src/assets/fonts/'),
-    images: path.join(__dirname, '../src/assets/images/'),
+    styles: path.join(__dirname, '../src/styles/'),
     '~': path.join(__dirname, '../src')
   }
 };

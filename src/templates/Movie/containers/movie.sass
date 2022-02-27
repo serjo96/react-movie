@@ -1,0 +1,24 @@
+@import "styles/mixins"
+
+.info-wrapper
+	display: flex
+	flex-wrap: wrap
+	position: relative
+	margin: 20px 0
+	h2
+		font-size: 18px
+		font-weight: bold
+		margin-bottom: 15px
+
+.overview
+	width: 100%
+	@include media("lgSize", "min")
+		width: 79%
+		padding-left: 20px
+
+
+.description__text
+	white-space: break-spaces
+	font-size: 14px
+	line-height: 25px
+

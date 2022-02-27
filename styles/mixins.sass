@@ -1,0 +1,12 @@
+@function translate-media-condition($c)
+	$breakpointsMap: (xsSize: 576px, smSize: 763px, lgSize: 992px, xlSize: 1200px, xxlSize: 1400px)
+	@return map-get($breakpointsMap, $c)
+
+
+@mixin media($size, $typeSize)
+	@if ($typeSize == 'min')
+		@media (min-width: translate-media-condition($size))
+			@content
+	@else
+		@media (max-width: translate-media-condition($size))
+			@content

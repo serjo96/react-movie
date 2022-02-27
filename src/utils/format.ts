@@ -1,5 +1,7 @@
 // TODO: to refactoring
-export function declOfNum (number: number, titles: string[]) {
+import { Genre } from '~/core/types/genres';
+
+export function declOfNum (number: number, titles: [string, string, string]) {
   return titles[(number % 10 === 1 && number % 100 !== 11) ? 0 : number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20) ? 1 : 2];
 }
 
@@ -15,6 +17,10 @@ export function capitalizeFirstLetter (string: string): string {
 
 export function friendlyUrl (url: string): string {
   return url.replace(/\s+/g, '_').toLowerCase();
+}
+
+export function friendlyName (name: string): string {
+  return name.replace(/_/g, ' ');
 }
 
 export function friendlyData (string: string): string {
@@ -83,3 +89,49 @@ export function urlRusLat (str: string): string {
   }
   return newStr.replace(/-/g, '_').replace(/[_]{2,}/gim, '_').replace(/\n/gim, '');
 }
+
+export function formattingGenres ({ movie, tv }: {movie: Genre[]; tv: Genre[]}) {
+  const hashObj: {[key: number | string]: string} = {
+    0: 'Все жанры'
+  };
+  const concatArr = movie.concat(tv);
+  concatArr.forEach((item) => {
+    hashObj[item.id] = capitalizeFirstLetter(item.name);
+  });
+
+  const allGenres = [{ id: 0, name: 'Все жанры' }];
+
+  const moviesGenres = movie.map(i => {
+    const result = {
+      ...i,
+      name: capitalizeFirstLetter(i.name)
+    };
+    allGenres.push(result);
+    return result;
+  });
+
+  moviesGenres.unshift({ id: 0, name: 'Все жанры' });
+
+  const tvGenres = tv.map(i => {
+    const result = {
+      ...i,
+      name: capitalizeFirstLetter(i.name)
+    };
+    allGenres.push(result);
+    return result;
+  });
+
+  // TODO: check if 0 id is necessary;
+  tvGenres.unshift({ id: 0, name: 'Все жанры' });
+
+  return {
+    genresHash: hashObj,
+    arrGenres: {
+      all: allGenres,
+      movie: moviesGenres,
+      tv: tvGenres
+    }
+  };
+}
+
+export const firstOrderObjectValue = <T>(key: string | number, object: T): T => ({ [key]: undefined, ...object });

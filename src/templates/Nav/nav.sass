@@ -1,3 +1,5 @@
+@import "styles/mixins"
+
 .nav
 	width: 250px
 	height: 100%
@@ -11,12 +13,23 @@
 	transform: translate3d(-195px, 0, 0)
 	overflow: hidden
 	overflow-y: auto
+	@include media("xlSize", "max")
+		width: 0
+		opacity: 0
+		transform: translate3d(-100%, 0, 0)
 	&:hover
 		transform: translate3d(0,0,0)
+	&--show
+		width: 100%
+		transform: translate3d(0, 0, 0)
+		opacity: 1
 	&--full
 		padding-top: 0
+	@include media("xlSize", "max")
+		padding-top: 60px
 	.logo
 		display: none
+
 
 
 .nav__element
@@ -57,6 +70,8 @@
 		line-height: 26px
 
 
+.nav-collapse
+	transition: .5s height
 
 .sub-menu.sub-menu--open
 	background: #141414

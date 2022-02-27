@@ -51,7 +51,7 @@ const config: webpack.Configuration = mainConfig({
   }
 });
 
-export default {
+const exportConfig: webpack.Configuration = {
   ...config,
   plugins: [
     ...config.plugins,
@@ -90,3 +90,4 @@ export default {
     new CompressionPlugin()
   ]
 };
+export default exportConfig;

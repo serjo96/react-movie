@@ -20,6 +20,7 @@ const config: webpack.Configuration = mainConfig({
     client: {
       progress: true,
       reconnect: true,
+      logging: 'info',
       overlay: true
     },
     port: PORT,
@@ -27,7 +28,7 @@ const config: webpack.Configuration = mainConfig({
   }
 });
 
-export default {
+const exportConfig: webpack.Configuration = {
   ...config,
   mode: 'development',
   plugins: [
@@ -35,3 +36,5 @@ export default {
     new webpack.NoEmitOnErrorsPlugin()
   ]
 };
+
+export default exportConfig;

@@ -1,0 +1,56 @@
+@import "styles/variables"
+@import "styles/mixins"
+
+
+.summary-ratings
+	margin-left: $summaryMargin
+	@media (max-width : 963px)
+		margin-left: 0
+
+.ratings
+	display: flex
+	align-items: flex-start
+	margin: 0 -7.5px
+	@media (max-width : 1320px)
+		flex-wrap: wrap
+
+.rating
+	display: flex
+	flex-wrap: wrap
+	.icon
+		margin-right: 10px
+		font-size: 30px
+		text-shadow: 0 0 20px black
+	.rating-1
+		color: #616161
+	.rating-2
+		color: #675b5b
+	.rating-3
+		color: #705252
+	.rating-4
+		color: #7a4747
+	.rating-5
+		color: #863c3c
+	.rating-6
+		color: #922f30
+	.rating-7
+		color: #9e2424
+	.rating-8
+		color: #a81918
+	.rating-9
+		color: #b11010
+	.rating-10
+		color: #b71a1a
+
+
+.summary-item
+	padding: 0 7.5px
+	@include media("xlSize", "max")
+		padding: 5px 7.5px
+	@include media("xsSize", "max")
+		width: 50%
+	&__title
+		margin-bottom: 5px
+		font: 700 17px 'proxima_novasemibold', sans-serif
+	@include media("xsSize", "max")
+		font-size: 14px

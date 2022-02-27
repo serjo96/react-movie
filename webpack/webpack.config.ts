@@ -44,7 +44,7 @@ const mainConfig = (config: webpack.Configuration): webpack.Configuration => ({
         js: ['bundle.js']
       }
     })
-  ].filter(Boolean),
+  ].filter(Boolean) as webpack.Configuration['plugins'],
   ...config
 });
 

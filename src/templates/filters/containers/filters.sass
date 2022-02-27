@@ -1,0 +1,173 @@
+.filter-list
+	display: flex
+	align-items: center
+	position: relative
+	margin: 0 -10px
+
+.filter-item
+	margin: 0 10px
+	&:hover
+		.fa-angle-down
+			transform: rotate(180deg)
+		.filter-item__catalog
+			display: block
+		.filter-item__catalog--genres
+			display: flex
+	&:active
+		background: #2e3854
+
+.filter-item--safe-filter
+	.fa
+		&:before
+			display: inline-block
+			width: 12px
+
+
+.filter-item--active
+	.filter-name
+		border-color: #d8b16b
+
+.filter-name
+	border-radius: 4px
+	border: 1px solid #f4f4f4
+	padding: 5px 10px
+	cursor: pointer
+	position: relative
+	span
+		user-select: none
+		vertical-align: middle
+		margin-right: 10px
+	i
+		vertical-align: middle
+		transition: all .5s
+		font-size: 15px
+	&:hover
+		border-color: #C5C5C5
+		color: #C5C5C5
+		.fa-angle-down
+			transform: rotate(180deg)
+		&:after
+			content: ''
+			position: absolute
+			top: 100%
+			left: 0
+			width: 100%
+			height: 25px
+			z-index: 26
+
+
+.filter-item__catalog
+	position: absolute
+	top: 150%
+	max-width: 1045px
+	padding: 20px 15px
+	background: #f4f4f4
+	left: auto
+	z-index: 25
+	color: #000
+	display: none
+	flex-wrap: wrap
+	animation: showFilterCatalog .2s ease
+	box-shadow: 0 12px 40px 0 rgba(21,18,41,.12)
+	&:before,&:after
+		bottom: 100%
+		left: 40px
+		border: solid transparent
+		content: " "
+		height: 0
+		width: 0
+		position: absolute
+		pointer-events: none
+	&:before
+		border-color: rgba(194, 225, 245, 0)
+		border-bottom-color: transparent
+		border-width: 12px
+		margin-left: -6px
+	&:after
+		border-color: rgba(136, 183, 213, 0)
+		border-bottom-color: #f4f4f4
+		border-width: 10px
+		margin-left: -8px
+
+.filter-item__catalog--col
+	&:before,&:after
+		left: 50%
+		right: 50%
+.filter-item__catalog--sort-date
+	max-width: 112px
+
+.filter-catalog-col
+	width: 169px
+	font-size: 16px
+	padding: 6px
+
+.filter-catalog__item
+	border-radius: 3px
+	padding: 5px
+	cursor: pointer
+	transition: all .5s
+	&:hover
+		background: #d8b16b
+		color: #fff
+
+.filter-catalog__item--active
+	background: #1b1d38
+	color: #fff
+	cursor: default
+	&:hover
+		background: #1b1d38
+
+
+
+.filter-catalog__title
+	margin-bottom: 10px
+
+.filter-catalog__sub-title
+	padding: 10px 5px
+	text-transform: uppercase
+	font-family: 'Roboto', sans-serif
+	font-size: 10px
+	font-weight: bold
+	color: #7f858c
+
+.filter-catalog__sub-title--country
+	margin: 10px 0
+
+.filter-item--sort-direction
+	font-size: 18px
+	i
+		cursor: pointer
+		transform: rotate(-180deg)
+		transition: all .5s
+
+.filter-item--sort-direction-asc
+	i
+		transform: rotate(0)
+		color: #d8b16b
+
+.filter-filed-date
+	display: block
+	width: 100%
+
+
+
+.restore-filters-btn
+	margin-top: 10px
+	padding: 10px
+	color: #f4f4f4
+	background: #0f111e
+	border-radius: 3px
+	text-align: center
+	cursor: pointer
+	font-weight: bold
+
+
+
+@keyframes showFilterCatalog
+	0%
+		top: 200%
+		opacity: 0
+
+	100%
+		top: 150%
+		opacity: 1

@@ -40,6 +40,11 @@ export const serialsLinks = (): Array<NavLinkData> => {
       href: '/tv/onAir',
       title: 'Текущие сериалы',
       icon: 'fa-play-circle-o'
+    },
+    {
+      href: '/tv/top',
+      title: 'Топ сериалы',
+      icon: 'fa-arrow-circle-up'
     }
   ];
 };

@@ -54,46 +54,32 @@ const loaders: webpack.ModuleOptions['rules'] = [
     test: /\.sass$/,
     use: [
       'style-loader',
-      'css-loader',
+      {
+        loader: 'css-loader',
+        options: {
+          sourceMap: true
+        }
+      },
+      'resolve-url-loader',
       {
         loader: 'sass-loader',
         options: {
           // Prefer `dart-sass`
-          implementation: require('dart-sass')
+          implementation: require('dart-sass'),
+          sassOptions: {
+            sourceMap: isDevelopment
+          }
         }
       }
     ]
   },
   {
-    test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+    test: /\.(woff2?|ttf|otf|eot|svg)$/,
+    type: 'asset/resource',
     exclude: /(node_modules|bower_components)/,
     use: [
       {
-        loader: 'file-loader',
-        options: {
-          outputPath: 'fonts/'
-        }
-      }
-    ]
-  },
-  {
-    test: /\.(woff|woff2)$/,
-    exclude: /(node_modules|bower_components)/,
-    use: [
-      {
-        loader: 'url-loader?prefix=font/&limit=5000',
-        options: {
-          outputPath: 'fonts/'
-        }
-      }
-    ]
-  },
-  {
-    test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-    exclude: /(node_modules|bower_components)/,
-    use: [
-      {
-        loader: 'url-loader?limit=10000&mimetype=application/octet-stream',
+        loader: 'url-loader',
         options: {
           outputPath: 'fonts/'
         }

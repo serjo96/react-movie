@@ -1,15 +1,23 @@
+//TODO add strict mode;
+
 {
   "compilerOptions": {
     "outDir": "./dist/",
+    "target": "ES5",
+    "jsx": "react",
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES5",
     "esModuleInterop": true,
-    "jsx": "react",
     "allowJs": true,
-    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "noEmit": true,
+//    "strict": true,
+    "resolveJsonModule": true,
     "baseUrl": ".",
+    "declaration": true,
+    "declarationDir": "./types",
     "paths": {
       "~/*": ["./src/*"]
     }
