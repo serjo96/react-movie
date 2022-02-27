@@ -48,10 +48,11 @@ function TooltipInfo ({
     }
     const container = containerRef.current;
     const tooltipPadding = 30;
+    const safeTopMargin = 50;
     const parentCoords = container.getBoundingClientRect();
     const tooltipElem = tooltipRef.current;
     let left = container.offsetLeft + container.offsetWidth;
-    const top = container.offsetTop + 50;
+    const top = container.offsetTop + safeTopMargin;
     setToolTipLeft(true);
 
     if (left < 0) {
