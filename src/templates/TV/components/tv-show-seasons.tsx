@@ -6,7 +6,7 @@ import MediaItem from '~/ui-components/media-item/media-item';
 import { MediaType } from '~/core/types/media-type';
 import { TvDetails } from '~/core/types/tvDetails';
 import { SeasonRouteMatchParams } from '~/templates/TV/containers/tv-details';
-import './tv-seasons.sass'
+import './tv-seasons.sass';
 
 interface MyProps {
   seasons: TvDetails['seasons'];

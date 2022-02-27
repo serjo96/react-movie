@@ -4,11 +4,11 @@ import classNames from 'classnames';
 
 import Nav from '~/templates/Nav/nav';
 import SearchHeader from '~/templates/Search/search-header';
-import './header.sass';
+
 import { usePrevious } from '~/hooks/usePrevious';
 import useBreakpoints, { BreakpointsNames } from '~/utils/useMediaQuery';
 import useWindowScroll from '~/hooks/useWindowScroll';
-import {useToggle} from "~/hooks/useToggle";
+import './header.sass';
 
 export default function Header () {
   const { pathname } = useLocation();

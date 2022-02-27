@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { sortingDateList, sortListTV, sortMovieByType } from '~/store/localData';
 
-import './filters.sass';
 import FiltersMobile from '../components/filters-mobile';
 import Filters from '../components/filters';
-import { useHistory, useLocation } from 'react-router-dom';
+
+import { sortingDateList, sortListTV, sortMovieByType } from '~/store/localData';
 import { useAppSelector } from '~/hooks/storeHooks';
 import useBreakpoints, { BreakpointsNames } from '~/utils/useMediaQuery';
 import { MediaType } from '~/core/types/media-type';
 import { Genre } from '~/core/types/genres';
+import './filters.sass';
 
 interface MyPros {
   sortByCountry?: boolean;
@@ -256,12 +257,5 @@ function FilterList ({
     />
   );
 }
-
-// onClickSortList={this.sortList}
-// onClickSortDate={this.onSortByDate}
-// sortByCountry={true}
-// safeFilter={true}
-// sortListType={sortListType}
-// MobileFilter={width >= 963}
 
 export default (FilterList);
