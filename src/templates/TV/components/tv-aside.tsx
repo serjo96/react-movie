@@ -7,6 +7,7 @@ import { TvDetails } from '~/core/types/tvDetails';
 import { TvState } from '~/store/tv/tv.slice';
 import '~/templates/Movie/components/movie-aside.sass';
 import './tv-aside.sass';
+import {Crew} from "~/core/types/crew";
 
 interface MyProps {
   id: TvDetails['id'];
@@ -41,6 +42,22 @@ function TvAside ({
   crew,
   links
 }: MyProps) {
+
+  const renderPerson = (person: Crew, index: number) => {
+    if(index > 3 ) {
+      return null;
+    }
+    return (
+      <div className='crew__name' key={index}>
+        <Link
+          to={'/person/' + friendlyUrl(person.name) + '-' + person.id}
+          className=' link'
+        >{person.name}
+        </Link>
+      </div>
+    )
+  }
+
   return (
 
     <aside className='aside '>
@@ -56,96 +73,44 @@ function TvAside ({
         <div className='crew__item info-table-border aside-row'>
           <div className='crew__job'>Создатели</div>
           <div className='crew__names aside-row__right-col'>
-            {createdBy.map((men, indx) => indx < 3 &&
-              <div className='crew__name' key={indx}>
-                <Link
-                  to={'/person/' + friendlyUrl(men.name) + '-' + men.id}
-                  className=' link'
-                >{men.name}
-                </Link>
-              </div>
-            )}
+            {createdBy.map(renderPerson)}
           </div>
         </div>
 
         <div className='crew__item info-table-border aside-row'>
           <div className='crew__job'>Режиссер</div>
           <div className='crew__names aside-row__right-col'>
-            {crew.director.map((men, indx) => indx < 3 &&
-              <div className='crew__name' key={indx}>
-                <Link
-                  to={'/person/' + friendlyUrl(men.name) + '-' + men.id}
-                  className='link'
-                >
-                  {men.name}
-                </Link>
-              </div>)}
+            {crew.director.map(renderPerson)}
           </div>
         </div>
         <div className='crew__item info-table-border aside-row'>
           <div className='crew__job'>Сценарий</div>
           <div className='crew__names aside-row__right-col'>
-            {crew.screenplay.map((men, indx) => indx < 3 &&
-              <div className='crew__name' key={indx}>
-                <Link
-                  to={'/person/' + friendlyUrl(men.name) + '-' + men.id}
-                  className='link'
-                >
-                  {men.name}
-                </Link>
-              </div>)}
+            {crew.screenplay.map(renderPerson)}
           </div>
         </div>
         <div className='crew__item info-table-border aside-row'>
           <div className='crew__job'>Продюсер</div>
           <div className='crew__names aside-row__right-col'>
-            {crew.producer.map((men, indx) => indx < 3 &&
-              <div className='crew__name' key={indx}>
-                <Link
-                  to={'/person/' + friendlyUrl(men.name) + '-' + men.id}
-                  className='link'
-                >{men.name}
-                </Link>
-              </div>)}
+            {crew.producer.map(renderPerson)}
           </div>
         </div>
         <div className='crew__item info-table-border aside-row'>
           <div className='crew__job'>Оператор</div>
           <div className='crew__names aside-row__right-col'>
-            {crew.directorOfPhotography.map((men, indx) => indx < 3 &&
-              <div className='crew__name' key={indx}>
-                <Link
-                  to={'/person/' + friendlyUrl(men.name) + '-' + men.id}
-                  className='link'
-                >{men.name}
-                </Link>
-              </div>)}
+            {crew.directorOfPhotography.map(renderPerson)}
           </div>
         </div>
         <div className='crew__item info-table-border aside-row'>
           <div className='crew__job'>Композитор</div>
           <div className='crew__names aside-row__right-col'>
-            {crew.music.map((men, indx) => indx <= 3 &&
-              <div className='crew__name' key={indx}>
-                <Link
-                  to={'/person/' + friendlyUrl(men.name) + '-' + men.id}
-                  className='link'
-                >{men.name}
-                </Link>
-              </div>)}
+            {crew.music.map(renderPerson)}
           </div>
         </div>
         <div className='crew__item info-table-border aside-row'>
           <div className='crew__job'>Художник</div>
           <div className='crew__names aside-row__right-col'>
-            {crew.art.map((men, indx) => indx < 3 &&
-              <div className='crew__name' key={indx}>
-                <Link
-                  to={'/person/' + friendlyUrl(men.name) + '-' + men.id}
-                  className='link'
-                >{men.name}
-                </Link>
-              </div>)}
+            {crew.art.map(renderPerson)}
           </div>
         </div>
       </div>
@@ -215,7 +180,8 @@ function TvAside ({
         <div className='keywords__list'>
           {keywords.map((el, indx) => (
             <Link
-              to={`/keywords-tv/${friendlyUrl(el.name)}-${el.id}`} className='keyword tag'
+              className='keyword tag'
+              to={`/keywords-tv/${friendlyUrl(el.name)}-${el.id}`}
               id={el.id} key={indx}
             >{el.name}
             </Link>))}
