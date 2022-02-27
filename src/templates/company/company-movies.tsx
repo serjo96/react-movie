@@ -1,14 +1,17 @@
-import FilterList from '~/templates/filters/containers/filter-list';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { getCompanyMovies } from '~/store/company/company.api';
 import { MediaType } from '~/core/types/media-type';
+
+import FilterList from '~/templates/filters/containers/filter-list';
+import ServiceBlock from '~/templates/service/service-block';
 import MediaList from '~/ui-components/media-list/media-list';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
-import React, { useEffect, useState } from 'react';
-import { getCompanyMovies } from '~/store/company/company.api';
+
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
-import { useParams } from 'react-router-dom';
 import { usePrevious } from '~/hooks/usePrevious';
 import { scrollToTop } from '~/utils';
-import ServiceBlock from '~/templates/service/service-block';
 
 type MoviesFilters = {
   adult: boolean;
@@ -37,7 +40,7 @@ export default function CompanyMovies () {
 
   const sendRequest = () => {
     const payload = { ...filters, date: filters.year };
-    appDispatch(getCompanyMovies({ ...payload, page, id: companyId }));
+    appDispatch(getCompanyMovies({ ...payload, page, id: +companyId }));
   };
 
   useEffect(() => {
