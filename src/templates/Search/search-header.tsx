@@ -90,8 +90,7 @@ function SearchHeader ({
         <div className='result-element__poster'>
           <Image
             showSpinner
-            src={(item.profilePath || item.backdropPath || item.posterPath) &&
-              'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + (item.profilePath || item.backdropPath || item.posterPath)}
+            src={item.profilePath || item.backdropPath || item.posterPath}
             alt='poster'
           />
         </div>
