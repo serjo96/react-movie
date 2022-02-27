@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import oldClient from '~/core/api/OldClient';
 
 import ConcatPages from '~/utils/concatPages';
-import { Languages } from '~/store/user/user.slice';
+import { Languages } from '~/store/config/config.slice';
 import { MovieDetails } from '~/core/types/movieDetails';
 import { MoviesListItem, MoviesList } from '~/core/types/movies';
 import { Collection } from '~/core/types/collection';

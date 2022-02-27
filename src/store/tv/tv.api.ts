@@ -4,7 +4,7 @@ import oldClient from '~/core/api/OldClient';
 import ConcatPages from '~/utils/concatPages';
 import { ListData } from '~/core/types/listData';
 import { TvDetails } from '~/core/types/tvDetails';
-import { Languages } from '~/store/user/user.slice';
+import { Languages } from '~/store/config/config.slice';
 
 export interface ReturnedTvShowsList {
   data: TvListResponseData;
