@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { Crew } from '~/core/types/crew';
 import { friendlyUrl, friendlyData, urlRusLat } from '~/utils/format';
 import Image from '~/ui-components/image/image';
 import { TvDetails } from '~/core/types/tvDetails';
 import { TvState } from '~/store/tv/tv.slice';
 import '~/templates/Movie/components/movie-aside.sass';
 import './tv-aside.sass';
-import {Crew} from "~/core/types/crew";
 
 interface MyProps {
   id: TvDetails['id'];
@@ -42,9 +42,8 @@ function TvAside ({
   crew,
   links
 }: MyProps) {
-
   const renderPerson = (person: Crew, index: number) => {
-    if(index > 3 ) {
+    if (index > 3) {
       return null;
     }
     return (
@@ -55,8 +54,8 @@ function TvAside ({
         >{person.name}
         </Link>
       </div>
-    )
-  }
+    );
+  };
 
   return (
 
