@@ -162,7 +162,7 @@ export const getOnTheAirTvShows = createAsyncThunk<ReturnedTvShowsList, number |
   }
 );
 
-export const getTvShowData = createAsyncThunk<TvRespData, {id: string, lang?: Languages}>(
+export const getTvShowData = createAsyncThunk<TvRespData, {id: number, lang?: Languages}>(
   'tvShows/getTvShowDetail',
   async ({ id, lang = Languages.RU }) => {
     const { data, isSuccessRequest } = await oldClient.get<TvDetails>(`tv/${id}`,
@@ -179,7 +179,7 @@ export const getTvShowData = createAsyncThunk<TvRespData, {id: string, lang?: La
   }
 );
 
-export const getEngTvShowData = createAsyncThunk<TvShowEngDataResp, {id: string, lang?: Languages}>(
+export const getEngTvShowData = createAsyncThunk<TvShowEngDataResp, {id: number, lang?: Languages}>(
   'tvShows/getEngTvShowDetail',
   async ({ id, lang = Languages.EN }) => {
     const { data, isSuccessRequest } = await oldClient.get<TvDetails>(`tv/${id}`,
@@ -194,7 +194,7 @@ export const getEngTvShowData = createAsyncThunk<TvShowEngDataResp, {id: string,
   }
 );
 
-export const getTvShowSeasons = createAsyncThunk<TvSeasonRespData, {id: string, season: string, lang?: Languages}>(
+export const getTvShowSeasons = createAsyncThunk<TvSeasonRespData, {id: number, season: number, lang?: Languages}>(
   'tvShows/getTvShowSeasons',
   async ({ id, season, lang = Languages.RU }) => {
     const { data, isSuccessRequest } = await oldClient.get<TvSeason>(`tv/${id}/season/${season}`,

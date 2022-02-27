@@ -32,15 +32,15 @@ function TvDetails () {
   const tvId = id.split('-').pop();
 
   const sendRequest = () => {
-    appDispatch(getTvShowData({ id: tvId }));
+    appDispatch(getTvShowData({ id: +tvId }));
   };
 
   const sendSeasonRequest = () => {
-    appDispatch(getTvShowSeasons({ id: tvId, season }));
+    appDispatch(getTvShowSeasons({ id: +tvId, season: +season }));
   };
 
   const handlerOnFetchEngData = () => {
-    appDispatch(getEngTvShowData({ id: `${tvId}`, lang: Languages.EN }));
+    appDispatch(getEngTvShowData({ id: +tvId, lang: Languages.EN }));
   };
 
   useEffect(() => {
