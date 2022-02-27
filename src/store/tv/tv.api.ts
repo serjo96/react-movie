@@ -184,8 +184,7 @@ export const getEngTvShowData = createAsyncThunk<TvShowEngDataResp, {id: string,
   async ({ id, lang = Languages.EN }) => {
     const { data, isSuccessRequest } = await oldClient.get<TvDetails>(`tv/${id}`,
       {
-        language: lang,
-        include_image_language: 'ru,null'
+        language: lang
       }
     );
     return {
