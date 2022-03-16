@@ -19,7 +19,7 @@ function KeywordsPage () {
   const [prevProps] = useState(search);
   const { isFetching, isSuccessful, data } = useAppSelector((state) => state.keywords);
 
-  const isMoviesPage = useRouteMatch('/keywords-movies/:id');
+  const isMoviesPage = useRouteMatch('/keywords-lists/:id');
   const typePage = isMoviesPage ? MediaType.MOVIE : MediaType.TV;
 
   const sendRequest = () => {
