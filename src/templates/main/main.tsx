@@ -11,9 +11,11 @@ import {
   getTopMovies,
   getUpcomingMovies
 } from '~/store/movies/movies.api';
+import { useTranslation } from 'react-i18next';
 
 function Main () {
   const appDispatch = useAppDispatch();
+  const { t } = useTranslation();
   const playing = useAppSelector(state => state.movies.lists.playing);
   const upcoming = useAppSelector(state => state.movies.lists.upcoming);
   const top = useAppSelector(state => state.movies.lists.top);
@@ -35,7 +37,7 @@ function Main () {
       <main className='main main--media-list iphonex'>
         <div className='movies-content movies-content--main-page'>
           <MediaList
-            movieListTitle='Сейчас в кино'
+            movieListTitle={t('nav.movies.playing')}
             mediaList={playing.data.results}
             mediaListDates={playing.data.dates}
             count={11}
@@ -44,7 +46,7 @@ function Main () {
             typeList={MediaType.MOVIE}
           />
           <MediaList
-            movieListTitle='Скоро в кино'
+            movieListTitle={t('nav.movies.upcoming')}
             mediaList={upcoming.data.results}
             count={11}
             movieListMain
@@ -52,7 +54,7 @@ function Main () {
             typeList={MediaType.MOVIE}
           />
           <MediaList
-            movieListTitle='Топ фильмы'
+            movieListTitle={t('nav.movies.top')}
             mediaList={top.data.results}
             count={11}
             movieListMain={false}
@@ -60,7 +62,7 @@ function Main () {
             typeList={MediaType.MOVIE}
           />
           <MediaList
-            movieListTitle='Все фильмы'
+            movieListTitle={t('nav.movies.all')}
             mediaList={all.data.results}
             count={11}
             movieListMain
