@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 
@@ -11,7 +12,6 @@ import {
   getTopMovies,
   getUpcomingMovies
 } from '~/store/movies/movies.api';
-import { useTranslation } from 'react-i18next';
 
 function Main () {
   const appDispatch = useAppDispatch();
