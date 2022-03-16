@@ -24,12 +24,6 @@ export const moviesLinks = (): Array<NavLinkData> => {
       title: 'Фильмы в кино',
       keyTitle: 'playing',
       icon: 'fa-ticket'
-    },
-    {
-      href: '/movies/top',
-      title: 'Топ фильмы',
-      keyTitle: 'top',
-      icon: 'fa-arrow-circle-up'
     }
   ];
 };
