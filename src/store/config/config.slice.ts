@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import i18n from 'i18next';
 
 export enum Languages {
   RU = 'ru-RU',
@@ -6,7 +7,7 @@ export enum Languages {
 }
 
 const initialState = {
-  language: Languages.RU
+  language: i18n.language || Languages.EN
 };
 
 export const configSlice = createSlice({
