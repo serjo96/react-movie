@@ -1,14 +1,12 @@
 import React from 'react';
-import classNames from 'classnames';
 
-import {useAppDispatch, useAppSelector} from '~/hooks/storeHooks';
-import {Languages, setLanguage} from '~/store/config/config.slice';
+import { Languages } from '~/store/config/config.slice';
 import './language-switcher.sass';
+import useTranslations from '~/hooks/useTranslations';
 
 export default function LanguageSwitcher () {
-  const appDispatch = useAppDispatch();
-  const selectedLanguage = useAppSelector(state => state.config.language);
-  const selectedLanguageTitle = selectedLanguage === Languages.RU ? 'RU' : 'EN';
+  const { setLang, lang } = useTranslations();
+  const selectedLanguageTitle = lang === Languages.RU ? 'RU' : 'EN';
 
   return (
 
@@ -20,18 +18,18 @@ export default function LanguageSwitcher () {
 
       <div className='languages-list'>
         <button
-          disabled={selectedLanguage === Languages.EN}
+          disabled={lang === Languages.EN}
           className='languages-list__item'
-          onClick={() => appDispatch(setLanguage(Languages.EN))}
+          onClick={() => setLang(Languages.EN)}
         >
-          English
+          ENG
         </button>
         <button
-          disabled={selectedLanguage === Languages.RU}
+          disabled={lang === Languages.RU}
           className='languages-list__item'
-          onClick={() => appDispatch(setLanguage(Languages.RU))}
+          onClick={() => setLang(Languages.RU)}
         >
-          Russian
+          RU
         </button>
       </div>
     </div>
