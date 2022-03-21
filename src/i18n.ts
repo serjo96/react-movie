@@ -6,6 +6,8 @@ import { Languages } from '~/store/config/config.slice';
 
 import LISTS_EN from '../public/locales/en/lists/list.json';
 import LISTS_RU from '../public/locales/ru/lists/list.json';
+import COMPANY_EN from '../public/locales/en/company/company.json';
+import COMPANY_RU from '../public/locales/ru/company/company.json';
 import COMMON_EN from '../public/locales/en/common/common.json';
 import COMMON_RU from '../public/locales/ru/common/common.json';
 import oldClient from '~/core/api/OldClient';
@@ -13,12 +15,14 @@ import oldClient from '~/core/api/OldClient';
 export const defaultNS = 'common';
 export const resources = {
   en: {
+    company: COMPANY_EN,
     // movie,
     // tv,
     common: COMMON_EN,
     lists: LISTS_EN
   },
   ru: {
+    company: COMPANY_RU,
     // movie,
     // tv,
     common: COMMON_RU,
