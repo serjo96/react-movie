@@ -11,15 +11,17 @@ import FilterList from '~/templates/filters/containers/filter-list';
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '~/templates/service/service-block';
 import { scrollToTop } from '~/utils';
+import { useTranslation } from 'react-i18next';
 
 function KeywordsPage () {
   const appDispatch = useAppDispatch();
+  const { t } = useTranslation('keywords');
   const { search } = useLocation();
   const { id } = useParams<{id: string}>();
   const [prevProps] = useState(search);
   const { isFetching, isSuccessful, data } = useAppSelector((state) => state.keywords);
 
-  const isMoviesPage = useRouteMatch('/keywords-lists/:id');
+  const isMoviesPage = useRouteMatch('/keywords-movies/:id');
   const typePage = isMoviesPage ? MediaType.MOVIE : MediaType.TV;
 
   const sendRequest = () => {
@@ -63,11 +65,12 @@ function KeywordsPage () {
   }, [search]);
 
   const titleSearch = id.split('-')[0].replace(/_/g, ' ');
-  const pageTitle = isMoviesPage ? 'Фильмы' : 'Сериалы';
+  const pageType = isMoviesPage ? t('movies') : t('tvShows');
+  const pageTitle = `${pageType} ${t('byKeyword')}: ${titleSearch}`;
   return (
     <main className='main main--media-list'>
       <Helmet>
-        <title>{pageTitle} по ключевому слову: {titleSearch}</title>
+        <title>{pageTitle}</title>
       </Helmet>
       <div className='movies-content'>
         <FilterList
@@ -80,7 +83,7 @@ function KeywordsPage () {
           fetch={sendRequest}
         >
           <MediaList
-            movieListTitle={`${pageTitle} по ключевому слову: ${titleSearch} (${data.totalResults})`}
+            movieListTitle={`${pageTitle} (${data.totalResults})`}
             mediaList={data.results}
             typeList={typePage}
           />
