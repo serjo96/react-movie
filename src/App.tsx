@@ -17,7 +17,7 @@ function App () {
       appDispatch(getGenres());
     }
   }, []);
-
+  // TODO: Add title component, with generation title
   return (
     <React.Fragment>
       <Helmet>
