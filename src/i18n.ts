@@ -5,6 +5,8 @@ import Backend from 'i18next-http-backend';
 import { Languages } from '~/store/config/config.slice';
 
 import LISTS_EN from '../public/locales/en/lists/list.json';
+import KEYWORDS_EN from '../public/locales/en/keywords/keywords.json';
+import KEYWORDS_RU from '../public/locales/ru/keywords/keywords.json';
 import LISTS_RU from '../public/locales/ru/lists/list.json';
 import COMPANY_EN from '../public/locales/en/company/company.json';
 import COMPANY_RU from '../public/locales/ru/company/company.json';
@@ -16,15 +18,13 @@ export const defaultNS = 'common';
 export const resources = {
   en: {
     company: COMPANY_EN,
-    // movie,
-    // tv,
+    keywords: KEYWORDS_EN,
     common: COMMON_EN,
     lists: LISTS_EN
   },
   ru: {
     company: COMPANY_RU,
-    // movie,
-    // tv,
+    keywords: KEYWORDS_RU,
     common: COMMON_RU,
     lists: LISTS_RU
   }
