@@ -4,7 +4,8 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
 import { Languages } from '~/store/config/config.slice';
 
-import moviesList from '../public/locales/en/lists/list.json';
+import LISTS_EN from '../public/locales/en/lists/list.json';
+import LISTS_RU from '../public/locales/ru/lists/list.json';
 import COMMON_EN from '../public/locales/en/common/common.json';
 import COMMON_RU from '../public/locales/ru/common/common.json';
 import oldClient from '~/core/api/OldClient';
@@ -15,13 +16,13 @@ export const resources = {
     // movie,
     // tv,
     common: COMMON_EN,
-    moviesList
+    lists: LISTS_EN
   },
   ru: {
     // movie,
     // tv,
-    common: COMMON_RU
-    // moviesList
+    common: COMMON_RU,
+    lists: LISTS_RU
   }
 } as const;
 
