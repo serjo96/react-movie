@@ -11,9 +11,11 @@ import FilterList from '~/templates/filters/containers/filter-list';
 import ServiceBlock from '~/templates/service/service-block';
 import MediaList from '~/ui-components/media-list/media-list';
 import { scrollToTop } from '~/utils';
+import { useTranslation } from 'react-i18next';
 
 function MoviesAll () {
   const appDispatch = useAppDispatch();
+  const { t } = useTranslation('lists');
   const { search } = useLocation();
   const [prevProps] = useState(search);
   const { isFetching, isSuccessful, data } = useAppSelector((state) => state.movies.lists.all);
@@ -45,7 +47,7 @@ function MoviesAll () {
   };
 
   useEffect(() => {
-    if (!isFetching) {
+    if (!data.results.length && !isFetching) {
       sendRequest();
     }
 
@@ -58,7 +60,7 @@ function MoviesAll () {
   return (
     <main className='main main--media-list'>
       <Helmet>
-        <title>Фильмы</title>
+        <title>Movie base | {t('list.movies.all')}</title>
       </Helmet>
       <div className='movies-content'>
         <FilterList
@@ -71,7 +73,7 @@ function MoviesAll () {
           fetch={sendRequest}
         >
           <MediaList
-            movieListTitle={`Всего фильмов (${data.totalResults})`}
+            movieListTitle={`${t('list.movies.all')} (${data.totalResults})`}
             mediaList={data.results}
             typeList={MediaType.MOVIE}
           />
