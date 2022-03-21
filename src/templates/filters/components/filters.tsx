@@ -1,13 +1,14 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import { chunkArr } from '~/utils';
 import {
   storageCountries,
   popularCountries,
   sortingDateList,
-  sortMovieByType, sortListTV
+  sortMovieByType,
+  sortListTV
 } from '~/store/localData';
-import classNames from 'classnames';
 import { Genre } from '~/core/types/genres';
 import { GenresState } from '~/store/genres/genres.slice';
 import { filterByCountryName, filterByDateName, sortByFilterName } from '~/utils/formatFiltersNames';
