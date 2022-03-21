@@ -12,6 +12,7 @@ import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { usePrevious } from '~/hooks/usePrevious';
 import { scrollToTop } from '~/utils';
+import { useTranslation } from 'react-i18next';
 
 type MoviesFilters = {
   adult: boolean;
@@ -29,6 +30,7 @@ const initMoviesFilters = (): MoviesFilters => ({
 
 export default function CompanyMovies () {
   const appDispatch = useAppDispatch();
+  const { t } = useTranslation('lists');
   const { id } = useParams<{id: string}>();
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.company.lists.movies);
 
@@ -114,7 +116,7 @@ export default function CompanyMovies () {
             handleFilterByDate={onFilterByDate}
           />
           <MediaList
-            movieListTitle={`Всего фильмов (${data.totalResults})`}
+            movieListTitle={`${t('list.movies.total')} (${data.totalResults})`}
             mediaList={data.results}
             typeList={MediaType.MOVIE}
           />

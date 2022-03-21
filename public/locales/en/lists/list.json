@@ -11,14 +11,16 @@
       "all": "All movies",
       "upcoming": "Upcoming movies",
       "playing": "Playing movies",
-      "top": "Top movies"
+      "top": "Top movies",
+      "total": "Total movies"
     },
     "tvShows": {
       "sectionTitle": "Tv shows",
       "all": "All tv shows",
       "airing": "Airing tv shows",
       "onAir": "Tv shows on air",
-      "top": "Top tv shows"
+      "top": "Top tv shows",
+      "total": "Total tv shows"
     }
   }
 }

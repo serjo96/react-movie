@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { usePrevious } from '~/hooks/usePrevious';
 import { initFilters } from '~/templates/company/company-page';
 import { scrollToTop } from '~/utils';
+import { useTranslation } from 'react-i18next';
 
 type TvShowsFilters = {
   sortBy: string | null;
@@ -28,6 +29,7 @@ const initTvShowsFilters = (): TvShowsFilters => ({
 
 export default function CompanyTvShows () {
   const appDispatch = useAppDispatch();
+  const { t } = useTranslation('lists');
   const { id } = useParams<{id: string}>();
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.company.lists.tvShows);
 
@@ -113,7 +115,7 @@ export default function CompanyTvShows () {
             handleFilterByDate={onFilterByDate}
           />
           <MediaList
-            movieListTitle={`Всего сериалов (${data.totalResults})`}
+            movieListTitle={`${t('list.tvShows.total')} (${data.totalResults})`}
             mediaList={data.results}
             typeList={MediaType.TV}
           />
