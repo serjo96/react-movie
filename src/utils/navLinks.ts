@@ -8,19 +8,19 @@ interface NavLinkData {
 export const moviesLinks = (): Array<NavLinkData> => {
   return [
     {
-      href: '/movies/all',
+      href: '/lists/all',
       title: 'Все фильмы',
       keyTitle: 'all',
       icon: 'fa-fire'
     },
     {
-      href: '/movies/upcoming',
+      href: '/lists/upcoming',
       title: 'Ожидаемые фильмы',
       keyTitle: 'upcoming',
       icon: 'fa-calendar'
     },
     {
-      href: '/movies/playing',
+      href: '/lists/playing',
       title: 'Фильмы в кино',
       keyTitle: 'playing',
       icon: 'fa-ticket'
