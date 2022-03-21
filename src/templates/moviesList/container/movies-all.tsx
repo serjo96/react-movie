@@ -73,7 +73,7 @@ function MoviesAll () {
           fetch={sendRequest}
         >
           <MediaList
-            movieListTitle={`${t('list.movies.all')} (${data.totalResults})`}
+            movieListTitle={`${t('list.movies.total')} (${data.totalResults})`}
             mediaList={data.results}
             typeList={MediaType.MOVIE}
           />
