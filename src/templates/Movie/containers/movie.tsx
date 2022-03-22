@@ -16,6 +16,7 @@ import MovieDescription from '~/ui-components/MovieDescription/MovieDescription'
 import { VideosSection } from '~/ui-components/video-section/videos-section';
 import { MediaType } from '~/core/types/media-type';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import useTranslations from '~/hooks/useTranslations';
 import { scrollToTop } from '~/utils';
 import './movie.sass';
 
@@ -24,11 +25,12 @@ function Movie () {
   const { id } = useParams<{id: string}>();
   const [prevProps] = useState(id);
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies);
+  const { lang } = useTranslations();
   const movie = data;
   const movieId = id.split('-').pop();
 
   const sendRequest = () => {
-    appDispatch(getMovieData({ id: +movieId }));
+    appDispatch(getMovieData({ id: +movieId, lang }));
   };
 
   useEffect(() => {

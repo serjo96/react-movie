@@ -173,12 +173,12 @@ export const getTopMovies = createAsyncThunk<ReturnedMovieList, number | void>(
   }
 );
 
-export const getMovieData = createAsyncThunk<MovieRespData, {id: number, lang?: Languages}>(
+export const getMovieData = createAsyncThunk<MovieRespData, {id: number, lang: Languages}>(
   'movie/getMovieData',
-  async ({ id }) => {
+  async ({ id, lang }) => {
     const resp = await oldClient.get<MovieDetails>(`movie/${id}`,
       {
-        include_image_language: 'ru,null',
+        include_image_language: `${lang},null`,
         append_to_response: 'credits,images,videos,recommendations,similar,reviews,lists,keywords,release_dates'
       }
     );
