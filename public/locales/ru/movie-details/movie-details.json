@@ -1,0 +1,16 @@
+{
+  "aside": {
+    "Director": "Режиссер",
+    "Producer": "Продюсер",
+    "Scenario": "Сценарий",
+    "Operator": "Оператор",
+    "Composer": "Композитор",
+    "Art": "Художник",
+    "Country": "Страна",
+    "ProductionCompanies": "Производители",
+    "Genres": "Жанр",
+    "Tags": "Теги",
+    "Links": "Ссылки",
+    "homePage": "Страница фильма"
+  }
+}

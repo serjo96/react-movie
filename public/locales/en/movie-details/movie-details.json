@@ -1,0 +1,16 @@
+{
+  "aside": {
+    "Director": "Director",
+    "Producer": "Producer",
+    "Scenario": "Scenario",
+    "Operator": "Operator",
+    "Composer": "Composer",
+    "Art": "Art",
+    "Country": "Country",
+    "ProductionCompanies": "Production companies",
+    "Genres": "Genres",
+    "Tags": "Tags",
+    "Links": "Links",
+    "homePage": "Home page"
+  }
+}

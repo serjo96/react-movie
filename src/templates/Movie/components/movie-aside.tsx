@@ -6,6 +6,7 @@ import { MovieDetails } from '~/core/types/movieDetails';
 import { CrewState } from '~/utils/initData';
 import Image from '~/ui-components/image/image';
 import './movie-aside.sass';
+import { useTranslation } from 'react-i18next';
 
 interface MyProps {
   id: MovieDetails['id'];
@@ -32,6 +33,7 @@ export function MovieAside ({
   imdbId,
   id
 }: MyProps) {
+  const { t } = useTranslation('movie');
   return (
     <aside className='aside'>
       <div className='movie__poster'>
@@ -43,7 +45,7 @@ export function MovieAside ({
       </div>
       <div className='crew-list info-table-row'>
         <div className='crew__item info-table-border aside-row'>
-          <div className='crew__job'>Режиссер</div>
+          <div className='crew__job'>{t('aside.Director')}</div>
           <div className='crew__names aside-row__right-col'>
             {crew.director.map((men, indx) => indx < 3 &&
               <div className='crew__name' key={indx}>
@@ -57,7 +59,7 @@ export function MovieAside ({
           </div>
         </div>
         <div className='crew__item info-table-border aside-row'>
-          <div className='crew__job'>Сценарий</div>
+          <div className='crew__job'>{t('aside.Scenario')}</div>
           <div className='crew__names aside-row__right-col'>
             {crew.screenplay.map((men, indx) => indx < 3 &&
               <div className='crew__name' key={indx}>
@@ -71,7 +73,7 @@ export function MovieAside ({
           </div>
         </div>
         <div className='crew__item info-table-border aside-row'>
-          <div className='crew__job'>Продюсер</div>
+          <div className='crew__job'>{t('aside.Producer')}</div>
           <div className='crew__names aside-row__right-col'>
             {crew.producer.map((men, indx) => indx < 3 &&
               <div className='crew__name' key={indx}>
@@ -84,7 +86,7 @@ export function MovieAside ({
           </div>
         </div>
         <div className='crew__item info-table-border aside-row'>
-          <div className='crew__job'>Оператор</div>
+          <div className='crew__job'>{t('aside.Operator')}</div>
           <div className='crew__names aside-row__right-col'>
             {crew.directorOfPhotography.map((men, indx) => indx < 3 &&
               <div className='crew__name' key={indx}>
@@ -97,7 +99,7 @@ export function MovieAside ({
           </div>
         </div>
         <div className='crew__item info-table-border aside-row'>
-          <div className='crew__job'>Композитор</div>
+          <div className='crew__job'>{t('aside.Composer')}</div>
           <div className='crew__names aside-row__right-col'>
             {crew.music.map((men, indx) => indx <= 3 &&
               <div className='crew__name' key={indx}>
@@ -110,7 +112,7 @@ export function MovieAside ({
           </div>
         </div>
         <div className='crew__item info-table-border aside-row'>
-          <div className='crew__job'>Художник</div>
+          <div className='crew__job'>{t('aside.Art')}</div>
           <div className='crew__names aside-row__right-col'>
             {crew.art.map((men, indx) => indx < 3 &&
               <div className='crew__name' key={indx}>
@@ -126,7 +128,7 @@ export function MovieAside ({
 
       <div className='production'>
         <div className='aside-row'>
-          <div className='production__title'>Страна</div>
+          <div className='production__title'>{t('aside.Country')}</div>
           <div className='production__countries aside-row__right-col'>
             {productionCountries.map((el, index) => (
               <div className='country' key={index}>
@@ -137,7 +139,7 @@ export function MovieAside ({
         </div>
       </div>
       <div className='production info-table-row info-table-border'>
-        <div className='production-company-title'>Производители</div>
+        <div className='production-company-title'>{t('aside.ProductionCompanies')}</div>
         <div className='production__companies'>
           {productionCompanies.map((el, index) => (
             <div className='company' key={index}>
@@ -152,7 +154,7 @@ export function MovieAside ({
         </div>
       </div>
       <div className='genres info-table-row'>
-        <div className='genres__title'>Жанр</div>
+        <div className='genres__title'>{t('aside.Genres')}</div>
         <div className='genres__list'>
           {genres.map((el, indx) => (
             <div className='genre' key={indx}>
@@ -167,7 +169,7 @@ export function MovieAside ({
         </div>
       </div>
       <div className='keywords info-table-row'>
-        <div className='keywords__title'>Теги</div>
+        <div className='keywords__title'>{t('aside.Genres')}</div>
         <div className='keywords__list'>
           {keywords.map((el, indx) => (
             <Link
@@ -182,7 +184,7 @@ export function MovieAside ({
       </div>
 
       <div className='movie-links info-table-row'>
-        <div className='movie-links__title'>Ссылки</div>
+        <div className='movie-links__title'>{t('aside.Links')}</div>
         <div className='movie-links__list'>
           {imdbId &&
             <a
@@ -207,7 +209,7 @@ export function MovieAside ({
               rel='noopener noreferrer'
               className='social-link'
             >
-               Страница фильма
+              {t('aside.homePage')}
             </a>}
         </div>
       </div>
