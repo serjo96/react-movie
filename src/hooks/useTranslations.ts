@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 
 export default function useTranslations () {
   const appDispatch = useAppDispatch();
-  const lang = useAppSelector((state) => state.config.language);
+  const lang = useAppSelector((state) => state.config.language) as Languages;
 
   useEffect(() => {
     if (lang !== i18n.language) {
