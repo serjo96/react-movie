@@ -20,6 +20,7 @@ import MediaRecommendations from '~/templates/media-page/media-recommendations';
 import MediaCast from '~/templates/media-page/media-cast';
 import ServiceBlock from '~/templates/service/service-block';
 import { scrollToTop } from '~/utils';
+import {useRequest} from "~/hooks/useRequest";
 
 export type SeasonRouteMatchParams = {season?: string};
 
@@ -42,6 +43,8 @@ function TvDetails () {
   const handlerOnFetchEngData = () => {
     appDispatch(getEngTvShowData({ id: +tvId, lang: Languages.EN }));
   };
+
+  // useRequest()
 
   useEffect(() => {
     if (!isFetching) {
