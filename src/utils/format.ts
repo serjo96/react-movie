@@ -11,6 +11,15 @@ export function formatTime (minutes: number): string {
   return hours.toString() + ' ' + declOfNum(hours, ['час', 'часа', 'часов']) + ' ' + (m < 10 ? '0' : '') + m.toString();
 }
 
+export function calCalculationTime (min: number) {
+  const minutes = min % 60;
+  const hours = (min - minutes) / 60;
+  return {
+    minutes,
+    hours
+  };
+}
+
 export function capitalizeFirstLetter (string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
