@@ -22,7 +22,7 @@ import useTranslations from '~/hooks/useTranslations';
 import { scrollToTop } from '~/utils';
 import './movie.sass';
 
-function Movie () {
+function MovieDetails () {
   const appDispatch = useAppDispatch();
   const { id } = useParams<{id: string}>();
   const [prevProps] = useState(id);
@@ -132,4 +132,4 @@ function Movie () {
   );
 }
 
-export default Movie;
+export default MovieDetails;
