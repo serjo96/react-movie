@@ -25,5 +25,8 @@
     "Keywords": "Keywords",
     "Links": "Links",
     "homePage": "Home page"
+  },
+  "description": {
+    "noDescription": "Ops! Its seems here no description."
   }
 }
