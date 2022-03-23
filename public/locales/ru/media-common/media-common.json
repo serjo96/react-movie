@@ -11,5 +11,19 @@
     "votes_one": "голос",
     "votes_other": "голоса",
     "votes_many": "голосов"
+  },
+  "aside": {
+    "Producer": "Продюсер",
+    "Scenario": "Сценарий",
+    "Operator": "Оператор",
+    "Composer": "Композитор",
+    "Art": "Художник",
+    "Country": "Страна",
+    "ProductionCompanies": "Производители",
+    "Genres": "Жанр",
+    "Tags": "Теги",
+    "Keywords": "Ключевые слова",
+    "Links": "Ссылки",
+    "homePage": "Домашняя страница"
   }
 }

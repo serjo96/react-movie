@@ -11,5 +11,19 @@
     "votes_one": "vote",
     "votes_other": "votes",
     "votes_many": "votes"
+  },
+  "aside" : {
+    "Producer": "Producer",
+    "Scenario": "Scenario",
+    "Operator": "Operator",
+    "Composer": "Composer",
+    "Art": "Art",
+    "Country": "Country",
+    "ProductionCompanies": "Production companies",
+    "Genres": "Genres",
+    "Tags": "Tags",
+    "Keywords": "Keywords",
+    "Links": "Links",
+    "homePage": "Home page"
   }
 }
