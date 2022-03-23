@@ -14,11 +14,7 @@
     "homePage": "Страница фильма"
   },
   "summary": {
-    "votes_zero": "голосов",
-    "votes_one": "голос",
-    "votes_other": "голоса",
-    "votes_many": "голосов",
-    "popularity": "Популярность",
+
     "duration": "Продолжительность",
     "budget": "Бюджет",
     "fees": "Сборы в мире",

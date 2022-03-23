@@ -1,6 +1,15 @@
 {
-  "runtime" : {
-    "hour": "час",
+  "runtime": {
+    "hour_one": "час",
+    "hour_many": "часов",
+    "hour_other": "часа",
     "min": "мин"
+  },
+  "summary": {
+    "popularity": "Популярность",
+    "votes_zero": "голосов",
+    "votes_one": "голос",
+    "votes_other": "голоса",
+    "votes_many": "голосов"
   }
 }

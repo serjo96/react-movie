@@ -1,6 +1,15 @@
 {
   "runtime" : {
-    "hour": "hour",
+    "hour_one": "hour",
+    "hour_many": "hours",
+    "hour_other": "hour",
     "min": "min"
+  },
+  "summary": {
+    "popularity": "Popularity",
+    "votes_zero": "votes",
+    "votes_one": "vote",
+    "votes_other": "votes",
+    "votes_many": "votes"
   }
 }

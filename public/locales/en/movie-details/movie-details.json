@@ -14,11 +14,6 @@
     "homePage": "Home page"
   },
   "summary": {
-    "votes_zero": "votes",
-    "votes_one": "vote",
-    "votes_other": "votes",
-    "votes_many": "votes",
-    "popularity": "Popularity",
     "duration": "Duration",
     "budget": "Budget",
     "fees": "Fees in the world",
