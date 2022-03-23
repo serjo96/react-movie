@@ -5,13 +5,15 @@ import { useParams } from 'react-router-dom';
 import { Languages } from '~/store/config/config.slice';
 import { getMovieData, getMovieEngOverview } from '~/store/movies/movies.api';
 import MediaStills from '~/templates/media-page/media-stills';
-import MediaCast from '~/templates//media-page/media-cast';
+
 import MediaTop from '~/templates/media-page/media-top';
 import MovieAside from '~/templates/Movie/components/movie-aside';
 import { MovieSummary } from '~/templates/Movie/components/movie-summary';
 import ServiceBlock from '~/templates/service/service-block';
 import MediaRecommendations from '~/templates/media-page/media-recommendations';
+import MediaCast from '~/templates/media-page/media-cast';
 import MovieCollection from '~/templates/Movie/components/movie-collection';
+
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
 import { VideosSection } from '~/ui-components/video-section/videos-section';
 import { MediaType } from '~/core/types/media-type';
@@ -26,8 +28,8 @@ function Movie () {
   const [prevProps] = useState(id);
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies);
   const { lang } = useTranslations();
-  const movie = data;
   const movieId = id.split('-').pop();
+  const movie = data;
 
   const sendRequest = () => {
     appDispatch(getMovieData({ id: +movieId, lang }));

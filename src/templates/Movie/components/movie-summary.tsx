@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { calCalculationTime, formatTime, friendlyData, kFormatter } from '~/utils/format';
+import { calCalculationTime, friendlyData, kFormatter } from '~/utils/format';
 import { movieDues } from '~/utils/movieDataFormat';
 import { useAppSelector } from '~/hooks/storeHooks';
 import './movie-summary.sass';
