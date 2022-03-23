@@ -127,7 +127,7 @@ export function MovieAside ({
       </div>
 
       <div className='production'>
-        <div className='aside-row'>
+        <div className='aside-row info-table-row info-table-border'>
           <div className='production__title'>{t('aside.Country')}</div>
           <div className='production__countries aside-row__right-col'>
             {productionCountries.map((el, index) => (
