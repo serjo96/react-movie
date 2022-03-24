@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {
   Scrollbar,
@@ -17,11 +18,12 @@ const MediaCast = ({ cast }: {cast: Cast[]}) => {
   if (!cast.length) {
     return null;
   }
+  const { t } = useTranslation('mediaCommon');
 
   return (
     <section className='credits'>
       <div className='cast'>
-        <h2 className='cast__title'>В ролях</h2>
+        <h2 className='cast__title'>{t('cast')}</h2>
 
         <Swiper
           breakpoints={{

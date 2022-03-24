@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import YouTube from 'react-youtube';
+
 import { Videos } from '~/core/types/videos';
 import Popup from '~/templates/popup/popup';
-import YouTube from 'react-youtube';
 import Portal from '~/ui-components/portal/portal';
 import './video-section.sass';
 
@@ -17,6 +19,7 @@ const YouTubeParams = {
 };
 
 export function VideosSection ({ videos }: MyProps) {
+  const { t } = useTranslation('mediaCommon');
   const [isShowTrailer, toggleTrailerView] = useState(false);
   const [videoKey, setVideoKey] = useState('');
   if (!videos.results.length) {
@@ -35,7 +38,7 @@ export function VideosSection ({ videos }: MyProps) {
   return (
     <React.Fragment>
       <section className='trailer'>
-        <h2>{videos.results.length > 1 ? 'Трейлеры' : 'Трейлер'}</h2>
+        <h2>{t('videos.trailer', { count: videos.results.length })}</h2>
 
         <div className='trailer__list'>
           {videos.results.map((video, indx) => video.site === 'YouTube' &&
