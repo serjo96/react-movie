@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Languages } from '~/store/config/config.slice';
 import { getMovieData, getMovieEngOverview } from '~/store/movies/movies.api';
@@ -28,6 +29,7 @@ function MovieDetails () {
   const [prevProps] = useState(id);
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies);
   const { lang } = useTranslations();
+  const { t } = useTranslation('movie');
   const movieId = id.split('-').pop();
   const movie = data;
 
@@ -101,13 +103,13 @@ function MovieDetails () {
               <MediaCast cast={movie.credits.cast} />
               <MediaStills
                 images={movie.images.backdrops}
-                title='Кадры из фильма'
+                title={t('stills')}
                 imgCount={16}
               />
 
               <MediaStills
                 images={movie.images.posters}
-                title='Постеры'
+                title={t('posters')}
                 posters
                 imgCount={8}
               />
@@ -117,14 +119,14 @@ function MovieDetails () {
 
         <MediaRecommendations
           recommendations={movie.similar}
-          listName='Похожие фильмы'
+          listName={t('similarMovies')}
           typeList={MediaType.MOVIE}
         />
 
         <MovieCollection collection={movie.collection} />
         <MediaRecommendations
           recommendations={movie.recommendations}
-          listName='Вам может понравиться'
+          listName={t('recommendation')}
           typeList={MediaType.MOVIE}
         />
       </main>

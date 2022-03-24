@@ -8,5 +8,9 @@
     "fees": "Сборы в мире",
     "inCollections": "В коллекциях",
     "releaseDate": "Дата выхода"
-  }
+  },
+  "stills": "Кадры из фильма",
+  "posters": "Постеры",
+  "similarMovies": "Похожие фильмы",
+  "recommendation": "Вам может понравиться"
 }

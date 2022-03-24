@@ -8,5 +8,9 @@
     "fees": "Fees in the world",
     "inCollections": "In collections",
     "releaseDate": "Release date"
-  }
+  },
+  "stills": "Stills",
+  "posters": "Posters",
+  "similarMovies": "Similar movies",
+  "recommendation": "You may also like"
 }
