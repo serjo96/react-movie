@@ -28,5 +28,10 @@
   },
   "description": {
     "noDescription": "Ops! Its seems here no description."
-  }
+  },
+  "videos": {
+    "trailer_one": "Trailer",
+    "trailer_many": "Trailers"
+  },
+  "cast": "Cast"
 }

@@ -28,5 +28,10 @@
   },
   "description": {
     "noDescription": "Ой! Кажется описание отсутствует."
-  }
+  },
+  "videos": {
+    "trailer_one": "Трейлер",
+    "trailer_many": "Трейлеры"
+  },
+  "cast": "В ролях"
 }
