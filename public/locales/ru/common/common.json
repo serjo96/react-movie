@@ -2,6 +2,7 @@
   "service": {
     "tryAgain": "Произошла ошибка, попробовать повторить запрос?"
   },
+  "moreButton": "Больше",
   "nav": {
     "movies": {
       "sectionTitle": "Фильмы",

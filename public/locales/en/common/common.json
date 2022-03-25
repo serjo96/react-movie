@@ -2,6 +2,7 @@
   "service": {
     "tryAgain": "An error occurred, please try again?"
   },
+  "moreButton": "More",
   "nav": {
     "movies": {
       "sectionTitle": "Movies",

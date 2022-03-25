@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import './media-stills.sass';
 
 import { Image } from '~/core/types/images';
+import { useTranslation } from 'react-i18next';
 
 interface MyProps {
   imgCount: number
@@ -24,6 +25,7 @@ export default function MediaStills ({
   const [imgIndex, setImageIndex] = useState(0);
   const [isShowLightBox, setVisibilityLightBox] = useState(false);
   const [isLoadedImages, setIsLoadedImages] = useState(false);
+  const { t } = useTranslation();
 
   const loadMoreImg = () => {
     setImgListCount(imgListCount + imgCount);
@@ -54,7 +56,12 @@ export default function MediaStills ({
         <div className={stillsListClass}>
           {images.length > imgListCount + 1 &&
             <div className='show-more show-more--stills'>
-              <div className='show-more__btn' onClick={loadMoreImg}>Больше</div>
+              <button
+                className='show-more__btn'
+                onClick={loadMoreImg}
+              >
+                {t('moreButton')}
+              </button>
             </div>}
           {images.map((backdrop, indx) => indx <= imgListCount &&
             <div
