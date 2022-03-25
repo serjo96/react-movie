@@ -1,7 +1,24 @@
 {
-  "genres": "",
+  "genresLabel": "Genres",
+  "allGenres": "All genres",
+  "yearLabel": "Year",
   "years": {
-    "all": "All years"
+    "all": "All years",
+    "decadesLabel": "decades"
   },
-
+  "customYearLabel": "Custom year",
+  "customYearInput": "Input custom year",
+  "sortLabel": "Sort",
+  "sortBy": {
+    "popularity": "By popularity",
+    "releaseDate": "Release date",
+    "boxOffice": "Box office",
+    "originalTitle": "Original title",
+    "medanVote": "Median vote",
+    "votesCount": "Count votes"
+  },
+  "sortDirection_zero": "Сортировать по убыванию",
+  "sortDirection_one": "Сортировать по возрастанию",
+  "safeFilter": "Безопасный фильтр",
+  "resetButton": "Сбросить все фильтры"
 }
