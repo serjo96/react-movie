@@ -69,7 +69,7 @@ export default function Filters ({
   });
 
   const sortDirectionClass = classNames('filter-item filter-item--sort-direction', {
-    'filter-item--sort-direction-asc': direction && direction === 'asc'
+    'filter-item--sort-direction--asc': direction && direction === 'asc'
   });
 
   const sortByClass = classNames('filter-item', {
@@ -237,7 +237,7 @@ export default function Filters ({
         <div className={sortDirectionClass}>
           <i
             onClick={() => onClickSort()}
-            className='fa fa-long-arrow-up' aria-hidden='true'
+            className='fa fa-arrow-up' aria-hidden='true'
           />
         </div>
         <div onClick={onResetFilters} className='filter-item'>

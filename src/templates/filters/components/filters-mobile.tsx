@@ -57,8 +57,8 @@ export default function FiltersMobile ({
 }: MyProps) {
   const direction = (filterValues.sortBy || '').split('.').pop();
 
-  const sortDirectionClass = classNames('mobile__sort-direction sort-direction', {
-    'sort-direction--asc': direction && direction === 'asc'
+  const sortDirectionClass = classNames('mobile__sort-direction filter-item--sort-direction', {
+    'filter-item--sort-direction--asc': direction && direction === 'asc'
   });
 
   const sortDirectionTitle = `Сортировать по ${direction === 'desc'
@@ -224,7 +224,7 @@ export default function FiltersMobile ({
                 className={sortDirectionClass}
               >
                 <span>{sortDirectionTitle}</span>
-                <i className='fa fa-long-arrow-up' aria-hidden='true' />
+                <i className='fa fa-arrow-up' aria-hidden='true' />
               </div>
 
               {safeFilter &&
