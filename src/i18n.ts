@@ -18,6 +18,8 @@ import COMMON_EN from '../public/locales/en/common/common.json';
 import COMMON_RU from '../public/locales/ru/common/common.json';
 import FILTERS_EN from '../public/locales/en/filters/filters.json';
 import FILTERS_RU from '../public/locales/ru/filters/filters.json';
+import SEARCH_EN from '../public/locales/en/search/search.json';
+import SEARCH_RU from '../public/locales/ru/search/search.json';
 import oldClient from '~/core/api/OldClient';
 
 export const defaultNS = 'common';
@@ -29,6 +31,7 @@ export const resources = {
     movie: MOVIE_DETAILS_EN,
     mediaCommon: MEDIA_COMMON_EN,
     keywords: KEYWORDS_EN,
+    search: SEARCH_EN,
     lists: LISTS_EN
   },
   ru: {
@@ -37,6 +40,7 @@ export const resources = {
     movie: MOVIE_DETAILS_RU,
     mediaCommon: MEDIA_COMMON_RU,
     keywords: KEYWORDS_RU,
+    search: SEARCH_RU,
     common: COMMON_RU,
     lists: LISTS_RU
   }
