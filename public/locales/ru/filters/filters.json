@@ -1,13 +1,14 @@
 {
   "genresLabel": "Жанр",
   "allGenres": "Все жанры",
+  "yearLabel": "Году",
   "year": "год",
   "years": {
     "all": "Все года",
     "decadesLabel": "Десятилетия"
   },
   "customYearLabel": "Свой год",
-  "customYearInput": "Введите свой год",
+  "customYearPlaceholder": "Введите свой год",
   "sortLabel": "Сортировать",
   "sortBy": {
     "popularity": "По популярности",
@@ -17,8 +18,10 @@
     "medanVote": "Среднему голосу",
     "votesCount": "Количеству голосов"
   },
-  "sortDirection_zero": "Сортировать по убыванию",
-  "sortDirection_one": "Сортировать по возрастанию",
+  "sortDirectionDesc": "Сортировать по убыванию",
+  "sortDirectionAsc": "Сортировать по возрастанию",
   "safeFilter": "Безопасный фильтр",
-  "resetButton": "Сбросить все фильтры"
+  "resetButton": "Сбросить все фильтры",
+  "showMobileFiltersButton": "Настроить фильтры",
+  "mobileFilterPopUpTitle": "Фильтровать список по:"
 }

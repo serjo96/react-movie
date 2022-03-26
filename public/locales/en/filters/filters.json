@@ -1,13 +1,14 @@
 {
   "genresLabel": "Genres",
   "allGenres": "All genres",
+  "yearLabel": "Year",
   "year": "year",
   "years": {
     "all": "All years",
     "decadesLabel": "decades"
   },
   "customYearLabel": "Custom year",
-  "customYearInput": "Input custom year",
+  "customYearPlaceholder": "Input custom year",
   "sortLabel": "Sort by",
   "sortBy": {
     "popularity": "By popularity",
@@ -17,8 +18,10 @@
     "medanVote": "Median vote",
     "votesCount": "Count votes"
   },
-  "sortDirection_zero": "Sort desc",
-  "sortDirection_one": "Sort asc",
+  "sortDirectionDesc": "desc",
+  "sortDirectionAsc": "asc",
   "safeFilter": "Safe filter",
-  "resetButton": "Reset filters"
+  "resetButton": "Reset filters",
+  "showMobileFiltersButton": "Setup filters",
+  "mobileFilterPopUpTitle": "Filter list by:"
 }

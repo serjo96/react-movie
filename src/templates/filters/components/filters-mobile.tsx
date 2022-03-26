@@ -8,6 +8,7 @@ import { GenresState } from '~/store/genres/genres.slice';
 import { filterByCountryName, filterByDateName, sortByFilterName } from '~/utils/formatFiltersNames';
 import './filter-mobile.sass';
 import Portal from '~/ui-components/portal/portal';
+import { useTranslation } from 'react-i18next';
 
 interface MyProps {
   genres: Array<Genre>;
@@ -55,15 +56,16 @@ export default function FiltersMobile ({
   genresObject,
   onClosePopUp
 }: MyProps) {
+  const { t } = useTranslation(['common', 'filters']);
   const direction = (filterValues.sortBy || '').split('.').pop();
 
   const sortDirectionClass = classNames('mobile__sort-direction filter-item--sort-direction', {
     'filter-item--sort-direction--asc': direction && direction === 'asc'
   });
 
-  const sortDirectionTitle = `Сортировать по ${direction === 'desc'
-    ? 'убыванию'
-    : 'возрастанию'}`;
+  const sortDirectionTitle = `${t('filters:sortLabel')} ${direction === 'desc'
+    ? t('filters:sortDirectionDesc')
+    : t('filters:sortDirectionAsc')}`;
 
   return (
     <React.Fragment>
@@ -72,7 +74,7 @@ export default function FiltersMobile ({
         className='mobile-filter-trigger link'
         onClick={onOpenFilterModal}
       >
-        <span>Настроить фильтры</span>
+        <span>{t('filters:showMobileFiltersButton')}</span>
         <i className='fa fa-filter' aria-hidden='true' />
       </button>
 
@@ -83,16 +85,16 @@ export default function FiltersMobile ({
           >
 
             <div className='mobile-filter'>
-              <h2 className='popup__title'>Фильтровать список</h2>
+              <h2 className='popup__title'>{t('filters:showMobileFiltersButton')}</h2>
               {genres.length &&
                 <div className='mobile-filter__select'>
-                  <div className='mobile-filter-item__title'>Жанр</div>
+                  <div className='mobile-filter-item__title'>{t('filters:genresLabel')}</div>
                   <label
                     htmlFor='genreFilter'
                     className='mobile-filter__label'
                   >
                     <div className='mobile-filter__name'>
-                      <span>{genresObject[filterValues.genre || 0]}</span>
+                      <span>{filterValues.genre ? genresObject[filterValues.genre] : t('filters:allGenres')}</span>
                       <i className='fa fa-angle-down' aria-hidden='true' />
                     </div>
                     <select
@@ -110,7 +112,7 @@ export default function FiltersMobile ({
                           key={indx}
                           value={el.id}
                         >
-                          {el.name}
+                          {el.id === 0 ? t('filters:allGenres') : el.name}
                         </option>)
                       )}
                     </select>
@@ -118,7 +120,7 @@ export default function FiltersMobile ({
                 </div>}
 
               <div className='mobile-filter__select'>
-                <div className='mobile-filter-item__title'>Год</div>
+                <div className='mobile-filter-item__title'>{t('filters:yearLabel')}</div>
                 <label className='mobile-filter__label' htmlFor='yearFilter'>
                   <div className='mobile-filter__name'>
                     <span>{filterByDateName(filterValues.year)}</span>
@@ -139,7 +141,7 @@ export default function FiltersMobile ({
                         data-type={el.type}
                         data-date={el.date}
                       >
-                        {el.name}
+                        {el.date !== 'all' ? `${el.name} ${t('filters:year')}` : t('filters:years.all')}
                       </option>)
                     )}
                   </select>
@@ -148,14 +150,14 @@ export default function FiltersMobile ({
 
               <div className='mobile-filter__select mobile-filter__select--date-input'>
                 <div className='mobile-filter-item__title'>
-                  <span>Свой год</span>
+                  <span>{t('filters:customYearLabel')}</span>
                 </div>
                 <label className='mobile-filter__label'>
                   <input
                     name='filterByYearInput'
                     type='search'
                     pattern='[0-9]*'
-                    placeholder='Введите свой год'
+                    placeholder={t('filters:customYearPlaceholder')}
                     className='mobile-filter__input'
                     onChange={({ target }) => onChangeRangeDate(target.value)}
                     onBlur={({ target }) => onBlurInputRange(target.value)}
@@ -194,7 +196,7 @@ export default function FiltersMobile ({
                 </div>}
 
               <div className='mobile-filter__select'>
-                <div className='mobile-filter-item__title'>Сортировать</div>
+                <div className='mobile-filter-item__title'>{t('filters:sortLabel')}</div>
                 <label className='mobile-filter__label'>
                   <div className='mobile-filter__name'>
                     <span>{sortByFilterName(sortByList, filterValues.sortBy)}</span>
@@ -209,10 +211,13 @@ export default function FiltersMobile ({
                     {sortByList.map((el, indx) => (
                       <option
                         key={indx}
-                        value={el.name}
+                        value={el.key}
                         data-type={el.type}
                       >
-                        {el.name}
+                        {/* TODO: Fix ts overloads */}
+                        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                        {/* @ts-ignore */}
+                        {t(`sortBy.${el.key}`, { ns: 'filters' })}
                       </option>)
                     )}
                   </select>
@@ -232,7 +237,7 @@ export default function FiltersMobile ({
                   className='mobile-filter__safe-filter'
                   onClick={onClickAdult}
                 >
-                  <span>Безопасный фильтр</span>
+                  <span>{t('filters:safeFilter')}</span>
                   <i
                     className={`fa ${filterValues.adult ? 'fa-square-o' : 'fa-check-square'}`}
                     aria-hidden='true'
@@ -243,7 +248,7 @@ export default function FiltersMobile ({
                 onClick={onResetFilters}
                 className='restore-filters-btn'
               >
-                Сбросить все фильтры
+                {t('filters:resetButton')}
               </div>
 
             </div>
