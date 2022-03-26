@@ -1,12 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars-2';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import queryString from 'query-string';
 
 import ServiceBlock from '~/templates/service/service-block';
 import Image from '~/ui-components/image/image';
 import Input from '~/ui-components/input/input';
+
+import { getRandomInt } from '~/utils';
 import { friendlyUrl, urlRusLat } from '~/utils/format';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { useOnClickOutside } from '~/hooks/useOnClickOutside';
@@ -19,11 +22,15 @@ interface MyProps {
   isShowMobileSearch: boolean;
 }
 
+const randomInt = getRandomInt(0, 3);
+console.log(randomInt);
+
 function SearchHeader ({
   isShowMobileSearch
 }: MyProps) {
   const componentRef = useRef(null);
   const appDispatch = useAppDispatch();
+  const { t } = useTranslation();
   const history = useHistory();
   const [value, setValue] = useState('');
   const [visibilityResult, setVisibilityResult] = useState(false);
@@ -71,9 +78,9 @@ function SearchHeader ({
   const elementType = (type: MediaType, personDepartment?: string) => {
     switch (type) {
       case MediaType.MOVIE:
-        return 'фильм';
+        return t('commonWords.movie');
       case MediaType.TV:
-        return 'сериал';
+        return t('commonWords.tvShow');
       case MediaType.PERSON:
         return personDepartment;
     }
@@ -124,7 +131,7 @@ function SearchHeader ({
           name='search'
           debounceTimeout={500}
           type='search'
-          placeholder='Поиск фильмов и сериалов...'
+          placeholder={t('headerSearch.placeholder', { count: randomInt })}
           onInput={value => setValue(value)}
           onChange={onInput}
           onKeyDown={onKeyDown}
@@ -151,7 +158,7 @@ function SearchHeader ({
                 >
                 {data.results.map(renderResults)}
                 </Scrollbars>
-              : <div className='result-element'>Поиск не дал результатов, попробуйте уточнить поиск</div>}
+              : <div className='result-element'>{t('headerSearch.noResults')}</div>}
           </ServiceBlock>}
       </div>
     </div>
