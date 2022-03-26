@@ -23,6 +23,8 @@
     "from": "from",
     "until": "until",
     "movie": "Movie",
-    "tvShow": "Tv show"
+    "tvShow": "Tv show",
+    "outOf": "out of",
+    "rating": "Rating"
   }
 }
