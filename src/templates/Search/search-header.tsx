@@ -30,7 +30,7 @@ function SearchHeader ({
 }: MyProps) {
   const componentRef = useRef(null);
   const appDispatch = useAppDispatch();
-  const { t } = useTranslation();
+  const { t } = useTranslation(['common', 'search']);
   const history = useHistory();
   const [value, setValue] = useState('');
   const [visibilityResult, setVisibilityResult] = useState(false);
@@ -78,9 +78,9 @@ function SearchHeader ({
   const elementType = (type: MediaType, personDepartment?: string) => {
     switch (type) {
       case MediaType.MOVIE:
-        return t('commonWords.movie');
+        return t('common:commonWords.movie');
       case MediaType.TV:
-        return t('commonWords.tvShow');
+        return t('common:commonWords.tvShow');
       case MediaType.PERSON:
         return personDepartment;
     }
@@ -131,7 +131,7 @@ function SearchHeader ({
           name='search'
           debounceTimeout={500}
           type='search'
-          placeholder={t('headerSearch.placeholder', { count: randomInt })}
+          placeholder={t('search:placeholder', { count: randomInt })}
           onInput={value => setValue(value)}
           onChange={onInput}
           onKeyDown={onKeyDown}
@@ -158,7 +158,7 @@ function SearchHeader ({
                 >
                 {data.results.map(renderResults)}
                 </Scrollbars>
-              : <div className='result-element'>{t('headerSearch.noResults')}</div>}
+              : <div className='result-element'>{t('search:noResults')}</div>}
           </ServiceBlock>}
       </div>
     </div>
