@@ -13,14 +13,8 @@ export const getGenres = createAsyncThunk<ReturnedGenres>(
   'genres/getGenres',
   async () => {
     const [genresMovie, genresTV] = await oldClient.all<{genres: Genre[]}>([
-      oldClient.get('genre/movie/list',
-        {
-          language: 'ru-RU'
-        }),
-      oldClient.get('genre/tv/list',
-        {
-          language: 'ru-RU'
-        })
+      oldClient.get('genre/movie/list'),
+      oldClient.get('genre/tv/list')
     ]);
 
     return {
