@@ -33,7 +33,8 @@
 	padding: 5px 10px
 	cursor: pointer
 	position: relative
-	text-transform: capitalize
+	&:first-letter
+		text-transform: capitalize
 	span
 		user-select: none
 		vertical-align: middle
@@ -107,7 +108,8 @@
 	padding: 5px
 	cursor: pointer
 	transition: all .5s
-	text-transform: capitalize
+	&:first-letter
+		text-transform: capitalize
 	&:hover
 		background: #d8b16b
 		color: #fff
