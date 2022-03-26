@@ -186,13 +186,12 @@ export const getEngTvShowData = createAsyncThunk<TvShowEngDataResp, {id: number,
   }
 );
 
-export const getTvShowSeasons = createAsyncThunk<TvSeasonRespData, {id: number, season: number, lang?: Languages}>(
+export const getTvShowSeasons = createAsyncThunk<TvSeasonRespData, {id: number, season: number, lang: Languages}>(
   'tvShows/getTvShowSeasons',
-  async ({ id, season, lang = Languages.RU }) => {
+  async ({ id, season, lang }) => {
     const { data, isSuccessRequest } = await oldClient.get<TvSeason>(`tv/${id}/season/${season}`,
       {
-        language: lang,
-        include_image_language: 'ru,null',
+        include_image_language: `${lang},null`,
         append_to_response: 'credits, external_ids,images,videos'
       });
     return {

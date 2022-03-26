@@ -39,7 +39,7 @@ function TvDetails () {
   };
 
   const sendSeasonRequest = () => {
-    appDispatch(getTvShowSeasons({ id: +tvId, season: +season }));
+    appDispatch(getTvShowSeasons({ id: +tvId, season: +season, lang }));
   };
 
   const handlerOnFetchEngData = () => {
