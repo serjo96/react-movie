@@ -25,7 +25,6 @@ export type KeywordsListResponse = {
 };
 
 interface KeywordsQuery {
-  language: 'ru-RU',
   with_keywords: string,
   sort_by: string,
   with_genres: number,
@@ -60,7 +59,6 @@ export const getKeywordsMedia = createAsyncThunk<KeywordsListResponse, KeywordsL
     page: 1
   }) => {
     let query: KeywordsQuery = {
-      language: 'ru-RU',
       with_keywords: keywordId,
       sort_by: sortType,
       with_original_language: region,

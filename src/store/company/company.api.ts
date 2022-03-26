@@ -13,14 +13,10 @@ export interface CompanyRespData {
   data: CompanyDetails;
 }
 
-export const getCompanyDetails = createAsyncThunk<CompanyRespData, {id: number, lang?: Languages}>(
+export const getCompanyDetails = createAsyncThunk<CompanyRespData, {id: number}>(
   'company/getCompanyDetails',
-  async ({ id, lang = Languages.RU }) => {
-    const resp = await oldClient.get<CompanyDetails>(`company/${id}`,
-      {
-        language: lang
-      }
-    );
+  async ({ id }) => {
+    const resp = await oldClient.get<CompanyDetails>(`company/${id}`);
 
     return {
       data: resp.data,
@@ -65,14 +61,12 @@ export const getCompanyMovies = createAsyncThunk<ReturnedCompanyMovieList, Compa
     date,
     adult = false,
     sortBy = 'popularity.desc',
-    page = 1,
-    language = Languages.RU
+    page = 1
   }: CompanyMoviesArguments = {
     id: 0,
     adult: false,
     sortBy: 'popularity.desc',
-    page: 1,
-    language: Languages.RU
+    page: 1
   }) => {
     let startRangeDate: string | undefined;
     let endRangeDate: string | undefined;
@@ -83,7 +77,6 @@ export const getCompanyMovies = createAsyncThunk<ReturnedCompanyMovieList, Compa
 
     const { data, isSuccessRequest } = await oldClient.get<ListData<MoviesListItem>>('discover/movie',
       {
-        language,
         sort_by: sortBy,
         with_genres: genre,
         primary_release_year: date,
@@ -108,12 +101,10 @@ export const getCompanyTvShows = createAsyncThunk<ReturnedCompanyTvShowsList, Co
     date,
     sortBy = 'popularity.desc',
     page = 1,
-    language = Languages.RU
   }: CompanyTvShowsArguments = {
     id: 0,
     sortBy: 'popularity.desc',
     page: 1,
-    language: Languages.RU
   }) => {
     let startRangeDate: string | undefined;
     let endRangeDate: string | undefined;
@@ -124,7 +115,6 @@ export const getCompanyTvShows = createAsyncThunk<ReturnedCompanyTvShowsList, Co
 
     const { data, isSuccessRequest } = await oldClient.get<ListData<TvListItem>>('discover/tv',
       {
-        language,
         sort_by: sortBy,
         with_genres: genre,
         first_air_date_year: date,

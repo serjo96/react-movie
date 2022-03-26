@@ -160,7 +160,6 @@ export const getTopMovies = createAsyncThunk<ReturnedMovieList, number | void>(
         }),
       oldClient.get('movie/top_rated',
         {
-          language: 'ru-RU',
           page: (page as number) + 1,
           region: 'RU'
         })
