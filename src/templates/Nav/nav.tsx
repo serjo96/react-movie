@@ -18,6 +18,7 @@ export default function Nav ({
 }: MyProps) {
   const { t } = useTranslation();
   const [navCollapse, setNavCollapse] = useState(true);
+  // TODO: fix condition for pages includes movies in path;
   const isMoviesPage = useRouteMatch({
     path: '/movies/',
     exact: false,
@@ -72,6 +73,9 @@ export default function Nav ({
                     to={link.href}
                     activeClassName='sub-menu__item--active'
                   >
+                    {/* TODO: Fix ts overloads */}
+                    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                    {/* @ts-ignore */}
                     <span>{t(`nav.movies.${link.keyTitle}`)}</span>
                     <i className={`fa ${link.icon}`} aria-hidden='true' />
                   </NavLink>
@@ -100,6 +104,9 @@ export default function Nav ({
                     to={link.href}
                     activeClassName='sub-menu__item--active'
                   >
+                    {/* TODO: Fix ts overloads */}
+                    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                    {/* @ts-ignore */}
                     <span>{t(`nav.tvShows.${link.keyTitle}`)}</span>
                     <i className={`fa ${link.icon}`} aria-hidden='true' />
                   </NavLink>
