@@ -54,7 +54,7 @@ export default function Filters ({
   onResetFilters,
   genresObject
 }: MyProps) {
-  const { t } = useTranslation('filters');
+  const { t } = useTranslation(['common', 'filters']);
   const [sortBy, direction] = (filterValues.sortBy || '').split('.');
   const filterCatalogClasses = (isActive: boolean) => classNames('filter-catalog__item filter-genre', {
     'filter-catalog__item--active': isActive
@@ -101,7 +101,7 @@ export default function Filters ({
         {genres.length &&
           <div className={genreFilterClasses}>
             <div className='filter-name'>
-              <span>{filterValues.genre ? genresObject[filterValues.genre] : t('allGenres')}</span>
+              <span>{filterValues.genre ? genresObject[filterValues.genre] : t('filters:allGenres')}</span>
               <i className='fa fa-angle-down' aria-hidden='true' />
             </div>
             <div className='filter-item__catalog filter-item__catalog--genres'>
@@ -117,7 +117,7 @@ export default function Filters ({
                       onClick={() => onClickGenres(item)}
                       key={index}
                     >
-                      {item.id === 0 ? t('allGenres') : item.name}
+                      {item.id === 0 ? t('filters:allGenres') : item.name}
                     </li>)
                   )}
                 </ul>
@@ -140,24 +140,24 @@ export default function Filters ({
                   key={index}
                   onClick={() => onSortByDate(el)}
                 >
-                  {el.name}
+                  {el.date !== 'all' ? `${el.name} ${t('filters:year')}` : t('filters:years.all')}
                 </div>
               ))}
             </div>
             <div className='filter-catalog__list'>
-              <div className='filter-catalog__sub-title'>{t('years.decadesLabel')}</div>
+              <div className='filter-catalog__sub-title'>{t('filters:years.decadesLabel')}</div>
               {sortingDateList.filter(date => date.type === 'range').map((el, index) => (
                 <div
                   className={filterCatalogItemClasses(filterValues.year === el.date)}
                   key={index}
                   onClick={() => onSortByDate(el)}
                 >
-                  {el.name}
+                  {el.date === '-1980' && t('common:nav.commonWords.until')} {el.name}
                 </div>
               ))}
             </div>
             <div className='filter-catalog__list'>
-              <div className='filter-catalog__sub-title'>{t('customYearLabel')}</div>
+              <div className='filter-catalog__sub-title'>{t('filters:customYearLabel')}</div>
               <input
                 type='text'
                 pattern='[0-9]*'
@@ -209,7 +209,7 @@ export default function Filters ({
             onClick={onClickAdult}
           >
             <div className='filter-name'>
-              <span>{t('safeFilter')}</span>
+              <span>{t('filters:safeFilter')}</span>
               <i
                 className={`fa ${filterValues.adult ? 'fa-square-o' : 'fa-check-square'}`}
                 aria-hidden='true'
@@ -224,14 +224,14 @@ export default function Filters ({
           </div>
 
           <div className='filter-item__catalog filter-item__catalog--col sort-catalog'>
-            <div className='filter-catalog__title'>{t('sortBy')}</div>
+            <div className='filter-catalog__title'>{t('filters:sortLabel')}</div>
             {sortByList.map((el, indx) => (
               <div
                 onClick={() => onClickSort(el.type)}
                 key={indx}
                 className={`${filterCatalogItemClasses(sortBy === el.type)} sort-catalog-item`}
               >
-                {el.name}
+                {t(`sortBy.${el.key}`, {ns: 'filters'})}
               </div>
             ))}
           </div>
@@ -243,7 +243,7 @@ export default function Filters ({
           />
         </div>
         <div onClick={onResetFilters} className='filter-item'>
-          <button className='reset-filters filter-name'>{t('resetButton')}</button>
+          <button className='reset-filters filter-name'>{t('filters:resetButton')}</button>
         </div>
       </div>
     </div>

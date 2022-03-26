@@ -1,7 +1,7 @@
 {
   "genresLabel": "Жанр",
   "allGenres": "Все жанры",
-  "yearLabel": "Год",
+  "year": "год",
   "years": {
     "all": "Все года",
     "decadesLabel": "Десятилетия"

@@ -1,14 +1,14 @@
 {
   "genresLabel": "Genres",
   "allGenres": "All genres",
-  "yearLabel": "Year",
+  "year": "year",
   "years": {
     "all": "All years",
     "decadesLabel": "decades"
   },
   "customYearLabel": "Custom year",
   "customYearInput": "Input custom year",
-  "sortLabel": "Sort",
+  "sortLabel": "Sort by",
   "sortBy": {
     "popularity": "By popularity",
     "releaseDate": "Release date",
@@ -17,8 +17,8 @@
     "medanVote": "Median vote",
     "votesCount": "Count votes"
   },
-  "sortDirection_zero": "Сортировать по убыванию",
-  "sortDirection_one": "Сортировать по возрастанию",
-  "safeFilter": "Безопасный фильтр",
-  "resetButton": "Сбросить все фильтры"
+  "sortDirection_zero": "Sort desc",
+  "sortDirection_one": "Sort asc",
+  "safeFilter": "Safe filter",
+  "resetButton": "Reset filters"
 }
