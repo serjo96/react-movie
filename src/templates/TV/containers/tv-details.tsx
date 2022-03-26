@@ -19,13 +19,15 @@ import TvShowSeason from '~/templates/TV/components/tv-show-season';
 import MediaRecommendations from '~/templates/media-page/media-recommendations';
 import MediaCast from '~/templates/media-page/media-cast';
 import ServiceBlock from '~/templates/service/service-block';
+
+import useTranslations from '~/hooks/useTranslations';
 import { scrollToTop } from '~/utils';
-import {useRequest} from "~/hooks/useRequest";
 
 export type SeasonRouteMatchParams = {season?: string};
 
 function TvDetails () {
   const appDispatch = useAppDispatch();
+  const { lang } = useTranslations();
   const { id, season } = useParams<{id: string, season?: string}>();
 
   const [prevProps, setProps] = useState({ id, season });
@@ -33,7 +35,7 @@ function TvDetails () {
   const tvId = id.split('-').pop();
 
   const sendRequest = () => {
-    appDispatch(getTvShowData({ id: +tvId }));
+    appDispatch(getTvShowData({ id: +tvId, lang }));
   };
 
   const sendSeasonRequest = () => {

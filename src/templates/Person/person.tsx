@@ -11,6 +11,7 @@ import PersonMediaList from './components/person-media-list';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import PersonAside from '~/templates/Person/person-aside';
 import { getPersonDetails } from '~/store/person/person.api';
+import useTranslations from '~/hooks/useTranslations';
 import { scrollToTop } from '~/utils';
 import { MediaType } from '~/core/types/media-type';
 import { sortBestMediaItem } from '~/utils/sortings';
@@ -20,11 +21,12 @@ import './Person.sass';
 function Person () {
   const appDispatch = useAppDispatch();
   const { id } = useParams<{id: string}>();
+  const { lang } = useTranslations();
   const [prevProps] = useState(id);
   const personId = id.split('-').pop();
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.person);
   const sendRequest = () => {
-    appDispatch(getPersonDetails(personId));
+    appDispatch(getPersonDetails({ id: personId, lang }));
   };
 
   useEffect(() => {
