@@ -7,7 +7,8 @@ export const filterByDateName = (yearValue: string) => {
   }
 
   const singleDate = sortingDateList.find(el => el.date === yearValue);
-  return singleDate ? singleDate.name : yearValue;
+  const beforeDate = yearValue === '-1980' ? `${i18n.t('commonWords.until')} ${yearValue}` : yearValue;
+  return singleDate && singleDate.type === 'single' ? singleDate.name : beforeDate;
 };
 
 export const filterByCountryName = (countryValue: string) => {
@@ -25,5 +26,5 @@ export const sortByFilterName = (sortByList: typeof sortMovieByType | typeof sor
   const [sortBy] = (sortByValue || '').split('.');
 
   const current = sortByList.find(el => el.type === sortBy);
-  return current ? i18n.t(`${current.key}`, { ns: 'filters' }) : sortByValue;
+  return current ? i18n.t(`sortBy.${current.key}`, { ns: 'filters' }) : sortByValue;
 };

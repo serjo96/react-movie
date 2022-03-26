@@ -17,10 +17,10 @@
       "airing": "Airing tv shows",
       "onAir": "Tv shows on air",
       "top": "Top tv shows"
-    },
-    "commonWords": {
-      "from": "from",
-      "until": "until"
     }
+  },
+  "commonWords": {
+    "from": "from",
+    "until": "until"
   }
 }

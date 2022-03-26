@@ -17,10 +17,10 @@
       "airing": "Сериалы на тв",
       "onAir": "Текущие сериалы",
       "top": "Топ сериалы"
-    },
-    "commonWords": {
-      "from": "от",
-      "until": "до"
     }
+  },
+  "commonWords": {
+    "from": "от",
+    "until": "до"
   }
 }

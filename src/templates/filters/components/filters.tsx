@@ -156,7 +156,7 @@ export default function Filters ({
                   key={index}
                   onClick={() => onSortByDate(el)}
                 >
-                  {el.date === '-1980' && t('common:nav.commonWords.until')} {el.name}
+                  {el.date === '-1980' && t('common:commonWords.until')} {el.name}
                 </div>
               ))}
             </div>
