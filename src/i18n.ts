@@ -16,20 +16,24 @@ import COMPANY_EN from '../public/locales/en/company/company.json';
 import COMPANY_RU from '../public/locales/ru/company/company.json';
 import COMMON_EN from '../public/locales/en/common/common.json';
 import COMMON_RU from '../public/locales/ru/common/common.json';
+import FILTERS_EN from '../public/locales/en/filters/filters.json';
+import FILTERS_RU from '../public/locales/ru/filters/filters.json';
 import oldClient from '~/core/api/OldClient';
 
 export const defaultNS = 'common';
 export const resources = {
   en: {
+    common: COMMON_EN,
+    filters: FILTERS_EN,
     company: COMPANY_EN,
     movie: MOVIE_DETAILS_EN,
     mediaCommon: MEDIA_COMMON_EN,
     keywords: KEYWORDS_EN,
-    common: COMMON_EN,
     lists: LISTS_EN
   },
   ru: {
     company: COMPANY_RU,
+    filters: FILTERS_RU,
     movie: MOVIE_DETAILS_RU,
     mediaCommon: MEDIA_COMMON_RU,
     keywords: KEYWORDS_RU,
