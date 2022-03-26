@@ -95,10 +95,6 @@ export default function Filters ({
   const genresChunks = chunkArr(genres, 5);
   const countriesChunks = chunkArr(storageCountries, 10);
 
-  // @ts-ignore
-  // @ts-ignore
-  // @ts-ignore
-  // @ts-ignore
   return (
     <div className='filter-list-container'>
       <div className='filter-list'>
