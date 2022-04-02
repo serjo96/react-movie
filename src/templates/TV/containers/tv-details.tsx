@@ -49,6 +49,14 @@ function TvDetails () {
   };
 
   useLangEffect(() => {
+    if (season) {
+      setProps({ ...prevProps, season: season });
+      sendSeasonRequest();
+      scrollToTop();
+    }
+  }, []);
+
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
