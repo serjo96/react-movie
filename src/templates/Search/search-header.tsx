@@ -17,6 +17,7 @@ import { getSearchData } from '~/store/search/search.api';
 import { SearchResultItem } from '~/core/types/search';
 import { MediaType } from '~/core/types/media-type';
 import './search-header.sass';
+import { useLangEffect } from '~/hooks/useLangEffect';
 
 interface MyProps {
   isShowMobileSearch: boolean;
@@ -41,8 +42,8 @@ function SearchHeader ({
     setVisibilityResult(false);
   };
 
-  const sendRequest = (inputValue: string) => {
-    appDispatch(getSearchData(inputValue));
+  const sendRequest = () => {
+    appDispatch(getSearchData(value));
   };
 
   const redirectOnSearchPage = () => {
@@ -54,10 +55,10 @@ function SearchHeader ({
     });
   };
 
-  const onInput = (inputValue: string) => {
+  const onInput = () => {
     if (value.length) {
       setValue(value);
-      sendRequest(inputValue);
+      sendRequest();
       setVisibilityResult(true);
     }
   };
@@ -73,6 +74,12 @@ function SearchHeader ({
       redirectOnSearchPage();
     }
   };
+
+  useLangEffect(() => {
+    if (value) {
+      sendRequest();
+    }
+  }, []);
 
   const elementType = (type: MediaType, personDepartment?: string) => {
     switch (type) {
@@ -147,7 +154,7 @@ function SearchHeader ({
           <ServiceBlock
             isLoading={isFetching}
             isSuccessful={isSuccessful}
-            fetch={() => sendRequest(value)}
+            fetch={sendRequest}
           >
             {data.totalResults
               ? <Scrollbars
