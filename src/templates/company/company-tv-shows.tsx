@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { MediaType } from '~/core/types/media-type';
 import { getCompanyTvShows } from '~/store/company/company.api';
@@ -13,7 +14,7 @@ import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { usePrevious } from '~/hooks/usePrevious';
 import { initFilters } from '~/templates/company/company-page';
 import { scrollToTop } from '~/utils';
-import { useTranslation } from 'react-i18next';
+import { useLangEffect } from '~/hooks/useLangEffect';
 
 type TvShowsFilters = {
   sortBy: string | null;
@@ -45,19 +46,19 @@ export default function CompanyTvShows () {
     appDispatch(getCompanyTvShows({ ...payload, page, id: +companyId }));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (page !== prevPage) {
       sendRequest();
     }
   }, [page]);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (filters !== prevFilters) {
       sendRequest();
       scrollToTop();

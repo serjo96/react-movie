@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-
-import { getCompanyMovies } from '~/store/company/company.api';
-import { MediaType } from '~/core/types/media-type';
-
+import { useTranslation } from 'react-i18next';
 import FilterList from '~/templates/filters/containers/filter-list';
+
 import ServiceBlock from '~/templates/service/service-block';
 import MediaList from '~/ui-components/media-list/media-list';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 
+import { getCompanyMovies } from '~/store/company/company.api';
+import { MediaType } from '~/core/types/media-type';
+
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useLangEffect } from '~/hooks/useLangEffect';
 import { usePrevious } from '~/hooks/usePrevious';
 import { scrollToTop } from '~/utils';
-import { useTranslation } from 'react-i18next';
 
 type MoviesFilters = {
   adult: boolean;
@@ -45,19 +46,19 @@ export default function CompanyMovies () {
     appDispatch(getCompanyMovies({ ...payload, page, id: +companyId }));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (page !== prevPage) {
       sendRequest();
     }
   }, [page]);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (filters !== prevFilters) {
       sendRequest();
       scrollToTop();

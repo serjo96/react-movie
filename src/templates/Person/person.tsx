@@ -5,14 +5,14 @@ import { Helmet } from 'react-helmet';
 import Image from '~/ui-components/image/image';
 import { declOfNum, friendlyData, urlRusLat } from '~/utils/format';
 
-import { MediaType } from '~/core/types/media-type';
-import { MovieCreditsCast, PersonCrew } from '~/core/types/perosn-details';
-
 import ServiceBlock from '../service/service-block';
+
 import MediaStills from '../media-page/media-stills';
 import PersonMediaList from './components/person-media-list';
 import PersonAside from '~/templates/Person/person-aside';
 
+import { MediaType } from '~/core/types/media-type';
+import { MovieCreditsCast, PersonCrew } from '~/core/types/perosn-details';
 import { getPersonDetails } from '~/store/person/person.api';
 
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';

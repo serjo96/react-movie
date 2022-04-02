@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 
-import { getTopTvShows } from '~/store/tv/tv.api';
-import { MediaType } from '~/core/types/media-type';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
-
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '../service/service-block';
+
+import { getTopTvShows } from '~/store/tv/tv.api';
+import { MediaType } from '~/core/types/media-type';
+
 import { scrollToTop } from '~/utils';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useLangEffect } from '~/hooks/useLangEffect';
 
 function TvShowsTop () {
   const appDispatch = useAppDispatch();
@@ -36,13 +38,13 @@ function TvShowsTop () {
     appDispatch(getTopTvShows(page));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (search !== prevProps) {
       sendRequest();
       scrollToTop();

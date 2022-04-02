@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 
-import { getRandomInt, scrollToTop } from '~/utils';
-import { friendlyName, friendlyUrl } from '~/utils/format';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
-import { MediaType } from '~/core/types/media-type';
-import { onSearchRequest } from '~/store/search/search.api';
-
 import ServiceBlock from '~/templates/service/service-block';
 import MediaList from '~/ui-components/media-list/media-list';
 import Input from '~/ui-components/input/input';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
+
+import { MediaType } from '~/core/types/media-type';
+import { onSearchRequest } from '~/store/search/search.api';
+
+import { useLangEffect } from '~/hooks/useLangEffect';
+import { getRandomInt, scrollToTop } from '~/utils';
+import { friendlyName, friendlyUrl } from '~/utils/format';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 
 import './search-page.sass';
 
@@ -36,14 +38,14 @@ function SearchPage () {
     }));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (queryParams.query && !isFetching) {
       sendRequest();
       scrollToTop();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (search !== prevProps) {
       sendRequest();
       scrollToTop();

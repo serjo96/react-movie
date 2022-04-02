@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 
@@ -6,18 +7,17 @@ import {
   getCompanyDetails
 } from '~/store/company/company.api';
 
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
-import { scrollToTop } from '~/utils';
 import ServiceBlock from '../service/service-block';
-
 import Image from '~/ui-components/image/image';
 import Tabs from '~/ui-components/tabs/tabs';
 import Tab from '~/ui-components/tabs/tab';
-
 import CompanyMovies from '~/templates/company/company-movies';
 import CompanyTvShows from '~/templates/company/company-tv-shows';
+
+import { useLangEffect } from '~/hooks/useLangEffect';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { scrollToTop } from '~/utils';
 import './company.sass';
-import { useTranslation } from 'react-i18next';
 
 type MoviesFilters = {
   adult: boolean;
@@ -56,13 +56,13 @@ function CompanyPage () {
     appDispatch(getCompanyDetails({ id: +companyId }));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (id !== prevProps) {
       sendRequest();
       scrollToTop();

@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 
-import { getPlayingMovies } from '~/store/movies/movies.api';
-import { MediaType } from '~/core/types/media-type';
-
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '~/templates/service/service-block';
+
+import { getPlayingMovies } from '~/store/movies/movies.api';
+import { MediaType } from '~/core/types/media-type';
 
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { usePrevious } from '~/hooks/usePrevious';

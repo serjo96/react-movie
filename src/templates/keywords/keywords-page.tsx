@@ -4,14 +4,13 @@ import React, { useState } from 'react';
 import queryString from 'query-string';
 import { Helmet } from 'react-helmet';
 
-import { MediaType } from '~/core/types/media-type';
-
-import { getKeywordsMedia } from '~/store/keywords/keywords.api';
-
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import FilterList from '~/templates/filters/containers/filter-list';
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '~/templates/service/service-block';
+
+import { MediaType } from '~/core/types/media-type';
+import { getKeywordsMedia } from '~/store/keywords/keywords.api';
 
 import { scrollToTop } from '~/utils';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
