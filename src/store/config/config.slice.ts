@@ -7,7 +7,7 @@ export enum Languages {
 }
 
 const initialState = {
-  language: i18n.language || Languages.EN
+  language: window.localStorage.getItem('i18nextLng') || i18n.language || Languages.EN
 };
 
 export const configSlice = createSlice({
