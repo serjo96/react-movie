@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
@@ -22,6 +22,7 @@ import ServiceBlock from '~/templates/service/service-block';
 
 import useTranslations from '~/hooks/useTranslations';
 import { scrollToTop } from '~/utils';
+import { useLangEffect } from '~/hooks/useLangEffect';
 
 export type SeasonRouteMatchParams = {season?: string};
 
@@ -46,9 +47,7 @@ function TvDetails () {
     appDispatch(getEngTvShowData({ id: +tvId, lang: Languages.EN }));
   };
 
-  // useRequest()
-
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
@@ -57,16 +56,27 @@ function TvDetails () {
       sendSeasonRequest();
       scrollToTop();
     }
+  }, [id]);
+
+  useLangEffect(() => {
+    if (!isFetching) {
+      // sendRequest();
+    }
+
+    if (season && !tvShowSeasons.isFetching) {
+      sendSeasonRequest();
+      scrollToTop();
+    }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (id !== prevProps.id) {
-      sendRequest();
+      // sendRequest();
       scrollToTop();
     }
   }, [id]);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (season && season !== prevProps.season) {
       setProps({ ...prevProps, season: season });
       sendSeasonRequest();
