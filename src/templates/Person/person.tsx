@@ -1,21 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import Image from '~/ui-components/image/image';
 import { declOfNum, friendlyData, urlRusLat } from '~/utils/format';
 
+import { MediaType } from '~/core/types/media-type';
+import { MovieCreditsCast, PersonCrew } from '~/core/types/perosn-details';
+
 import ServiceBlock from '../service/service-block';
 import MediaStills from '../media-page/media-stills';
 import PersonMediaList from './components/person-media-list';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import PersonAside from '~/templates/Person/person-aside';
+
 import { getPersonDetails } from '~/store/person/person.api';
+
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useLangEffect } from '~/hooks/useLangEffect';
 import useTranslations from '~/hooks/useTranslations';
-import { scrollToTop } from '~/utils';
-import { MediaType } from '~/core/types/media-type';
 import { sortBestMediaItem } from '~/utils/sortings';
-import { MovieCreditsCast, PersonCrew } from '~/core/types/perosn-details';
+import { scrollToTop } from '~/utils';
+
 import './Person.sass';
 
 function Person () {
@@ -29,13 +34,13 @@ function Person () {
     appDispatch(getPersonDetails({ id: personId, lang }));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (id !== prevProps) {
       sendRequest();
       scrollToTop();
