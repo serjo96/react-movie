@@ -9,15 +9,16 @@ import ServiceBlock from '~/templates/service/service-block';
 import Image from '~/ui-components/image/image';
 import Input from '~/ui-components/input/input';
 
-import { getRandomInt } from '~/utils';
-import { friendlyUrl, urlRusLat } from '~/utils/format';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
-import { useOnClickOutside } from '~/hooks/useOnClickOutside';
 import { getSearchData } from '~/store/search/search.api';
 import { SearchResultItem } from '~/core/types/search';
 import { MediaType } from '~/core/types/media-type';
-import './search-header.sass';
+
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useOnClickOutside } from '~/hooks/useOnClickOutside';
 import { useLangEffect } from '~/hooks/useLangEffect';
+import { friendlyUrl, urlRusLat } from '~/utils/format';
+import { getRandomInt } from '~/utils';
+import './search-header.sass';
 
 interface MyProps {
   isShowMobileSearch: boolean;
