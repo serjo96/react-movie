@@ -31,7 +31,10 @@
   },
   "videos": {
     "trailer_one": "Trailer",
-    "trailer_many": "Trailers"
+    "trailer_two": "Trailers",
+    "trailer_few": "Trailers",
+    "trailer_many": "Trailers",
+    "trailer_other": "Trailers"
   },
   "cast": "Cast"
 }

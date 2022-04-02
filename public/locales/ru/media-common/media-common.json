@@ -31,7 +31,10 @@
   },
   "videos": {
     "trailer_one": "Трейлер",
-    "trailer_many": "Трейлеры"
+    "trailer_two": "Трейлера",
+    "trailer_few": "Трейлеров",
+    "trailer_many": "Трейлеров",
+    "trailer_other": "Трейлеров"
   },
   "cast": "В ролях"
 }
