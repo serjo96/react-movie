@@ -43,6 +43,7 @@ function TvDetails () {
     appDispatch(getTvShowSeasons({ id: +tvId, season: +season, lang }));
   };
 
+  // TODO: Add handler for eng tv season data
   const handlerOnFetchEngData = () => {
     appDispatch(getEngTvShowData({ id: +tvId, lang: Languages.EN }));
   };
@@ -57,17 +58,6 @@ function TvDetails () {
       scrollToTop();
     }
   }, [id]);
-
-  useLangEffect(() => {
-    if (!isFetching) {
-      // sendRequest();
-    }
-
-    if (season && !tvShowSeasons.isFetching) {
-      sendSeasonRequest();
-      scrollToTop();
-    }
-  }, []);
 
   useLangEffect(() => {
     if (id !== prevProps.id) {
