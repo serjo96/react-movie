@@ -3,15 +3,17 @@ import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
-import { usePrevious } from '~/hooks/usePrevious';
 import { getPlayingMovies } from '~/store/movies/movies.api';
 import { MediaType } from '~/core/types/media-type';
-import { scrollToTop } from '~/utils';
 
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '~/templates/service/service-block';
+
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { usePrevious } from '~/hooks/usePrevious';
+import { useLangEffect } from '~/hooks/useLangEffect';
+import { scrollToTop } from '~/utils';
 
 function MoviePlaying () {
   const appDispatch = useAppDispatch();
@@ -33,13 +35,13 @@ function MoviePlaying () {
     appDispatch(getPlayingMovies(page));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (search !== prevProps) {
       sendRequest();
       scrollToTop();

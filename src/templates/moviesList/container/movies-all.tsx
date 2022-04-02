@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 
 import { MediaType } from '~/core/types/media-type';
 import { getMoviesList } from '~/store/movies/movies.api';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import FilterList from '~/templates/filters/containers/filter-list';
 import ServiceBlock from '~/templates/service/service-block';
 import MediaList from '~/ui-components/media-list/media-list';
+
 import { scrollToTop } from '~/utils';
-import { useTranslation } from 'react-i18next';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useLangEffect } from '~/hooks/useLangEffect';
 
 function MoviesAll () {
   const appDispatch = useAppDispatch();
@@ -46,7 +49,7 @@ function MoviesAll () {
     appDispatch(getMoviesList(payload));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!data.results.length && !isFetching) {
       sendRequest();
     }

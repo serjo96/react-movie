@@ -1,17 +1,21 @@
 import { useLocation, useParams, useRouteMatch } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import React, { useState } from 'react';
 import queryString from 'query-string';
 import { Helmet } from 'react-helmet';
 
-import { getKeywordsMedia } from '~/store/keywords/keywords.api';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { MediaType } from '~/core/types/media-type';
+
+import { getKeywordsMedia } from '~/store/keywords/keywords.api';
+
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import FilterList from '~/templates/filters/containers/filter-list';
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '~/templates/service/service-block';
+
 import { scrollToTop } from '~/utils';
-import { useTranslation } from 'react-i18next';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useLangEffect } from '~/hooks/useLangEffect';
 
 function KeywordsPage () {
   const appDispatch = useAppDispatch();
@@ -53,7 +57,7 @@ function KeywordsPage () {
     appDispatch(getKeywordsMedia(payload));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }

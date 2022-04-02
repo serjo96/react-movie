@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { MediaType } from '~/core/types/media-type';
+
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useLangEffect } from '~/hooks/useLangEffect';
 
 import Spinner from '~/ui-components/spinner/Spinner';
 import MediaList from '~/ui-components/media-list/media-list';
-import { MediaType } from '~/core/types/media-type';
 import {
   getMoviesList,
   getPlayingMovies,
@@ -22,7 +24,7 @@ function Main () {
   const all = useAppSelector(state => state.movies.lists.all);
   const allFetched = [!playing.isFetching, !upcoming.isFetching, !all.isFetching, !top.isFetching].every(el => el);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (allFetched) {
       appDispatch(getPlayingMovies());
       appDispatch(getUpcomingMovies());

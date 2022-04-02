@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { Languages } from '~/store/config/config.slice';
 import { getMovieData, getMovieEngOverview } from '~/store/movies/movies.api';
-import MediaStills from '~/templates/media-page/media-stills';
+import { MediaType } from '~/core/types/media-type';
 
+import MediaStills from '~/templates/media-page/media-stills';
 import MediaTop from '~/templates/media-page/media-top';
 import MovieAside from '~/templates/Movie/components/movie-aside';
 import { MovieSummary } from '~/templates/Movie/components/movie-summary';
@@ -14,13 +15,14 @@ import ServiceBlock from '~/templates/service/service-block';
 import MediaRecommendations from '~/templates/media-page/media-recommendations';
 import MediaCast from '~/templates/media-page/media-cast';
 import MovieCollection from '~/templates/Movie/components/movie-collection';
-
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
 import { VideosSection } from '~/ui-components/video-section/videos-section';
-import { MediaType } from '~/core/types/media-type';
+
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useLangEffect } from '~/hooks/useLangEffect';
 import useTranslations from '~/hooks/useTranslations';
 import { scrollToTop } from '~/utils';
+
 import './movie.sass';
 
 function MovieDetails () {
@@ -37,13 +39,13 @@ function MovieDetails () {
     appDispatch(getMovieData({ id: +movieId, lang }));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (id !== prevProps) {
       sendRequest();
       scrollToTop();
