@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
@@ -7,10 +7,13 @@ import FilterList from '~/templates/filters/containers/filter-list';
 import ServiceBlock from '~/templates/service/service-block';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import MediaList from '~/ui-components/media-list/media-list';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+
 import { getTvShowsList } from '~/store/tv/tv.api';
 import { MediaType } from '~/core/types/media-type';
+
 import { scrollToTop } from '~/utils';
+import { useLangEffect } from '~/hooks/useLangEffect';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 
 function TvShowsAll () {
   const appDispatch = useAppDispatch();
@@ -40,13 +43,13 @@ function TvShowsAll () {
     appDispatch(getTvShowsList(payload));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (search !== prevProps) {
       sendRequest();
       scrollToTop();

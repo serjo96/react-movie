@@ -1,16 +1,19 @@
 import queryString from 'query-string';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '~/templates/service/service-block';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+
 import { getUpcomingMovies } from '~/store/movies/movies.api';
 import { MediaType } from '~/core/types/media-type';
+
 import { scrollToTop } from '~/utils';
 import { usePrevious } from '~/hooks/usePrevious';
+import { useLangEffect } from '~/hooks/useLangEffect';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 
 function MovieUpcoming () {
   const appDispatch = useAppDispatch();
@@ -32,13 +35,13 @@ function MovieUpcoming () {
     appDispatch(getUpcomingMovies(page));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (search !== prevProps) {
       sendRequest();
       scrollToTop();
