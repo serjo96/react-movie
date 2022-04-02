@@ -23,7 +23,6 @@ interface MyProps {
 }
 
 const randomInt = getRandomInt(0, 3);
-console.log(randomInt);
 
 function SearchHeader ({
   isShowMobileSearch
