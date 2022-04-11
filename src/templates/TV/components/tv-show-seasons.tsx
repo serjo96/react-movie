@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouteMatch } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Image } from '~/core/types/images';
 import MediaItem from '~/ui-components/media-item/media-item';
@@ -20,6 +21,7 @@ function TvShowSeasons ({
   if (!seasons || !seasons.length) {
     return null;
   }
+  const { t } = useTranslation('tv');
   const isTvShowSeasonsPage = useRouteMatch({
     path: '/tv/:id/season-:season',
     exact: true,
@@ -48,7 +50,7 @@ function TvShowSeasons ({
       <div className='bg-base' />
       <div className='tv-seasons__data'>
         <div className='container'>
-          <h2 className='tv-seasons__title'>Сезоны</h2>
+          <h2 className='tv-seasons__title'>{t('sectionTitle.seasons')}</h2>
           <div className='seasons-list'>
             {seasons.map((el, index) =>
 

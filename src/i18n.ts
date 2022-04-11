@@ -7,6 +7,8 @@ import { Languages } from '~/store/config/config.slice';
 import LISTS_EN from '../public/locales/en/lists/list.json';
 import KEYWORDS_EN from '../public/locales/en/keywords/keywords.json';
 import KEYWORDS_RU from '../public/locales/ru/keywords/keywords.json';
+import TV_DETAILS_EN from '../public/locales/en/tv-details/tv-details.json';
+import TV_DETAILS_RU from '../public/locales/ru/tv-details/tv-details.json';
 import MOVIE_DETAILS_EN from '../public/locales/en/movie-details/movie-details.json';
 import MOVIE_DETAILS_RU from '../public/locales/ru/movie-details/movie-details.json';
 import MEDIA_COMMON_EN from '../public/locales/en/media-common/media-common.json';
@@ -29,6 +31,7 @@ export const resources = {
     filters: FILTERS_EN,
     company: COMPANY_EN,
     movie: MOVIE_DETAILS_EN,
+    tv: TV_DETAILS_EN,
     mediaCommon: MEDIA_COMMON_EN,
     keywords: KEYWORDS_EN,
     search: SEARCH_EN,
@@ -38,6 +41,7 @@ export const resources = {
     company: COMPANY_RU,
     filters: FILTERS_RU,
     movie: MOVIE_DETAILS_RU,
+    tv: TV_DETAILS_RU,
     mediaCommon: MEDIA_COMMON_RU,
     keywords: KEYWORDS_RU,
     search: SEARCH_RU,

@@ -1,0 +1,26 @@
+{
+  "aside": {
+    "creators": "Creators",
+    "releaseDate": "Release date"
+  },
+  "summary": {
+    "episodesLength": "Episodes length",
+    "lastSeries": "Last series",
+    "seasons": "Seasons",
+    "status": "Status",
+    "onTheAir": "on the air",
+    "season": "season",
+    "series": "series",
+    "ended": "Ended"
+  },
+  "sectionTitle": {
+    "stills": "Shots from the series",
+    "posters": "Posters",
+    "similarTv": "Similar tv shows",
+    "recommendation": "You may also like",
+    "seasons": "Seasons"
+  },
+  "common": {
+    "buckToDetailPage": "Buck on tv show page"
+  }
+}

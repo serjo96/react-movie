@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
@@ -10,9 +11,10 @@ import { MediaType } from '~/core/types/media-type';
 
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
 import { VideosSection } from '~/ui-components/video-section/videos-section';
+
+import { TvShowSummary } from '~/templates/TV/components/tv-show-summary';
 import TvAside from '~/templates/TV/components/tv-aside';
 import MediaTop from '~/templates/media-page/media-top';
-import { TvShowSummary } from '~/templates/TV/components/tv-show-summary';
 import TvShowSeasons from '~/templates/TV/components/tv-show-seasons';
 import MediaStills from '~/templates/media-page/media-stills';
 import TvShowSeason from '~/templates/TV/components/tv-show-season';
@@ -30,6 +32,7 @@ function TvDetails () {
   const appDispatch = useAppDispatch();
   const { lang } = useTranslations();
   const { id, season } = useParams<{id: string, season?: string}>();
+  const { t } = useTranslation('tv');
 
   const [prevProps, setProps] = useState({ id, season });
   const { isFetching, isSuccessful, data, tvShowSeasons } = useAppSelector(state => state.tvShows);
@@ -161,7 +164,7 @@ function TvDetails () {
                     className='link-angle link-angle--left'
                   >
                     <i className='fa fa-angle-left' aria-hidden='true' />
-                    <span>На страницу сериала</span>
+                    <span>{t('common.buckToDetailPage')}</span>
                   </Link>
                 </div>}
 
@@ -180,13 +183,13 @@ function TvDetails () {
 
               <MediaStills
                 images={data.images.backdrops}
-                title='Кадры из сериала'
+                title={t('sectionTitle.stills')}
                 imgCount={16}
               />
 
               <MediaStills
                 images={componentsData.posters}
-                title='Постеры'
+                title={t('sectionTitle.posters')}
                 posters
                 imgCount={8}
               />
@@ -196,7 +199,7 @@ function TvDetails () {
 
         <MediaRecommendations
           recommendations={data.similar}
-          listName='Похожие сериалы'
+          listName={t('sectionTitle.similarTv')}
           typeList={MediaType.TV}
         />
 
@@ -207,7 +210,7 @@ function TvDetails () {
 
         <MediaRecommendations
           recommendations={data.recommendations}
-          listName='Вам может понравиться'
+          listName={t('sectionTitle.recommendation')}
           typeList={MediaType.TV}
         />
 
