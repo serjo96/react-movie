@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
 import Image from '~/ui-components/image/image';
@@ -25,6 +26,7 @@ import './Person.sass';
 
 function Person () {
   const appDispatch = useAppDispatch();
+  const { t } = useTranslation('person');
   const { id } = useParams<{id: string}>();
   const { lang } = useTranslations();
   const [prevProps] = useState(id);
@@ -82,7 +84,7 @@ function Person () {
 
                 <div className='person-info-table__col'>
                   <div className='person-dates col-content'>
-                    <div className='person-info-table__name-row'>Дата рождения:</div>
+                    <div className='person-info-table__name-row'>{t('info.birthDate')}:</div>
                     <div className='person-info-table__data-row person-dates__numbers'>
                       <div>{data.birthday ? friendlyData(data.birthday) : '-'}</div>
                       {data.deathday && <div className='death-date-hyphen'>-</div>}
@@ -92,30 +94,30 @@ function Person () {
 
                   {!data.deathday &&
                     <div className='person-year col-content'>
-                      {years + ' ' + declOfNum(years, ['год', 'года', 'лет'])}
+                      {`${years} ${t('info.year', { count: years })}`}
                     </div>}
                 </div>
 
                 <div className='person-info-table__col col-content'>
-                  <div className='person-info-table__name-row'>Место рождения:</div>
+                  <div className='person-info-table__name-row'>{t('info.placeOfBirth')}:</div>
                   <div className='person-info-table__data-row'>{data.placeOfBirth}</div>
                 </div>
 
                 <div className='person-info-table__col'>
                   <div className='all-movies col-content'>
-                    <div className='person-info-table__name-row'>Всего фильмов:</div>
+                    <div className='person-info-table__name-row'>{t('info.totalFilms')}:</div>
                     <div className='person-info-table__data-row'>{data.movieCredits.cast.length}</div>
                   </div>
                 </div>
 
                 <div className='person-info-table__col col-content'>
-                  <div className='person-info-table__name-row'>Всего сериалов:</div>
+                  <div className='person-info-table__name-row'>{t('info.totalSeries')}:</div>
                   <div className='person-info-table__data-row'>{data.tvCredits.cast.length}</div>
                 </div>
 
                 <div className='person-info-table__col'>
                   <div className='last-movies col-content'>
-                    <div className='person-info-table__name-row'>Последние фильмы:</div>
+                    <div className='person-info-table__name-row'>{t('info.latestFilms')}:</div>
                     <div className='person-info-table__data-row'>
                       {lastMovies.map((e, index) => (
                         <div
@@ -131,7 +133,7 @@ function Person () {
 
                 <div className='person-info-table__col'>
                   <div className='last-movies col-content'>
-                    <div className='person-info-table__name-row'>Лучшие фильмы:</div>
+                    <div className='person-info-table__name-row'>{t('info.bestMovies')}:</div>
                     <div className='person-info-table__data-row'>
                       {bestMovies.length ? bestMovies.splice(0, 3).map((movie: MovieCreditsCast, index) => (
                         <div
@@ -147,7 +149,7 @@ function Person () {
 
                 <div className='person-info-table__col'>
                   <div className='last-movies col-content'>
-                    <div className='person-info-table__name-row'>Последние шоу:</div>
+                    <div className='person-info-table__name-row'>{t('info.latestTvShows')}:</div>
                     <div className='person-info-table__data-row'>
                       {lastTV.length ? lastTV.map((e, index) => (
                         <div
@@ -164,7 +166,7 @@ function Person () {
 
                 <div className='person-info-table__col'>
                   <div className='last-movies col-content'>
-                    <div className='person-info-table__name-row'>Лучшие шоу:</div>
+                    <div className='person-info-table__name-row'>{t('info.bestTvShows')}:</div>
                     <div className='person-info-table__data-row'>
                       {bestTV.length
                         ? bestTV.splice(0, 3).map((e, index) => (
@@ -181,7 +183,7 @@ function Person () {
 
                 <div className='person-info-table__col'>
                   <div className='last-links col-content'>
-                    <div className='person-info-table__name-row'>Ссылки:</div>
+                    <div className='person-info-table__name-row'>{t('info.links')}:</div>
                     <div className='person-info-table__data-row person-links'>
                       {data.externalIds.facebookId &&
                         <a
@@ -234,7 +236,7 @@ function Person () {
                           target='_blank'
                           className='social-link'
                         >
-                          Домашняя старница
+                          {t('info.homePage')}
                         </a>}
                     </div>
                   </div>
@@ -243,20 +245,20 @@ function Person () {
               </div>
               <div className='description'>
                 {/* TODO: add description component */}
-                <p className='description__text'>{data.biography ? data.biography : 'Биография пока не добавленна'}</p>
+                <p className='description__text'>{data.biography ? data.biography : t('info.noBio')}</p>
               </div>
 
               <MediaStills
                 images={data.images.profiles}
-                title='Фото'
+                title={t('sectionsTitle.photo')}
                 posters
                 imgCount={11}
               />
 
-              <PersonMediaList title='Фильмография' typeList={MediaType.MOVIE} listData={bestMovies} />
-              <PersonMediaList title='Сериалы' typeList={MediaType.TV} listData={bestTV} />
+              <PersonMediaList title={t('sectionsTitle.filmography')} typeList={MediaType.MOVIE} listData={bestMovies} />
+              <PersonMediaList title={t('sectionsTitle.tvSeries')} typeList={MediaType.TV} listData={bestTV} />
 
-              <PersonMediaList title='Учиствие в проектах' typeList={MediaType.MIXED} listData={data.combinedCredits.crew} />
+              <PersonMediaList title={t('sectionsTitle.projectParticipation')} typeList={MediaType.MIXED} listData={data.combinedCredits.crew} />
             </div>
 
           </div>

@@ -1,0 +1,26 @@
+{
+  "info": {
+    "birthDate": "Date of Birth",
+    "year_one": "year",
+    "year_two": "years",
+    "year_few": "years",
+    "year_many": "years",
+    "year_other": "years",
+    "placeOfBirth": "Place of Birth",
+    "totalFilms": "Total films",
+    "totalSeries": "Total series",
+    "latestFilms": "Latest films",
+    "bestMovies": "Best films",
+    "latestTvShows": "Last tv shows",
+    "bestTvShows": "Best tv shows",
+    "links": "Links",
+    "homePage": "Home page",
+    "noBio": "Biography not yet added"
+  },
+  "sectionsTitle": {
+    "photo": "Photo",
+    "filmography": "Filmography",
+    "tvSeries": "TV series",
+    "projectParticipation": "Participation in projects"
+  }
+}
