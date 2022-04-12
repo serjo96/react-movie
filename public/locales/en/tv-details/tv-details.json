@@ -20,7 +20,11 @@
     "recommendation": "You may also like",
     "seasons": "Seasons"
   },
-  "common": {
-    "buckToDetailPage": "Buck on tv show page"
+  "seasonData": {
+    "buckToDetailPage": "Buck on tv show page",
+    "releaseDate": "Release date",
+    "noDescription": "Description for this series has not yet been added.",
+    "episode_one": "episode",
+    "episode_other": "episodes"
   }
 }

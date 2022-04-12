@@ -164,7 +164,7 @@ function TvDetails () {
                     className='link-angle link-angle--left'
                   >
                     <i className='fa fa-angle-left' aria-hidden='true' />
-                    <span>{t('common.buckToDetailPage')}</span>
+                    <span>{t('seasonData.buckToDetailPage')}</span>
                   </Link>
                 </div>}
 

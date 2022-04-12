@@ -20,7 +20,11 @@
     "recommendation": "You may also like",
     "seasons": "Сезоны"
   },
-  "common": {
-    "buckToDetailPage": "Назад на страницу сериала"
+  "seasonData": {
+    "buckToDetailPage": "Назад на страницу сериала",
+    "releaseDate": "Дата выпуска",
+    "noDescription": "Описание к этой серии еще не добавлено.",
+    "episode_one": "серия",
+    "episode_other": "серий"
   }
 }
