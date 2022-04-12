@@ -19,6 +19,7 @@
   "homepage": "https://movie-base.net",
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.1",
+    "@tippyjs/react": "^4.2.6",
     "classnames": "^2.3.1",
     "compression-webpack-plugin": "^9.2.0",
     "copy-webpack-plugin": "^10.2.0",
