@@ -13,6 +13,7 @@
     "votes_many": "голосов"
   },
   "aside": {
+    "Director": "Режиссер",
     "Producer": "Продюсер",
     "Scenario": "Сценарий",
     "Operator": "Оператор",

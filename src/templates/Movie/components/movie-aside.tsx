@@ -45,7 +45,7 @@ export function MovieAside ({
       </div>
       <div className='crew-list info-table-row'>
         <div className='crew__item info-table-border aside-row'>
-          <div className='crew__job'>{t('movie:aside.Director')}</div>
+          <div className='crew__job'>{t('mediaCommon:aside.Director')}</div>
           <div className='crew__names aside-row__right-col'>
             {crew.director.map((men, indx) => indx < 3 &&
               <div className='crew__name' key={indx}>
