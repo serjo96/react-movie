@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
 import Image from '~/ui-components/image/image';
-import { declOfNum, friendlyData, urlRusLat } from '~/utils/format';
+import { friendlyData, urlRusLat } from '~/utils/format';
 
 import ServiceBlock from '../service/service-block';
 

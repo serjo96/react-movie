@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 
@@ -18,6 +19,7 @@ import { scrollToTop } from '~/utils';
 function MoviePlaying () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
+  const { t } = useTranslation('lists');
 
   const prevProps = usePrevious(search || '');
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies.lists.playing);
@@ -51,7 +53,7 @@ function MoviePlaying () {
   return (
     <main className='main main--media-list'>
       <Helmet>
-        <title>В прокате</title>
+        <title>Movie base | {t('list.movies.playing')}</title>
       </Helmet>
 
       <ServiceBlock
@@ -61,7 +63,7 @@ function MoviePlaying () {
       >
         <div className='movies-content'>
           <MediaList
-            movieListTitle={`Сейчас в кино (${data.totalResults})`}
+            movieListTitle={`${t('list.movies.playing')} (${data.totalResults})`}
             mediaList={data.results}
             typeList={MediaType.MOVIE}
           />

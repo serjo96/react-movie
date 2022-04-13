@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 
@@ -16,6 +17,7 @@ import { useLangEffect } from '~/hooks/useLangEffect';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 
 function TvShowsAll () {
+  const { t } = useTranslation('lists');
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
   const [prevProps] = useState(search);
@@ -59,7 +61,7 @@ function TvShowsAll () {
   return (
     <main className='main main--media-list'>
       <Helmet>
-        <title>Популярные сериалы</title>
+        <title>Movie base | {t('list.tvShows.all')}</title>
       </Helmet>
 
       <div className='movies-content'>
@@ -73,7 +75,7 @@ function TvShowsAll () {
         >
 
           <MediaList
-            movieListTitle={`Всего сериалов (${data.totalResults})`}
+            movieListTitle={`${t('list.tvShows.total')} (${data.totalResults})`}
             mediaList={data.results}
             typeList={MediaType.TV}
           />

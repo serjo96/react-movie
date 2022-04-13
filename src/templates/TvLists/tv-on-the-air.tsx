@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
+import { Helmet } from 'react-helmet';
+import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import ServiceBlock from '~/templates/service/service-block';
@@ -15,6 +16,7 @@ import { useLangEffect } from '~/hooks/useLangEffect';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 
 function TVonTheAir () {
+  const { t } = useTranslation('lists');
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
   const [prevProps] = useState(search);
@@ -54,7 +56,7 @@ function TVonTheAir () {
   return (
     <main className='main main--media-list'>
       <Helmet>
-        <title>Текущие сериалы</title>
+        <title>Movie base | {t('list.tvShows.onAir')}</title>
       </Helmet>
       <ServiceBlock
         isLoading={isFetching}
@@ -63,7 +65,7 @@ function TVonTheAir () {
       >
         <div className='movies-content'>
           <MediaList
-            movieListTitle={`Текущие сериалы (${data.totalResults})`}
+            movieListTitle={`${t('list.tvShows.onAir')} (${data.totalResults})`}
             mediaList={data.results}
             typeList={MediaType.TV}
           />

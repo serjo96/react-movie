@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
+import { Helmet } from 'react-helmet';
 
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import MediaList from '~/ui-components/media-list/media-list';
@@ -15,6 +16,7 @@ import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { useLangEffect } from '~/hooks/useLangEffect';
 
 function TvShowsTop () {
+  const { t } = useTranslation('lists');
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
   const [prevProps] = useState(search);
@@ -54,7 +56,7 @@ function TvShowsTop () {
   return (
     <main className='main main--media-list'>
       <Helmet>
-        <title>Топ сериалы</title>
+        <title>Movie base | {t('list.tvShows.top')}</title>
       </Helmet>
       <ServiceBlock
         isLoading={isFetching}
@@ -63,7 +65,7 @@ function TvShowsTop () {
       >
         <div className='movies-content'>
           <MediaList
-            movieListTitle='Топ сериалы'
+            movieListTitle={t('list.tvShows.top')}
             mediaList={data.results}
             typeList={MediaType.TV}
           />

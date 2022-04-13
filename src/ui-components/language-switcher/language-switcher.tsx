@@ -1,10 +1,10 @@
 import React from 'react';
-
-import { Languages } from '~/store/config/config.slice';
-import './language-switcher.sass';
-import useTranslations from '~/hooks/useTranslations';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
+
+import { Languages } from '~/store/config/config.slice';
+import useTranslations from '~/hooks/useTranslations';
+import './language-switcher.sass';
 
 export default function LanguageSwitcher () {
   const { setLang, lang } = useTranslations();
