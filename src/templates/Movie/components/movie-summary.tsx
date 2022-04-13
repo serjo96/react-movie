@@ -1,14 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { calCalculationTime, friendlyData, kFormatter } from '~/utils/format';
+import { calculationTime, friendlyData, kFormatter } from '~/utils/format';
 import { movieDues } from '~/utils/movieDataFormat';
 import { useAppSelector } from '~/hooks/storeHooks';
 import './movie-summary.sass';
 
 export const MovieSummary = () => {
   const { voteAverage, voteCount, popularity, runtime, budget, lists, revenue, releaseDate } = useAppSelector(state => state.movies.data);
-  const { minutes, hours } = calCalculationTime(runtime);
+  const { minutes, hours } = calculationTime(runtime);
   const { t } = useTranslation(['movie', 'mediaCommon']);
   return (
     <div className='summary-ratings'>

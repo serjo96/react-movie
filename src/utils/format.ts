@@ -11,7 +11,7 @@ export function formatTime (minutes: number): string {
   return hours.toString() + ' ' + declOfNum(hours, ['час', 'часа', 'часов']) + ' ' + (m < 10 ? '0' : '') + m.toString();
 }
 
-export function calCalculationTime (min: number) {
+export function calculationTime (min: number) {
   const minutes = min % 60;
   const hours = (min - minutes) / 60;
   return {
