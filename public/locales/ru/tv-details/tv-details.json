@@ -1,7 +1,7 @@
 {
   "aside": {
     "creators": "Создатели",
-    "releaseDate": "Давта выпуска"
+    "releaseDate": "Дата выпуска"
   },
   "summary": {
     "episodesLength": "Продолжительность серий",
@@ -17,7 +17,7 @@
     "stills": "Кадры из сериала",
     "posters": "Постеры",
     "similarTv": "Похожие сериалы",
-    "recommendation": "You may also like",
+    "recommendation": "Вам может понравиться",
     "seasons": "Сезоны"
   },
   "seasonData": {
