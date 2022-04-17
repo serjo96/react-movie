@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import MediaItem from '~/ui-components/media-item/media-item';
 import { MediaType } from '~/core/types/media-type';
 import { Crew } from '~/core/types/crew';
 import { MovieCreditsCast, PersonCrew } from '~/core/types/perosn-details';
-import {useTranslation} from "react-i18next";
 
 interface MyProps {
   title: string;
