@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 
@@ -6,16 +7,16 @@ import {
   getCompanyDetails
 } from '~/store/company/company.api';
 
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
-import { scrollToTop } from '~/utils';
 import ServiceBlock from '../service/service-block';
-
 import Image from '~/ui-components/image/image';
 import Tabs from '~/ui-components/tabs/tabs';
 import Tab from '~/ui-components/tabs/tab';
-
 import CompanyMovies from '~/templates/company/company-movies';
 import CompanyTvShows from '~/templates/company/company-tv-shows';
+
+import { useLangEffect } from '~/hooks/useLangEffect';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { scrollToTop } from '~/utils';
 import './company.sass';
 
 type MoviesFilters = {
@@ -42,6 +43,7 @@ export const initFilters = (isMovies?: true): MoviesFilters | TvShowsFilters => 
 
 function CompanyPage () {
   const appDispatch = useAppDispatch();
+  const { t } = useTranslation('company');
   const { id } = useParams<{id: string}>();
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.company);
 
@@ -54,13 +56,13 @@ function CompanyPage () {
     appDispatch(getCompanyDetails({ id: +companyId }));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (id !== prevProps) {
       sendRequest();
       scrollToTop();
@@ -92,9 +94,9 @@ function CompanyPage () {
             </div>
             <div className='company__info'>
               <h1 className='person-name'>{companyData.name}</h1>
-              <p className='company__description'>{companyData.description.length > 0 ? companyData.description : 'К сожалению, на данный момент нет описания данной компании.'}</p>
-              <div className='company__city'>{companyData.headquarters ? `Месторасположение компании - ${companyData.headquarters}` : ''}</div>
-              <div className='company__parent'>{companyData.parentCompany ? `Родительская компания - ${companyData.parentCompany}` : ''}</div>
+              <p className='company__description'>{companyData.description.length > 0 ? companyData.description : t('noDescription')}</p>
+              <div className='company__city'>{companyData.headquarters ? `${t('location')} - ${companyData.headquarters}` : ''}</div>
+              <div className='company__parent'>{companyData.parentCompany ? `${t('parentCompany')} - ${companyData.parentCompany}` : ''}</div>
               <div className='company__links'>
                 {companyData.homepage &&
                   <a
@@ -103,7 +105,7 @@ function CompanyPage () {
                     target='_blank'
                     rel='noopener noreferrer'
                   >
-                    Домашняя страница
+                    {t('homePageLink')}
                   </a>}
               </div>
             </div>

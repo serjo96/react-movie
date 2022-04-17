@@ -33,6 +33,8 @@
 	padding: 5px 10px
 	cursor: pointer
 	position: relative
+	&:first-letter
+		text-transform: capitalize
 	span
 		user-select: none
 		vertical-align: middle
@@ -106,6 +108,8 @@
 	padding: 5px
 	cursor: pointer
 	transition: all .5s
+	&:first-letter
+		text-transform: capitalize
 	&:hover
 		background: #d8b16b
 		color: #fff
@@ -140,7 +144,7 @@
 		transform: rotate(-180deg)
 		transition: all .5s
 
-.filter-item--sort-direction-asc
+.filter-item--sort-direction--asc
 	i
 		transform: rotate(0)
 		color: #d8b16b
@@ -161,7 +165,9 @@
 	cursor: pointer
 	font-weight: bold
 
-
+.reset-filters
+	background: transparent
+	color: inherit
 
 @keyframes showFilterCatalog
 	0%

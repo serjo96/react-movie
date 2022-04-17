@@ -1,49 +1,65 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { getEngTvShowData, getTvShowData, getTvShowSeasons } from '~/store/tv/tv.api';
 import { tvActions } from '~/store/tv/tv.slice';
-import { Languages } from '~/store/user/user.slice';
+import { Languages } from '~/store/config/config.slice';
 import { MediaType } from '~/core/types/media-type';
 
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
 import { VideosSection } from '~/ui-components/video-section/videos-section';
+
+import { TvShowSummary } from '~/templates/TV/components/tv-show-summary';
 import TvAside from '~/templates/TV/components/tv-aside';
 import MediaTop from '~/templates/media-page/media-top';
-import { TvShowSummary } from '~/templates/TV/components/tv-show-summary';
 import TvShowSeasons from '~/templates/TV/components/tv-show-seasons';
 import MediaStills from '~/templates/media-page/media-stills';
 import TvShowSeason from '~/templates/TV/components/tv-show-season';
 import MediaRecommendations from '~/templates/media-page/media-recommendations';
 import MediaCast from '~/templates/media-page/media-cast';
 import ServiceBlock from '~/templates/service/service-block';
+
+import useTranslations from '~/hooks/useTranslations';
 import { scrollToTop } from '~/utils';
+import { useLangEffect } from '~/hooks/useLangEffect';
 
 export type SeasonRouteMatchParams = {season?: string};
 
 function TvDetails () {
   const appDispatch = useAppDispatch();
+  const { lang } = useTranslations();
   const { id, season } = useParams<{id: string, season?: string}>();
+  const { t } = useTranslation('tv');
 
   const [prevProps, setProps] = useState({ id, season });
   const { isFetching, isSuccessful, data, tvShowSeasons } = useAppSelector(state => state.tvShows);
   const tvId = id.split('-').pop();
 
   const sendRequest = () => {
-    appDispatch(getTvShowData({ id: +tvId }));
+    appDispatch(getTvShowData({ id: +tvId, lang }));
   };
 
   const sendSeasonRequest = () => {
-    appDispatch(getTvShowSeasons({ id: +tvId, season: +season }));
+    appDispatch(getTvShowSeasons({ id: +tvId, season: +season, lang }));
   };
 
+  // TODO: Add handler for eng tv season data
   const handlerOnFetchEngData = () => {
     appDispatch(getEngTvShowData({ id: +tvId, lang: Languages.EN }));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
+    if (season) {
+      setProps({ ...prevProps, season: season });
+      sendSeasonRequest();
+      scrollToTop();
+    }
+  }, []);
+
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
@@ -52,16 +68,16 @@ function TvDetails () {
       sendSeasonRequest();
       scrollToTop();
     }
-  }, []);
+  }, [id]);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (id !== prevProps.id) {
-      sendRequest();
+      // sendRequest();
       scrollToTop();
     }
   }, [id]);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (season && season !== prevProps.season) {
       setProps({ ...prevProps, season: season });
       sendSeasonRequest();
@@ -148,7 +164,7 @@ function TvDetails () {
                     className='link-angle link-angle--left'
                   >
                     <i className='fa fa-angle-left' aria-hidden='true' />
-                    <span>На страницу сериала</span>
+                    <span>{t('seasonData.buckToDetailPage')}</span>
                   </Link>
                 </div>}
 
@@ -167,13 +183,13 @@ function TvDetails () {
 
               <MediaStills
                 images={data.images.backdrops}
-                title='Кадры из сериала'
+                title={t('sectionTitle.stills')}
                 imgCount={16}
               />
 
               <MediaStills
                 images={componentsData.posters}
-                title='Постеры'
+                title={t('sectionTitle.posters')}
                 posters
                 imgCount={8}
               />
@@ -183,7 +199,7 @@ function TvDetails () {
 
         <MediaRecommendations
           recommendations={data.similar}
-          listName='Похожие сериалы'
+          listName={t('sectionTitle.similarTv')}
           typeList={MediaType.TV}
         />
 
@@ -194,7 +210,7 @@ function TvDetails () {
 
         <MediaRecommendations
           recommendations={data.recommendations}
-          listName='Вам может понравиться'
+          listName={t('sectionTitle.recommendation')}
           typeList={MediaType.TV}
         />
 

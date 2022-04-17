@@ -39,19 +39,7 @@ const loaders: webpack.ModuleOptions['rules'] = [
     ]
   },
   {
-    test: /\.css$/,
-    exclude: /(node_modules|bower_components|public\/)/,
-    use: ['style-loader',
-      {
-        loader: 'css-loader',
-        options: {
-          importLoaders: 1
-        }
-      }
-    ]
-  },
-  {
-    test: /\.sass$/,
+    test: /\.(sa|sc|c)ss$/,
     use: [
       'style-loader',
       {

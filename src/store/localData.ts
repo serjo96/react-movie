@@ -366,23 +366,23 @@ export const sortingDateList = [
     date: 'all',
     type: 'single'
   }, {
-    name: '2017 год',
+    name: '2017',
     date: '2017',
     type: 'single'
   }, {
-    name: '2016 год',
+    name: '2016',
     date: '2016',
     type: 'single'
   }, {
-    name: '2015 год',
+    name: '2015',
     date: '2015',
     type: 'single'
   }, {
-    name: '2014 год',
+    name: '2014',
     date: '2014',
     type: 'single'
   }, {
-    name: '2013 год',
+    name: '2013',
     date: '2013',
     type: 'single'
   }, {
@@ -403,7 +403,7 @@ export const sortingDateList = [
     date: '1980-01-01=1990-01-01',
     type: 'range'
   }, {
-    name: 'до 1980',
+    name: '1980',
     date: '-1980',
     type: 'range'
   }
@@ -411,41 +411,41 @@ export const sortingDateList = [
 
 export const sortMovieByType = [
   {
-    name: 'По популярности',
+    key: 'popularity',
     type: 'popularity'
   }, {
-    name: 'Дате выпуска',
+    key: 'releaseDate',
     type: 'primary_release_date'
   }, {
-    name: 'Сборам',
+    key: 'boxOffice',
     type: 'revenue'
   }, {
-    name: 'Оригинальному названию',
+    key: 'originalTitle',
     type: 'original_title'
   }, {
-    name: 'Среднему голосу',
+    key: 'medanVote',
     type: 'vote_average'
   }, {
-    name: 'Количеству голосов',
+    key: 'votesCount',
     type: 'vote_count'
   }
 ];
 
 export const sortListTV = [
   {
-    name: 'По популярности',
+    key: 'popularity',
     type: 'popularity'
   }, {
-    name: 'Дате выпуска',
+    key: 'releaseDate',
     type: 'first_air_date'
   }, {
-    name: 'Оригинальному названию',
+    key: 'originalTitle',
     type: 'original_title'
   }, {
-    name: 'Среднему голосу',
+    key: 'medanVote',
     type: 'vote_average'
   }, {
-    name: 'Количеству голосов',
+    key: 'votesCount',
     type: 'vote_count'
   }
 ];

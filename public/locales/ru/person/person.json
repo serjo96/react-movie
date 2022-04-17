@@ -1,0 +1,26 @@
+{
+  "info": {
+    "birthDate": "Дата рождения",
+    "year_one": "год",
+    "year_two": "года",
+    "year_few": "года",
+    "year_many": "лет",
+    "year_other": "лет",
+    "placeOfBirth": "Место рождения",
+    "totalFilms": "Всего фильмов",
+    "totalSeries": "Всего сериалов",
+    "latestFilms": "Последние фильмы",
+    "bestMovies": "Лучшие фильмы",
+    "latestTvShows": "Последние шоу",
+    "bestTvShows": "Лучшие шоу",
+    "links": "Ссылки",
+    "homePage": "Домашняя страница",
+    "noBio": "Биография пока не добавлена"
+  },
+  "sectionsTitle": {
+    "photo": "Фото",
+    "filmography": "Фильмография",
+    "tvSeries": "Сериалы",
+    "projectParticipation": "Учасите в проектах"
+  }
+}

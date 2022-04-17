@@ -1,0 +1,27 @@
+{
+  "genresLabel": "Genres",
+  "allGenres": "All genres",
+  "yearLabel": "Year",
+  "year": "year",
+  "years": {
+    "all": "All years",
+    "decadesLabel": "decades"
+  },
+  "customYearLabel": "Custom year",
+  "customYearPlaceholder": "Input custom year",
+  "sortLabel": "Sort by",
+  "sortBy": {
+    "popularity": "By popularity",
+    "releaseDate": "Release date",
+    "boxOffice": "Box office",
+    "originalTitle": "Original title",
+    "medanVote": "Median vote",
+    "votesCount": "Count votes"
+  },
+  "sortDirectionDesc": "desc",
+  "sortDirectionAsc": "asc",
+  "safeFilter": "Safe filter",
+  "resetButton": "Reset filters",
+  "showMobileFiltersButton": "Setup filters",
+  "mobileFilterPopUpTitle": "Filter list by:"
+}

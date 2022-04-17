@@ -4,7 +4,7 @@
 
 .summary-ratings
 	margin-left: $summaryMargin
-	@media (max-width : 963px)
+	@include media("lgSize", "max")
 		margin-left: 0
 
 .ratings
@@ -45,6 +45,7 @@
 
 .summary-item
 	padding: 0 7.5px
+	margin-bottom: 5px
 	@include media("xlSize", "max")
 		padding: 5px 7.5px
 	@include media("xsSize", "max")

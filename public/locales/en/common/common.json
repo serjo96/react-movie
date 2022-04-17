@@ -1,0 +1,30 @@
+{
+  "service": {
+    "tryAgain": "An error occurred, please try again?"
+  },
+  "moreButton": "More",
+  "nav": {
+    "movies": {
+      "sectionTitle": "Movies",
+      "all": "All movies",
+      "upcoming": "Upcoming movies",
+      "playing": "Playing movies",
+      "top": "Top movies"
+    },
+    "tvShows": {
+      "sectionTitle": "Tv shows",
+      "all": "All tv shows",
+      "airing": "Airing tv shows",
+      "onAir": "Tv shows on air",
+      "top": "Top tv shows"
+    }
+  },
+  "commonWords": {
+    "from": "from",
+    "until": "until",
+    "movie": "Movie",
+    "tvShow": "Tv show",
+    "outOf": "out of",
+    "rating": "Rating"
+  }
+}

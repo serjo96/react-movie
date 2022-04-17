@@ -1,13 +1,14 @@
 import React, { Fragment, useLayoutEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
-import { urlRusLat } from '~/utils/format';
-import { MediaType } from '~/core/types/media-type';
-import { useAppSelector } from '~/hooks/storeHooks';
 import classNames from 'classnames';
-import './tooltip-info.sass';
+
+import { MediaType } from '~/core/types/media-type';
+import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
+
+import { useAppSelector } from '~/hooks/storeHooks';
 import useBreakpoints, { BreakpointsNames } from '~/utils/useMediaQuery';
+import './tooltip-info.sass';
 
 interface MyProps {
   title: string;
@@ -37,6 +38,7 @@ function TooltipInfo ({
   const [isVisible, setIsVisible] = useState(false);
   const [toolTipLeft, setToolTipLeft] = useState(true);
   const { active } = useBreakpoints();
+  const { t } = useTranslation();
   const tooltipRef = useRef(null);
   const containerRef = useRef(null);
   const { genresHash } = useAppSelector(state => state.genres.data);
@@ -97,7 +99,7 @@ function TooltipInfo ({
   const genreLink = (genreID: number) => {
     return `/${itemType === MediaType.MOVIE
       ? MediaType.MOVIE + 's'
-      : itemType}/all?genre-${urlRusLat(genresHash[genreID])}-${genreID}`;
+      : itemType}/all?genre=${genreID}`;
   };
 
   const renderGenres = (id: number, index: number) => {
@@ -158,7 +160,7 @@ function TooltipInfo ({
                   </div>}
 
               </div>
-              {voteAverage && <div className='rating'>Рейтинг {voteAverage} из 10</div>}
+              {voteAverage && <div className='rating'>{t('commonWords.rating')} {voteAverage} {t('commonWords.outOf')} 10</div>}
             </div>
             <MovieDescription
               short

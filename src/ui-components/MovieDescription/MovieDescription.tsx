@@ -1,5 +1,8 @@
 import React from 'react';
 import './media-description.sass';
+import useTranslations from '~/hooks/useTranslations';
+import { Languages } from '~/store/config/config.slice';
+import { useTranslation } from 'react-i18next';
 
 interface MyProps {
   short?: boolean;
@@ -8,6 +11,8 @@ interface MyProps {
 }
 
 const MovieDescription = ({ short, overview, fetchEngData }: MyProps) => {
+  const { lang } = useTranslations();
+  const { t } = useTranslation('mediaCommon');
   const mediaOverview = () => {
     const textLength = 375;
 
@@ -25,10 +30,11 @@ const MovieDescription = ({ short, overview, fetchEngData }: MyProps) => {
   } else {
     return (
       <div className='media-description__no-description'>
-        <div>Ой! Кажется описание отсутствует</div>
-        <div className='load-eng-description'>
-          <button onClick={fetchEngData}>Загрузить описание на английском?</button>
-        </div>
+        <div>{t('description.noDescription')}</div>
+        {lang === Languages.RU &&
+          <div className='load-eng-description'>
+            <button onClick={fetchEngData}>Загрузить описание на английском?</button>
+          </div>}
       </div>
     );
   }

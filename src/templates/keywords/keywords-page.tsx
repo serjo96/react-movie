@@ -1,19 +1,24 @@
 import { useLocation, useParams, useRouteMatch } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import React, { useState } from 'react';
 import queryString from 'query-string';
 import { Helmet } from 'react-helmet';
 
-import { getKeywordsMedia } from '~/store/keywords/keywords.api';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
-import { MediaType } from '~/core/types/media-type';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import FilterList from '~/templates/filters/containers/filter-list';
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '~/templates/service/service-block';
+
+import { MediaType } from '~/core/types/media-type';
+import { getKeywordsMedia } from '~/store/keywords/keywords.api';
+
 import { scrollToTop } from '~/utils';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useLangEffect } from '~/hooks/useLangEffect';
 
 function KeywordsPage () {
   const appDispatch = useAppDispatch();
+  const { t } = useTranslation('keywords');
   const { search } = useLocation();
   const { id } = useParams<{id: string}>();
   const [prevProps] = useState(search);
@@ -51,7 +56,7 @@ function KeywordsPage () {
     appDispatch(getKeywordsMedia(payload));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
@@ -63,11 +68,12 @@ function KeywordsPage () {
   }, [search]);
 
   const titleSearch = id.split('-')[0].replace(/_/g, ' ');
-  const pageTitle = isMoviesPage ? 'Фильмы' : 'Сериалы';
+  const pageType = isMoviesPage ? t('movies') : t('tvShows');
+  const pageTitle = `${pageType} ${t('byKeyword')}: ${titleSearch}`;
   return (
     <main className='main main--media-list'>
       <Helmet>
-        <title>{pageTitle} по ключевому слову: {titleSearch}</title>
+        <title>{pageTitle}</title>
       </Helmet>
       <div className='movies-content'>
         <FilterList
@@ -80,7 +86,7 @@ function KeywordsPage () {
           fetch={sendRequest}
         >
           <MediaList
-            movieListTitle={`${pageTitle} по ключевому слову: ${titleSearch} (${data.totalResults})`}
+            movieListTitle={`${pageTitle} (${data.totalResults})`}
             mediaList={data.results}
             typeList={typePage}
           />

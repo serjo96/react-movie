@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
 import queryString from 'query-string';
 import { Helmet } from 'react-helmet';
+import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import ServiceBlock from '../service/service-block';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import MediaList from '~/ui-components/media-list/media-list';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+
 import { MediaType } from '~/core/types/media-type';
 import { getAiringTvShows } from '~/store/tv/tv.api';
+
 import { scrollToTop } from '~/utils';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useLangEffect } from '~/hooks/useLangEffect';
 
 function TvAiring () {
+  const { t } = useTranslation('lists');
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
   const [prevProps] = useState(search);
@@ -35,13 +40,13 @@ function TvAiring () {
     appDispatch(getAiringTvShows(page));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (search !== prevProps) {
       sendRequest();
       scrollToTop();
@@ -51,7 +56,7 @@ function TvAiring () {
   return (
     <main className='main main--media-list'>
       <Helmet>
-        <title>Сейчас на тв</title>
+        <title>Movie base | {t('list.tvShows.airing')}</title>
       </Helmet>
       <ServiceBlock
         isLoading={isFetching}
@@ -60,7 +65,7 @@ function TvAiring () {
       >
         <div className='movies-content'>
           <MediaList
-            movieListTitle={`Сейчас на тв (${data.totalResults})`}
+            movieListTitle={`${t('list.tvShows.airing')} (${data.totalResults})`}
             mediaList={data.results}
             typeList={MediaType.TV}
           />

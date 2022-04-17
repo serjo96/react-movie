@@ -21,7 +21,6 @@ export const getSearchData = createAsyncThunk<SearchResponse, string>(
   async (words) => {
     const { data, isSuccessRequest } = await oldClient.get('search/multi',
       {
-        language: 'ru-RU',
         page: 1,
         region: 'RU',
         query: words,
@@ -48,7 +47,6 @@ export const onSearchRequest = createAsyncThunk<SearchResponse, SearchPayload>(
     const [firstPage, secondPage] = await oldClient.all<SearchResponse['data']>([
       oldClient.get('search/multi',
         {
-          language: 'ru-RU',
           page: page,
           region: 'RU',
           include_adult: adult,
@@ -56,7 +54,6 @@ export const onSearchRequest = createAsyncThunk<SearchResponse, SearchPayload>(
         }),
       oldClient.get('search/multi',
         {
-          language: 'ru-RU',
           page: page + 1,
           region: 'RU',
           include_adult: adult,

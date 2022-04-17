@@ -4,7 +4,7 @@ import oldClient from '~/core/api/OldClient';
 import ConcatPages from '~/utils/concatPages';
 import { ListData } from '~/core/types/listData';
 import { TvDetails } from '~/core/types/tvDetails';
-import { Languages } from '~/store/user/user.slice';
+import { Languages } from '~/store/config/config.slice';
 
 export interface ReturnedTvShowsList {
   data: TvListResponseData;
@@ -57,7 +57,6 @@ export const getTvShowsList = createAsyncThunk<ReturnedTvShowsList, TvListArgs |
     const [firstPage, secondPage] = await oldClient.all<ListData<TvListItem>>([
       oldClient.get('discover/tv',
         {
-          language: 'ru-RU',
           sort_by: sortBy,
           with_genres: genre,
           first_air_date_year: date,
@@ -68,7 +67,6 @@ export const getTvShowsList = createAsyncThunk<ReturnedTvShowsList, TvListArgs |
         }),
       oldClient.get('discover/tv',
         {
-          language: 'ru-RU',
           sort_by: sortBy,
           with_genres: genre,
           watch_region: region,
@@ -93,13 +91,11 @@ export const getAiringTvShows = createAsyncThunk<ReturnedTvShowsList, number | v
     const [firstPage, secondPage] = await oldClient.all<ListData<TvListItem>>([
       oldClient.get('tv/airing_today',
         {
-          language: 'ru-RU',
           page: page,
           region: 'RU'
         }),
       oldClient.get('tv/airing_today',
         {
-          language: 'ru-RU',
           page: (page as number) + 1,
           region: 'RU'
         })
@@ -118,13 +114,11 @@ export const getTopTvShows = createAsyncThunk<ReturnedTvShowsList, number | void
     const [firstPage, secondPage] = await oldClient.all<ListData<TvListItem>>([
       oldClient.get('tv/top_rated',
         {
-          language: 'ru-RU',
           page: page,
           region: 'RU'
         }),
       oldClient.get('tv/top_rated',
         {
-          language: 'ru-RU',
           page: (page as number) + 1,
           region: 'RU'
         })
@@ -143,13 +137,11 @@ export const getOnTheAirTvShows = createAsyncThunk<ReturnedTvShowsList, number |
     const [firstPage, secondPage] = await oldClient.all<ListData<TvListItem>>([
       oldClient.get('tv/on_the_air',
         {
-          language: 'ru-RU',
           page: page,
           region: 'RU'
         }),
       oldClient.get('tv/on_the_air',
         {
-          language: 'ru-RU',
           page: (page as number) + 1,
           region: 'RU'
         })
@@ -162,13 +154,13 @@ export const getOnTheAirTvShows = createAsyncThunk<ReturnedTvShowsList, number |
   }
 );
 
-export const getTvShowData = createAsyncThunk<TvRespData, {id: number, lang?: Languages}>(
+export const getTvShowData = createAsyncThunk<TvRespData, {id: number, lang: Languages}>(
   'tvShows/getTvShowDetail',
-  async ({ id, lang = Languages.RU }) => {
+  async ({ id, lang }) => {
     const { data, isSuccessRequest } = await oldClient.get<TvDetails>(`tv/${id}`,
       {
         language: lang,
-        include_image_language: 'ru,null',
+        include_image_language: `${lang},null`,
         append_to_response: 'content_ratings,credits,external_ids,images,keywords,recommendations,screened_theatrically,similar,translations,videos'
       }
     );
@@ -194,13 +186,12 @@ export const getEngTvShowData = createAsyncThunk<TvShowEngDataResp, {id: number,
   }
 );
 
-export const getTvShowSeasons = createAsyncThunk<TvSeasonRespData, {id: number, season: number, lang?: Languages}>(
+export const getTvShowSeasons = createAsyncThunk<TvSeasonRespData, {id: number, season: number, lang: Languages}>(
   'tvShows/getTvShowSeasons',
-  async ({ id, season, lang = Languages.RU }) => {
+  async ({ id, season, lang }) => {
     const { data, isSuccessRequest } = await oldClient.get<TvSeason>(`tv/${id}/season/${season}`,
       {
-        language: lang,
-        include_image_language: 'ru,null',
+        include_image_language: `${lang},null`,
         append_to_response: 'credits, external_ids,images,videos'
       });
     return {

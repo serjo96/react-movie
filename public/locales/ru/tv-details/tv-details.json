@@ -1,0 +1,30 @@
+{
+  "aside": {
+    "creators": "Создатели",
+    "releaseDate": "Дата выпуска"
+  },
+  "summary": {
+    "episodesLength": "Продолжительность серий",
+    "lastSeries": "Последняя серия",
+    "seasons": "Сезонов",
+    "status": "Статус",
+    "onTheAir": "Идет",
+    "season": "сезон",
+    "series": "серия",
+    "ended": "Закончен"
+  },
+  "sectionTitle": {
+    "stills": "Кадры из сериала",
+    "posters": "Постеры",
+    "similarTv": "Похожие сериалы",
+    "recommendation": "Вам может понравиться",
+    "seasons": "Сезоны"
+  },
+  "seasonData": {
+    "buckToDetailPage": "Назад на страницу сериала",
+    "releaseDate": "Дата выпуска",
+    "noDescription": "Описание к этой серии еще не добавлено.",
+    "episode_one": "серия",
+    "episode_other": "серий"
+  }
+}

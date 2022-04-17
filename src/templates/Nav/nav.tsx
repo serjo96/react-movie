@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { NavLink, useLocation, useRouteMatch } from 'react-router-dom';
 import { Collapse } from 'react-collapse';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import { moviesLinks, serialsLinks } from '~/utils/navLinks';
@@ -15,7 +16,9 @@ export default function Nav ({
   isShowNav,
   isHideHeader
 }: MyProps) {
+  const { t } = useTranslation();
   const [navCollapse, setNavCollapse] = useState(true);
+  // TODO: fix condition for pages includes movies in path;
   const isMoviesPage = useRouteMatch({
     path: '/movies/',
     exact: false,
@@ -28,8 +31,11 @@ export default function Nav ({
     strict: false
   });
 
+  const { pathname } = useLocation();
+  const isCollapseMovie = pathname === '/' || !!isMoviesPage || !!isMoviePage;
+
   useEffect(() => {
-    setNavCollapse(!!isMoviesPage || !!isMoviePage);
+    setNavCollapse(isCollapseMovie);
   }, []);
 
   const handleCollapseNav = () => {
@@ -53,7 +59,7 @@ export default function Nav ({
             className='nav__element sub-menu-trigger'
             onClick={handleCollapseNav}
           >
-            <span>Фильмы</span>
+            <span>{t('nav.movies.sectionTitle')}</span>
             <i className='fa fa-film' />
           </div>
           <Collapse
@@ -67,7 +73,10 @@ export default function Nav ({
                     to={link.href}
                     activeClassName='sub-menu__item--active'
                   >
-                    <span>{link.title}</span>
+                    {/* TODO: Fix ts overloads */}
+                    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                    {/* @ts-ignore */}
+                    <span>{t(`nav.movies.${link.keyTitle}`)}</span>
                     <i className={`fa ${link.icon}`} aria-hidden='true' />
                   </NavLink>
                 </li>
@@ -81,7 +90,7 @@ export default function Nav ({
             className='nav__element sub-menu-trigger'
             onClick={handleCollapseNav}
           >
-            <span>Сериалы</span>
+            <span>{t('nav.tvShows.sectionTitle')}</span>
             <i className='fa fa-television' />
           </div>
           <Collapse
@@ -95,7 +104,10 @@ export default function Nav ({
                     to={link.href}
                     activeClassName='sub-menu__item--active'
                   >
-                    <span>{link.title}</span>
+                    {/* TODO: Fix ts overloads */}
+                    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                    {/* @ts-ignore */}
+                    <span>{t(`nav.tvShows.${link.keyTitle}`)}</span>
                     <i className={`fa ${link.icon}`} aria-hidden='true' />
                   </NavLink>
                 </li>

@@ -1,22 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
-
-import ServiceBlock from '../service/service-block';
-import MediaList from '~/ui-components/media-list/media-list';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { scrollToTop } from '~/utils';
-import { onSearchRequest } from '~/store/search/search.api';
-import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
-import { MediaType } from '~/core/types/media-type';
+import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
-import { friendlyName, friendlyUrl } from '~/utils/format';
+
+import ServiceBlock from '~/templates/service/service-block';
+import MediaList from '~/ui-components/media-list/media-list';
 import Input from '~/ui-components/input/input';
+import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
+
+import { MediaType } from '~/core/types/media-type';
+import { onSearchRequest } from '~/store/search/search.api';
+
+import { useLangEffect } from '~/hooks/useLangEffect';
+import { getRandomInt, scrollToTop } from '~/utils';
+import { friendlyName, friendlyUrl } from '~/utils/format';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+
 import './search-page.sass';
 
+const randomInt = getRandomInt(0, 3);
 function SearchPage () {
   const appDispatch = useAppDispatch();
   const history = useHistory();
+  const { t } = useTranslation('search');
   const { search } = useLocation();
   const [prevProps] = useState(search);
   const queryParams = queryString.parse(search, { parseNumbers: true });
@@ -31,18 +38,18 @@ function SearchPage () {
     }));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (queryParams.query && !isFetching) {
       sendRequest();
       scrollToTop();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (search !== prevProps) {
       sendRequest();
       scrollToTop();
-      setValue(queryParams.query as string);
+      setValue(friendlyName(queryParams.query as string));
     }
   }, [search]);
 
@@ -68,7 +75,7 @@ function SearchPage () {
     }
   };
 
-  const titleSearch = data.results.length ? `Результаты поиска «${(queryParams.query as string).replace('_', ' ')}» (${data.totalResults})` : 'Поиск на movie base';
+  const titleSearch = data.results.length ? `${t('resultSearch')} «${(queryParams.query as string).replace('_', ' ')}» (${data.totalResults})` : t('defaultTitle');
 
   return (
     <main className='search-page main main--media-list '>
@@ -77,12 +84,14 @@ function SearchPage () {
         <title>{titleSearch}</title>
       </Helmet>
       <div className='movies-content iphonex'>
+        <h2 className='search-page-title'>{titleSearch}</h2>
+
         <div className='search-field-wrapper'>
           <Input
             className='search__field'
             name='Search'
             type='search'
-            placeholder='Поиск фильмов и сериалов...'
+            placeholder={t('placeholder', { count: randomInt })}
             onChange={onInput}
             onKeyDown={onKeyDown}
             value={value}
@@ -98,7 +107,6 @@ function SearchPage () {
         >
           <div className='search-results'>
             <MediaList
-              movieListTitle={`${titleSearch}`}
               mediaList={data.results}
               typeList={MediaType.MIXED}
             />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import classNames from 'classnames';
 
 import Nav from '~/templates/Nav/nav';
@@ -9,6 +9,7 @@ import { usePrevious } from '~/hooks/usePrevious';
 import useBreakpoints, { BreakpointsNames } from '~/utils/useMediaQuery';
 import useWindowScroll from '~/hooks/useWindowScroll';
 import './header.sass';
+import LanguageSwitcher from '~/ui-components/language-switcher/language-switcher';
 
 export default function Header () {
   const { pathname } = useLocation();
@@ -20,6 +21,12 @@ export default function Header () {
   const prevPath = usePrevious(pathname);
   const prevPosition = usePrevious(y);
   const mobileBreakpoints = [BreakpointsNames.MD, BreakpointsNames.SM, BreakpointsNames.XS, BreakpointsNames.LG, BreakpointsNames.XL];
+
+  const isSearchPage = useRouteMatch({
+    path: '/search',
+    exact: false,
+    strict: false
+  });
 
   useEffect(() => {
     if (pathname !== prevPath && (mobileBreakpoints.includes(active))) {
@@ -65,13 +72,17 @@ export default function Header () {
               Movie Base
           </Link>
         </div>
-        <div
-          className='search-mobile-trigger link'
-          onClick={toggleMobileSearch}
-        >
-          <i className='fa fa-search' aria-hidden='true' />
+
+        <div className='header__right-side'>
+          <div
+            className='search-mobile-trigger link'
+            onClick={toggleMobileSearch}
+          >
+            <i className='fa fa-search' aria-hidden='true' />
+          </div>
+          {!isSearchPage && <SearchHeader isShowMobileSearch={isShowMobileSearch} />}
+          <LanguageSwitcher />
         </div>
-        <SearchHeader isShowMobileSearch={isShowMobileSearch} />
       </header>
 
       <Nav

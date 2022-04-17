@@ -56,7 +56,7 @@ const MediaList = ({
   };
 
   const renderMovie = (item: ItemType, index: number) => {
-    // show only 11 movies on main page
+    // show only 11 lists on main page
     if (count && index > count) {
       return null;
     }

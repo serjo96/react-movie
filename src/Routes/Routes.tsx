@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Main from '~/templates/main/main';
-import Movie from '~/templates/Movie/containers/movie';
+import MovieDetails from '~/templates/Movie/containers/movie-details';
 import MovieUpcoming from '~/templates/moviesList/container/movies-upcoming';
 import MoviePlaying from '~/templates/moviesList/container/movies-playing';
 import MoviesAll from '~/templates/moviesList/container/movies-all';
@@ -24,7 +24,7 @@ class Routes extends Component {
         <Route exact path='/' component={Main} />
         <Route exact path='/movies/upcoming' component={MovieUpcoming} />
         <Route exact path='/movies/playing' component={MoviePlaying} />
-        <Route exact path='/movie/:id' component={Movie} />
+        <Route exact path='/movie/:id' component={MovieDetails} />
         <Route path='/tv/all' component={TvShowsAll} />
         <Route exact path='/tv/airing' component={TvAiring} />
         <Route exact path='/tv/onAir' component={TvOnTheAir} />

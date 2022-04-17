@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 
@@ -7,12 +8,16 @@ import FilterList from '~/templates/filters/containers/filter-list';
 import ServiceBlock from '~/templates/service/service-block';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import MediaList from '~/ui-components/media-list/media-list';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+
 import { getTvShowsList } from '~/store/tv/tv.api';
 import { MediaType } from '~/core/types/media-type';
+
 import { scrollToTop } from '~/utils';
+import { useLangEffect } from '~/hooks/useLangEffect';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 
 function TvShowsAll () {
+  const { t } = useTranslation('lists');
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
   const [prevProps] = useState(search);
@@ -40,13 +45,13 @@ function TvShowsAll () {
     appDispatch(getTvShowsList(payload));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (search !== prevProps) {
       sendRequest();
       scrollToTop();
@@ -56,7 +61,7 @@ function TvShowsAll () {
   return (
     <main className='main main--media-list'>
       <Helmet>
-        <title>Популярные сериалы</title>
+        <title>Movie base | {t('list.tvShows.all')}</title>
       </Helmet>
 
       <div className='movies-content'>
@@ -70,7 +75,7 @@ function TvShowsAll () {
         >
 
           <MediaList
-            movieListTitle={`Всего сериалов (${data.totalResults})`}
+            movieListTitle={`${t('list.tvShows.total')} (${data.totalResults})`}
             mediaList={data.results}
             typeList={MediaType.TV}
           />

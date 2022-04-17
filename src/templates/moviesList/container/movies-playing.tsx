@@ -1,21 +1,25 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
-
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
-import { usePrevious } from '~/hooks/usePrevious';
-import { getPlayingMovies } from '~/store/movies/movies.api';
-import { MediaType } from '~/core/types/media-type';
-import { scrollToTop } from '~/utils';
 
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '~/templates/service/service-block';
 
+import { getPlayingMovies } from '~/store/movies/movies.api';
+import { MediaType } from '~/core/types/media-type';
+
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { usePrevious } from '~/hooks/usePrevious';
+import { useLangEffect } from '~/hooks/useLangEffect';
+import { scrollToTop } from '~/utils';
+
 function MoviePlaying () {
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
+  const { t } = useTranslation('lists');
 
   const prevProps = usePrevious(search || '');
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies.lists.playing);
@@ -33,13 +37,13 @@ function MoviePlaying () {
     appDispatch(getPlayingMovies(page));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (search !== prevProps) {
       sendRequest();
       scrollToTop();
@@ -49,7 +53,7 @@ function MoviePlaying () {
   return (
     <main className='main main--media-list'>
       <Helmet>
-        <title>В прокате</title>
+        <title>Movie base | {t('list.movies.playing')}</title>
       </Helmet>
 
       <ServiceBlock
@@ -59,7 +63,7 @@ function MoviePlaying () {
       >
         <div className='movies-content'>
           <MediaList
-            movieListTitle={`Сейчас в кино (${data.totalResults})`}
+            movieListTitle={`${t('list.movies.playing')} (${data.totalResults})`}
             mediaList={data.results}
             typeList={MediaType.MOVIE}
           />

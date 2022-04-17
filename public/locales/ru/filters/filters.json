@@ -1,0 +1,27 @@
+{
+  "genresLabel": "Жанр",
+  "allGenres": "Все жанры",
+  "yearLabel": "Году",
+  "year": "год",
+  "years": {
+    "all": "Все года",
+    "decadesLabel": "Десятилетия"
+  },
+  "customYearLabel": "Свой год",
+  "customYearPlaceholder": "Введите свой год",
+  "sortLabel": "Сортировать",
+  "sortBy": {
+    "popularity": "По популярности",
+    "releaseDate": "Дате выпуска",
+    "boxOffice": "Сборам",
+    "originalTitle": "Оригинальному названию",
+    "medanVote": "Среднему голосу",
+    "votesCount": "Количеству голосов"
+  },
+  "sortDirectionDesc": "Сортировать по убыванию",
+  "sortDirectionAsc": "Сортировать по возрастанию",
+  "safeFilter": "Безопасный фильтр",
+  "resetButton": "Сбросить все фильтры",
+  "showMobileFiltersButton": "Настроить фильтры",
+  "mobileFilterPopUpTitle": "Фильтровать список по:"
+}

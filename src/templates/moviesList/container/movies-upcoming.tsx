@@ -1,19 +1,24 @@
+import React from 'react';
 import queryString from 'query-string';
-import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '~/templates/service/service-block';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+
 import { getUpcomingMovies } from '~/store/movies/movies.api';
 import { MediaType } from '~/core/types/media-type';
+
 import { scrollToTop } from '~/utils';
 import { usePrevious } from '~/hooks/usePrevious';
+import { useLangEffect } from '~/hooks/useLangEffect';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 
 function MovieUpcoming () {
   const appDispatch = useAppDispatch();
+  const { t } = useTranslation('lists');
   const { search } = useLocation();
   const prevProps = usePrevious(search);
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies.lists.upcoming);
@@ -32,13 +37,13 @@ function MovieUpcoming () {
     appDispatch(getUpcomingMovies(page));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (search !== prevProps) {
       sendRequest();
       scrollToTop();
@@ -48,7 +53,7 @@ function MovieUpcoming () {
   return (
     <main className='main main--media-list'>
       <Helmet>
-        <title>Ожидаемые фильмы</title>
+        <title>Movie base | {t('list.movies.upcoming')}</title>
       </Helmet>
       <ServiceBlock
         isLoading={isFetching}
@@ -57,7 +62,7 @@ function MovieUpcoming () {
       >
         <div className='movies-content'>
           <MediaList
-            movieListTitle={`Скоро в кино (${data.totalResults})`}
+            movieListTitle={`${t('list.movies.upcoming')} (${data.totalResults})`}
             mediaList={data.results}
             typeList={MediaType.MOVIE}
           />

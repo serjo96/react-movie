@@ -1,0 +1,41 @@
+{
+  "runtime" : {
+    "hour_one": "hour",
+    "hour_many": "hours",
+    "hour_other": "hour",
+    "min": "min"
+  },
+  "summary": {
+    "popularity": "Popularity",
+    "votes_zero": "votes",
+    "votes_one": "vote",
+    "votes_other": "votes",
+    "votes_many": "votes"
+  },
+  "aside" : {
+    "Director": "Director",
+    "Producer": "Producer",
+    "Scenario": "Scenario",
+    "Operator": "Operator",
+    "Composer": "Composer",
+    "Art": "Art",
+    "Country": "Country",
+    "ProductionCompanies": "Production companies",
+    "Genres": "Genres",
+    "Tags": "Tags",
+    "Keywords": "Keywords",
+    "Links": "Links",
+    "homePage": "Home page"
+  },
+  "description": {
+    "noDescription": "Ops! Its seems here no description."
+  },
+  "videos": {
+    "trailer_one": "Trailer",
+    "trailer_two": "Trailers",
+    "trailer_few": "Trailers",
+    "trailer_many": "Trailers",
+    "trailer_other": "Trailers"
+  },
+  "cast": "Cast"
+}

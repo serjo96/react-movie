@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import MediaItem from '~/ui-components/media-item/media-item';
@@ -25,6 +26,7 @@ export default function PersonMediaList ({
 }: MyProps) {
   if (!listData.length) return null;
   const [listCount, setListCount] = useState(count ? count - 1 : defaultCount);
+  const { t } = useTranslation();
 
   const loadMoreMovies = () => {
     setListCount(listCount + 14);
@@ -58,7 +60,7 @@ export default function PersonMediaList ({
       <div className={filmographyListClass}>
         {listData.length > listCount + 1 &&
           <div className='show-more show-more--stills'>
-            <div className='show-more__btn' onClick={loadMoreMovies}>Больше</div>
+            <div className='show-more__btn' onClick={loadMoreMovies}>{t('moreButton')}</div>
           </div>}
         {listData.map((item, index) => index <= listCount && renderMediaItem(item as ItemType, index))}
       </div>

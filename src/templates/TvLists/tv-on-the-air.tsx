@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import React, { useState } from 'react';
 import queryString from 'query-string';
+import { Helmet } from 'react-helmet';
+import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import ServiceBlock from '~/templates/service/service-block';
 import MediaList from '~/ui-components/media-list/media-list';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
-import { useLocation } from 'react-router-dom';
+
 import { getOnTheAirTvShows } from '~/store/tv/tv.api';
 import { MediaType } from '~/core/types/media-type';
+
 import { scrollToTop } from '~/utils';
+import { useLangEffect } from '~/hooks/useLangEffect';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 
 function TVonTheAir () {
+  const { t } = useTranslation('lists');
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
   const [prevProps] = useState(search);
@@ -35,13 +40,13 @@ function TVonTheAir () {
     appDispatch(getOnTheAirTvShows(page));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (search !== prevProps) {
       sendRequest();
       scrollToTop();
@@ -51,7 +56,7 @@ function TVonTheAir () {
   return (
     <main className='main main--media-list'>
       <Helmet>
-        <title>Текущие сериалы</title>
+        <title>Movie base | {t('list.tvShows.onAir')}</title>
       </Helmet>
       <ServiceBlock
         isLoading={isFetching}
@@ -60,7 +65,7 @@ function TVonTheAir () {
       >
         <div className='movies-content'>
           <MediaList
-            movieListTitle={`Текущие сериалы (${data.totalResults})`}
+            movieListTitle={`${t('list.tvShows.onAir')} (${data.totalResults})`}
             mediaList={data.results}
             typeList={MediaType.TV}
           />

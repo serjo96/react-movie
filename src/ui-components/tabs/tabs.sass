@@ -2,6 +2,8 @@
 	display: flex
 	flex-wrap: wrap
 	margin-bottom: 15px
+	padding: 10px
+	background: rgba(0, 0, 0, 0.24)
 	&__item
 		padding: 10px
 		cursor: pointer
@@ -9,6 +11,8 @@
 		border: 1px solid #fff
 		background: transparent
 		transition: all 1s
+		&:first-letter
+			text-transform: capitalize
 		&:hover
 			border: 1px solid #af8c4f
 		&--active

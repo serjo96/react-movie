@@ -1,19 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 
-import { MediaType } from '~/core/types/media-type';
-import { getMoviesList } from '~/store/movies/movies.api';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import FilterList from '~/templates/filters/containers/filter-list';
 import ServiceBlock from '~/templates/service/service-block';
 import MediaList from '~/ui-components/media-list/media-list';
+
+import { MediaType } from '~/core/types/media-type';
+import { getMoviesList } from '~/store/movies/movies.api';
+
 import { scrollToTop } from '~/utils';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useLangEffect } from '~/hooks/useLangEffect';
 
 function MoviesAll () {
   const appDispatch = useAppDispatch();
+  const { t } = useTranslation('lists');
   const { search } = useLocation();
   const [prevProps] = useState(search);
   const { isFetching, isSuccessful, data } = useAppSelector((state) => state.movies.lists.all);
@@ -44,8 +49,8 @@ function MoviesAll () {
     appDispatch(getMoviesList(payload));
   };
 
-  useEffect(() => {
-    if (!isFetching) {
+  useLangEffect(() => {
+    if (!data.results.length && !isFetching) {
       sendRequest();
     }
 
@@ -58,7 +63,7 @@ function MoviesAll () {
   return (
     <main className='main main--media-list'>
       <Helmet>
-        <title>Фильмы</title>
+        <title>Movie base | {t('list.movies.all')}</title>
       </Helmet>
       <div className='movies-content'>
         <FilterList
@@ -71,7 +76,7 @@ function MoviesAll () {
           fetch={sendRequest}
         >
           <MediaList
-            movieListTitle={`Всего фильмов (${data.totalResults})`}
+            movieListTitle={`${t('list.movies.total')} (${data.totalResults})`}
             mediaList={data.results}
             typeList={MediaType.MOVIE}
           />

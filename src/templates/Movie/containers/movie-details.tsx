@@ -1,43 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
-import { Languages } from '~/store/user/user.slice';
+import { Languages } from '~/store/config/config.slice';
 import { getMovieData, getMovieEngOverview } from '~/store/movies/movies.api';
+import { MediaType } from '~/core/types/media-type';
+
 import MediaStills from '~/templates/media-page/media-stills';
-import MediaCast from '~/templates//media-page/media-cast';
 import MediaTop from '~/templates/media-page/media-top';
 import MovieAside from '~/templates/Movie/components/movie-aside';
 import { MovieSummary } from '~/templates/Movie/components/movie-summary';
 import ServiceBlock from '~/templates/service/service-block';
 import MediaRecommendations from '~/templates/media-page/media-recommendations';
+import MediaCast from '~/templates/media-page/media-cast';
 import MovieCollection from '~/templates/Movie/components/movie-collection';
 import MovieDescription from '~/ui-components/MovieDescription/MovieDescription';
 import { VideosSection } from '~/ui-components/video-section/videos-section';
-import { MediaType } from '~/core/types/media-type';
+
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useLangEffect } from '~/hooks/useLangEffect';
+import useTranslations from '~/hooks/useTranslations';
 import { scrollToTop } from '~/utils';
+
 import './movie.sass';
 
-function Movie () {
+function MovieDetails () {
   const appDispatch = useAppDispatch();
   const { id } = useParams<{id: string}>();
   const [prevProps] = useState(id);
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.movies);
-  const movie = data;
+  const { lang } = useTranslations();
+  const { t } = useTranslation('movie');
   const movieId = id.split('-').pop();
+  const movie = data;
 
   const sendRequest = () => {
-    appDispatch(getMovieData({ id: +movieId }));
+    appDispatch(getMovieData({ id: +movieId, lang }));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (id !== prevProps) {
       sendRequest();
       scrollToTop();
@@ -97,13 +105,13 @@ function Movie () {
               <MediaCast cast={movie.credits.cast} />
               <MediaStills
                 images={movie.images.backdrops}
-                title='Кадры из фильма'
+                title={t('stills')}
                 imgCount={16}
               />
 
               <MediaStills
                 images={movie.images.posters}
-                title='Постеры'
+                title={t('posters')}
                 posters
                 imgCount={8}
               />
@@ -113,14 +121,14 @@ function Movie () {
 
         <MediaRecommendations
           recommendations={movie.similar}
-          listName='Похожие фильмы'
+          listName={t('similarMovies')}
           typeList={MediaType.MOVIE}
         />
 
         <MovieCollection collection={movie.collection} />
         <MediaRecommendations
           recommendations={movie.recommendations}
-          listName='Вам может понравиться'
+          listName={t('recommendation')}
           typeList={MediaType.MOVIE}
         />
       </main>
@@ -128,4 +136,4 @@ function Movie () {
   );
 }
 
-export default Movie;
+export default MovieDetails;

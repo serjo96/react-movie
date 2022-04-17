@@ -1,13 +1,15 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import { chunkArr } from '~/utils';
 import {
   storageCountries,
   popularCountries,
   sortingDateList,
-  sortMovieByType, sortListTV
+  sortMovieByType,
+  sortListTV
 } from '~/store/localData';
-import classNames from 'classnames';
 import { Genre } from '~/core/types/genres';
 import { GenresState } from '~/store/genres/genres.slice';
 import { filterByCountryName, filterByDateName, sortByFilterName } from '~/utils/formatFiltersNames';
@@ -52,6 +54,7 @@ export default function Filters ({
   onResetFilters,
   genresObject
 }: MyProps) {
+  const { t } = useTranslation(['common', 'filters']);
   const [sortBy, direction] = (filterValues.sortBy || '').split('.');
   const filterCatalogClasses = (isActive: boolean) => classNames('filter-catalog__item filter-genre', {
     'filter-catalog__item--active': isActive
@@ -68,7 +71,7 @@ export default function Filters ({
   });
 
   const sortDirectionClass = classNames('filter-item filter-item--sort-direction', {
-    'filter-item--sort-direction-asc': direction && direction === 'asc'
+    'filter-item--sort-direction--asc': direction && direction === 'asc'
   });
 
   const sortByClass = classNames('filter-item', {
@@ -98,7 +101,7 @@ export default function Filters ({
         {genres.length &&
           <div className={genreFilterClasses}>
             <div className='filter-name'>
-              <span>{genresObject[filterValues.genre || 0]}</span>
+              <span>{filterValues.genre ? genresObject[filterValues.genre] : t('filters:allGenres')}</span>
               <i className='fa fa-angle-down' aria-hidden='true' />
             </div>
             <div className='filter-item__catalog filter-item__catalog--genres'>
@@ -114,7 +117,7 @@ export default function Filters ({
                       onClick={() => onClickGenres(item)}
                       key={index}
                     >
-                      {item.name}
+                      {item.id === 0 ? t('filters:allGenres') : item.name}
                     </li>)
                   )}
                 </ul>
@@ -137,24 +140,24 @@ export default function Filters ({
                   key={index}
                   onClick={() => onSortByDate(el)}
                 >
-                  {el.name}
+                  {el.date !== 'all' ? `${el.name} ${t('filters:year')}` : t('filters:years.all')}
                 </div>
               ))}
             </div>
             <div className='filter-catalog__list'>
-              <div className='filter-catalog__sub-title'>Десятилетия</div>
+              <div className='filter-catalog__sub-title'>{t('filters:years.decadesLabel')}</div>
               {sortingDateList.filter(date => date.type === 'range').map((el, index) => (
                 <div
                   className={filterCatalogItemClasses(filterValues.year === el.date)}
                   key={index}
                   onClick={() => onSortByDate(el)}
                 >
-                  {el.name}
+                  {el.date === '-1980' && t('common:commonWords.until')} {el.name}
                 </div>
               ))}
             </div>
             <div className='filter-catalog__list'>
-              <div className='filter-catalog__sub-title'>Свой год</div>
+              <div className='filter-catalog__sub-title'>{t('filters:customYearLabel')}</div>
               <input
                 type='text'
                 pattern='[0-9]*'
@@ -206,7 +209,7 @@ export default function Filters ({
             onClick={onClickAdult}
           >
             <div className='filter-name'>
-              <span>Безопасный фильтр</span>
+              <span>{t('filters:safeFilter')}</span>
               <i
                 className={`fa ${filterValues.adult ? 'fa-square-o' : 'fa-check-square'}`}
                 aria-hidden='true'
@@ -221,14 +224,17 @@ export default function Filters ({
           </div>
 
           <div className='filter-item__catalog filter-item__catalog--col sort-catalog'>
-            <div className='filter-catalog__title'>Сортировать</div>
+            <div className='filter-catalog__title'>{t('filters:sortLabel')}</div>
             {sortByList.map((el, indx) => (
               <div
                 onClick={() => onClickSort(el.type)}
                 key={indx}
                 className={`${filterCatalogItemClasses(sortBy === el.type)} sort-catalog-item`}
               >
-                {el.name}
+                {/* TODO: Fix ts overloads */}
+                {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                {/* @ts-ignore */}
+                {t(`sortBy.${el.key}`, { ns: 'filters' })}
               </div>
             ))}
           </div>
@@ -236,11 +242,11 @@ export default function Filters ({
         <div className={sortDirectionClass}>
           <i
             onClick={() => onClickSort()}
-            className='fa fa-long-arrow-up' aria-hidden='true'
+            className='fa fa-arrow-up' aria-hidden='true'
           />
         </div>
         <div onClick={onResetFilters} className='filter-item'>
-          <div className='filter-name'>Сбросить фильтры</div>
+          <button className='reset-filters filter-name'>{t('filters:resetButton')}</button>
         </div>
       </div>
     </div>

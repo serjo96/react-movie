@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import oldClient from '~/core/api/OldClient';
 
 import ConcatPages from '~/utils/concatPages';
-import { Languages } from '~/store/user/user.slice';
+import { Languages } from '~/store/config/config.slice';
 import { MovieDetails } from '~/core/types/movieDetails';
 import { MoviesListItem, MoviesList } from '~/core/types/movies';
 import { Collection } from '~/core/types/collection';
@@ -22,7 +22,6 @@ export interface MovieListArgs {
   date?: string;
   region?: string;
   adult?: boolean;
-  language?: Languages;
 }
 
 export interface MovieRespData {
@@ -36,20 +35,18 @@ export interface MovieEngRespData {
 }
 
 export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs | void>(
-  'movies/getMoviesList',
+  'lists/getMoviesList',
   async ({
     genre,
     date,
     region,
     adult = false,
     sortBy = 'popularity.desc',
-    page = 1,
-    language = Languages.RU
+    page = 1
   }: MovieListArgs = {
     adult: false,
     sortBy: 'popularity.desc',
-    page: 1,
-    language: Languages.RU
+    page: 1
   }) => {
     let startRangeDate: string | undefined;
     let endRangeDate: string | undefined;
@@ -61,7 +58,6 @@ export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs |
     const [firstPage, secondPage] = await oldClient.all<MoviesList>([
       oldClient.get('discover/movie',
         {
-          language,
           region: region,
           sort_by: sortBy,
           with_genres: genre,
@@ -73,7 +69,6 @@ export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs |
         }),
       oldClient.get('discover/movie',
         {
-          language: 'ru-RU',
           region: region,
           sort_by: sortBy,
           with_genres: genre,
@@ -93,11 +88,10 @@ export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs |
 );
 
 export const getUpcomingMovies = createAsyncThunk<ReturnedMovieList, number | void>(
-  'movies/getUpcomingMovies',
+  'lists/getUpcomingMovies',
   async (page = 1) => {
     const response = await oldClient.get<MoviesList>('movie/upcoming',
       {
-        language: 'ru-RU',
         page: page,
         region: 'RU'
       }
@@ -110,18 +104,16 @@ export const getUpcomingMovies = createAsyncThunk<ReturnedMovieList, number | vo
 );
 
 export const getPopularMovies = createAsyncThunk<ReturnedMovieList, number | void>(
-  'movies/getPopularMovies',
+  'lists/getPopularMovies',
   async (page = 1) => {
     const [firstPage, secondPage] = await oldClient.all<MoviesList>([
       oldClient.get('movie/popular',
         {
-          language: 'ru-RU',
           page: page,
           region: 'RU'
         }),
       oldClient.get('movie/popular',
         {
-          language: 'ru-RU',
           page: (page as number) + 1,
           region: 'RU'
         })
@@ -135,18 +127,16 @@ export const getPopularMovies = createAsyncThunk<ReturnedMovieList, number | voi
 );
 
 export const getPlayingMovies = createAsyncThunk<ReturnedMovieList, number | void>(
-  'movies/getPlayingMovies',
+  'lists/getPlayingMovies',
   async (page = 1) => {
     const [firstPage, secondPage] = await oldClient.all<MoviesList>([
       oldClient.get('movie/now_playing',
         {
-          language: 'ru-RU',
           page: page,
           region: 'RU'
         }),
       oldClient.get('movie/now_playing',
         {
-          language: 'ru-RU',
           page: (page as number) + 1,
           region: 'RU'
         })
@@ -160,18 +150,16 @@ export const getPlayingMovies = createAsyncThunk<ReturnedMovieList, number | voi
 );
 
 export const getTopMovies = createAsyncThunk<ReturnedMovieList, number | void>(
-  'movies/getTopMovies',
+  'lists/getTopMovies',
   async (page = 1) => {
     const [firstPage, secondPage] = await oldClient.all<MoviesList>([
       oldClient.get('movie/top_rated',
         {
-          language: 'ru-RU',
           page: page,
           region: 'RU'
         }),
       oldClient.get('movie/top_rated',
         {
-          language: 'ru-RU',
           page: (page as number) + 1,
           region: 'RU'
         })
@@ -184,13 +172,12 @@ export const getTopMovies = createAsyncThunk<ReturnedMovieList, number | void>(
   }
 );
 
-export const getMovieData = createAsyncThunk<MovieRespData, {id: number, lang?: Languages}>(
+export const getMovieData = createAsyncThunk<MovieRespData, {id: number, lang: Languages}>(
   'movie/getMovieData',
-  async ({ id, lang = Languages.RU }) => {
+  async ({ id, lang }) => {
     const resp = await oldClient.get<MovieDetails>(`movie/${id}`,
       {
-        language: lang,
-        include_image_language: 'ru,null',
+        include_image_language: `${lang},null`,
         append_to_response: 'credits,images,videos,recommendations,similar,reviews,lists,keywords,release_dates'
       }
     );
@@ -202,11 +189,7 @@ export const getMovieData = createAsyncThunk<MovieRespData, {id: number, lang?: 
 
     let collection;
     if (resp.data.belongsToCollection) {
-      collection = await oldClient.get<Collection>('collection/' + resp.data.belongsToCollection.id,
-        {
-          language: lang
-        }
-      );
+      collection = await oldClient.get<Collection>('collection/' + resp.data.belongsToCollection.id);
 
       const sortedCollection = { ...collection.data, parts: sortCollectionItems(collection.data.parts) };
       response = {

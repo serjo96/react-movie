@@ -1,29 +1,37 @@
 import React, { useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars-2';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import queryString from 'query-string';
 
 import ServiceBlock from '~/templates/service/service-block';
 import Image from '~/ui-components/image/image';
 import Input from '~/ui-components/input/input';
-import { friendlyUrl, urlRusLat } from '~/utils/format';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
-import { useOnClickOutside } from '~/hooks/useOnClickOutside';
+
 import { getSearchData } from '~/store/search/search.api';
 import { SearchResultItem } from '~/core/types/search';
 import { MediaType } from '~/core/types/media-type';
+
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useOnClickOutside } from '~/hooks/useOnClickOutside';
+import { useLangEffect } from '~/hooks/useLangEffect';
+import { friendlyUrl, urlRusLat } from '~/utils/format';
+import { getRandomInt } from '~/utils';
 import './search-header.sass';
 
 interface MyProps {
   isShowMobileSearch: boolean;
 }
 
+const randomInt = getRandomInt(0, 3);
+
 function SearchHeader ({
   isShowMobileSearch
 }: MyProps) {
   const componentRef = useRef(null);
   const appDispatch = useAppDispatch();
+  const { t } = useTranslation(['common', 'search']);
   const history = useHistory();
   const [value, setValue] = useState('');
   const [visibilityResult, setVisibilityResult] = useState(false);
@@ -35,8 +43,8 @@ function SearchHeader ({
     setVisibilityResult(false);
   };
 
-  const sendRequest = (inputValue: string) => {
-    appDispatch(getSearchData(inputValue));
+  const sendRequest = () => {
+    appDispatch(getSearchData(value));
   };
 
   const redirectOnSearchPage = () => {
@@ -48,10 +56,10 @@ function SearchHeader ({
     });
   };
 
-  const onInput = (inputValue: string) => {
+  const onInput = () => {
     if (value.length) {
       setValue(value);
-      sendRequest(inputValue);
+      sendRequest();
       setVisibilityResult(true);
     }
   };
@@ -68,12 +76,18 @@ function SearchHeader ({
     }
   };
 
+  useLangEffect(() => {
+    if (value) {
+      sendRequest();
+    }
+  }, []);
+
   const elementType = (type: MediaType, personDepartment?: string) => {
     switch (type) {
       case MediaType.MOVIE:
-        return 'фильм';
+        return t('common:commonWords.movie');
       case MediaType.TV:
-        return 'сериал';
+        return t('common:commonWords.tvShow');
       case MediaType.PERSON:
         return personDepartment;
     }
@@ -124,7 +138,7 @@ function SearchHeader ({
           name='search'
           debounceTimeout={500}
           type='search'
-          placeholder='Поиск фильмов и сериалов...'
+          placeholder={t('search:placeholder', { count: randomInt })}
           onInput={value => setValue(value)}
           onChange={onInput}
           onKeyDown={onKeyDown}
@@ -141,7 +155,7 @@ function SearchHeader ({
           <ServiceBlock
             isLoading={isFetching}
             isSuccessful={isSuccessful}
-            fetch={() => sendRequest(value)}
+            fetch={sendRequest}
           >
             {data.totalResults
               ? <Scrollbars
@@ -151,7 +165,7 @@ function SearchHeader ({
                 >
                 {data.results.map(renderResults)}
                 </Scrollbars>
-              : <div className='result-element'>Поиск не дал результатов, попробуйте уточнить поиск</div>}
+              : <div className='result-element'>{t('search:noResults')}</div>}
           </ServiceBlock>}
       </div>
     </div>

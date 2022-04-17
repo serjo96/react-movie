@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
-
-import { getTopTvShows } from '~/store/tv/tv.api';
-import { MediaType } from '~/core/types/media-type';
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { Helmet } from 'react-helmet';
 
 import PageSwitcher from '~/ui-components/Page-switcher/Page-switcher';
 import MediaList from '~/ui-components/media-list/media-list';
 import ServiceBlock from '../service/service-block';
+
+import { getTopTvShows } from '~/store/tv/tv.api';
+import { MediaType } from '~/core/types/media-type';
+
 import { scrollToTop } from '~/utils';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useLangEffect } from '~/hooks/useLangEffect';
 
 function TvShowsTop () {
+  const { t } = useTranslation('lists');
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
   const [prevProps] = useState(search);
@@ -36,13 +40,13 @@ function TvShowsTop () {
     appDispatch(getTopTvShows(page));
   };
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (!isFetching) {
       sendRequest();
     }
   }, []);
 
-  useEffect(() => {
+  useLangEffect(() => {
     if (search !== prevProps) {
       sendRequest();
       scrollToTop();
@@ -52,7 +56,7 @@ function TvShowsTop () {
   return (
     <main className='main main--media-list'>
       <Helmet>
-        <title>Топ сериалы</title>
+        <title>Movie base | {t('list.tvShows.top')}</title>
       </Helmet>
       <ServiceBlock
         isLoading={isFetching}
@@ -61,7 +65,7 @@ function TvShowsTop () {
       >
         <div className='movies-content'>
           <MediaList
-            movieListTitle='Топ сериалы'
+            movieListTitle={t('list.tvShows.top')}
             mediaList={data.results}
             typeList={MediaType.TV}
           />
