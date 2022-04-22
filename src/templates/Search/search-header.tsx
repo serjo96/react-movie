@@ -155,7 +155,7 @@ function SearchHeader ({
           <ServiceBlock
             isLoading={isFetching}
             isSuccessful={isSuccessful}
-            fetch={sendRequest}
+            sectionService
           >
             {data.totalResults
               ? <Scrollbars
