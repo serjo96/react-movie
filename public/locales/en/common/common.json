@@ -2,7 +2,7 @@
   "service": {
     "tryAgain": "An error occurred, try again?"
   },
-  "errorText": "An error has occurred",
+  "errorText": "Something went wrong",
   "moreButton": "More",
   "nav": {
     "movies": {
