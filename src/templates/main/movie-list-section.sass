@@ -1,0 +1,36 @@
+.movies-list-section
+		&:not(:last-child)
+			margin-bottom: 15px
+		&__title
+			display: flex
+			margin-bottom: 10px
+			font-weight: bold
+			font-size: 21px
+		&__list
+			&--loading
+				position: relative
+				height: 200px
+
+
+.link-angle
+	transition: all .3s linear
+	color: #d8b16b
+	h2
+		margin-right: 5px
+		vertical-align: middle
+	i
+		transition: all .3s linear
+		vertical-align: middle
+	&:hover
+		color: #fff
+		i
+			transform: translateX(10px)
+
+.link-angle--left
+	h2
+		margin-left: 5px
+		margin-right: 0
+	&:hover
+		color: #fff
+		i
+			transform: translateX(-10px)
