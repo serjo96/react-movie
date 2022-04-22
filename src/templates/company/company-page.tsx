@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import {
   getCompanyDetails
@@ -18,6 +18,7 @@ import { useLangEffect } from '~/hooks/useLangEffect';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { scrollToTop } from '~/utils';
 import './company.sass';
+import { friendlyUrl } from '~/utils/format';
 
 type MoviesFilters = {
   adult: boolean;
@@ -73,6 +74,26 @@ function CompanyPage () {
   //   appDispatch(getEngCompanyDetails({ id: `${companyId}`, lang: Languages.EN }));
   // };
 
+  const renderParentCompany = () => {
+    if (!companyData.parentCompany) {
+      return null;
+    }
+    return (
+      <div>
+        <div>
+          {t('parentCompany')}:
+          <Link
+            style={{ marginLeft: '5px' }}
+            className='link'
+            to={`/company/${friendlyUrl(companyData.parentCompany.name)}-${companyData.parentCompany.id}`}
+          >
+            <span>{companyData.parentCompany.name}</span>
+          </Link>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className='main main--media-list'>
       <div className='movies-content company'>
@@ -92,12 +113,12 @@ function CompanyPage () {
                 alt='poster'
               />
             </div>
-            <div className='company__info'>
+            <div className='company-info'>
               <h1 className='person-name'>{companyData.name}</h1>
               <p className='company__description'>{companyData.description.length > 0 ? companyData.description : t('noDescription')}</p>
-              <div className='company__city'>{companyData.headquarters ? `${t('location')} - ${companyData.headquarters}` : ''}</div>
-              <div className='company__parent'>{companyData.parentCompany ? `${t('parentCompany')} - ${companyData.parentCompany}` : ''}</div>
-              <div className='company__links'>
+              <div className='company-info__row company__city'>{companyData.headquarters ? `${t('location')}:  ${companyData.headquarters}` : ''}</div>
+              <div className='company-info__row company__parent'>{renderParentCompany()}</div>
+              <div className='company-info__row company__links'>
                 {companyData.homepage &&
                   <a
                     className='social-link'
