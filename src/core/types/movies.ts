@@ -39,3 +39,10 @@ export declare class MovieListItem {
   name: string;
   posterPath: string | null;
 }
+
+export enum MoviesListType {
+  ALL = 'all',
+  TOP = 'top',
+  UPCOMING = 'upcoming',
+  PLAYING = 'playing'
+}
