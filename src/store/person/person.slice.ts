@@ -1,8 +1,12 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import * as Sentry from '@sentry/react';
+import { toast } from 'react-toastify';
+
 import { PersonDetails, TaggedImage } from '~/core/types/perosn-details';
 import { initDataState, initExternalIds } from '~/utils/initData';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getPersonDetails, PersonRespData } from '~/store/person/person.api';
 import { sortMoviesItems, sortTvShows } from '~/utils/sortings';
+import i18n from '~/i18n';
 
 type PersonState = {
   isFetching: boolean;
@@ -76,9 +80,11 @@ export const personSlice = createSlice({
         state.isFetching = false;
       })
       .addCase(getPersonDetails.rejected, (state, action) => {
-        console.log(action);
-        throw new Error(action.error.message);
-        // state.lists.all.data = action.payload.data;
+        state.isFetching = false;
+        state.isSuccessful = false;
+        console.error(action.error.message);
+        toast.error(i18n.t('errorText'));
+        Sentry.captureException(action.error);
       });
   }
 });

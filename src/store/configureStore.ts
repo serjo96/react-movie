@@ -1,9 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
+import * as Sentry from '@sentry/react';
 import { rootReducer } from './mainReducer';
+
+const sentryReduxEnhancer = Sentry.createReduxEnhancer({
+  // Optionally pass options listed below
+});
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  enhancers: [sentryReduxEnhancer]
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

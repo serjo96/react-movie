@@ -1,9 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import * as Sentry from '@sentry/react';
+import { toast } from 'react-toastify';
+
 import { initListData } from '~/utils/initData';
 import { ListData } from '~/core/types/listData';
 import { SearchResultItem } from '~/core/types/search';
 import ActionPayloadData from '~/core/types/actionPayloadData';
 import { onSearchRequest, getSearchData, SearchResponse } from '~/store/search/search.api';
+import i18n from '~/i18n';
 
 export interface SearchState {
   headerSearch: ActionPayloadData<ListData<SearchResultItem>>;
@@ -29,9 +33,11 @@ export const searchSlice = createSlice({
         state.headerSearch.isFetching = false;
       })
       .addCase(getSearchData.rejected, (state, action) => {
-        console.log(action);
-        throw new Error(action.error.message);
-        // state.lists.all.data = action.payload.data;
+        state.headerSearch.isFetching = false;
+        state.headerSearch.isSuccessful = false;
+        console.error(action.error.message);
+        toast.error(i18n.t('errorText'));
+        Sentry.captureException(action.error);
       })
 
       .addCase(onSearchRequest.pending, (state) => {
@@ -42,9 +48,11 @@ export const searchSlice = createSlice({
         state.pageSearch.isFetching = false;
       })
       .addCase(onSearchRequest.rejected, (state, action) => {
-        console.log(action);
-        throw new Error(action.error.message);
-        // state.lists.all.data = action.payload.data;
+        state.pageSearch.isFetching = false;
+        state.pageSearch.isSuccessful = false;
+        console.error(action.error.message);
+        toast.error(i18n.t('errorText'));
+        Sentry.captureException(action.error);
       });
   }
 });
