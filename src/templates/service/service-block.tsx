@@ -19,11 +19,11 @@ const ServiceBlock = ({
 }: MyProps) => {
   const showPreloader = isLoading && isSuccessful;
   const allDataIsReady = !isLoading && isSuccessful;
-  console.log(isSuccessful);
+
   return (
     <React.Fragment>
       {showPreloader && <Spinner isFullScreen={!sectionService} />}
-      {!isSuccessful && <TryAgain fetch={fetch} />}
+      {!isSuccessful && <TryAgain isFullScreen={!sectionService} fetch={fetch} />}
       {allDataIsReady && children}
     </React.Fragment>
   );
