@@ -130,8 +130,9 @@ export const moviesSlice = createSlice({
       })
       .addCase(getMoviesList.rejected, (state, action) => {
         console.log(action);
-        throw new Error(action.error.message);
+        // throw new Error(action.error.message);
         // state.lists.all.data = action.payload.data;
+        state.lists.all.isSuccessful = false;
       })
       .addCase(getUpcomingMovies.pending, (state) => {
         state.lists.upcoming.isFetching = true;
@@ -140,6 +141,11 @@ export const moviesSlice = createSlice({
         state.lists.upcoming.data = action.payload.data;
         state.lists.upcoming.isFetching = false;
       })
+      .addCase(getUpcomingMovies.rejected, (state, action) => {
+        console.log(action);
+        state.lists.upcoming.isSuccessful = false;
+        // state.lists.all.data = action.payload.data;
+      })
       .addCase(getTopMovies.pending, (state) => {
         state.lists.top.isFetching = true;
       })
@@ -147,12 +153,20 @@ export const moviesSlice = createSlice({
         state.lists.top.data = action.payload.data;
         state.lists.top.isFetching = false;
       })
+      .addCase(getTopMovies.rejected, (state, action) => {
+        console.log(action);
+        state.lists.top.isSuccessful = false;
+      })
       .addCase(getPlayingMovies.pending, (state) => {
         state.lists.playing.isFetching = true;
       })
       .addCase(getPlayingMovies.fulfilled, (state, action: PayloadAction<ReturnedMovieList>) => {
         state.lists.playing.data = action.payload.data;
         state.lists.playing.isFetching = false;
+      })
+      .addCase(getPlayingMovies.rejected, (state, action) => {
+        console.log(action);
+        state.lists.playing.isSuccessful = false;
       })
       .addCase(getMovieData.pending, (state) => {
         state.isFetching = true;
