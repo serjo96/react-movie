@@ -45,7 +45,7 @@ function Main () {
       <div className='movies-content movies-content--main-page'>
         <MovieListSection
           title={t('nav.movies.playing')}
-          listStatus={playing.isFetching && !playing.isSuccessful}
+          listStatus={playing.isFetching || !playing.isSuccessful}
           typeList={MoviesListType.PLAYING}
         >
           <ServiceBlock
@@ -65,7 +65,7 @@ function Main () {
 
         <MovieListSection
           title={t('nav.movies.upcoming')}
-          listStatus={upcoming.isFetching && !upcoming.isSuccessful}
+          listStatus={upcoming.isFetching || !upcoming.isSuccessful}
           typeList={MoviesListType.UPCOMING}
         >
           <ServiceBlock
@@ -84,7 +84,7 @@ function Main () {
 
         <MovieListSection
           title={t('nav.movies.top')}
-          listStatus={top.isFetching && !top.isSuccessful}
+          listStatus={top.isFetching || !top.isSuccessful}
           typeList={MoviesListType.TOP}
         >
           <ServiceBlock
@@ -103,7 +103,7 @@ function Main () {
 
         <MovieListSection
           title={t('nav.movies.all')}
-          listStatus={all.isFetching && !all.isSuccessful}
+          listStatus={all.isFetching || !all.isSuccessful}
           typeList={MoviesListType.ALL}
         >
           <ServiceBlock
