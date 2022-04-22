@@ -7,12 +7,15 @@ interface MyProps {
 }
 
 function Spinner ({ isFullScreen }: MyProps) {
+  const spinnerWrapClass = classNames('spinner-wrap', {
+    'spinner-wrap--full-page': isFullScreen
+  });
   const spinnerClass = classNames('spinner', {
     'spinner--full-page': isFullScreen
   });
 
   return (
-    <div className='spinner-wrap'>
+    <div className={spinnerWrapClass}>
       <div className={spinnerClass} />
     </div>
   );
