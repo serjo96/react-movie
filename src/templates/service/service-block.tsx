@@ -7,7 +7,7 @@ interface MyProps {
   sectionService?: boolean;
   isLoading: boolean;
   isSuccessful: boolean;
-  fetch: () => void;
+  fetch?: () => void;
 }
 
 const ServiceBlock = ({
@@ -23,7 +23,7 @@ const ServiceBlock = ({
   return (
     <React.Fragment>
       {showPreloader && <Spinner isFullScreen={!sectionService} />}
-      {!isSuccessful && <TryAgain isFullScreen={!sectionService} fetch={fetch} />}
+      {(!isSuccessful && fetch) && <TryAgain isFullScreen={!sectionService} fetch={fetch} />}
       {allDataIsReady && children}
     </React.Fragment>
   );
