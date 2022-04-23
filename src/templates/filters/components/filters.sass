@@ -1,0 +1,10 @@
+@import "styles/mixins"
+@import "styles/variables"
+
+.filter-list
+	&--isShow
+		@include media($lgSize, "max")
+			display: block
+
+	@include media($lgSize, "max")
+		display: none

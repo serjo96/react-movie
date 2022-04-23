@@ -13,6 +13,7 @@ import {
 import { Genre } from '~/core/types/genres';
 import { GenresState } from '~/store/genres/genres.slice';
 import { filterByCountryName, filterByDateName, sortByFilterName } from '~/utils/formatFiltersNames';
+import './filters.sass';
 
 interface MyProps {
   genres: Array<Genre>;
