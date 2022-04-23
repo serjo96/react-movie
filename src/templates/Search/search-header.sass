@@ -7,7 +7,6 @@
 		margin-right: 20px
 
 
-
 .search__field
 	width: 100%
 	padding: 10px 12px
@@ -34,9 +33,11 @@
 	width: 350px
 	max-height: 300px
 	z-index: 325
-	background: #fff
+	background: #f7f7f7
 	color: #020411
 	font-size: 14px
+	border-bottom-left-radius: 3px
+	border-bottom-right-radius: 3px
 	box-shadow:  0 7px 34px -9px rgba(0,0,0,0.4)
 	transition: height, opacity .5s
 	@include media("xlSize", "max")
@@ -57,6 +58,7 @@
 	align-items: center
 	justify-content: space-between
 	padding: 10px
+	min-height: 95px
 	@include media("lgSize", "max")
 		display: inline-flex
 		margin: 5px
@@ -72,11 +74,12 @@
 
 .result-element__poster
 	width: 50px
+	height: 100%
 	position: relative
 	.spinner-wrap
 		position: absolute
 	.spinner
-		height: 75px
+		height: 70%
 	img
 		display: block
 		width: 100%
@@ -89,10 +92,8 @@
 		margin: 5px 0
 		padding: 0 5px
 
-
 .result-element__type
 	font-weight: bold
-
 
 .header__search--mobile
 	position: fixed
