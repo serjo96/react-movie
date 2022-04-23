@@ -1,3 +1,5 @@
+@import "styles/mixins"
+
 .tv-seasons
 	background-repeat: no-repeat
 	background-size: cover
@@ -25,6 +27,10 @@
 	.movie-item
 		padding: 15px
 		width: 17.7%
+		@include media("smSize", "max")
+			width: 29.7%
+		@include media("xsSize", "max")
+			width: 49.7%
 		&:hover
 			.season-number
 				color: #fff

@@ -29,16 +29,19 @@
 	margin: 0 auto
 	text-align: center
 	margin-bottom: 20px
-	width: 800px
 	font-size: 17px
+	@include media("lgSize", "min")
+		width: 800px
 
 .collection__list
 	display: flex
 	flex-wrap: wrap
 	justify-content: center
 	.movie-item
-		width: 16%
+		width: 17.7%
+		@include media("smSize", "max")
+			width: 29.7%
 		@include media("xsSize", "max")
-			width: 50%
+			width: 49.7%
 			.movie-item__title
 				font-size: 14px
