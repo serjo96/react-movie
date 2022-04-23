@@ -34,7 +34,7 @@ const MediaRecommendations = ({
       slidesPerView: 2
     },
     460: {
-      slidesPerView: 4
+      slidesPerView: 3
     },
     560: {
       slidesPerView: 4
