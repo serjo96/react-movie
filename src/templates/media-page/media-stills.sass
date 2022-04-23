@@ -42,6 +42,9 @@
 	&--posters
 		padding-bottom: 35%
 		width: 25%
+		@include media("xsSize", "max")
+			padding-bottom: 43.7%
+			width: 33.3%
 	&:hover
 		img
 			transform: scale3d(2, 2, 2)
