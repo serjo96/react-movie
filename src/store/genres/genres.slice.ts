@@ -44,6 +44,8 @@ export const genresSlice = createSlice({
         state.isFetching = true;
       })
       .addCase(getGenres.fulfilled, (state, action: PayloadAction<ReturnedGenres>) => {
+        state.isSuccessful = true;
+        state.isFetching = false;
         const formattedGenres = formattingGenres(action.payload.data);
         window.localStorage.setItem('genres', JSON.stringify(formattedGenres));
         state.data = formattedGenres;

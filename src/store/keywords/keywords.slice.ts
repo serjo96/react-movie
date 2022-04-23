@@ -24,6 +24,7 @@ export const keywordsSlice = createSlice({
       })
       .addCase(getKeywordsMedia.fulfilled, (state, action: PayloadAction<KeywordsListResponse>) => {
         state.isFetching = false;
+        state.isSuccessful = true;
         state.data = action.payload.data;
       })
       .addCase(getKeywordsMedia.rejected, (state, action) => {

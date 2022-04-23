@@ -59,6 +59,7 @@ export const companySlice = createSlice({
       })
       .addCase(getCompanyDetails.fulfilled, (state, action: PayloadAction<CompanyRespData>) => {
         state.isFetching = false;
+        state.isSuccessful = true;
         state.data = action.payload.data;
       })
       .addCase(getCompanyDetails.rejected, (state, action) => {
@@ -74,6 +75,7 @@ export const companySlice = createSlice({
       })
       .addCase(getEngCompanyDetails.fulfilled, (state, action: PayloadAction<CompanyRespData>) => {
         state.isFetching = false;
+        state.isSuccessful = true;
         state.data = {
           ...state.data,
           description: action.payload.data.description
@@ -92,6 +94,7 @@ export const companySlice = createSlice({
       })
       .addCase(getCompanyMovies.fulfilled, (state, action: PayloadAction<ReturnedMovieList>) => {
         state.lists.movies.data = action.payload.data;
+        state.lists.movies.isSuccessful = true;
         state.lists.movies.isFetching = false;
       })
       .addCase(getCompanyMovies.rejected, (state, action) => {
@@ -107,6 +110,7 @@ export const companySlice = createSlice({
       .addCase(getCompanyTvShows.fulfilled, (state, action: PayloadAction<ReturnedTvShowsList>) => {
         state.lists.tvShows.data = action.payload.data;
         state.lists.tvShows.isFetching = false;
+        state.lists.tvShows.isSuccessful = true;
       })
       .addCase(getCompanyTvShows.rejected, (state, action) => {
         state.lists.tvShows.isFetching = false;

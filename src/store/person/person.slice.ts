@@ -78,6 +78,7 @@ export const personSlice = createSlice({
         };
         state.data = data;
         state.isFetching = false;
+        state.isSuccessful = true;
       })
       .addCase(getPersonDetails.rejected, (state, action) => {
         state.isFetching = false;

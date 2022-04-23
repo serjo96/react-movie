@@ -129,6 +129,7 @@ export const moviesSlice = createSlice({
       })
       .addCase(getMoviesList.fulfilled, (state, action: PayloadAction<ReturnedMovieList>) => {
         state.lists.all.data = action.payload.data;
+        state.lists.all.isSuccessful = true;
         state.lists.all.isFetching = false;
       })
       .addCase(getMoviesList.rejected, (state, action) => {
@@ -144,6 +145,7 @@ export const moviesSlice = createSlice({
       .addCase(getUpcomingMovies.fulfilled, (state, action: PayloadAction<ReturnedMovieList>) => {
         state.lists.upcoming.data = action.payload.data;
         state.lists.upcoming.isFetching = false;
+        state.lists.upcoming.isSuccessful = true;
       })
       .addCase(getUpcomingMovies.rejected, (state, action) => {
         state.lists.upcoming.isFetching = false;
@@ -158,6 +160,7 @@ export const moviesSlice = createSlice({
       .addCase(getTopMovies.fulfilled, (state, action: PayloadAction<ReturnedMovieList>) => {
         state.lists.top.data = action.payload.data;
         state.lists.top.isFetching = false;
+        state.lists.top.isSuccessful = true;
       })
       .addCase(getTopMovies.rejected, (state, action) => {
         state.lists.top.isFetching = false;
@@ -172,6 +175,7 @@ export const moviesSlice = createSlice({
       .addCase(getPlayingMovies.fulfilled, (state, action: PayloadAction<ReturnedMovieList>) => {
         state.lists.playing.data = action.payload.data;
         state.lists.playing.isFetching = false;
+        state.lists.playing.isSuccessful = true;
       })
       .addCase(getPlayingMovies.rejected, (state, action) => {
         state.lists.playing.isFetching = false;
@@ -187,6 +191,7 @@ export const moviesSlice = createSlice({
       .addCase(getMovieData.fulfilled, (state, action: PayloadAction<MovieRespData>) => {
         const data = action.payload.data;
         state.isFetching = false;
+        state.isSuccessful = true;
         state.data = {
           ...data,
           credits: {
@@ -204,10 +209,10 @@ export const moviesSlice = createSlice({
       })
       .addCase(getMovieEngOverview.pending, (state) => {
         state.isFetching = true;
-        state.isSuccessful = true;
       })
       .addCase(getMovieEngOverview.fulfilled, (state, action: PayloadAction<MovieEngRespData>) => {
         state.isFetching = false;
+        state.isSuccessful = true;
         state.data = { ...state.data, overview: action.payload.data };
       })
       .addCase(getMovieEngOverview.rejected, (state, action) => {

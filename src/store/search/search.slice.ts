@@ -31,6 +31,7 @@ export const searchSlice = createSlice({
       .addCase(getSearchData.fulfilled, (state, action: PayloadAction<SearchResponse>) => {
         state.headerSearch.data = action.payload.data;
         state.headerSearch.isFetching = false;
+        state.headerSearch.isSuccessful = true;
       })
       .addCase(getSearchData.rejected, (state, action) => {
         state.headerSearch.isFetching = false;
@@ -46,6 +47,7 @@ export const searchSlice = createSlice({
       .addCase(onSearchRequest.fulfilled, (state, action: PayloadAction<SearchResponse>) => {
         state.pageSearch.data = action.payload.data;
         state.pageSearch.isFetching = false;
+        state.pageSearch.isSuccessful = true;
       })
       .addCase(onSearchRequest.rejected, (state, action) => {
         state.pageSearch.isFetching = false;

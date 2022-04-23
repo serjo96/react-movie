@@ -166,6 +166,7 @@ export const tvSlice = createSlice({
       .addCase(getTvShowsList.fulfilled, (state, action: PayloadAction<ReturnedTvShowsList>) => {
         state.lists.all.data = action.payload.data;
         state.lists.all.isFetching = false;
+        state.lists.all.isSuccessful = true;
       })
       .addCase(getTvShowsList.rejected, (state, action) => {
         state.lists.all.isFetching = false;
@@ -180,6 +181,7 @@ export const tvSlice = createSlice({
       .addCase(getAiringTvShows.fulfilled, (state, action: PayloadAction<ReturnedTvShowsList>) => {
         state.lists.airing.data = action.payload.data;
         state.lists.airing.isFetching = false;
+        state.lists.airing.isSuccessful = true;
       })
       .addCase(getAiringTvShows.rejected, (state, action) => {
         state.lists.airing.isFetching = false;
@@ -194,6 +196,7 @@ export const tvSlice = createSlice({
       .addCase(getTopTvShows.fulfilled, (state, action: PayloadAction<ReturnedTvShowsList>) => {
         state.lists.top.data = action.payload.data;
         state.lists.top.isFetching = false;
+        state.lists.top.isSuccessful = true;
       })
       .addCase(getTopTvShows.rejected, (state, action) => {
         state.lists.top.isFetching = false;
@@ -209,6 +212,7 @@ export const tvSlice = createSlice({
       .addCase(getOnTheAirTvShows.fulfilled, (state, action: PayloadAction<ReturnedTvShowsList>) => {
         state.lists.onTheAir.data = action.payload.data;
         state.lists.onTheAir.isFetching = false;
+        state.lists.onTheAir.isSuccessful = true;
       })
       .addCase(getOnTheAirTvShows.rejected, (state, action) => {
         state.lists.onTheAir.isFetching = false;
@@ -225,6 +229,7 @@ export const tvSlice = createSlice({
         const data = action.payload.data;
         state.data = { ...state.data, ...data, credits: { ...data.credits, crew: formatCrew(data.credits.crew) } };
         state.isFetching = false;
+        state.isSuccessful = true;
       })
       .addCase(getTvShowData.rejected, (state, action) => {
         state.isFetching = false;
@@ -240,6 +245,7 @@ export const tvSlice = createSlice({
       .addCase(getEngTvShowData.fulfilled, (state, action: PayloadAction<TvShowEngDataResp>) => {
         state.data = { ...state.data, overview: action.payload.data };
         state.isFetching = false;
+        state.isSuccessful = true;
       })
       .addCase(getEngTvShowData.rejected, (state, action) => {
         state.isFetching = false;
@@ -256,6 +262,7 @@ export const tvSlice = createSlice({
         const data = action.payload.data;
         state.tvShowSeasons.data = { ...state.data, ...data, credits: { ...data.credits, crew: formatCrew(data.credits.crew) } };
         state.isFetching = false;
+        state.tvShowSeasons.isSuccessful = true;
       })
       .addCase(getTvShowSeasons.rejected, (state, action) => {
         state.tvShowSeasons.isFetching = false;
