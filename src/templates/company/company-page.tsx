@@ -44,7 +44,7 @@ export const initFilters = (isMovies?: true): MoviesFilters | TvShowsFilters => 
 
 function CompanyPage () {
   const appDispatch = useAppDispatch();
-  const { t } = useTranslation('company');
+  const { t } = useTranslation(['common', 'company']);
   const { id } = useParams<{id: string}>();
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.company);
 
@@ -81,7 +81,7 @@ function CompanyPage () {
     return (
       <div>
         <div>
-          {t('parentCompany')}:
+          {t('company:parentCompany')}:
           <Link
             style={{ marginLeft: '5px' }}
             className='link'
@@ -115,8 +115,8 @@ function CompanyPage () {
             </div>
             <div className='company-info'>
               <h1 className='person-name'>{companyData.name}</h1>
-              <p className='company__description'>{companyData.description.length > 0 ? companyData.description : t('noDescription')}</p>
-              <div className='company-info__row company__city'>{companyData.headquarters ? `${t('location')}:  ${companyData.headquarters}` : ''}</div>
+              <p className='company__description'>{companyData.description.length > 0 ? companyData.description : t('company:noDescription')}</p>
+              <div className='company-info__row company__city'>{companyData.headquarters ? `${t('company:location')}:  ${companyData.headquarters}` : ''}</div>
               <div className='company-info__row company__parent'>{renderParentCompany()}</div>
               <div className='company-info__row company__links'>
                 {companyData.homepage &&
@@ -126,7 +126,7 @@ function CompanyPage () {
                     target='_blank'
                     rel='noopener noreferrer'
                   >
-                    {t('homePageLink')}
+                    {t('company:homePageLink')}
                   </a>}
               </div>
             </div>
@@ -135,13 +135,13 @@ function CompanyPage () {
 
           <Tabs
             defaultActiveKey='movies'
-            labels={['Movies', 'Tv shows']}
+            labels={[t('common:nav.movies.sectionTitle'), t('common:nav.tvShows.sectionTitle')]}
           >
-            <Tab title='movies'>
+            <Tab tabKey='movies'>
               <CompanyMovies />
             </Tab>
 
-            <Tab title='tv-shows'>
+            <Tab tabKey='tv-shows'>
               <CompanyTvShows />
             </Tab>
           </Tabs>
