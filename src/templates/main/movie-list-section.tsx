@@ -18,7 +18,7 @@ function MovieListSection ({
   typeList,
   children
 }: MyProps) {
-  const listWrapperClass = () => classNames('movies-list-section__list', {
+  const listWrapperClass = classNames('movies-list-section__list', {
     'movies-list-section__list--loading': listStatus
   });
 
@@ -31,7 +31,7 @@ function MovieListSection ({
         <h2>{title}</h2>
         <i className='fa fa-angle-right' aria-hidden='true' />
       </Link>
-      <div className={listWrapperClass()}>
+      <div className={listWrapperClass}>
         {children}
       </div>
     </section>
