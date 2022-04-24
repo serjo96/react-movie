@@ -1,4 +1,5 @@
 @import "styles/mixins"
+@import "styles/variables"
 
 .collection
 	margin-top: 30px
@@ -27,21 +28,21 @@
 
 .collection__overview
 	margin: 0 auto
-	text-align: center
 	margin-bottom: 20px
+	text-align: center
 	font-size: 17px
-	@include media("lgSize", "min")
+	@include media($lgSize, "min")
 		width: 800px
 
 .collection__list
-	display: flex
-	flex-wrap: wrap
-	justify-content: center
+	display: grid
+	grid-template-columns: repeat( auto-fit, minmax(158px, 1fr) )
+	grid-auto-rows: minmax(295px, 1fr)
+	@include media($smSize, "max")
+		grid-template-columns: repeat( auto-fit, minmax(26%, 1fr) )
+	@include media($xsSize, "max")
+		grid-template-columns: repeat( auto-fit, minmax(34%, 1fr) )
 	.movie-item
-		width: 17.7%
-		@include media("smSize", "max")
-			width: 29.7%
-		@include media("xsSize", "max")
-			width: 49.7%
+		@include media($xsSize, "max")
 			.movie-item__title
 				font-size: 14px
