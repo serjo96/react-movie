@@ -16,8 +16,23 @@ export default function Tabs ({
   defaultActiveKey,
   onSelect
 }: MyProps) {
-  const tabsLabels = children.map(el => el.props.title);
-  const [activeTab, setActiveTab] = useState(defaultActiveKey || tabsLabels[0]);
+  const getKeys = children.map(el => el.props.tabKey);
+  const getTabsLabels = () => {
+    if (labels && labels.length) {
+      return labels.map((label, index) => {
+        return {
+          label,
+          key: getKeys[index] || label
+        };
+      });
+    }
+    return children.map(tabKey => ({
+      label: tabKey.props.tabKey,
+      key: tabKey.props.tabKey
+    }));
+  };
+  const tabsLabels = getTabsLabels();
+  const [activeTab, setActiveTab] = useState(defaultActiveKey || tabsLabels[0].key);
 
   const onClickTabItem = (tab: string) => {
     setActiveTab(tab);
@@ -27,14 +42,15 @@ export default function Tabs ({
   const headerTabClass = (label: string) => classNames('tabs-nav__item', {
     'tabs-nav__item--active': activeTab === label
   });
+
   return (
     <div className='tabs'>
       <div className='tabs-nav'>
-        {tabsLabels.map(label => (
+        {tabsLabels.map(({ key, label }) => (
           <button
-            key={label}
-            onClick={() => onClickTabItem(label)}
-            className={headerTabClass(label)}
+            key={key}
+            onClick={() => onClickTabItem(key)}
+            className={headerTabClass(key)}
           >
             {label}
           </button>
@@ -43,7 +59,7 @@ export default function Tabs ({
 
       <div className='tab-content'>
         {children.map((child) => {
-          if (child.props.title !== activeTab) return undefined;
+          if (child.props.tabKey !== activeTab) return undefined;
           return child.props.children;
         })}
       </div>
