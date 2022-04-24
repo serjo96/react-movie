@@ -19,6 +19,14 @@ export default function Image (props: MyProps) {
   const [imgError, setImgError] = useState(false);
   let imageSrc = NoImg;
 
+  const onLoadImg = () => {
+    setImgStatus(false);
+  };
+
+  const onErrorImg = () => {
+    setImgError(true);
+  };
+
   if (props.src) {
     imageSrc = props.src.match(/^http/) ? props.src : `${imgUrl}${props.src}`;
   }
@@ -27,13 +35,6 @@ export default function Image (props: MyProps) {
     imageSrc = errorImg;
   }
 
-  const onLoadImg = () => {
-    setTimeout(() => setImgStatus(false), 500);
-  };
-
-  const onErrorImg = () => {
-    setImgError(true);
-  };
   const imgClass = classNames(props.className, { 'img-loading': imgStatus });
   const imgWrapperClass = classNames('image-wrapper', {
     'image-wrapper--preload': imgStatus || imgError,
