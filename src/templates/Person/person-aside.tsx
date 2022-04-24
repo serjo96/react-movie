@@ -30,7 +30,7 @@ export default function PersonAside ({
             username: 'TwitterDev',
             theme: 'dark',
             transparent: true,
-            tweetLimit: 10,
+            tweetLimit: 6,
             slug: 'official-twitter-accts',
             chrome: ['transparent', 'noborders']
           }}
