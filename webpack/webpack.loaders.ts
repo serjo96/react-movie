@@ -45,7 +45,7 @@ const loaders: webpack.ModuleOptions['rules'] = [
       {
         loader: 'css-loader',
         options: {
-          sourceMap: true
+          sourceMap: isDevelopment
         }
       },
       'resolve-url-loader',
