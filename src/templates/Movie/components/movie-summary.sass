@@ -46,12 +46,12 @@
 .summary-item
 	padding: 0 7.5px
 	margin-bottom: 5px
-	@include media("xlSize", "max")
+	@include media($xlSize, "max")
 		padding: 5px 7.5px
-	@include media("xsSize", "max")
+	@include media($xsSize, "max")
 		width: 50%
 	&__title
 		margin-bottom: 5px
 		font: 700 17px 'proxima_novasemibold', sans-serif
-	@include media("xsSize", "max")
-		font-size: 14px
+		@include media($xsSize, "max")
+			font-size: 14px
