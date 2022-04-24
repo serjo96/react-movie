@@ -99,7 +99,7 @@ export default function Filters ({
   return (
     <div className='filter-list-container'>
       <div className='filter-list'>
-        {genres.length &&
+        {!!genres.length &&
           <div className={genreFilterClasses}>
             <div className='filter-name'>
               <span>{filterValues.genre ? genresObject[filterValues.genre] : t('filters:allGenres')}</span>

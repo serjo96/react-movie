@@ -86,7 +86,7 @@ export default function FiltersMobile ({
 
             <div className='mobile-filter'>
               <h2 className='popup__title'>{t('filters:showMobileFiltersButton')}</h2>
-              {genres.length &&
+              {!!genres.length &&
                 <div className='mobile-filter__select'>
                   <div className='mobile-filter-item__title'>{t('filters:genresLabel')}</div>
                   <label
