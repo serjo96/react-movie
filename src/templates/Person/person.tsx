@@ -22,6 +22,8 @@ import useTranslations from '~/hooks/useTranslations';
 import { sortBestMediaItem } from '~/utils/sortings';
 import { scrollToTop } from '~/utils';
 
+import Tab from '~/ui-components/tabs/tab';
+import Tabs from '~/ui-components/tabs/tabs';
 import './Person.sass';
 
 function Person () {
@@ -76,7 +78,7 @@ function Person () {
 
               <div className='mobile-person-info'>
                 <div className='person-photo'>
-                  <Image src={data.profilePath} />
+                  <Image src={`https://image.tmdb.org/t/p/w185/${data.profilePath}`} />
                 </div>
               </div>
 
@@ -255,10 +257,23 @@ function Person () {
                 imgCount={11}
               />
 
-              <PersonMediaList title={t('sectionsTitle.filmography')} typeList={MediaType.MOVIE} listData={bestMovies} />
-              <PersonMediaList title={t('sectionsTitle.tvSeries')} typeList={MediaType.TV} listData={bestTV} />
+              <Tabs
+                defaultActiveKey='movies'
+                labels={[t('sectionsTitle.filmography'), t('sectionsTitle.tvSeries'), t('sectionsTitle.projectParticipation')]}
+              >
+                <Tab tabKey='movies'>
+                  <PersonMediaList title={t('sectionsTitle.filmography')} typeList={MediaType.MOVIE} listData={bestMovies} />
+                </Tab>
 
-              <PersonMediaList title={t('sectionsTitle.projectParticipation')} typeList={MediaType.MIXED} listData={data.combinedCredits.crew} />
+                <Tab tabKey='tv-shows'>
+                  <PersonMediaList title={t('sectionsTitle.tvSeries')} typeList={MediaType.TV} listData={bestTV} />
+                </Tab>
+
+                <Tab tabKey='project-participation'>
+                  <PersonMediaList title={t('sectionsTitle.projectParticipation')} typeList={MediaType.MIXED} listData={data.combinedCredits.crew} />
+                </Tab>
+              </Tabs>
+
             </div>
 
           </div>
