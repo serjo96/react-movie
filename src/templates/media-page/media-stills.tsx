@@ -3,25 +3,35 @@ import Lightbox from 'lightbox-react';
 import classNames from 'classnames';
 import './media-stills.sass';
 
-import { Image } from '~/core/types/images';
+import { Image as ImgInterface } from '~/core/types/images';
 import { useTranslation } from 'react-i18next';
+
+import Image from '~/ui-components/image/image';
+
+export enum stillsType {
+  PERSON = 'person',
+  POSTERS = 'posters',
+  STILLS = 'stills'
+}
 
 interface MyProps {
   imgCount: number
   title: string;
-  images: Image[];
+  images: ImgInterface[];
   posters?: boolean;
+  stillsVariants?: stillsType
 }
 
 const defaultCount = 15;
 
 export default function MediaStills ({
-  imgCount,
+  imgCount = defaultCount,
   title,
   images,
-  posters
+  posters,
+  stillsVariants
 }: MyProps) {
-  const [imgListCount, setImgListCount] = useState(imgCount ? imgCount - 1 : defaultCount);
+  const [imgListCount, setImgListCount] = useState(imgCount - 1);
   const [imgIndex, setImageIndex] = useState(0);
   const [isShowLightBox, setVisibilityLightBox] = useState(false);
   const [isLoadedImages, setIsLoadedImages] = useState(false);
@@ -39,7 +49,7 @@ export default function MediaStills ({
 
   const stillsListClass = classNames('stills__list', {
     'stills__list--moreLoaded': images.length <= imgCount + 1 || isLoadedImages,
-    'stills__list--person': title === 'Фото'
+    'stills__list--poster': stillsVariants === stillsType.PERSON || stillsVariants === stillsType.POSTERS
   });
 
   const stillsImgClasses = classNames('stills__img', {
@@ -68,9 +78,10 @@ export default function MediaStills ({
               className={stillsImgClasses}
               key={indx}
             >
-              <img
+              <Image
                 src={'https://image.tmdb.org/t/p/w1280' + backdrop.filePath}
                 alt=''
+                showSpinner
                 onClick={() => onClickImg(indx)}
               />
             </div>
