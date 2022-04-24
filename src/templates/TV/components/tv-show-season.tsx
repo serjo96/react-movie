@@ -4,20 +4,28 @@ import { useTranslation } from 'react-i18next';
 import NoImg from '~/assets/images/noImg.png';
 import { friendlyData, kFormatter } from '~/utils/format';
 import { useAppSelector } from '~/hooks/storeHooks';
+import useBreakpoints, { BreakpointsNames } from '~/utils/useMediaQuery';
 
 function TvShowSeason () {
   const { t } = useTranslation(['tv', 'mediaCommon']);
+  const { active } = useBreakpoints();
+  const mobileBreakpoints = [BreakpointsNames.MD, BreakpointsNames.SM, BreakpointsNames.XS];
   const { isFetching, data } = useAppSelector(state => state.tvShows.tvShowSeasons);
+  const isMobile = mobileBreakpoints.includes(active);
 
   return (
     <div className='season'>
       {isFetching &&
         <div className='season__wrapper'>
-          <div className='season__number-series'>{`${data.episodes.length} ${t('tv:seasonData.episode', {count: data.episodes.length})}`}</div>
+          <div className='season__number-series'>{`${data.episodes.length} ${t('tv:seasonData.episode', { count: data.episodes.length })}`}</div>
           <div className='episodes-list'>
             {data.episodes.map((episode, indx) => (
               <div className='episodes-list__episode episode' key={indx}>
-                <div className='episode__img' style={{ backgroundImage: `url(${episode.stillPath ? `https://image.tmdb.org/t/p/original${episode.stillPath})` : NoImg}` }} />
+                {!isMobile &&
+                  <div
+                    className='episode__img'
+                    style={{ backgroundImage: `url(${episode.stillPath ? `https://image.tmdb.org/t/p/original${episode.stillPath})` : NoImg}` }}
+                  />}
                 <div className='episode__data'>
                   <div className='episode__header'>
                     <div className='episode-header--left'>
@@ -38,7 +46,7 @@ function TvShowSeason () {
                     </div>
                   </div>
                   <div className='episode__overview-img-wrap'>
-                    <div className='episode__img episode__img--mobile' style={{ backgroundImage: `url(${episode.stillPath ? `https://image.tmdb.org/t/p/original${episode.stillPath})` : NoImg}` }} />
+                    {isMobile && <div className='episode__img episode__img--mobile' style={{ backgroundImage: `url(${episode.stillPath ? `https://image.tmdb.org/t/p/original${episode.stillPath})` : NoImg}` }} />}
                     <div className='episode__overview'>{episode.overview ? episode.overview : t('tv:seasonData.noDescription')}</div>
                   </div>
                 </div>
