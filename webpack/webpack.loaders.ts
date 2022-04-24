@@ -1,4 +1,5 @@
 import * as webpack from 'webpack';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 const loaders: webpack.ModuleOptions['rules'] = [
@@ -41,7 +42,7 @@ const loaders: webpack.ModuleOptions['rules'] = [
   {
     test: /\.(sa|sc|c)ss$/,
     use: [
-      'style-loader',
+      isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
       {
         loader: 'css-loader',
         options: {
