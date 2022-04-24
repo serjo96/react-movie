@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 
 import NoImg from '~/assets/images/noImg.png';
 import errorImg from '~/assets/images/error.png';
@@ -12,6 +12,7 @@ interface MyProps {
   alt?: string;
   showSpinner?: boolean;
   className?: string;
+  onClick?: (event: SyntheticEvent) => void;
 }
 
 export default function Image (props: MyProps) {
@@ -51,6 +52,7 @@ export default function Image (props: MyProps) {
         alt={alt}
         onError={onErrorImg}
         onLoad={onLoadImg}
+        onClick={props.onClick}
       />
     </div>
   );
