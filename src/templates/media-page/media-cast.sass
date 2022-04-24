@@ -1,3 +1,6 @@
+@import "styles/mixins"
+@import "styles/variables"
+
 .credits
 	margin-top: 25px
 
@@ -17,6 +20,8 @@
 			color: #fff
 	&__info
 		transition: all 0.6s
+		@include media($smSize, "max")
+			padding: 0 5px
 	&__role
 		color: #d8b16b
 	&__name

@@ -25,6 +25,8 @@
 
 .header--is-hide
 	transform: translate3d(0, -100%, 0)
+	@include media("lgSize", "max")
+		transform: translate3d(0px, 0px, 0px)
 	.searchComboBox
 		height: 0!important
 		opacity: 0
@@ -94,3 +96,5 @@
 	justify-content: center
 	align-items: center
 	cursor: pointer
+	@include media("lgSize", "max")
+		display: flex

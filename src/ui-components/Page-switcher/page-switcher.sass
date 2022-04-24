@@ -1,11 +1,19 @@
+@import "styles/mixins"
+@import "styles/variables"
+
+
 .pager-btns
 	margin-top: 20px
 	padding: 0 15px
+	@include media($xsSize, "max")
+		padding: 0
 
 
 .pager-btn
 	cursor: pointer
-
+	@include media($xsSize, "max")
+		span
+			font-size: 12px
 .pager-btn--prev
 	float: left
 

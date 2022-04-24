@@ -1,4 +1,5 @@
 @import "styles/mixins"
+@import "styles/variables"
 
 .tv-seasons
 	background-repeat: no-repeat
@@ -24,6 +25,8 @@
 	justify-content: center
 	flex-wrap: wrap
 	margin: 0 15px
+	@include media("smSize", "max")
+		margin: 0 -10px
 	.movie-item
 		padding: 15px
 		width: 17.7%
@@ -90,6 +93,12 @@
 .episode__data
 	width: 73%
 	margin-left: 15px
+	@include media($xlSize, "max")
+		width: 100%
+		margin-left: 0
+	@include media($lgSize, "max")
+		width: 100%
+		margin-left: 0
 
 .episode__header
 	margin-bottom: 10px
@@ -111,7 +120,6 @@
 
 .episode__img
 	width: 25%
-	-webkit-background-size: cover
 	background-size: cover
 	background-repeat: no-repeat
 	background-position: 50% 50%
@@ -121,8 +129,19 @@
 		padding-bottom: 100%
 
 .episode__img--mobile
-	display: none
 	margin-right: 15px
+	@include media("lgSize", "max")
+		width: 20%
+	@include media("smSize", "max")
+		width: 30%
+		margin-bottom: 10px
+	@include media("xsSize", "max")
+		width: 100%
+		margin-right: 0
+
+.episode__overview
+	@include media("smSize", "min")
+		width: 67%
 
 .episode__overview-img-wrap
 	display: flex
