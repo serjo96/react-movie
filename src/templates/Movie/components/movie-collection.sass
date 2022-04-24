@@ -36,12 +36,13 @@
 
 .collection__list
 	display: grid
-	grid-template-columns: repeat( auto-fit, minmax(158px, 1fr) )
+	grid-template-columns: repeat( auto-fit, minmax(158px, 223px) )
 	grid-auto-rows: minmax(295px, 1fr)
 	@include media($smSize, "max")
-		grid-template-columns: repeat( auto-fit, minmax(26%, 1fr) )
+		grid-template-columns: repeat( auto-fit, minmax(33%, min-content) )
 	@include media($xsSize, "max")
-		grid-template-columns: repeat( auto-fit, minmax(34%, 1fr) )
+		grid-template-columns: repeat( auto-fit, minmax(50%, min-content) )
+		grid-auto-rows: minmax(auto, 1fr)
 	.movie-item
 		@include media($xsSize, "max")
 			.movie-item__title
