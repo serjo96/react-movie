@@ -8,7 +8,7 @@ import { friendlyData, urlRusLat } from '~/utils/format';
 
 import ServiceBlock from '../service/service-block';
 
-import MediaStills from '../media-page/media-stills';
+import MediaStills, { stillsType } from '../media-page/media-stills';
 import PersonMediaList from './components/person-media-list';
 import PersonAside from '~/templates/Person/person-aside';
 
@@ -253,7 +253,7 @@ function Person () {
               <MediaStills
                 images={data.images.profiles}
                 title={t('sectionsTitle.photo')}
-                posters
+                stillsVariants={stillsType.PERSON}
                 imgCount={11}
               />
 
