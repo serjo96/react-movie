@@ -121,7 +121,7 @@ function TvDetails () {
   return (
     <ServiceBlock
       isLoading={isFetching}
-      isSuccessful={isSuccessful || tvShowSeasons.isSuccessful}
+      isSuccessful={isSuccessful}
       fetch={sendRequest}
     >
       <main className='movie'>

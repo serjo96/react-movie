@@ -256,17 +256,17 @@ export const tvSlice = createSlice({
       })
 
       .addCase(getTvShowSeasons.pending, (state) => {
-        state.tvShowSeasons.isFetching = true;
+        state.isFetching = true;
       })
       .addCase(getTvShowSeasons.fulfilled, (state, action: PayloadAction<TvSeasonRespData>) => {
         const data = action.payload.data;
         state.tvShowSeasons.data = { ...state.data, ...data, credits: { ...data.credits, crew: formatCrew(data.credits.crew) } };
         state.isFetching = false;
-        state.tvShowSeasons.isSuccessful = true;
+        state.isSuccessful = true;
       })
       .addCase(getTvShowSeasons.rejected, (state, action) => {
-        state.tvShowSeasons.isFetching = false;
-        state.tvShowSeasons.isSuccessful = false;
+        state.isFetching = false;
+        state.isSuccessful = false;
         console.error(action.error.message);
         toast.error(i18n.t('errorText'));
         Sentry.captureException(action.error);
