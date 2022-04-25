@@ -7,7 +7,7 @@ import { Languages } from '~/store/config/config.slice';
 import { getMovieData, getMovieEngOverview } from '~/store/movies/movies.api';
 import { MediaType } from '~/core/types/media-type';
 
-import MediaStills from '~/templates/media-page/media-stills';
+import MediaStills, { stillsType } from '~/templates/media-page/media-stills';
 import MediaTop from '~/templates/media-page/media-top';
 import MovieAside from '~/templates/Movie/components/movie-aside';
 import { MovieSummary } from '~/templates/Movie/components/movie-summary';
@@ -21,11 +21,14 @@ import { VideosSection } from '~/ui-components/video-section/videos-section';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { useLangEffect } from '~/hooks/useLangEffect';
 import useTranslations from '~/hooks/useTranslations';
+import useBreakpoints, { BreakpointsNames } from '~/utils/useMediaQuery';
 import { scrollToTop } from '~/utils';
 
 import './movie.sass';
 
 function MovieDetails () {
+  const { active } = useBreakpoints();
+  const mobileBreakpoints = [BreakpointsNames.MD, BreakpointsNames.SM, BreakpointsNames.XS];
   const appDispatch = useAppDispatch();
   const { id } = useParams<{id: string}>();
   const [prevProps] = useState(id);
@@ -34,6 +37,8 @@ function MovieDetails () {
   const { t } = useTranslation('movie');
   const movieId = id.split('-').pop();
   const movie = data;
+  const isMobile = mobileBreakpoints.includes(active);
+  const videoItemsCount = isMobile ? 3 : 15;
 
   const sendRequest = () => {
     appDispatch(getMovieData({ id: +movieId, lang }));
@@ -100,7 +105,7 @@ function MovieDetails () {
                 fetchEngData={handlerOnFetchEngData}
               />
 
-              <VideosSection videos={movie.videos} />
+              <VideosSection itemsCount={videoItemsCount} videos={movie.videos} />
 
               <MediaCast cast={movie.credits.cast} />
               <MediaStills
@@ -112,7 +117,7 @@ function MovieDetails () {
               <MediaStills
                 images={movie.images.posters}
                 title={t('posters')}
-                posters
+                stillsVariants={stillsType.POSTERS}
                 imgCount={8}
               />
             </div>

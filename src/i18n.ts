@@ -25,6 +25,7 @@ import SEARCH_EN from '../public/locales/en/search/search.json';
 import SEARCH_RU from '../public/locales/ru/search/search.json';
 import oldClient from '~/core/api/OldClient';
 
+const isDevelopment = process.env.NODE_ENV !== 'production';
 export const defaultNS = 'common';
 export const resources = {
   en: {
@@ -72,7 +73,7 @@ i18n
   .init({
     defaultNS,
     fallbackLng: Languages.EN,
-    debug: true,
+    debug: isDevelopment,
     react: {
       useSuspense: false //   <---- this will do the magic
     },

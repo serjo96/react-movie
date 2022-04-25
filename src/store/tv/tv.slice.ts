@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import * as Sentry from '@sentry/react';
+import { toast } from 'react-toastify';
 
 import {
   CrewState,
@@ -21,6 +23,7 @@ import {
   ReturnedTvShowsList, TvRespData, TvSeasonRespData, TvShowEngDataResp
 } from '~/store/tv/tv.api';
 import { formatCrew } from '~/utils/formatCrew';
+import i18n from '~/i18n';
 
 export type TvShowsListsData = ActionPayloadData<ListData<TvListItem>>;
 type TvDetailState = Omit<TvDetails, 'credits'> & {
@@ -163,37 +166,44 @@ export const tvSlice = createSlice({
       .addCase(getTvShowsList.fulfilled, (state, action: PayloadAction<ReturnedTvShowsList>) => {
         state.lists.all.data = action.payload.data;
         state.lists.all.isFetching = false;
+        state.lists.all.isSuccessful = true;
       })
       .addCase(getTvShowsList.rejected, (state, action) => {
-        console.log(action);
-        throw new Error(action.error.message);
-        // state.lists.all.data = action.payload.data;
+        state.lists.all.isFetching = false;
+        state.lists.all.isSuccessful = false;
+        console.error(action.error.message);
+        toast.error(i18n.t('errorText'));
+        Sentry.captureException(action.error);
       })
-
       .addCase(getAiringTvShows.pending, (state) => {
         state.lists.airing.isFetching = true;
       })
       .addCase(getAiringTvShows.fulfilled, (state, action: PayloadAction<ReturnedTvShowsList>) => {
         state.lists.airing.data = action.payload.data;
         state.lists.airing.isFetching = false;
+        state.lists.airing.isSuccessful = true;
       })
       .addCase(getAiringTvShows.rejected, (state, action) => {
-        console.log(action);
-        throw new Error(action.error.message);
-        // state.lists.all.data = action.payload.data;
+        state.lists.airing.isFetching = false;
+        state.lists.airing.isSuccessful = false;
+        console.error(action.error.message);
+        toast.error(i18n.t('errorText'));
+        Sentry.captureException(action.error);
       })
-
       .addCase(getTopTvShows.pending, (state) => {
         state.lists.top.isFetching = true;
       })
       .addCase(getTopTvShows.fulfilled, (state, action: PayloadAction<ReturnedTvShowsList>) => {
         state.lists.top.data = action.payload.data;
         state.lists.top.isFetching = false;
+        state.lists.top.isSuccessful = true;
       })
       .addCase(getTopTvShows.rejected, (state, action) => {
-        console.log(action);
-        throw new Error(action.error.message);
-        // state.lists.all.data = action.payload.data;
+        state.lists.top.isFetching = false;
+        state.lists.top.isSuccessful = false;
+        console.error(action.error.message);
+        toast.error(i18n.t('errorText'));
+        Sentry.captureException(action.error);
       })
 
       .addCase(getOnTheAirTvShows.pending, (state) => {
@@ -202,11 +212,14 @@ export const tvSlice = createSlice({
       .addCase(getOnTheAirTvShows.fulfilled, (state, action: PayloadAction<ReturnedTvShowsList>) => {
         state.lists.onTheAir.data = action.payload.data;
         state.lists.onTheAir.isFetching = false;
+        state.lists.onTheAir.isSuccessful = true;
       })
       .addCase(getOnTheAirTvShows.rejected, (state, action) => {
-        console.log(action);
-        throw new Error(action.error.message);
-        // state.lists.all.data = action.payload.data;
+        state.lists.onTheAir.isFetching = false;
+        state.lists.onTheAir.isSuccessful = false;
+        console.error(action.error.message);
+        toast.error(i18n.t('errorText'));
+        Sentry.captureException(action.error);
       })
 
       .addCase(getTvShowData.pending, (state) => {
@@ -216,11 +229,14 @@ export const tvSlice = createSlice({
         const data = action.payload.data;
         state.data = { ...state.data, ...data, credits: { ...data.credits, crew: formatCrew(data.credits.crew) } };
         state.isFetching = false;
+        state.isSuccessful = true;
       })
       .addCase(getTvShowData.rejected, (state, action) => {
-        console.log(action);
-        throw new Error(action.error.message);
-        // state.lists.all.data = action.payload.data;
+        state.isFetching = false;
+        state.isSuccessful = false;
+        console.error(action.error.message);
+        toast.error(i18n.t('errorText'));
+        Sentry.captureException(action.error);
       })
 
       .addCase(getEngTvShowData.pending, (state) => {
@@ -229,25 +245,31 @@ export const tvSlice = createSlice({
       .addCase(getEngTvShowData.fulfilled, (state, action: PayloadAction<TvShowEngDataResp>) => {
         state.data = { ...state.data, overview: action.payload.data };
         state.isFetching = false;
+        state.isSuccessful = true;
       })
       .addCase(getEngTvShowData.rejected, (state, action) => {
-        console.log(action);
-        throw new Error(action.error.message);
-        // state.lists.all.data = action.payload.data;
+        state.isFetching = false;
+        state.isSuccessful = false;
+        console.error(action.error.message);
+        toast.error(i18n.t('errorText'));
+        Sentry.captureException(action.error);
       })
 
       .addCase(getTvShowSeasons.pending, (state) => {
-        state.tvShowSeasons.isFetching = true;
+        state.isFetching = true;
       })
       .addCase(getTvShowSeasons.fulfilled, (state, action: PayloadAction<TvSeasonRespData>) => {
         const data = action.payload.data;
         state.tvShowSeasons.data = { ...state.data, ...data, credits: { ...data.credits, crew: formatCrew(data.credits.crew) } };
         state.isFetching = false;
+        state.isSuccessful = true;
       })
       .addCase(getTvShowSeasons.rejected, (state, action) => {
-        console.log(action);
-        throw new Error(action.error.message);
-        // state.lists.all.data = action.payload.data;
+        state.isFetching = false;
+        state.isSuccessful = false;
+        console.error(action.error.message);
+        toast.error(i18n.t('errorText'));
+        Sentry.captureException(action.error);
       });
   }
 });

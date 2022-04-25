@@ -15,12 +15,13 @@ import { getMoviesList } from '~/store/movies/movies.api';
 import { scrollToTop } from '~/utils';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { useLangEffect } from '~/hooks/useLangEffect';
+import { usePrevious } from '~/hooks/usePrevious';
 
 function MoviesAll () {
   const appDispatch = useAppDispatch();
   const { t } = useTranslation('lists');
   const { search } = useLocation();
-  const [prevProps] = useState(search);
+  const prevProps = usePrevious(search);
   const { isFetching, isSuccessful, data } = useAppSelector((state) => state.movies.lists.all);
 
   const sendRequest = () => {
@@ -50,7 +51,7 @@ function MoviesAll () {
   };
 
   useLangEffect(() => {
-    if (!data.results.length && !isFetching) {
+    if (!isFetching) {
       sendRequest();
     }
 

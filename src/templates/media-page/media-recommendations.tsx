@@ -34,10 +34,10 @@ const MediaRecommendations = ({
       slidesPerView: 2
     },
     460: {
-      slidesPerView: 4
+      slidesPerView: 3
     },
     560: {
-      slidesPerView: 5
+      slidesPerView: 4
     },
     963: {
       slidesPerView: 5
@@ -53,13 +53,12 @@ const MediaRecommendations = ({
 
   return (
     <section className='recommendations'>
-      <div className='container'>
-        <h3 className='recommendations__title'>{listName}</h3>
-      </div>
+      <h3 className='recommendations__title'>{listName}</h3>
       <div className='recommendations__list tooltip-parent'>
         <Swiper
           breakpoints={SwiperBreakpointParam}
           className={swiperClass}
+          spaceBetween={20}
           navigation={recommendations.totalResults > 10 ? {
             nextEl: '.slider-button-next',
             prevEl: '.slider-button-prev',

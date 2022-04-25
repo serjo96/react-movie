@@ -1,9 +1,11 @@
 @import "styles/mixins"
+@import "styles/variables"
 
 .person-aside
 	width: 190px
 	position: relative
-	@include media("xsSize", "max")
+	@include media($lgSize, "max")
+		margin-top: 15px
 		order: 2
 		width: 100%
 		.person-photo

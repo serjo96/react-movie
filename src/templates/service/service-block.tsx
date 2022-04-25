@@ -4,15 +4,17 @@ import TryAgain from '../try-again-button/try-again-button';
 
 interface MyProps {
   children: React.ReactNode;
+  sectionService?: boolean;
   isLoading: boolean;
   isSuccessful: boolean;
-  fetch: () => void;
+  fetch?: () => void;
 }
 
 const ServiceBlock = ({
   children,
   isLoading,
   isSuccessful,
+  sectionService,
   fetch
 }: MyProps) => {
   const showPreloader = isLoading && isSuccessful;
@@ -20,8 +22,8 @@ const ServiceBlock = ({
 
   return (
     <React.Fragment>
-      {showPreloader && <Spinner isFullScreen />}
-      {!isSuccessful && <TryAgain fetch={fetch} />}
+      {showPreloader && <Spinner isFullScreen={!sectionService} />}
+      {(!isSuccessful && fetch) && <TryAgain isFullScreen={!sectionService} fetch={fetch} />}
       {allDataIsReady && children}
     </React.Fragment>
   );

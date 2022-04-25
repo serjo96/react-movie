@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import queryString from 'query-string';
 import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
@@ -14,12 +14,13 @@ import { MediaType } from '~/core/types/media-type';
 import { scrollToTop } from '~/utils';
 import { useLangEffect } from '~/hooks/useLangEffect';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { usePrevious } from '~/hooks/usePrevious';
 
 function TVonTheAir () {
   const { t } = useTranslation('lists');
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
-  const [prevProps] = useState(search);
+  const prevProps = usePrevious(search);
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.tvShows.lists.onTheAir);
 
   const sendRequest = () => {

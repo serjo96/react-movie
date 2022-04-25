@@ -1,17 +1,21 @@
+@import "styles/mixins"
+@import "styles/variables"
+
 .recommendations
 	margin: 40px 0
+	padding-left: $navHideSize + 15px
+	@include media("lgSize", "max")
+		padding: 0
+	@include media("xlSize", "max")
+		padding: 0 20px
 	&__slider
 		position: relative
 
 .recommendations__list
-	padding-left: 55px
 	position: relative
-	@media (max-width : 1130px)
-		padding: 0
 	.movie-item
-		margin: 0
-	.swiper-slide
-		width: 7.6%
+		padding: 0
+		min-height: 280px
 
 .scroll-notice
 	position: absolute

@@ -3,25 +3,33 @@ import Lightbox from 'lightbox-react';
 import classNames from 'classnames';
 import './media-stills.sass';
 
-import { Image } from '~/core/types/images';
+import { Image as ImgInterface } from '~/core/types/images';
 import { useTranslation } from 'react-i18next';
+
+import Image from '~/ui-components/image/image';
+
+export enum stillsType {
+  PERSON = 'person',
+  POSTERS = 'posters',
+  STILLS = 'stills'
+}
 
 interface MyProps {
   imgCount: number
   title: string;
-  images: Image[];
-  posters?: boolean;
+  images: ImgInterface[];
+  stillsVariants?: stillsType
 }
 
 const defaultCount = 15;
 
 export default function MediaStills ({
-  imgCount,
+  imgCount = defaultCount,
   title,
   images,
-  posters
+  stillsVariants
 }: MyProps) {
-  const [imgListCount, setImgListCount] = useState(imgCount ? imgCount - 1 : defaultCount);
+  const [imgListCount, setImgListCount] = useState(imgCount - 1);
   const [imgIndex, setImageIndex] = useState(0);
   const [isShowLightBox, setVisibilityLightBox] = useState(false);
   const [isLoadedImages, setIsLoadedImages] = useState(false);
@@ -39,11 +47,7 @@ export default function MediaStills ({
 
   const stillsListClass = classNames('stills__list', {
     'stills__list--moreLoaded': images.length <= imgCount + 1 || isLoadedImages,
-    'stills__list--person': title === 'Фото'
-  });
-
-  const stillsImgClasses = classNames('stills__img', {
-    'stills__img--posters': posters
+    'stills__list--poster': stillsVariants === stillsType.PERSON || stillsVariants === stillsType.POSTERS
   });
 
   if (!images.length) {
@@ -65,12 +69,13 @@ export default function MediaStills ({
             </div>}
           {images.map((backdrop, indx) => indx <= imgListCount &&
             <div
-              className={stillsImgClasses}
+              className='stills__img'
               key={indx}
             >
-              <img
+              <Image
                 src={'https://image.tmdb.org/t/p/w1280' + backdrop.filePath}
                 alt=''
+                showSpinner
                 onClick={() => onClickImg(indx)}
               />
             </div>

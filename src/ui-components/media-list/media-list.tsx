@@ -21,14 +21,12 @@ interface MyProps {
   typeList: MediaType;
   count?: number;
   movieListTitle?: string;
-  movieListMain?: boolean;
   listLink?: string;
 }
 
 type ItemType = MoviesListItem & TvListItem & SearchResultItem & Crew & {mediaType?: MediaType};
 
 const MediaList = ({
-  movieListMain,
   mediaListDates,
   listLink,
   count,
@@ -37,11 +35,11 @@ const MediaList = ({
   movieListTitle
 }: MyProps) => {
   const RenderListTitle = () => {
-    if (movieListMain && listLink) {
+    if (listLink) {
       return (
         <Link
           className='title-link link-angle'
-          to={`/movies/${listLink}`}
+          to={listLink}
         >
           <span>{movieListTitle}</span>
           <i className='fa fa-angle-right' aria-hidden='true' />

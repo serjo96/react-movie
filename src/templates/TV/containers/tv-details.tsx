@@ -16,7 +16,7 @@ import { TvShowSummary } from '~/templates/TV/components/tv-show-summary';
 import TvAside from '~/templates/TV/components/tv-aside';
 import MediaTop from '~/templates/media-page/media-top';
 import TvShowSeasons from '~/templates/TV/components/tv-show-seasons';
-import MediaStills from '~/templates/media-page/media-stills';
+import MediaStills, { stillsType } from '~/templates/media-page/media-stills';
 import TvShowSeason from '~/templates/TV/components/tv-show-season';
 import MediaRecommendations from '~/templates/media-page/media-recommendations';
 import MediaCast from '~/templates/media-page/media-cast';
@@ -25,10 +25,13 @@ import ServiceBlock from '~/templates/service/service-block';
 import useTranslations from '~/hooks/useTranslations';
 import { scrollToTop } from '~/utils';
 import { useLangEffect } from '~/hooks/useLangEffect';
+import useBreakpoints, {BreakpointsNames} from "~/utils/useMediaQuery";
 
 export type SeasonRouteMatchParams = {season?: string};
 
 function TvDetails () {
+  const { active } = useBreakpoints();
+  const mobileBreakpoints = [BreakpointsNames.MD, BreakpointsNames.SM, BreakpointsNames.XS];
   const appDispatch = useAppDispatch();
   const { lang } = useTranslations();
   const { id, season } = useParams<{id: string, season?: string}>();
@@ -37,6 +40,8 @@ function TvDetails () {
   const [prevProps, setProps] = useState({ id, season });
   const { isFetching, isSuccessful, data, tvShowSeasons } = useAppSelector(state => state.tvShows);
   const tvId = id.split('-').pop();
+  const isMobile = mobileBreakpoints.includes(active);
+  const videoItemsCount = isMobile ? 3 : 15;
 
   const sendRequest = () => {
     appDispatch(getTvShowData({ id: +tvId, lang }));
@@ -116,7 +121,7 @@ function TvDetails () {
   return (
     <ServiceBlock
       isLoading={isFetching}
-      isSuccessful={isSuccessful || tvShowSeasons.isSuccessful}
+      isSuccessful={isSuccessful}
       fetch={sendRequest}
     >
       <main className='movie'>
@@ -176,7 +181,7 @@ function TvDetails () {
 
               </div>
 
-              <VideosSection videos={componentsData.videos} />
+              <VideosSection itemsCount={videoItemsCount} videos={componentsData.videos} />
               <MediaCast cast={data.credits.cast} />
 
               {season && <TvShowSeason />}
@@ -190,7 +195,7 @@ function TvDetails () {
               <MediaStills
                 images={componentsData.posters}
                 title={t('sectionTitle.posters')}
-                posters
+                stillsVariants={stillsType.POSTERS}
                 imgCount={8}
               />
             </div>

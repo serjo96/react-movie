@@ -15,12 +15,13 @@ import { MediaType } from '~/core/types/media-type';
 import { scrollToTop } from '~/utils';
 import { useLangEffect } from '~/hooks/useLangEffect';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { usePrevious } from '~/hooks/usePrevious';
 
 function TvShowsAll () {
   const { t } = useTranslation('lists');
   const appDispatch = useAppDispatch();
   const { search } = useLocation();
-  const [prevProps] = useState(search);
+  const prevProps = usePrevious(search);
   const { isFetching, isSuccessful, data } = useAppSelector((state) => state.tvShows.lists.all);
 
   const sendRequest = () => {

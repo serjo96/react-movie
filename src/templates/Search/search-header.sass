@@ -1,13 +1,13 @@
 @import "styles/mixins"
+@import "styles/variables"
 
 .header__search
 	position: relative
 	width: 300px
-	margin-left: 55px
-	@include media("xlSize", "max")
-		margin-left: 0
+	@include media($xlSize, "max")
 		margin-right: 20px
-
+	@include media($lgSize, "max")
+		display: none
 
 
 .search__field
@@ -36,14 +36,16 @@
 	width: 350px
 	max-height: 300px
 	z-index: 325
-	background: #fff
+	background: #f7f7f7
 	color: #020411
 	font-size: 14px
+	border-bottom-left-radius: 3px
+	border-bottom-right-radius: 3px
 	box-shadow:  0 7px 34px -9px rgba(0,0,0,0.4)
 	transition: height, opacity .5s
-	@include media("xlSize", "max")
+	@include media($xlSize, "max")
 		left: auto
-	@include media("lgSize", "max")
+	@include media($lgSize, "max")
 		width: 100%
 		height: auto
 		opacity: 1
@@ -59,26 +61,31 @@
 	align-items: center
 	justify-content: space-between
 	padding: 10px
-	@include media("lgSize", "max")
+	min-height: 95px
+	@include media($lgSize, "max")
 		display: inline-flex
 		margin: 5px
 		width: 31%
-		background: #EFEFEF
-	@include media("smSize", "max")
+	@include media($smSize, "max")
 		width: 48%
-	@include media("xsSize", "max")
+	@include media($xsSize, "max")
 		width: 100%
 		margin: 5px 0
 	&:hover
 		background: #EFEFEF
 
+.result-element__release
+	@include media($lgSize, "max")
+		margin-top: 5px
+
 .result-element__poster
 	width: 50px
+	height: 100%
 	position: relative
 	.spinner-wrap
 		position: absolute
 	.spinner
-		height: 75px
+		height: 70%
 	img
 		display: block
 		width: 100%
@@ -86,15 +93,13 @@
 .result-element__title
 	margin-left: 10px
 	width: 170px
-	@include media("lgSize", "max")
+	@include media($lgSize, "max")
 		width: 140px
 		margin: 5px 0
 		padding: 0 5px
 
-
 .result-element__type
 	font-weight: bold
-
 
 .header__search--mobile
 	position: fixed
@@ -104,6 +109,8 @@
 	z-index: 55
 	top: 60px
 	margin: 0
+	@include media($lgSize, "max")
+		display: block
 	.searchComboBox
 		max-height: calc(100vh - 100px)
 		width: 100%

@@ -6,5 +6,9 @@ export interface CompanyDetails {
   logoPath: string;
   name: string;
   originCountry: string;
-  parentCompany: string;
+  parentCompany?: {
+    id?: string | number;
+    name?: string;
+    logoPath?: string;
+  };
 }

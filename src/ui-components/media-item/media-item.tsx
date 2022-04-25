@@ -62,20 +62,17 @@ const MediaItem = ({
       genres={genres}
       className={parentClass}
     >
-
-      <div className='movie-item__data'>
-        <CustomLink isNotLink={isNotLink} to={linkUrl}>
-          <div className='movie-item__poster'>
-            <Image
-              src={poster}
-              alt={title}
-            />
-          </div>
-          <div className='movie-item__title'>{title}</div>
-          {job && <div className='movie-item__crew'>{job}</div>}
-        </CustomLink>
-      </div>
-
+      <CustomLink className='movie-item__data' isNotLink={isNotLink} to={linkUrl}>
+        <div className='movie-item__poster'>
+          <Image
+            src={poster}
+            showSpinner
+            alt={title}
+          />
+        </div>
+        <div className='movie-item__title'>{title}</div>
+        {job && <div className='movie-item__crew'>{job}</div>}
+      </CustomLink>
     </TooltipInfo>
   );
 };

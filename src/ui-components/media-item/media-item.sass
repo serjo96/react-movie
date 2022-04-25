@@ -16,8 +16,15 @@
 		position: relative
 		transition: border .3s linear
 		border: 1px solid #272f46
-	&__data
+		min-height: 81.4%
 		width: 100%
+	&__data
+		display: flex
+		flex-direction: column
+		align-items: center
+		justify-content: space-between
+		width: 100%
+		height: 100%
 		&:hover
 			.movie-item__poster
 				border: 1px solid #f7f7f7
@@ -26,7 +33,7 @@
 		img
 			display: block
 			width: 100%
-			height: auto
+			height: 100%
 		a
 			display: block
 	&__crew

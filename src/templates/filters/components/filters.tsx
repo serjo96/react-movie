@@ -13,6 +13,7 @@ import {
 import { Genre } from '~/core/types/genres';
 import { GenresState } from '~/store/genres/genres.slice';
 import { filterByCountryName, filterByDateName, sortByFilterName } from '~/utils/formatFiltersNames';
+import './filters.sass';
 
 interface MyProps {
   genres: Array<Genre>;
@@ -98,7 +99,7 @@ export default function Filters ({
   return (
     <div className='filter-list-container'>
       <div className='filter-list'>
-        {genres.length &&
+        {!!genres.length &&
           <div className={genreFilterClasses}>
             <div className='filter-name'>
               <span>{filterValues.genre ? genresObject[filterValues.genre] : t('filters:allGenres')}</span>

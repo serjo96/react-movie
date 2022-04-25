@@ -1,19 +1,20 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { MediaType } from '~/core/types/media-type';
-
-import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
-import { useLangEffect } from '~/hooks/useLangEffect';
-
-import Spinner from '~/ui-components/spinner/Spinner';
-import MediaList from '~/ui-components/media-list/media-list';
 import {
   getMoviesList,
   getPlayingMovies,
   getTopMovies,
   getUpcomingMovies
 } from '~/store/movies/movies.api';
+import { MoviesListType } from '~/core/types/movies';
+import { MediaType } from '~/core/types/media-type';
+import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
+import { useLangEffect } from '~/hooks/useLangEffect';
+
+import MediaList from '~/ui-components/media-list/media-list';
+import ServiceBlock from '~/templates/service/service-block';
+import MovieListSection from '~/templates/main/movie-list-section';
 
 function Main () {
   const appDispatch = useAppDispatch();
@@ -33,49 +34,94 @@ function Main () {
     }
   }, []);
 
+  const playingFetch = () => appDispatch(getPlayingMovies());
+  const upcomingFetch = () => appDispatch(getUpcomingMovies());
+  const topFetch = () => appDispatch(getTopMovies());
+  const allMoviesListFetch = () => appDispatch(getMoviesList());
+
   // TODO: Add service block for handle rejected requests
-  if (allFetched) {
-    return (
-      <main className='main main--media-list iphonex'>
-        <div className='movies-content movies-content--main-page'>
-          <MediaList
-            movieListTitle={t('nav.movies.playing')}
-            mediaList={playing.data.results}
-            mediaListDates={playing.data.dates}
-            count={11}
-            movieListMain
-            listLink='playing'
-            typeList={MediaType.MOVIE}
-          />
-          <MediaList
-            movieListTitle={t('nav.movies.upcoming')}
-            mediaList={upcoming.data.results}
-            count={11}
-            movieListMain
-            listLink='upcoming'
-            typeList={MediaType.MOVIE}
-          />
-          <MediaList
-            movieListTitle={t('nav.movies.top')}
-            mediaList={top.data.results}
-            count={11}
-            movieListMain={false}
-            listLink='top'
-            typeList={MediaType.MOVIE}
-          />
-          <MediaList
-            movieListTitle={t('nav.movies.all')}
-            mediaList={all.data.results}
-            count={11}
-            movieListMain
-            listLink='all'
-            typeList={MediaType.MOVIE}
-          />
-        </div>
-      </main>
-    );
-  }
-  return (<Spinner isFullScreen />);
+  return (
+    <main className='main main--media-list iphonex'>
+      <div className='movies-content movies-content--main-page'>
+        <MovieListSection
+          title={t('nav.movies.playing')}
+          listStatus={playing.isFetching || !playing.isSuccessful}
+          typeList={MoviesListType.PLAYING}
+        >
+          <ServiceBlock
+            sectionService
+            isSuccessful={playing.isSuccessful}
+            isLoading={playing.isFetching}
+            fetch={playingFetch}
+          >
+            <MediaList
+              mediaList={playing.data.results}
+              mediaListDates={playing.data.dates}
+              count={11}
+              typeList={MediaType.MOVIE}
+            />
+          </ServiceBlock>
+        </MovieListSection>
+
+        <MovieListSection
+          title={t('nav.movies.upcoming')}
+          listStatus={upcoming.isFetching || !upcoming.isSuccessful}
+          typeList={MoviesListType.UPCOMING}
+        >
+          <ServiceBlock
+            sectionService
+            isSuccessful={upcoming.isSuccessful}
+            isLoading={upcoming.isFetching}
+            fetch={upcomingFetch}
+          >
+            <MediaList
+              mediaList={upcoming.data.results}
+              count={11}
+              typeList={MediaType.MOVIE}
+            />
+          </ServiceBlock>
+        </MovieListSection>
+
+        <MovieListSection
+          title={t('nav.movies.top')}
+          listStatus={top.isFetching || !top.isSuccessful}
+          typeList={MoviesListType.TOP}
+        >
+          <ServiceBlock
+            sectionService
+            isSuccessful={top.isSuccessful}
+            isLoading={top.isFetching}
+            fetch={topFetch}
+          >
+            <MediaList
+              mediaList={top.data.results}
+              count={11}
+              typeList={MediaType.MOVIE}
+            />
+          </ServiceBlock>
+        </MovieListSection>
+
+        <MovieListSection
+          title={t('nav.movies.all')}
+          listStatus={all.isFetching || !all.isSuccessful}
+          typeList={MoviesListType.ALL}
+        >
+          <ServiceBlock
+            sectionService
+            isSuccessful={all.isSuccessful}
+            isLoading={all.isFetching}
+            fetch={allMoviesListFetch}
+          >
+            <MediaList
+              mediaList={all.data.results}
+              count={11}
+              typeList={MediaType.MOVIE}
+            />
+          </ServiceBlock>
+        </MovieListSection>
+      </div>
+    </main>
+  );
 }
 
 export default Main;

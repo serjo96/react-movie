@@ -1,7 +1,11 @@
-import { Genre } from '~/core/types/genres';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
+import * as Sentry from '@sentry/react';
+
+import { Genre } from '~/core/types/genres';
 import { getGenres, ReturnedGenres } from '~/store/genres/generes.api';
 import { formattingGenres } from '~/utils/format';
+import i18n from '~/i18n';
 
 export interface GenresData {
   movie: Array<Genre>;
@@ -40,9 +44,18 @@ export const genresSlice = createSlice({
         state.isFetching = true;
       })
       .addCase(getGenres.fulfilled, (state, action: PayloadAction<ReturnedGenres>) => {
+        state.isSuccessful = true;
+        state.isFetching = false;
         const formattedGenres = formattingGenres(action.payload.data);
         window.localStorage.setItem('genres', JSON.stringify(formattedGenres));
         state.data = formattedGenres;
+      })
+      .addCase(getGenres.rejected, (state, action) => {
+        state.isFetching = false;
+        state.isSuccessful = false;
+        Sentry.captureException(action.error);
+        console.error(action.error.message);
+        toast.error(i18n.t('errorText'));
       });
   }
 });

@@ -17,13 +17,16 @@
 	&__right-side
 		display: flex
 		align-items: center
-		margin-right: 2%
+		margin-right: 15px
 		@include media("xlSize", "min")
+			margin: 0 55px
 			width: 100%
 			justify-content: space-between
 
 .header--is-hide
 	transform: translate3d(0, -100%, 0)
+	@include media("lgSize", "max")
+		transform: translate3d(0px, 0px, 0px)
 	.searchComboBox
 		height: 0!important
 		opacity: 0
@@ -36,7 +39,7 @@
 	left: 0
 	right: 0
 	margin: 0 auto
-	width: 155px
+	width: 125px
 
 .logo__link
 	display: inline-block
@@ -93,3 +96,5 @@
 	justify-content: center
 	align-items: center
 	cursor: pointer
+	@include media("lgSize", "max")
+		display: flex
