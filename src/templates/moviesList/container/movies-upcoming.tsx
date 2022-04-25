@@ -58,7 +58,7 @@ function MovieUpcoming () {
       <ServiceBlock
         isLoading={isFetching}
         isSuccessful={isSuccessful}
-        fetch={this.sendRequest}
+        fetch={sendRequest}
       >
         <div className='movies-content'>
           <MediaList
