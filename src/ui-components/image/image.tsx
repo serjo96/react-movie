@@ -1,10 +1,15 @@
 import React, { SyntheticEvent, useState } from 'react';
+import classNames from 'classnames';
 
 import NoImg from '~/assets/images/noImg.png';
+import NoImgEng from '~/assets/images/noImgEng.png';
 import errorImg from '~/assets/images/error.png';
+
 import { imgUrl } from '~/core/config';
+import useTranslations from '~/hooks/useTranslations';
+import { Languages } from '~/store/config/config.slice';
+
 import Spinner from '~/ui-components/spinner/Spinner';
-import classNames from 'classnames';
 import './image.sass';
 
 interface MyProps {
@@ -18,7 +23,8 @@ interface MyProps {
 export default function Image (props: MyProps) {
   const [imgStatus, setImgStatus] = useState(true);
   const [imgError, setImgError] = useState(false);
-  let imageSrc = NoImg;
+  const { lang } = useTranslations();
+  let imageSrc = lang === Languages.RU ? NoImg : NoImgEng;
 
   const onLoadImg = () => {
     setImgStatus(false);

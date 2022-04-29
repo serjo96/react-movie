@@ -7,9 +7,13 @@ import SwiperCore, {
   Mousewheel
 } from 'swiper';
 
+import NoImgEng from '~/assets/images/noImgEng.png';
+import NoImg from '~/assets/images/noImg.png';
+
 import { friendlyUrl } from '~/utils/format';
 import { Cast } from '~/core/types/cast';
-import NoImg from '~/assets/images/noImg.png';
+import { Languages } from '~/store/config/config.slice';
+import useTranslations from '~/hooks/useTranslations';
 import './media-cast.sass';
 
 SwiperCore.use([Scrollbar, Mousewheel]);
@@ -19,6 +23,8 @@ const MediaCast = ({ cast }: {cast: Cast[]}) => {
     return null;
   }
   const { t } = useTranslation('mediaCommon');
+  const { lang } = useTranslations();
+  const defaultNoImg = lang === Languages.RU ? NoImg : NoImgEng;
 
   return (
     <section className='credits'>
@@ -57,7 +63,7 @@ const MediaCast = ({ cast }: {cast: Cast[]}) => {
               >
                 <div
                   className='actor__img'
-                  style={{ backgroundImage: actor.profilePath ? `url(https://image.tmdb.org/t/p/w185/${actor.profilePath})` : `url(${NoImg})` }}
+                  style={{ backgroundImage: actor.profilePath ? `url(https://image.tmdb.org/t/p/w185/${actor.profilePath})` : `url(${defaultNoImg})` }}
                 />
                 <div className='actor__info'>
                   <div className='actor__name'>{actor.name}</div>
