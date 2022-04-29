@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { Crew } from '~/core/types/crew';
-import { friendlyUrl, friendlyData, urlRusLat } from '~/utils/format';
+import { friendlyUrl, friendlyData } from '~/utils/format';
+import useTranslations from '~/hooks/useTranslations';
 import Image from '~/ui-components/image/image';
 import { TvDetails } from '~/core/types/tvDetails';
 import { TvState } from '~/store/tv/tv.slice';
+
 import '~/templates/Movie/components/movie-aside.sass';
 import './tv-aside.sass';
 
@@ -44,6 +46,8 @@ function TvAside ({
   links
 }: MyProps) {
   const { t } = useTranslation(['tv', 'mediaCommon']);
+  const { lang } = useTranslations();
+
   const renderPerson = (person: Crew, index: number) => {
     if (index > 3) {
       return null;
@@ -167,7 +171,7 @@ function TvAside ({
               key={indx}
             >
               <Link
-                to={`/tv/all?genre-${urlRusLat(el.name)}-${el.id}`}
+                to={`/tv/all?genre-${el.id}`}
                 className='tag'
                 id={`${el.id}`}
               >{el.name}

@@ -5,7 +5,6 @@ import TooltipInfo from '~/templates/Tooltip/tooltip-info';
 import Image from '~/ui-components/image/image';
 import CustomLink from '~/ui-components/custom-link/custom-link';
 
-import { urlRusLat } from '~/utils/format';
 import { MediaType } from '~/core/types/media-type';
 import './media-item.sass';
 
@@ -46,8 +45,7 @@ const MediaItem = ({
     if (linkPath) {
       return linkPath;
     }
-
-    return `/${typeList}/${urlRusLat(title)}-${id}`;
+    return `/${typeList}/${id}`;
   };
 
   return (
