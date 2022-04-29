@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import NoImg from '~/assets/images/noImg.png';
-import './media-top.sass';
+import NoImgEng from '~/assets/images/noImgEng.png';
 
 import useBreakpoints, { BreakpointsNames } from '~/utils/useMediaQuery';
 import classNames from 'classnames';
+import { Languages } from '~/store/config/config.slice';
+import useTranslations from '~/hooks/useTranslations';
+
+import './media-top.sass';
 
 interface MyProps {
   title: string;
@@ -29,10 +33,12 @@ const MediaTop = ({
   const [isLoadedPoster, setLoadedPoster] = useState(true);
   const mobileBreakpoints = [BreakpointsNames.MD, BreakpointsNames.SM, BreakpointsNames.XS];
   const { active } = useBreakpoints();
+  const { lang } = useTranslations();
+  const defaultNoImg = lang === Languages.RU ? NoImg : NoImgEng;
 
   const posterImg = () => {
     if (!poster || !backdrop) {
-      return NoImg;
+      return defaultNoImg;
     }
     let path = 'https://image.tmdb.org/t/p/original/';
 
@@ -44,7 +50,7 @@ const MediaTop = ({
 
   const bgImage = () => {
     if (!backdrop || !poster) {
-      return NoImg;
+      return defaultNoImg;
     }
     let path = 'https://image.tmdb.org/t/p/original';
 

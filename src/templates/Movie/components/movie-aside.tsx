@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
-import { friendlyUrl, urlRusLat } from '~/utils/format';
-import { MovieDetails } from '~/core/types/movieDetails';
+import { friendlyUrl } from '~/utils/format';
 import { CrewState } from '~/utils/initData';
+import { MovieDetails } from '~/core/types/movieDetails';
+
 import Image from '~/ui-components/image/image';
 import './movie-aside.sass';
-import { useTranslation } from 'react-i18next';
 
 interface MyProps {
   id: MovieDetails['id'];
@@ -34,6 +35,7 @@ export function MovieAside ({
   id
 }: MyProps) {
   const { t } = useTranslation(['movie', 'mediaCommon']);
+
   return (
     <aside className='aside'>
       <div className='movie__poster'>
@@ -159,7 +161,7 @@ export function MovieAside ({
           {genres.map((el, indx) => (
             <div className='genre' key={indx}>
               <Link
-                to={`/movies/all?genre-${urlRusLat(el.name)}-${el.id}`}
+                to={`/movies/all?genre-${el.id}`}
                 className='tag'
                 id={el.id.toString()}
               >{el.name}

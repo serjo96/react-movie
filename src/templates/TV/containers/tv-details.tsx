@@ -25,7 +25,7 @@ import ServiceBlock from '~/templates/service/service-block';
 import useTranslations from '~/hooks/useTranslations';
 import { scrollToTop } from '~/utils';
 import { useLangEffect } from '~/hooks/useLangEffect';
-import useBreakpoints, {BreakpointsNames} from "~/utils/useMediaQuery";
+import useBreakpoints, { BreakpointsNames } from '~/utils/useMediaQuery';
 
 export type SeasonRouteMatchParams = {season?: string};
 
@@ -39,21 +39,20 @@ function TvDetails () {
 
   const [prevProps, setProps] = useState({ id, season });
   const { isFetching, isSuccessful, data, tvShowSeasons } = useAppSelector(state => state.tvShows);
-  const tvId = id.split('-').pop();
   const isMobile = mobileBreakpoints.includes(active);
   const videoItemsCount = isMobile ? 3 : 15;
 
   const sendRequest = () => {
-    appDispatch(getTvShowData({ id: +tvId, lang }));
+    appDispatch(getTvShowData({ id: +id, lang }));
   };
 
   const sendSeasonRequest = () => {
-    appDispatch(getTvShowSeasons({ id: +tvId, season: +season, lang }));
+    appDispatch(getTvShowSeasons({ id: +id, season: +season, lang }));
   };
 
   // TODO: Add handler for eng tv season data
   const handlerOnFetchEngData = () => {
-    appDispatch(getEngTvShowData({ id: +tvId, lang: Languages.EN }));
+    appDispatch(getEngTvShowData({ id: +id, lang: Languages.EN }));
   };
 
   useLangEffect(() => {

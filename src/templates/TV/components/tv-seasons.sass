@@ -23,14 +23,13 @@
 
 .seasons-list
 	display: grid
-	grid-template-columns: repeat( auto-fit, minmax(158px, 223px) )
+	grid-template-columns: repeat( auto-fill, minmax(158px, 223px) )
 	grid-auto-rows: minmax(344px, 1fr)
+	justify-content: center
 	margin: 0 15px
 	@include media($smSize, "max")
-		grid-template-columns: repeat( auto-fit, minmax(33%, min-content) )
 		margin: 0 -10px
 	@include media($xsSize, "max")
-		grid-template-columns: repeat( auto-fit, minmax(50%, min-content) )
 		grid-auto-rows: minmax(auto, 1fr)
 	.movie-item
 		padding: 15px
@@ -124,6 +123,7 @@
 	background-size: cover
 	background-repeat: no-repeat
 	background-position: 50% 50%
+	background-color: $imageDefaultBg
 	&:before
 		content: ''
 		display: block

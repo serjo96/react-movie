@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
 import Image from '~/ui-components/image/image';
-import { friendlyData, urlRusLat } from '~/utils/format';
+import { friendlyData } from '~/utils/format';
 
 import ServiceBlock from '../service/service-block';
 
@@ -56,6 +56,7 @@ function Person () {
   const bestMovies = sortBestMediaItem(data.movieCredits.cast) as MovieCreditsCast[];
   const bestTV = sortBestMediaItem(data.tvCredits.cast) as PersonCrew[];
   const years = new Date().getFullYear() - new Date(data.birthday).getFullYear();
+
   return (
     <div className='container'>
       <div className='person main'>
@@ -126,7 +127,7 @@ function Person () {
                           className='last-movies__item'
                           key={index}
                         >
-                          <Link className='link' to={`/movie/${urlRusLat(e.title)}-${e.id}`}>{e.title}</Link>
+                          <Link className='link' to={`/movie/${e.id}`}>{e.title}</Link>
                         </div>
                       ))}
                     </div>
@@ -142,7 +143,7 @@ function Person () {
                           className='last-movies__item'
                           key={index}
                         >
-                          <Link className='link' to={`/movie/${urlRusLat(movie.title)}-${movie.id}`}>{movie.title}</Link>
+                          <Link className='link' to={`/movie/${movie.id}`}>{movie.title}</Link>
                         </div>
                       )) : '-'}
                     </div>
@@ -158,7 +159,7 @@ function Person () {
                           className='last-movies__item'
                           key={index}
                         >
-                          <Link className='link' to={`/tv/${urlRusLat(e.name)}-${e.id}`}>{e.name}</Link>
+                          <Link className='link' to={`/tv/${e.id}`}>{e.name}</Link>
                         </div>
                       ))
                         : '-'}
@@ -176,7 +177,7 @@ function Person () {
                             className='last-movies__item'
                             key={index}
                           >
-                            <Link className='link' to={`/tv/${urlRusLat(e.name)}-${e.id}`}>{e.name}</Link>
+                            <Link className='link' to={`/tv/${e.id}`}>{e.name}</Link>
                           </div>))
                         : '-'}
                     </div>

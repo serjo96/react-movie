@@ -16,7 +16,7 @@ import { MediaType } from '~/core/types/media-type';
 import { useAppDispatch, useAppSelector } from '~/hooks/storeHooks';
 import { useOnClickOutside } from '~/hooks/useOnClickOutside';
 import { useLangEffect } from '~/hooks/useLangEffect';
-import { friendlyUrl, urlRusLat } from '~/utils/format';
+import { friendlyUrl } from '~/utils/format';
 import { getRandomInt } from '~/utils';
 import './search-header.sass';
 
@@ -37,6 +37,7 @@ function SearchHeader ({
   const [visibilityResult, setVisibilityResult] = useState(false);
   const { isFetching, isSuccessful, data } = useAppSelector(state => state.search.headerSearch);
   useOnClickOutside(componentRef, () => setVisibilityResult(false));
+
 
   const resetState = () => {
     setValue('');
@@ -96,7 +97,7 @@ function SearchHeader ({
   const renderResults = (item: SearchResultItem, index: number) => {
     return (
       <Link
-        to={`/${item.mediaType}/${urlRusLat(item.title || item.name)}-${item.id}`}
+        to={`/${item.mediaType}/${item.id}`}
         className='result-element'
         key={index}
         onClick={resetState}
