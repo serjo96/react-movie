@@ -31,7 +31,9 @@ if (process.env.NODE_ENV === 'production') {
 render(
   <Provider store={store}>
     <Router history={history}>
-      <App />
+      <Sentry.ErrorBoundary>
+        <App />
+      </Sentry.ErrorBoundary>
     </Router>
   </Provider>,
   document.querySelector('#app')
