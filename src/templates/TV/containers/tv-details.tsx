@@ -41,18 +41,19 @@ function TvDetails () {
   const { isFetching, isSuccessful, data, tvShowSeasons } = useAppSelector(state => state.tvShows);
   const isMobile = mobileBreakpoints.includes(active);
   const videoItemsCount = isMobile ? 3 : 15;
+  const tvId = id.split('-').length ? +id.split('-').pop() : +id;
 
   const sendRequest = () => {
-    appDispatch(getTvShowData({ id: +id, lang }));
+    appDispatch(getTvShowData({ id: tvId, lang }));
   };
 
   const sendSeasonRequest = () => {
-    appDispatch(getTvShowSeasons({ id: +id, season: +season, lang }));
+    appDispatch(getTvShowSeasons({ id: tvId, season: +season, lang }));
   };
 
   // TODO: Add handler for eng tv season data
   const handlerOnFetchEngData = () => {
-    appDispatch(getEngTvShowData({ id: +id, lang: Languages.EN }));
+    appDispatch(getEngTvShowData({ id: tvId, lang: Languages.EN }));
   };
 
   useLangEffect(() => {

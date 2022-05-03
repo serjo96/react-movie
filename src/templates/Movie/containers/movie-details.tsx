@@ -39,8 +39,9 @@ function MovieDetails () {
   const isMobile = mobileBreakpoints.includes(active);
   const videoItemsCount = isMobile ? 3 : 15;
 
+  const movieId = id.split('-').length ? +id.split('-').pop() : +id;
   const sendRequest = () => {
-    appDispatch(getMovieData({ id: +id, lang }));
+    appDispatch(getMovieData({ id: movieId, lang }));
   };
 
   useLangEffect(() => {
@@ -57,7 +58,7 @@ function MovieDetails () {
   }, [id]);
 
   const handlerOnFetchEngData = () => {
-    appDispatch(getMovieEngOverview({ id: +id, lang: Languages.EN }));
+    appDispatch(getMovieEngOverview({ id: movieId, lang: Languages.EN }));
   };
 
   return (
