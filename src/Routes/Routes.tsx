@@ -1,6 +1,7 @@
 import React from 'react';
 import { RouteProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
+import * as Sentry from '@sentry/react';
 
 import Main from '~/templates/main/main';
 import MovieDetails from '~/templates/Movie/containers/movie-details';
@@ -102,12 +103,14 @@ export const routesList: RouteProps[] = [
   }
 ];
 
+const SentryRoute = Sentry.withSentryRouting(Route);
+
 function Routes () {
   return (
 
     <Switch>
       {routesList.map(router => (
-        <Route
+        <SentryRoute
           key={router.path as string}
           path={router.path}
           exact={router.exact}
