@@ -25,7 +25,7 @@ export function capitalizeFirstLetter (string: string): string {
 }
 
 export function friendlyUrl (url: string): string {
-  return url.replace(/\s+/g, '_').toLowerCase();
+  return url.replace(/\s|%+/g, '_').toLowerCase();
 }
 
 export function friendlyName (name: string): string {
