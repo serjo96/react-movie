@@ -13,7 +13,7 @@ export interface TvDetails {
   backdropPath: string;
   createdBy: CreatedBy[];
   episodeRunTime: number[];
-  firstAirDate: string;
+  firstAirDate?: string;
   genres: Genre[];
   homepage: string;
   id: number;
