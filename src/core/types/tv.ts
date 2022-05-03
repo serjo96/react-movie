@@ -26,7 +26,7 @@ export interface TvListItem {
 
 export interface TvSeason {
   id: string;
-  airDate: string;
+  airDate?: string;
   episodes: Episode[];
   name: string;
   overview: string;

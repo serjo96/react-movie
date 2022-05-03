@@ -14,7 +14,7 @@ interface MyProps {
   originalTitle: string;
   backdrop: string;
   poster: string;
-  releaseDate: string;
+  releaseDate?: string;
   tagline: string;
   seasonTitle?: string;
   children: React.ReactNode
@@ -95,7 +95,7 @@ const MediaTop = ({
                 <h1 className='media-titles__title'>{title}</h1>
                 <h2 className='media-titles__original-title'>{(originalTitle !== title) && originalTitle}</h2>
                 {seasonTitle && <div className='season-title'>{seasonTitle}</div>}
-                <span className='media-titles__year'>{releaseDate.substring(0, 4)}</span>
+                <span className='media-titles__year'>{releaseDate ? releaseDate.substring(0, 4) : '-'}</span>
                 <div className='media-titles__tagline'>{tagline}</div>
               </div>
             </div>
