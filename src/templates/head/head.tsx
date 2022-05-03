@@ -4,12 +4,12 @@ import classNames from 'classnames';
 
 import Nav from '~/templates/Nav/nav';
 import SearchHeader from '~/templates/Search/search-header';
+import LanguageSwitcher from '~/ui-components/language-switcher/language-switcher';
 
 import { usePrevious } from '~/hooks/usePrevious';
 import useBreakpoints, { BreakpointsNames } from '~/utils/useMediaQuery';
 import useWindowScroll from '~/hooks/useWindowScroll';
 import './header.sass';
-import LanguageSwitcher from '~/ui-components/language-switcher/language-switcher';
 
 export default function Header () {
   const { pathname } = useLocation();
@@ -35,7 +35,7 @@ export default function Header () {
   }, [pathname]);
 
   useEffect(() => {
-    if (y > prevPosition) {
+    if (y > 0 && y > prevPosition) {
       setIsHideHeader(true);
     } else {
       setIsHideHeader(false);
