@@ -14,7 +14,7 @@ const mainConfig = (config: webpack.Configuration): webpack.Configuration => ({
   entry: [
     path.join(__dirname, './../src/index.tsx') // your app's entry point
   ],
-  devtool: process.env.WEBPACK_DEVTOOL === 'source-map' ? 'source-map' : 'eval-source-map',
+  devtool: 'hidden-source-map',
   resolve,
   module: {
     rules: loaders
