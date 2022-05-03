@@ -10,13 +10,14 @@ export default function useTranslations () {
 
   useEffect(() => {
     if (lang !== i18n.language) {
-      appDispatch(setLanguage(i18n.language as Languages));
+      appDispatch(setLanguage(i18n.language as Languages === Languages.RU ? Languages.RU : Languages.EN));
     }
   }, []);
 
   const setLang = (language: Languages) => {
-    appDispatch(setLanguage(language));
-    i18n.changeLanguage(language);
+    const lang = language === Languages.RU ? Languages.RU : Languages.EN;
+    appDispatch(setLanguage(lang));
+    i18n.changeLanguage(lang);
   };
   return {
     lang,
