@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { RouteProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
+
 import Main from '~/templates/main/main';
 import MovieDetails from '~/templates/Movie/containers/movie-details';
 import MovieUpcoming from '~/templates/moviesList/container/movies-upcoming';
@@ -17,29 +19,103 @@ import Company from '~/templates/company/company-page';
 import KeywordsPage from '~/templates/keywords/keywords-page';
 import SearchPage from '~/templates/Search/search-page';
 
-class Routes extends Component {
-  render () {
-    return (
-      <Switch>
-        <Route exact path='/' component={Main} />
-        <Route exact path='/movies/upcoming' component={MovieUpcoming} />
-        <Route exact path='/movies/playing' component={MoviePlaying} />
-        <Route exact path='/movie/:id' component={MovieDetails} />
-        <Route path='/tv/all' component={TvShowsAll} />
-        <Route exact path='/tv/airing' component={TvAiring} />
-        <Route exact path='/tv/onAir' component={TvOnTheAir} />
-        <Route exact path='/tv/top' component={TvShowsTop} />
-        <Route exact path='/tv/:id' component={TvDetails} />
-        <Route exact path='/tv/:id/season-:season' component={TvDetails} />
-        <Route exact path='/person/:id' component={People} />
-        <Route exact path='/company/:id' component={Company} />
-        <Route path='/search' component={SearchPage} />
-        <Route path='/movies/all' component={MoviesAll} />
-        <Route path='/keywords-movies/:id' component={KeywordsPage} />
-        <Route path='/keywords-tv-shows/:id' component={KeywordsPage} />
-      </Switch>
-    );
+export const routesList: RouteProps[] = [
+  {
+    path: '/',
+    exact: true,
+    component: Main
+  },
+  {
+    path: '/keywords-movies/:id',
+    exact: false,
+    component: KeywordsPage
+  },
+  {
+    path: '/keywords-tv-shows/:id',
+    exact: false,
+    component: KeywordsPage
+  },
+  {
+    path: '/tv/airing',
+    exact: true,
+    component: TvAiring
+  },
+  {
+    path: '/tv/onAir',
+    exact: true,
+    component: TvOnTheAir
+  },
+  {
+    path: '/tv/top',
+    exact: true,
+    component: TvShowsTop
+  },
+  {
+    path: '/tv/all',
+    exact: false,
+    component: TvShowsAll
+  },
+  {
+    path: '/tv/:id',
+    exact: true,
+    component: TvDetails
+  },
+  {
+    path: '/tv/:id/season-:season',
+    exact: true,
+    component: TvDetails
+  },
+  {
+    path: '/movies/all',
+    exact: false,
+    component: MoviesAll
+  },
+  {
+    path: '/movies/upcoming',
+    exact: true,
+    component: MovieUpcoming
+  },
+  {
+    path: '/movies/playing',
+    exact: true,
+    component: MoviePlaying
+  },
+  {
+    path: '/movie/:id',
+    exact: true,
+    component: MovieDetails
+  },
+  {
+    path: '/person/:id',
+    exact: true,
+    component: People
+  },
+  {
+    path: '/company/:id',
+    exact: true,
+    component: Company
+  },
+  {
+    path: '/search',
+    exact: false,
+    component: SearchPage
   }
+];
+
+function Routes () {
+  return (
+
+    <Switch>
+      {routesList.map(router => (
+        <Route
+          key={router.path as string}
+          path={router.path}
+          exact={router.exact}
+          component={router.component}
+        />
+      ))}
+    </Switch>
+  );
 }
 
 export default Routes;
