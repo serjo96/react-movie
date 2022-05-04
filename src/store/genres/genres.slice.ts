@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
-import * as Sentry from '@sentry/react';
 
 import { Genre } from '~/core/types/genres';
 import { getGenres, ReturnedGenres } from '~/store/genres/generes.api';
 import { formattingGenres } from '~/utils/format';
-import i18n from '~/i18n';
+import { ResponseError } from '~/core/api/apiClient';
+import formatThunkErrorPayload from '~/utils/formatThunkErrorPayload';
+import errorLogging from '~/utils/errorLogging';
 
 export interface GenresData {
   movie: Array<Genre>;
@@ -50,12 +50,12 @@ export const genresSlice = createSlice({
         window.localStorage.setItem('genres', JSON.stringify(formattedGenres));
         state.data = formattedGenres;
       })
-      .addCase(getGenres.rejected, (state, action) => {
+      .addCase(getGenres.rejected, (state, { payload, error }) => {
         state.isFetching = false;
         state.isSuccessful = false;
-        Sentry.captureException(action.error);
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       });
   }
 });

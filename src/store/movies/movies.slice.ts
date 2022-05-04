@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
-import * as Sentry from "@sentry/react";
 
 import { MovieDetails } from '~/core/types/movieDetails';
 import { Collection } from '~/core/types/collection';
@@ -27,7 +25,9 @@ import {
 import { formatCrew } from '~/utils/formatCrew';
 import { Credits } from '~/core/types/credits';
 import { ListData } from '~/core/types/listData';
-import i18n from '~/i18n';
+import formatThunkErrorPayload from '~/utils/formatThunkErrorPayload';
+import { ResponseError } from '~/core/api/apiClient';
+import errorLogging from '~/utils/errorLogging';
 
 type MovieDetailState = Omit<MovieDetails, 'credits'> & {
   collection?: Collection;
@@ -132,12 +132,12 @@ export const moviesSlice = createSlice({
         state.lists.all.isSuccessful = true;
         state.lists.all.isFetching = false;
       })
-      .addCase(getMoviesList.rejected, (state, action) => {
-        Sentry.captureException(action.error);
+      .addCase(getMoviesList.rejected, (state, { payload, error }) => {
         state.lists.all.isSuccessful = false;
         state.lists.all.isFetching = false;
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       })
       .addCase(getUpcomingMovies.pending, (state) => {
         state.lists.upcoming.isFetching = true;
@@ -147,12 +147,12 @@ export const moviesSlice = createSlice({
         state.lists.upcoming.isFetching = false;
         state.lists.upcoming.isSuccessful = true;
       })
-      .addCase(getUpcomingMovies.rejected, (state, action) => {
+      .addCase(getUpcomingMovies.rejected, (state, { payload, error }) => {
         state.lists.upcoming.isFetching = false;
         state.lists.upcoming.isSuccessful = false;
-        Sentry.captureException(action.error);
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       })
       .addCase(getTopMovies.pending, (state) => {
         state.lists.top.isFetching = true;
@@ -162,12 +162,12 @@ export const moviesSlice = createSlice({
         state.lists.top.isFetching = false;
         state.lists.top.isSuccessful = true;
       })
-      .addCase(getTopMovies.rejected, (state, action) => {
+      .addCase(getTopMovies.rejected, (state, { payload, error }) => {
         state.lists.top.isFetching = false;
         state.lists.top.isSuccessful = false;
-        Sentry.captureException(action.error);
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       })
       .addCase(getPlayingMovies.pending, (state) => {
         state.lists.playing.isFetching = true;
@@ -177,12 +177,12 @@ export const moviesSlice = createSlice({
         state.lists.playing.isFetching = false;
         state.lists.playing.isSuccessful = true;
       })
-      .addCase(getPlayingMovies.rejected, (state, action) => {
+      .addCase(getPlayingMovies.rejected, (state, { payload, error }) => {
         state.lists.playing.isFetching = false;
         state.lists.playing.isSuccessful = false;
-        Sentry.captureException(action.error);
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       })
       .addCase(getMovieData.pending, (state) => {
         state.isFetching = true;
@@ -200,12 +200,12 @@ export const moviesSlice = createSlice({
           }
         };
       })
-      .addCase(getMovieData.rejected, (state, action) => {
+      .addCase(getMovieData.rejected, (state, { payload, error }) => {
         state.isFetching = false;
         state.isSuccessful = false;
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
-        Sentry.captureException(action.error);
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       })
       .addCase(getMovieEngOverview.pending, (state) => {
         state.isFetching = true;
@@ -215,12 +215,12 @@ export const moviesSlice = createSlice({
         state.isSuccessful = true;
         state.data = { ...state.data, overview: action.payload.data };
       })
-      .addCase(getMovieEngOverview.rejected, (state, action) => {
+      .addCase(getMovieEngOverview.rejected, (state, { payload, error }) => {
         state.isFetching = false;
         state.isSuccessful = false;
-        Sentry.captureException(action.error);
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       });
   }
 });
