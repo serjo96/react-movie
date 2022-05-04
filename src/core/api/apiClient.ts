@@ -19,12 +19,10 @@ type queryParams = { [key: string]: string | number | null | boolean | Array<str
 export class ResponseError extends Error {
     code: number;
     response: Response;
-    defaultQuery?: {[key: string]: string};
     constructor (resp: Response) {
       super(resp.statusText);
       this.code = resp.status;
       this.response = resp;
-      this.defaultQuery = {};
       Object.setPrototypeOf(this, ResponseError.prototype);
     }
 }

@@ -174,31 +174,35 @@ export const getTopMovies = createAsyncThunk<ReturnedMovieList, number | void>(
 
 export const getMovieData = createAsyncThunk<MovieRespData, {id: number, lang: Languages}>(
   'movie/getMovieData',
-  async ({ id, lang }) => {
-    const resp = await oldClient.get<MovieDetails>(`movie/${id}`,
-      {
-        include_image_language: `${lang},null`,
-        append_to_response: 'credits,images,videos,recommendations,similar,reviews,lists,keywords,release_dates'
-      }
-    );
+  async ({ id, lang }, { rejectWithValue }) => {
+    try {
+      const resp = await oldClient.get<MovieDetails>(`movie/${id}`,
+        {
+          include_image_language: `${lang},null`,
+          append_to_response: 'credits,images,videos,recommendations,similar,reviews,lists,keywords,release_dates'
+        }
+      );
 
-    let response: MovieRespData = {
-      data: resp.data,
-      isSuccessful: resp.isSuccessRequest
-    };
-
-    let collection;
-    if (resp.data.belongsToCollection) {
-      collection = await oldClient.get<Collection>('collection/' + resp.data.belongsToCollection.id);
-
-      const sortedCollection = { ...collection.data, parts: sortCollectionItems(collection.data.parts) };
-      response = {
-        data: { ...resp.data, collection: sortedCollection },
-        isSuccessful: resp.isSuccessRequest && collection.isSuccessRequest
+      let response: MovieRespData = {
+        data: resp.data,
+        isSuccessful: resp.isSuccessRequest
       };
-    }
 
-    return response;
+      let collection;
+      if (resp.data.belongsToCollection) {
+        collection = await oldClient.get<Collection>('collection/' + resp.data.belongsToCollection.id);
+
+        const sortedCollection = { ...collection.data, parts: sortCollectionItems(collection.data.parts) };
+        response = {
+          data: { ...resp.data, collection: sortedCollection },
+          isSuccessful: resp.isSuccessRequest && collection.isSuccessRequest
+        };
+      }
+
+      return response;
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
   }
 );
 

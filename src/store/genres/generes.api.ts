@@ -11,18 +11,22 @@ export interface ReturnedGenres {
 
 export const getGenres = createAsyncThunk<ReturnedGenres>(
   'genres/getGenres',
-  async () => {
-    const [genresMovie, genresTV] = await oldClient.all<{genres: Genre[]}>([
-      oldClient.get('genre/movie/list'),
-      oldClient.get('genre/tv/list')
-    ]);
+  async (_, { rejectWithValue }) => {
+    try {
+      const [genresMovie, genresTV] = await oldClient.all<{genres: Genre[]}>([
+        oldClient.get('genre/movie/list'),
+        oldClient.get('genre/tv/list')
+      ]);
 
-    return {
-      data: {
-        movie: genresMovie.data.genres,
-        tv: genresTV.data.genres
-      },
-      isSuccessful: genresMovie.isSuccessRequest && genresTV.isSuccessRequest
-    };
+      return {
+        data: {
+          movie: genresMovie.data.genres,
+          tv: genresTV.data.genres
+        },
+        isSuccessful: genresMovie.isSuccessRequest && genresTV.isSuccessRequest
+      };
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
   }
 );

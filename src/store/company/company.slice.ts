@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
-import * as Sentry from '@sentry/react';
 
 import { CompanyDetails } from '~/core/types/comapny-details';
 import { initListData } from '~/utils/initData';
@@ -16,7 +14,9 @@ import {
   getEngCompanyDetails
 } from '~/store/company/company.api';
 import { ReturnedTvShowsList } from '~/store/tv/tv.api';
-import i18n from '~/i18n';
+import formatThunkErrorPayload from '~/utils/formatThunkErrorPayload';
+import errorLogging from '~/utils/errorLogging';
+import { ResponseError } from '~/core/api/apiClient';
 
 type CompanyState = {
   isFetching: boolean;
@@ -62,12 +62,12 @@ export const companySlice = createSlice({
         state.isSuccessful = true;
         state.data = action.payload.data;
       })
-      .addCase(getCompanyDetails.rejected, (state, action) => {
+      .addCase(getCompanyDetails.rejected, (state, { payload, error }) => {
         state.isFetching = false;
         state.isSuccessful = false;
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
-        Sentry.captureException(action.error);
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       })
       .addCase(getEngCompanyDetails.pending, (state) => {
         state.isFetching = true;
@@ -81,12 +81,12 @@ export const companySlice = createSlice({
           description: action.payload.data.description
         };
       })
-      .addCase(getEngCompanyDetails.rejected, (state, action) => {
+      .addCase(getEngCompanyDetails.rejected, (state, { payload, error }) => {
         state.isFetching = false;
         state.isSuccessful = false;
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
-        Sentry.captureException(action.error);
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       })
 
       .addCase(getCompanyMovies.pending, (state) => {
@@ -97,12 +97,12 @@ export const companySlice = createSlice({
         state.lists.movies.isSuccessful = true;
         state.lists.movies.isFetching = false;
       })
-      .addCase(getCompanyMovies.rejected, (state, action) => {
+      .addCase(getCompanyMovies.rejected, (state, { payload, error }) => {
         state.lists.movies.isFetching = false;
         state.lists.movies.isSuccessful = false;
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
-        Sentry.captureException(action.error);
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       })
       .addCase(getCompanyTvShows.pending, (state) => {
         state.lists.tvShows.isFetching = true;
@@ -112,12 +112,12 @@ export const companySlice = createSlice({
         state.lists.tvShows.isFetching = false;
         state.lists.tvShows.isSuccessful = true;
       })
-      .addCase(getCompanyTvShows.rejected, (state, action) => {
+      .addCase(getCompanyTvShows.rejected, (state, { payload, error }) => {
         state.lists.tvShows.isFetching = false;
         state.lists.tvShows.isSuccessful = false;
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
-        Sentry.captureException(action.error);
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       });
   }
 });

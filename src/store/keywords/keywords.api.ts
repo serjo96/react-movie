@@ -57,7 +57,7 @@ export const getKeywordsMedia = createAsyncThunk<KeywordsListResponse, KeywordsL
     sortType: 'popularity.desc',
     adult: false,
     page: 1
-  }) => {
+  }, { rejectWithValue }) => {
     let query: KeywordsQuery = {
       with_keywords: keywordId,
       sort_by: sortType,
@@ -89,21 +89,25 @@ export const getKeywordsMedia = createAsyncThunk<KeywordsListResponse, KeywordsL
       };
     }
 
-    const [firstPage, secondPage] = await oldClient.all<KeywordsListData>([
-      oldClient.get(`discover/${type}`, {
-        ...query
-      }),
-      oldClient.get(`discover/${type}`,
-        {
-          ...query,
-          page: page + 1
-        })
-    ]);
+    try {
+      const [firstPage, secondPage] = await oldClient.all<KeywordsListData>([
+        oldClient.get(`discover/${type}`, {
+          ...query
+        }),
+        oldClient.get(`discover/${type}`,
+          {
+            ...query,
+            page: page + 1
+          })
+      ]);
 
-    const concatPages = ConcatPages<MoviesListItem | TvListItem>({ firstPage, secondPage });
-    return {
-      data: concatPages,
-      isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
-    };
+      const concatPages = ConcatPages<MoviesListItem | TvListItem>({ firstPage, secondPage });
+      return {
+        data: concatPages,
+        isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+      };
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
   }
 );

@@ -24,6 +24,9 @@ import {
 } from '~/store/tv/tv.api';
 import { formatCrew } from '~/utils/formatCrew';
 import i18n from '~/i18n';
+import formatThunkErrorPayload from '~/utils/formatThunkErrorPayload';
+import { ResponseError } from '~/core/api/apiClient';
+import errorLogging from '~/utils/errorLogging';
 
 export type TvShowsListsData = ActionPayloadData<ListData<TvListItem>>;
 type TvDetailState = Omit<TvDetails, 'credits'> & {
@@ -168,12 +171,12 @@ export const tvSlice = createSlice({
         state.lists.all.isFetching = false;
         state.lists.all.isSuccessful = true;
       })
-      .addCase(getTvShowsList.rejected, (state, action) => {
+      .addCase(getTvShowsList.rejected, (state, { payload, error }) => {
         state.lists.all.isFetching = false;
         state.lists.all.isSuccessful = false;
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
-        Sentry.captureException(action.error);
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       })
       .addCase(getAiringTvShows.pending, (state) => {
         state.lists.airing.isFetching = true;
@@ -183,12 +186,12 @@ export const tvSlice = createSlice({
         state.lists.airing.isFetching = false;
         state.lists.airing.isSuccessful = true;
       })
-      .addCase(getAiringTvShows.rejected, (state, action) => {
+      .addCase(getAiringTvShows.rejected, (state, { payload, error }) => {
         state.lists.airing.isFetching = false;
         state.lists.airing.isSuccessful = false;
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
-        Sentry.captureException(action.error);
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       })
       .addCase(getTopTvShows.pending, (state) => {
         state.lists.top.isFetching = true;
@@ -198,12 +201,12 @@ export const tvSlice = createSlice({
         state.lists.top.isFetching = false;
         state.lists.top.isSuccessful = true;
       })
-      .addCase(getTopTvShows.rejected, (state, action) => {
+      .addCase(getTopTvShows.rejected, (state, { payload, error }) => {
         state.lists.top.isFetching = false;
         state.lists.top.isSuccessful = false;
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
-        Sentry.captureException(action.error);
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       })
 
       .addCase(getOnTheAirTvShows.pending, (state) => {
@@ -214,12 +217,12 @@ export const tvSlice = createSlice({
         state.lists.onTheAir.isFetching = false;
         state.lists.onTheAir.isSuccessful = true;
       })
-      .addCase(getOnTheAirTvShows.rejected, (state, action) => {
+      .addCase(getOnTheAirTvShows.rejected, (state, { payload, error }) => {
         state.lists.onTheAir.isFetching = false;
         state.lists.onTheAir.isSuccessful = false;
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
-        Sentry.captureException(action.error);
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       })
 
       .addCase(getTvShowData.pending, (state) => {
@@ -231,12 +234,12 @@ export const tvSlice = createSlice({
         state.isFetching = false;
         state.isSuccessful = true;
       })
-      .addCase(getTvShowData.rejected, (state, action) => {
+      .addCase(getTvShowData.rejected, (state, { payload, error }) => {
         state.isFetching = false;
         state.isSuccessful = false;
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
-        Sentry.captureException(action.error);
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       })
 
       .addCase(getEngTvShowData.pending, (state) => {
@@ -247,12 +250,12 @@ export const tvSlice = createSlice({
         state.isFetching = false;
         state.isSuccessful = true;
       })
-      .addCase(getEngTvShowData.rejected, (state, action) => {
+      .addCase(getEngTvShowData.rejected, (state, { payload, error }) => {
         state.isFetching = false;
         state.isSuccessful = false;
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
-        Sentry.captureException(action.error);
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       })
 
       .addCase(getTvShowSeasons.pending, (state) => {
@@ -264,12 +267,12 @@ export const tvSlice = createSlice({
         state.isFetching = false;
         state.isSuccessful = true;
       })
-      .addCase(getTvShowSeasons.rejected, (state, action) => {
+      .addCase(getTvShowSeasons.rejected, (state, { payload, error }) => {
         state.isFetching = false;
         state.isSuccessful = false;
-        console.error(action.error.message);
-        toast.error(i18n.t('errorText'));
-        Sentry.captureException(action.error);
+
+        const formattedError = formatThunkErrorPayload(payload as ResponseError, error);
+        errorLogging(formattedError);
       });
   }
 });

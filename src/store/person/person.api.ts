@@ -10,13 +10,17 @@ export interface PersonRespData {
 
 export const getPersonDetails = createAsyncThunk<PersonRespData, {id: string, lang: Languages}>(
   'person/getPersonDetails',
-  async ({ id, lang }) => {
-    const { data, isSuccessRequest } = await oldClient.get(`person/${id}`,
-      {
-        include_image_language: `${lang},null`,
-        append_to_response: 'movie_credits,images,tv_credits,combined_credits,external_ids,images,tagged_images,latest'
-      }
-    );
+  async ({ id, lang }, { rejectWithValue }) => {
+    try {
+      const { data, isSuccessRequest } = await oldClient.get(`person/${id}`,
+        {
+          include_image_language: `${lang},null`,
+          append_to_response: 'movie_credits,images,tv_credits,combined_credits,external_ids,images,tagged_images,latest'
+        }
+      );
 
-    return { data, isSuccessful: isSuccessRequest };
+      return { data, isSuccessful: isSuccessRequest };
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
   });

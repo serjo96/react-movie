@@ -15,29 +15,36 @@ export interface CompanyRespData {
 
 export const getCompanyDetails = createAsyncThunk<CompanyRespData, {id: number}>(
   'company/getCompanyDetails',
-  async ({ id }) => {
-    const resp = await oldClient.get<CompanyDetails>(`company/${id}`);
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const resp = await oldClient.get<CompanyDetails>(`company/${id}`);
 
-    return {
-      data: resp.data,
-      isSuccessful: resp.isSuccessRequest
-    };
-  }
-);
+      return {
+        data: resp.data,
+        isSuccessful: resp.isSuccessRequest
+      };
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
+  });
 
 export const getEngCompanyDetails = createAsyncThunk<CompanyRespData, {id: number, lang?: Languages}>(
   'company/getEngCompanyDetails',
-  async ({ id, lang = Languages.EN }) => {
-    const resp = await oldClient.get<CompanyDetails>(`company/${id}`,
-      {
-        language: lang
-      }
-    );
+  async ({ id, lang = Languages.EN }, { rejectWithValue }) => {
+    try {
+      const resp = await oldClient.get<CompanyDetails>(`company/${id}`,
+        {
+          language: lang
+        }
+      );
 
-    return {
-      data: resp.data,
-      isSuccessful: resp.isSuccessRequest
-    };
+      return {
+        data: resp.data,
+        isSuccessful: resp.isSuccessRequest
+      };
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
   }
 );
 
@@ -67,7 +74,7 @@ export const getCompanyMovies = createAsyncThunk<ReturnedCompanyMovieList, Compa
     adult: false,
     sortBy: 'popularity.desc',
     page: 1
-  }) => {
+  }, { rejectWithValue }) => {
     let startRangeDate: string | undefined;
     let endRangeDate: string | undefined;
     const rangeData = date && date.split('-');
@@ -75,21 +82,25 @@ export const getCompanyMovies = createAsyncThunk<ReturnedCompanyMovieList, Compa
       [startRangeDate, endRangeDate] = rangeData;
     }
 
-    const { data, isSuccessRequest } = await oldClient.get<ListData<MoviesListItem>>('discover/movie',
-      {
-        sort_by: sortBy,
-        with_genres: genre,
-        primary_release_year: date,
-        with_companies: id,
-        'primary_release_date.gte': startRangeDate,
-        'primary_release_date.lte': endRangeDate,
-        page: page,
-        include_adult: adult
-      });
-    return {
-      data,
-      isSuccessful: isSuccessRequest
-    };
+    try {
+      const { data, isSuccessRequest } = await oldClient.get<ListData<MoviesListItem>>('discover/movie',
+        {
+          sort_by: sortBy,
+          with_genres: genre,
+          primary_release_year: date,
+          with_companies: id,
+          'primary_release_date.gte': startRangeDate,
+          'primary_release_date.lte': endRangeDate,
+          page: page,
+          include_adult: adult
+        });
+      return {
+        data,
+        isSuccessful: isSuccessRequest
+      };
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
   }
 );
 
@@ -100,12 +111,12 @@ export const getCompanyTvShows = createAsyncThunk<ReturnedCompanyTvShowsList, Co
     genre,
     date,
     sortBy = 'popularity.desc',
-    page = 1,
+    page = 1
   }: CompanyTvShowsArguments = {
     id: 0,
     sortBy: 'popularity.desc',
-    page: 1,
-  }) => {
+    page: 1
+  }, { rejectWithValue }) => {
     let startRangeDate: string | undefined;
     let endRangeDate: string | undefined;
     const rangeData = date && date.split('-');
@@ -113,19 +124,23 @@ export const getCompanyTvShows = createAsyncThunk<ReturnedCompanyTvShowsList, Co
       [startRangeDate, endRangeDate] = rangeData;
     }
 
-    const { data, isSuccessRequest } = await oldClient.get<ListData<TvListItem>>('discover/tv',
-      {
-        sort_by: sortBy,
-        with_genres: genre,
-        first_air_date_year: date,
-        with_companies: id,
-        'first_air_date.gte': startRangeDate,
-        'first_air_date.lte': endRangeDate,
-        page: page
-      });
-    return {
-      data,
-      isSuccessful: isSuccessRequest
-    };
+    try {
+      const { data, isSuccessRequest } = await oldClient.get<ListData<TvListItem>>('discover/tv',
+        {
+          sort_by: sortBy,
+          with_genres: genre,
+          first_air_date_year: date,
+          with_companies: id,
+          'first_air_date.gte': startRangeDate,
+          'first_air_date.lte': endRangeDate,
+          page: page
+        });
+      return {
+        data,
+        isSuccessful: isSuccessRequest
+      };
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
   }
 );
