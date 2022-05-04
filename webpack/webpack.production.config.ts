@@ -64,8 +64,9 @@ const exportConfig: webpack.Configuration = {
       ignore: ['node_modules', 'webpack.config.js'],
       dryRun: true,
       debug: true,
-      project: 'movie-base',
-      org: 'curiosity-things'
+      authToken: process.env.SENTRY_AUTH_TOKEN || '',
+      project: process.env.SENTRY_ORG || 'movie-base',
+      org: process.env.SENTRY_PROJECT || 'curiosity-things'
     }),
     ...config.plugins,
     new ImageMinimizerPlugin({
