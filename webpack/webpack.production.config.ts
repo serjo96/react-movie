@@ -56,7 +56,6 @@ const config: webpack.Configuration = mainConfig({
 const exportConfig: webpack.Configuration = {
   ...config,
   plugins: [
-    ...config.plugins,
     new SentryCliPlugin({
       include: '.',
       ignore: ['node_modules', 'webpack.config.js'],
@@ -64,6 +63,7 @@ const exportConfig: webpack.Configuration = {
       project: 'movie-base',
       org: 'curiosity-things'
     }),
+    ...config.plugins,
     new ImageMinimizerPlugin({
       minimizer: {
         implementation: ImageMinimizerPlugin.imageminMinify,
