@@ -21,9 +21,6 @@ const config: webpack.Configuration = mainConfig({
     filename: 'js/[chunkhash].js'
   },
   optimization: {
-    splitChunks: {
-      chunks: 'all',
-    },
     chunkIds: 'total-size',
     moduleIds: 'size',
     minimizer: [
