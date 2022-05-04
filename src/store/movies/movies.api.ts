@@ -47,7 +47,7 @@ export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs |
     adult: false,
     sortBy: 'popularity.desc',
     page: 1
-  }) => {
+  }, { rejectWithValue }) => {
     let startRangeDate: string | undefined;
     let endRangeDate: string | undefined;
     const rangeData = date && date.split('-');
@@ -55,51 +55,59 @@ export const getMoviesList = createAsyncThunk<ReturnedMovieList, MovieListArgs |
       [startRangeDate, endRangeDate] = rangeData;
     }
 
-    const [firstPage, secondPage] = await oldClient.all<MoviesList>([
-      oldClient.get('discover/movie',
-        {
-          region: region,
-          sort_by: sortBy,
-          with_genres: genre,
-          primary_release_year: date,
-          'primary_release_date.gte': startRangeDate,
-          'primary_release_date.lte': endRangeDate,
-          page: page,
-          include_adult: adult
-        }),
-      oldClient.get('discover/movie',
-        {
-          region: region,
-          sort_by: sortBy,
-          with_genres: genre,
-          primary_release_year: date,
-          'primary_release_date.gte': startRangeDate,
-          'primary_release_date.lte': endRangeDate,
-          page: page + 1,
-          include_adult: adult
-        })
-    ]);
-    const concatPages = ConcatPages<MoviesListItem>({ firstPage, secondPage });
-    return {
-      data: { ...concatPages, sortByDate: date },
-      isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
-    };
+    try {
+      const [firstPage, secondPage] = await oldClient.all<MoviesList>([
+        oldClient.get('discover/movie',
+          {
+            region: region,
+            sort_by: sortBy,
+            with_genres: genre,
+            primary_release_year: date,
+            'primary_release_date.gte': startRangeDate,
+            'primary_release_date.lte': endRangeDate,
+            page: page,
+            include_adult: adult
+          }),
+        oldClient.get('discover/movie',
+          {
+            region: region,
+            sort_by: sortBy,
+            with_genres: genre,
+            primary_release_year: date,
+            'primary_release_date.gte': startRangeDate,
+            'primary_release_date.lte': endRangeDate,
+            page: page + 1,
+            include_adult: adult
+          })
+      ]);
+      const concatPages = ConcatPages<MoviesListItem>({ firstPage, secondPage });
+      return {
+        data: { ...concatPages, sortByDate: date },
+        isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+      };
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
   }
 );
 
 export const getUpcomingMovies = createAsyncThunk<ReturnedMovieList, number | void>(
   'lists/getUpcomingMovies',
-  async (page = 1) => {
-    const response = await oldClient.get<MoviesList>('movie/upcoming',
-      {
-        page: page,
-        region: 'RU'
-      }
-    );
-    return {
-      data: response.data,
-      isSuccessful: response.isSuccessRequest
-    };
+  async (page = 1, { rejectWithValue }) => {
+    try {
+      const response = await oldClient.get<MoviesList>('movie/upcoming',
+        {
+          page: page,
+          region: 'RU'
+        }
+      );
+      return {
+        data: response.data,
+        isSuccessful: response.isSuccessRequest
+      };
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
   }
 );
 
@@ -128,47 +136,55 @@ export const getPopularMovies = createAsyncThunk<ReturnedMovieList, number | voi
 
 export const getPlayingMovies = createAsyncThunk<ReturnedMovieList, number | void>(
   'lists/getPlayingMovies',
-  async (page = 1) => {
-    const [firstPage, secondPage] = await oldClient.all<MoviesList>([
-      oldClient.get('movie/now_playing',
-        {
-          page: page,
-          region: 'RU'
-        }),
-      oldClient.get('movie/now_playing',
-        {
-          page: (page as number) + 1,
-          region: 'RU'
-        })
-    ]);
-    const concatPages = ConcatPages<MoviesListItem>({ firstPage, secondPage });
-    return {
-      data: concatPages,
-      isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
-    };
+  async (page = 1, { rejectWithValue }) => {
+    try {
+      const [firstPage, secondPage] = await oldClient.all<MoviesList>([
+        oldClient.get('movie/now_playing',
+          {
+            page: page,
+            region: 'RU'
+          }),
+        oldClient.get('movie/now_playing',
+          {
+            page: (page as number) + 1,
+            region: 'RU'
+          })
+      ]);
+      const concatPages = ConcatPages<MoviesListItem>({ firstPage, secondPage });
+      return {
+        data: concatPages,
+        isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+      };
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
   }
 );
 
 export const getTopMovies = createAsyncThunk<ReturnedMovieList, number | void>(
   'lists/getTopMovies',
-  async (page = 1) => {
-    const [firstPage, secondPage] = await oldClient.all<MoviesList>([
-      oldClient.get('movie/top_rated',
-        {
-          page: page,
-          region: 'RU'
-        }),
-      oldClient.get('movie/top_rated',
-        {
-          page: (page as number) + 1,
-          region: 'RU'
-        })
-    ]);
-    const concatPages = ConcatPages<MoviesListItem>({ firstPage, secondPage });
-    return {
-      data: concatPages,
-      isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
-    };
+  async (page = 1, { rejectWithValue }) => {
+    try {
+      const [firstPage, secondPage] = await oldClient.all<MoviesList>([
+        oldClient.get('movie/top_rated',
+          {
+            page: page,
+            region: 'RU'
+          }),
+        oldClient.get('movie/top_rated',
+          {
+            page: (page as number) + 1,
+            region: 'RU'
+          })
+      ]);
+      const concatPages = ConcatPages<MoviesListItem>({ firstPage, secondPage });
+      return {
+        data: concatPages,
+        isSuccessful: firstPage.isSuccessRequest && secondPage.isSuccessRequest
+      };
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
   }
 );
 
@@ -208,16 +224,20 @@ export const getMovieData = createAsyncThunk<MovieRespData, {id: number, lang: L
 
 export const getMovieEngOverview = createAsyncThunk<MovieEngRespData, {id: number, lang?: Languages}>(
   'movie/getMovieEngData',
-  async ({ id, lang = Languages.EN }) => {
-    const resp = await oldClient.get<MovieDetails>(`movie/${id}`,
-      {
-        language: lang
-      }
-    );
+  async ({ id, lang = Languages.EN }, { rejectWithValue }) => {
+    try {
+      const resp = await oldClient.get<MovieDetails>(`movie/${id}`,
+        {
+          language: lang
+        }
+      );
 
-    return {
-      data: resp.data.overview,
-      isSuccessful: resp.isSuccessRequest
-    };
+      return {
+        data: resp.data.overview,
+        isSuccessful: resp.isSuccessRequest
+      };
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
   }
 );

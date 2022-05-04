@@ -4,6 +4,7 @@ import TerserPlugin from 'terser-webpack-plugin';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
+import SentryCliPlugin from '@sentry/webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import mainConfig from './webpack.config';
 
@@ -26,6 +27,7 @@ const config: webpack.Configuration = mainConfig({
       new TerserPlugin({
         parallel: true,
         terserOptions: {
+          sourceMap: true,
           parse: {
             bare_returns: true
           },
@@ -54,6 +56,13 @@ const config: webpack.Configuration = mainConfig({
 const exportConfig: webpack.Configuration = {
   ...config,
   plugins: [
+    new SentryCliPlugin({
+      include: '.',
+      ignore: ['node_modules', 'webpack.config.js'],
+      dryRun: true,
+      project: 'movie-base',
+      org: 'curiosity-things'
+    }),
     ...config.plugins,
     new ImageMinimizerPlugin({
       minimizer: {
@@ -87,7 +96,9 @@ const exportConfig: webpack.Configuration = {
         { from: 'public', to: '' }
       ]
     }),
-    new CompressionPlugin()
+    new CompressionPlugin({
+      deleteOriginalAssets: false
+    })
   ]
 };
 export default exportConfig;
