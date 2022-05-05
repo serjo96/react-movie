@@ -1,10 +1,10 @@
 {
   "name": "movie-base",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Movie base web app on react/redux",
   "main": "''",
   "scripts": {
-    "build": "webpack --node-env=production --config ./webpack/webpack.production.config.ts --progress",
+    "build": "yarn version --minor && webpack --node-env=production --config ./webpack/webpack.production.config.ts --progress",
     "start": "webpack-dev-server --config ./webpack/webpack.dev.config.ts --progress --profile  --stats-error-details",
     "dev": "webpack-dev-server --host 0.0.0.0  --config ./webpack/webpack.dev.config.ts --progress --profile  --stats-error-details",
     "lint": "eslint --ext js --ext jsx --ext ts src || exit 0",
