@@ -58,8 +58,8 @@ const exportConfig: webpack.Configuration = {
   plugins: [
     new SentryCliPlugin({
       authToken: process.env.SENTRY_AUTH_TOKEN || '',
-      project: process.env.SENTRY_ORG || 'curiosity-things',
-      org: process.env.SENTRY_PROJECT || 'movie-base',
+      org: 'curiosity-things',
+      project: 'movie-base',
       include: '.',
       ignore: ['node_modules', 'webpack.config.js'],
       release: process.env.COMMIT_REF,
