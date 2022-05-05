@@ -57,12 +57,13 @@ const exportConfig: webpack.Configuration = {
   ...config,
   plugins: [
     new SentryCliPlugin({
-      include: './js/',
+      include: '~/js',
       ignore: ['node_modules', 'webpack.config.js'],
       dryRun: true,
       dist: process.env.BUILD_ID,
       debug: true,
       validate: true,
+      urlPrefix: '~/',
       authToken: process.env.SENTRY_AUTH_TOKEN || '',
       project: process.env.SENTRY_ORG || 'movie-base',
       org: process.env.SENTRY_PROJECT || 'curiosity-things',
@@ -71,7 +72,7 @@ const exportConfig: webpack.Configuration = {
         name: process.env.BUILD_ID
       },
       setCommits: {
-        repo: 'serjo96/react-movie',
+        repo: process.env.REPOSITORY_URL || 'serjo96/react-movie',
         auto: true
       }
     }),
