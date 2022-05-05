@@ -64,7 +64,11 @@ const exportConfig: webpack.Configuration = {
       debug: true,
       authToken: process.env.SENTRY_AUTH_TOKEN || '',
       project: process.env.SENTRY_ORG || 'movie-base',
-      org: process.env.SENTRY_PROJECT || 'curiosity-things'
+      org: process.env.SENTRY_PROJECT || 'curiosity-things',
+      deploy: {
+        env: process.env.NODE_ENV,
+        name: process.env.COMMIT_REF
+      }
     }),
     ...config.plugins,
     new ImageMinimizerPlugin({
