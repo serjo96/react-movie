@@ -60,14 +60,14 @@ const exportConfig: webpack.Configuration = {
       include: '.',
       ignore: ['node_modules', 'webpack.config.js'],
       dryRun: true,
-      dist: process.env.COMMIT_REF || process.env.BUILD_ID,
+      dist: process.env.BUILD_ID,
       debug: true,
       authToken: process.env.SENTRY_AUTH_TOKEN || '',
       project: process.env.SENTRY_ORG || 'movie-base',
       org: process.env.SENTRY_PROJECT || 'curiosity-things',
       deploy: {
         env: process.env.NODE_ENV,
-        name: process.env.COMMIT_REF
+        name: process.env.BUILD_ID
       }
     }),
     ...config.plugins,
