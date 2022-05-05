@@ -57,11 +57,12 @@ const exportConfig: webpack.Configuration = {
   ...config,
   plugins: [
     new SentryCliPlugin({
-      include: '.',
+      include: './js/',
       ignore: ['node_modules', 'webpack.config.js'],
       dryRun: true,
       dist: process.env.BUILD_ID,
       debug: true,
+      validate: true,
       authToken: process.env.SENTRY_AUTH_TOKEN || '',
       project: process.env.SENTRY_ORG || 'movie-base',
       org: process.env.SENTRY_PROJECT || 'curiosity-things',
