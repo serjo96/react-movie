@@ -65,6 +65,7 @@ const exportConfig: webpack.Configuration = {
       release: process.env.COMMIT_REF,
       dist: process.env.BUILD_ID,
       debug: true,
+      dryRun: true,
       validate: true,
       urlPrefix: '~/',
       deploy: {
