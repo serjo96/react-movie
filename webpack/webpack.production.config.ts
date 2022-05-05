@@ -59,6 +59,7 @@ const exportConfig: webpack.Configuration = {
     new SentryCliPlugin({
       include: '~/build/js',
       ignore: ['node_modules', 'webpack.config.js'],
+      release: process.env.COMMIT_REF,
       dryRun: true,
       dist: process.env.BUILD_ID,
       debug: true,
