@@ -57,10 +57,9 @@ const exportConfig: webpack.Configuration = {
   ...config,
   plugins: [
     new SentryCliPlugin({
-      include: '~/build/js',
+      include: '.',
       ignore: ['node_modules', 'webpack.config.js'],
       release: process.env.COMMIT_REF,
-      dryRun: true,
       dist: process.env.BUILD_ID,
       debug: true,
       validate: true,
@@ -73,7 +72,7 @@ const exportConfig: webpack.Configuration = {
         name: process.env.BUILD_ID
       },
       setCommits: {
-        repo: process.env.REPOSITORY_URL || 'serjo96/react-movie',
+        repo: process.env.REPOSITORY_URL || 'https://github.com/serjo96/react-movie',
         commit: process.env.COMMIT_REF,
         previousCommit: process.env.previousCommit
       }
