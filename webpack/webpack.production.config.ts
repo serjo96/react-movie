@@ -69,6 +69,10 @@ const exportConfig: webpack.Configuration = {
       deploy: {
         env: process.env.NODE_ENV,
         name: process.env.BUILD_ID
+      },
+      setCommits: {
+        repo: 'serjo96/react-movie',
+        auto: true
       }
     }),
     ...config.plugins,
