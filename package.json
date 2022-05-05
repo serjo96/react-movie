@@ -4,7 +4,7 @@
   "description": "Movie base web app on react/redux",
   "main": "''",
   "scripts": {
-    "build": "yarn version --preminor && webpack --node-env=production --config ./webpack/webpack.production.config.ts --progress",
+    "build": "webpack --node-env=production --config ./webpack/webpack.production.config.ts --progress",
     "start": "webpack-dev-server --config ./webpack/webpack.dev.config.ts --progress --profile  --stats-error-details",
     "dev": "webpack-dev-server --host 0.0.0.0  --config ./webpack/webpack.dev.config.ts --progress --profile  --stats-error-details",
     "lint": "eslint --ext js --ext jsx --ext ts src || exit 0",
