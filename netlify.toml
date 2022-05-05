@@ -1,7 +1,7 @@
-#[[plugins]]
-#  package = "@sentry/netlify-build-plugin"
-#
-#  [plugins.inputs]
-#    sentryOrg = "curiosity-things"
-#    sentryProject = "movie-base"
-#    sourceMapUrlPrefix = "~/src"
+[[plugins]]
+  package = "@sentry/netlify-build-plugin"
+
+  [plugins.inputs]
+    sentryOrg = "curiosity-things"
+    sentryProject = "movie-base"
+    sourceMapUrlPrefix = "~/src"

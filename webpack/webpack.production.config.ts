@@ -56,28 +56,27 @@ const config: webpack.Configuration = mainConfig({
 const exportConfig: webpack.Configuration = {
   ...config,
   plugins: [
-    new SentryCliPlugin({
-      authToken: process.env.SENTRY_AUTH_TOKEN || '',
-      org: 'curiosity-things',
-      project: 'movie-base',
-      include: '.',
-      ignore: ['node_modules', 'webpack.config.js'],
-      release: process.env.COMMIT_REF,
-      dist: process.env.BUILD_ID,
-      debug: true,
-      dryRun: true,
-      validate: true,
-      urlPrefix: '~/',
-      deploy: {
-        env: process.env.NODE_ENV,
-        name: process.env.BUILD_ID
-      },
-      setCommits: {
-        repo: process.env.REPOSITORY_URL || 'github.com/serjo96/react-movie',
-        commit: process.env.COMMIT_REF,
-        previousCommit: process.env.previousCommit
-      }
-    }),
+    // new SentryCliPlugin({
+    //   authToken: process.env.SENTRY_AUTH_TOKEN || '',
+    //   org: 'curiosity-things',
+    //   project: 'movie-base',
+    //   include: '.',
+    //   ignore: ['node_modules', 'webpack.config.js'],
+    //   release: process.env.COMMIT_REF,
+    //   dist: process.env.BUILD_ID,
+    //   debug: true,
+    //   validate: true,
+    //   urlPrefix: '~/',
+    //   deploy: {
+    //     env: process.env.NODE_ENV,
+    //     name: process.env.BUILD_ID
+    //   },
+    //   setCommits: {
+    //     repo: process.env.REPOSITORY_URL || 'https://github.com/serjo96/react-movie',
+    //     commit: process.env.COMMIT_REF,
+    //     previousCommit: process.env.previousCommit
+    //   }
+    // }),
     ...config.plugins,
     new ImageMinimizerPlugin({
       minimizer: {
