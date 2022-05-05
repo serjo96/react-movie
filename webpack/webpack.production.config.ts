@@ -73,7 +73,8 @@ const exportConfig: webpack.Configuration = {
       },
       setCommits: {
         repo: process.env.REPOSITORY_URL || 'serjo96/react-movie',
-        auto: true
+        commit: process.env.COMMIT_REF,
+        previousCommit: process.env.previousCommit
       }
     }),
     ...config.plugins,
