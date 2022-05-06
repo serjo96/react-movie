@@ -19,6 +19,7 @@ export default function useTranslations () {
     appDispatch(setLanguage(lang));
     i18n.changeLanguage(lang);
   };
+
   return {
     lang,
     setLang
