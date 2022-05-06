@@ -72,7 +72,7 @@ const exportConfig: webpack.Configuration = {
         name: process.env.BUILD_ID
       },
       setCommits: {
-        repo: 'serjo96/react-movie',
+        repo: process.env.REPOSITORY_SHORT_URL,
         commit: process.env.COMMIT_REF,
         previousCommit: process.env.previousCommit
       }
