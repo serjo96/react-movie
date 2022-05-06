@@ -72,7 +72,9 @@ const exportConfig: webpack.Configuration = {
         name: process.env.BUILD_ID
       },
       setCommits: {
-        auto: true
+        repo: 'serjo96/react-movie',
+        commit: process.env.COMMIT_REF,
+        previousCommit: process.env.previousCommit
       }
     }),
     ...config.plugins,
