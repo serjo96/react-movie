@@ -56,6 +56,7 @@ const config: webpack.Configuration = mainConfig({
 const exportConfig: webpack.Configuration = {
   ...config,
   plugins: [
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'BUILD_ID']),
     new SentryCliPlugin({
       authToken: process.env.SENTRY_AUTH_TOKEN || '',
       org: 'curiosity-things',
