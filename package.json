@@ -83,6 +83,7 @@
     "babel-plugin-transform-class-properties": "^6.22.0",
     "babel-plugin-transform-es2015-unicode-regex": "^6.24.1",
     "babel-runtime": "^6.26.0",
+    "clean-webpack-plugin": "^4.0.0",
     "css-loader": "3.4.2",
     "css-minimizer-webpack-plugin": "^3.3.1",
     "dart-sass": "^1.25.0",

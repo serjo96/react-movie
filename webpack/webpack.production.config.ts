@@ -5,7 +5,9 @@ import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import SentryCliPlugin from '@sentry/webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
+
 import mainConfig from './webpack.config';
 
 const config: webpack.Configuration = mainConfig({
@@ -115,6 +117,10 @@ const exportConfig: webpack.Configuration = {
     }),
     new CompressionPlugin({
       deleteOriginalAssets: false
+    }),
+    new CleanWebpackPlugin({
+      cleanAfterEveryBuildPatterns: ['**/*.map'],
+      protectWebpackAssets: false
     })
   ]
 };
