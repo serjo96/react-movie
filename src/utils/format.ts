@@ -105,7 +105,7 @@ export function formattingGenres ({ movie, tv }: {movie: Genre[]; tv: Genre[]}) 
   };
   const concatArr = movie.concat(tv);
   concatArr.forEach((item) => {
-    hashObj[item.id] = capitalizeFirstLetter(item.name);
+    hashObj[item.id] = item.name;
   });
 
   const allGenres = [{ id: 0, name: 'Все жанры' }];
@@ -113,7 +113,7 @@ export function formattingGenres ({ movie, tv }: {movie: Genre[]; tv: Genre[]}) 
   const moviesGenres = movie.map(i => {
     const result = {
       ...i,
-      name: capitalizeFirstLetter(i.name)
+      name: i.name
     };
     allGenres.push(result);
     return result;
