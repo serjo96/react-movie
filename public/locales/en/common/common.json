@@ -27,5 +27,8 @@
     "tvShow": "Tv show",
     "outOf": "out of",
     "rating": "Rating"
+  },
+  "genres": {
+    "all": "All genres"
   }
 }

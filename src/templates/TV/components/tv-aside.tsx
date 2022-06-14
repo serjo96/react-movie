@@ -164,7 +164,7 @@ function TvAside ({
 
       <div className='genres info-table-row'>
         <div className='genres__title'>{t('mediaCommon:aside.Genres')}</div>
-        <div className='genres__list'>
+        <div className='tag-list'>
           {genres.map((el, indx) => (
             <div
               className='genre'
@@ -172,7 +172,7 @@ function TvAside ({
             >
               <Link
                 to={`/tv/all?genre-${el.id}`}
-                className='tag'
+                className='tag-list__tag'
                 id={`${el.id}`}
               >{el.name}
               </Link>
@@ -183,10 +183,10 @@ function TvAside ({
 
       <div className='keywords info-table-row'>
         <div className='keywords__title'>{t('mediaCommon:aside.Tags')}</div>
-        <div className='keywords__list'>
+        <div className='tag-list'>
           {keywords.map((el, indx) => (
             <Link
-              className='keyword tag'
+              className='tag-list__tag'
               to={`/keywords-tv/${friendlyUrl(el.name)}-${el.id}`}
               id={el.id} key={indx}
             >{el.name}

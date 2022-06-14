@@ -1,5 +1,6 @@
 // TODO: to refactoring
 import { Genre } from '~/core/types/genres';
+import i18n from '~/i18n';
 
 export function declOfNum (number: number, titles: [string, string, string]) {
   return titles[(number % 10 === 1 && number % 100 !== 11) ? 0 : number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20) ? 1 : 2];
@@ -105,21 +106,21 @@ export function formattingGenres ({ movie, tv }: {movie: Genre[]; tv: Genre[]}) 
   };
   const concatArr = movie.concat(tv);
   concatArr.forEach((item) => {
-    hashObj[item.id] = capitalizeFirstLetter(item.name);
+    hashObj[item.id] = item.name;
   });
 
-  const allGenres = [{ id: 0, name: 'Все жанры' }];
+  const allGenres = [{ id: 0, name: i18n.t('genres.all') }];
 
   const moviesGenres = movie.map(i => {
     const result = {
       ...i,
-      name: capitalizeFirstLetter(i.name)
+      name: i.name
     };
     allGenres.push(result);
     return result;
   });
 
-  moviesGenres.unshift({ id: 0, name: 'Все жанры' });
+  moviesGenres.unshift({ id: 0, name: i18n.t('genres.all') });
 
   const tvGenres = tv.map(i => {
     const result = {
@@ -131,7 +132,7 @@ export function formattingGenres ({ movie, tv }: {movie: Genre[]; tv: Genre[]}) 
   });
 
   // TODO: check if 0 id is necessary;
-  tvGenres.unshift({ id: 0, name: 'Все жанры' });
+  tvGenres.unshift({ id: 0, name: i18n.t('genres.all') });
 
   return {
     genresHash: hashObj,
