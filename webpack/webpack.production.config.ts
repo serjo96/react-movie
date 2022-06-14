@@ -60,7 +60,8 @@ const exportConfig: webpack.Configuration = {
   plugins: [
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
-      BUILD_ID: ''
+      BUILD_ID: '',
+      GOOGLE_ADS_TRACKING_ID: ''
     }),
     new SentryCliPlugin({
       authToken: process.env.SENTRY_AUTH_TOKEN || '',
