@@ -157,12 +157,12 @@ export function MovieAside ({
       </div>
       <div className='genres info-table-row'>
         <div className='genres__title'>{t('mediaCommon:aside.Genres')}</div>
-        <div className='genres__list'>
+        <div className='tag-list'>
           {genres.map((el, indx) => (
             <div className='genre' key={indx}>
               <Link
                 to={`/movies/all?genre-${el.id}`}
-                className='tag'
+                className='tag-list__tag'
                 id={el.id.toString()}
               >{el.name}
               </Link>
@@ -172,11 +172,11 @@ export function MovieAside ({
       </div>
       <div className='keywords info-table-row'>
         <div className='keywords__title'>{t('mediaCommon:aside.Keywords')}</div>
-        <div className='keywords__list'>
+        <div className='tag-list'>
           {keywords.map((el, indx) => (
             <Link
               to={`/keywords-movies/${friendlyUrl(el.name)}-${el.id}`}
-              className='keyword tag'
+              className='tag-list__tag'
               id={el.id}
               key={indx}
             >{el.name}
