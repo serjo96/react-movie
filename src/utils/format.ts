@@ -125,7 +125,7 @@ export function formattingGenres ({ movie, tv }: {movie: Genre[]; tv: Genre[]}) 
   const tvGenres = tv.map(i => {
     const result = {
       ...i,
-      name: capitalizeFirstLetter(i.name)
+      name: i.name
     };
     allGenres.push(result);
     return result;
